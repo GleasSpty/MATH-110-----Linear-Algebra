@@ -1,0 +1,859 @@
+\chapter{Coordinates, column vectors, and matrices}
+
+We now turn to the second important use of bases:  coordinates.
+
+\section{Coordinates, vectors, and column vectors}
+
+\begin{dfn}{Coordinates (of a vector)}{CoordinatesVector}
+	Let $V$ be a $\K$-module, let $\basis{B}$ be a basis of $V$, let $v\in V$, and write
+	\begin{equation}
+		v=\sum _{b\in \basis{B}}v^b\cdot b
+	\end{equation}
+	for unique $v^b\in \basis{B}$.  Then, the \term{coordinates}\index{Coordinates (of a vector)} of $v$ with respect to the basis $\basis{B}$, $\coordinates{v}{\basis{B}}$\index[notation]{$\coordinates{v}{\basis{B}}$}, are defined by
+	\begin{equation}
+		\coordinates{v}{\basis{B}}\ceqq \coord{v^b:b\in \basis{B}}\in \K ^{\basis{B}}.
+	\end{equation}
+	\begin{rmk}
+		Recall (\cref{CartesianProductCollection,exrA.3.41}) that this is suggestive notation for what is technically a function $\basis{B}\ni b\mapsto v^b\in \K$.  Thinking of things like this, however, is often not helpful---for example, we usually don't think of sequences as being functions on $\N$, even though that's exactly what they are.  In this case, I like to think of $\langle v^b:b\in \basis{B}\}$ as a list of scalars indexed by elements in the basis.  If $\basis{B}$ is finite, this list is often written as a \emph{column vector}---see the following remark.
+	\end{rmk}
+	\begin{rmk}
+		In this level of generality, it is a bit difficult to understand, so let us consider the important special case in which $\basis{B}$ is \emph{finite}.  Write $\basis{B}=\{ b_1,\ldots ,b_d\}$.  As $\basis{B}$ is a basis, there are unique $v^1,\ldots ,v^d\in \K$ such that
+		\begin{equation}
+			v=v^1\cdot b_1+\cdots +v^d\cdot b_d.
+		\end{equation}
+		Then, the coordinates of $v$ are given by the column vector
+		\begin{equation}
+			\coordinates{v}{\basis{B}}\ceqq \begin{bmatrix}v^1 \\ \vdots \\ v^d\end{bmatrix}\in \K ^d.
+		\end{equation}
+		Note that, when we do this, it is implicit that the first coordinate corresponds to the coefficient of $b_1$, etc..  Thus, if someone said instead to take the coordinates with respect to ``$\{ b_2,b_1,b_3,\ldots ,b_d\}$'', at least in terms of the notation, it is implicit that the first coordinate now corresponds to the coefficient of $b_2$, the second coordinate now corresponds to the coefficient of $b_1$, etc., and so in this case one would instead write
+		\begin{equation}
+			\coordinates{v}{\basis{B}}\ceqq \begin{bmatrix}v^2 \\ v^1 \\ v^3 \\ \vdots \\ v^d\end{bmatrix}\in \K ^d.
+		\end{equation}
+	\end{rmk}
+\end{dfn}
+Thus, if we are working in a vector space $V$, a \emph{choice of basis $\basis{B}$} allows us to assign column vectors to all vectors in $V$.\footnote{At least if $\basis{B}$ is finite---we can of course do essentially the same thing no matter the cardinality of $\basis{B}$, but calling an infinite list a ``column vector'' is slightly dubious.}  It turns out that this is an isomorphism\footnote{See \cref{Isomorphism} for the definition of isomorphism.  In this context, ``isomorphism'' is effectively synonymous with ``invertible linear map''.}, at least in finite dimensions.
+\begin{prp}{$[\blankdot ]_{\basis{B}}$ is linear and injective (and surjective in finite dimensions)}{prp3.1.7}
+Let $V$ be a $\K$-module, and let $\basis{B}$ be a basis of $V$.  Then,
+\begin{equation}
+	V\ni v\mapsto \coordinates{v}{\basis{B}}\in \K ^{\basis{B}}
+\end{equation}
+is linear and injective with image
+\begin{equation}
+	\left\{ \coord{v^b:b\in \basis{B}}:v^b=0\text{ for cofinitely many }b\in \basis{B}\text{.}\right\} .
+\end{equation}
+\begin{rmk}
+	In particular, if $\basis{B}$ is finite (with $\abs{\basis{B}}=d$), this map is surjective, and so this gives an \emph{isomorphism} $V\rightarrow \K ^d$ onto $\K ^d$.
+\end{rmk}
+\begin{rmk}
+	Explicitly, that this map is linear means that
+	\begin{equation}
+		\coordinates{v_1+v_2}{\basis{B}}=\coordinates{v_1}{\basis{B}}+\coordinates{v_2}{\basis{B}}
+	\end{equation}
+	and
+	\begin{equation}
+		\coordinates{\alpha \cdot v}{\basis{B}}=\alpha \cdot \coordinates{v}{\basis{B}}.
+	\end{equation}
+\end{rmk}
+\begin{rmk}
+	Note that a corollary of this is that any two vector spaces with the same dimension are isomorphic.  Thus, in this sense, vector spaces aren't terribly interesting.
+\end{rmk}
+\begin{proof}
+	We first prove that it is in fact linear.  Let $v_1,v_2\in V$ and write
+	\begin{equation}
+		v_1=v_1^{b_1}\cdot b_1+\cdots +v_1^{b_m}\cdot b_m\text{ and }v_2=v_2^{b_1}\cdot b_1+\cdots +v_2^{b_m}\cdot b_m,
+	\end{equation}
+	so that
+	\begin{equation}\label{eqn3.1.12}
+		v_1+v_2=(v_1^{b_1}+v_2^{b_1})\cdot b_1+\cdots +(v_1^{b_m}+v_2^{b_m})\cdot b_m.
+	\end{equation}
+	$\coordinates{v_1}{\basis{B}}$ is the function $\basis{B}\rightarrow \K$ that sends $b_k$ to $v_1^{b_k}$ and every other basis element to $0$.  Similarly for $\coordinates{v_2}{\basis{B}}$.  Hence, $\coordinates{v_1}{\basis{B}}+\coordinates{v_2}{\basis{B}}$ is the function that sends $b_k$ to $v_1^{b_k}+v_2^{b_k}$ (and everything else to $0$).  However, from \eqref{eqn3.1.12}, we see that this is exactly the same as $\coordinates{v_1+v_2}{\basis{B}}$, as desired.  Similarly, for $\alpha \in \K$, we have
+	\begin{equation}
+		\alpha \cdot v_1=\alpha v_1^{b_1}\cdot b_1+\cdots +\alpha v_1^{b_m}\cdot b_m,
+	\end{equation}
+	which says that the $\coordinates{\alpha \cdot v_1}{\basis{B}}$ is the function $\basis{B}\rightarrow \K$ that sends $b_k$ to $\alpha v_1^{b_k}$ (and everything else to $0$).  This, of course, is the same as the function $\alpha \cdot \coordinates{v_1}{\basis{B}}$, as desired.
+	
+	We now check injectivity.  As it is linear, it suffices to show that the kernel is $0$.  So, suppose that $\coordinates{v}{\basis{B}}=0$.  As, by definition, the coordinates are the coefficients of the basis elements when writing $v$ as a linear-combination of elements of $\basis{B}$, if all the coordinates are $0$, then $v$ itself has to be $0$, and so indeed the kernel vanishes.  As for the image, if $\basis{B}\ni b\mapsto v^b\in \K$ is a function such that $v^b\neq 0$ for only finitely many $b\in \basis{B}$, we can enumerate those elements $\{ b_1,\ldots ,b_m\} \subseteq \basis{B}$ (that is, $v^b=0$ unless $b\in \{ b_1,\ldots ,b_m\}$).  Now, let us define
+	\begin{equation}
+		v\ceqq v^{b_1}\cdot b_1+\cdots +v^{b_m}\cdot b_m.
+	\end{equation}
+	By construction, we have that $\coordinates{v}{\basis{B}}=(b\mapsto v^b)$, as desired.
+\end{proof}
+\end{prp}
+So, given a choice of basis, we can associate column vectors to `abstract' vectors.  But what happens if the ``abstract'' vectors were column vectors themselves?  Fortunately, the answer is as nice as one could hope.
+\begin{prp}{Coordinates of column vectors}{prp3.1.17}
+	Let $v\in \K ^d$, and let $\basis{S}$ denote the standard basis of $\K ^d$.  Then,
+	\begin{equation}
+		\coordinates{v}{\basis{S}}=v.
+	\end{equation}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exm}{}{exm1.2.86}
+	Define $T\colon C^{\infty}(\R )\rightarrow C^{\infty}(\R )$ by
+	\begin{equation}
+		T(f)\ceqq f''+f.
+	\end{equation}
+	Then,
+	\begin{equation}
+		\basis{B}\ceqq \{ x\mapsto \e ^{\im x},x\mapsto \e ^{-\im x}\}
+	\end{equation}
+	and
+	\begin{equation}
+		\basis{C}\ceqq \{ x\mapsto \cos (x),x\mapsto \sin (x)\} 
+	\end{equation}
+	are both bases for $\Ker (T)$.
+	
+	Using Euler's Formula
+	\begin{equation}
+		\e ^{\im x}=\cos (x)+\im \sin (x),
+	\end{equation}
+	we see that
+	\begin{equation}\label{eqn1.2.91}
+		\coordinates{\e ^{\im x}}{\basis{C}}=\begin{bmatrix}1 \\ \im \end{bmatrix}\text{ and }\coordinates{\e ^{-\im x}}{\basis{C}}=\begin{bmatrix}1 \\ -\im \end{bmatrix}.\footnote{Technically, I should be writing $x\mapsto \e ^{\im x}$ and $x\mapsto \e ^{-\im x}$, though being this pedantic all the time becomes tiresome.  I trust you know what I mean and will make similar abuse of notation throughout.}
+	\end{equation}
+	Note that, if we had used the different order (first $\sin$ then $\cos$), we would instead have
+	\begin{equation}
+		\coordinates{\e ^{\im x}}{\basis{C}}=\begin{bmatrix}\im \\ 1\end{bmatrix}\text{ and }[\e ^{-\im x}]_{\basis{B}}=\begin{bmatrix}-\im \\ 1\end{bmatrix}.
+	\end{equation}
+	Technically, the order doesn't really matter as the function $\basis{B}\rightarrow \C$ doesn't depend on this; however, in practice, we need to keep the order in mind because changing the order in which we write things implicitly changes the function from $\basis{B}$ to $\C$ we mean to indicate.  Loosely speaking, while the mathematics doesn't care about the order, the notation does.  If this technicality doesn't quite make sense, don't worry---I promise this is a subtle and unimportant detail.
+	
+	\begin{exr}[breakable=false]{}{}
+		Compute $\coordinates{\cos (x)}{\basis{B}}$ and $\coordinates{\sin (x)}{\basis{C}}$.
+	\end{exr}
+\end{exm}
+
+\section{Coordinates, linear-transformations, and matrices}
+
+We can also define the coordinates of linear-transformations.  We just saw that the coordinates of a vector in an (`abstract') vector space is a column vector.  On the other hand, it turns out that the coordinates of a linear-transformation is a \emph{matrix}, and so first, I suppose, it would help to actually define what a matrix is.
+
+\subsection{Matrices}\label{sbs3.2.1}
+
+While there is a good chance you are already familiar with matrices, if you think about it, a priori, matrices are sort of an awkward thing.  Put numbers in a rectangular grid?  What?  Why?  Well, I think the best answer to this question is given by \cref{CoordinatesLinearTransformation}, the result that tells us how we actually associate matrices to linear-transformations.  From a mathematician's perspective, it is linear-transformations that we care about a priori---we then care about matrices because they help us understand linear-transformations using the correspondence explained in \cref{CoordinatesLinearTransformation}.  What a priori seems like an awkward definition is justified a posteriori because it makes \cref{CoordinatesLinearTransformation} work.  Of course, however, we can't actually state the correspondence if we don't know what matrices are, which means we need to define them here.
+
+We begin with some heuristic motivation.  Let $T\colon V\rightarrow W$ be a linear-transformation between finite-dimensional vector spaces, and let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ and $\basis{C}\eqqc \{ c_1,\ldots ,c_e\}$ be bases for $V$ and $W$ respectively.  Given $v\in V$, I can write
+\begin{equation}
+	v=v^1\cdot b_1+\cdots +v^d\cdot b_d
+\end{equation}
+for unique $v^j\in \F$.  As we just learned, these are the \emph{coordinates} of $v$ with respect to the basis $\basis{B}$.  Apply $T$ to this equation, and use linearity to find
+\begin{equation}\label{eqn3.2.2}
+	T(v)=v^1\cdot T(b_1)+\cdots +v^d\cdot T(b_d).
+\end{equation}
+Each $T(b_i)\in W$, and so for each $b_i\in \basis{B}$, we can write
+\begin{equation}
+	T(b_i)=T\indices{^1_j}\cdot c_1+\cdots +T\indices{^e_i}\cdot c_e
+\end{equation}
+for unique $T\indices{^j_i}\in \F$.  Substituting this back into \eqref{eqn3.2.2}, we find
+\begin{equation}\label{eqn3.2.4}
+T(v)=\left( \sum _{i=1}^dv^iT\indices{^1_i}\right) \cdot c_1+\cdots +\left( \sum _{i=1}^dT\indices{^e_i}\right) \cdot c_e.
+\end{equation}
+From this, we see that the collection of scalars $\{ T\indices{^j_i}:1\leq i\leq d,1\leq j\leq e\}$ determines the linear-transformation $T$:  using the above equation, if you hand me $v$, I can compute $T(v)$.  This is where the idea of ``putting numbers in a rectangular grid'' comes from.
+\begin{dfn}{Matrix}{Matrix}
+	Let $\K$ be a ring, and let $m$ and $n$ be sets.  Then, an \term{$m\times n$ matrix} with entries in $\K$ is a function from $m\times n$ into $\K$.
+	\begin{ntn}[breakable=false]{}{}
+		If $A\colon m\times n\rightarrow \K$ is a matrix, we generally write $A\indices{^i_j}\ceqq A(i,j)$\index[notation]{$A\indices{^i_j}$}.  Often times you'll also see $A_{ij}\ceqq A(ij)$, but the former is quite advantageous, something that will likely only be obvious when you learn Penrose's abstract index notation for tensors.
+		
+		If $n\eqqc \{ *\}$ is a singleton, we write $A^i\ceqq A\indices{^i_*}$\index[notation]{$A^i$}.  Similarly, if $m\eqqc \{ *\}$ is a singleton, we write $A_j\ceqq A\indices{^*_j}$\index[notation]{$A_j$}.
+	\end{ntn}
+	\begin{rmk}
+		$\coord{m,n}$, often written $m\times n\ceqq \coord{m,n}$\index[notation]{$m\times n$}, is the \term{dimension}\index{Dimension (of a matrix)} of $A$.
+	\end{rmk}
+	\begin{rmk}
+		Note that we do allow $m$ and $n$ to be \emph{any set}.  To obtain the case you are most likely familiar with where $m,n\in \Z ^+$, we think of these as corresponding to the sets $\{ 1,\ldots ,m\}$ and $\{ 1,\ldots ,n\}$ respectively.  Indeed, we will be sloppy and say that $A$ is an $m\times n$ matrix even though we technically mean it is a $\{ 1,\ldots ,m\} \times \{ 1,\ldots ,n\}$ matrix.
+	\end{rmk}
+	\begin{rmk}
+		For convenience, if we ever say ``Let $A$ be an $m\times n$ matrix.'', or something similar, without first stating what $m$ and $n$ are, it should be assumed that $m,n\in \Z ^+$.
+	\end{rmk}
+\end{dfn}
+\begin{ntn}{}{}
+	If $m$ and $n$ are finite and $A$ is an $m\times n$ matrix, then it is customary to write
+	\begin{equation}
+	A\eqqc \begin{bmatrix}A\indices{^1_1} & \cdots & A\indices{^i_n} \\ \vdots & \ddots & \vdots \\ A\indices{^m_1} & \cdots & A\indices{^m_n}\end{bmatrix}.
+	\end{equation}
+	When we do so, we shall freely use the English language to discuss $A$ without necessarily defining every term first.  For example, it should be clear that ``the top-right entry'' is referring to $A\indices{^i_j}$, and that ``the third row is above the fourth row'', etc..
+\end{ntn}
+\begin{dfn}{Rows and columns}{RowsAndColumns}
+	Let $\K$ be a ring, let $m$ and $n$ be sets, and let $A$ be an $m\times n$ matrix.
+	\begin{enumerate}
+		\item For $i\in M$, the \term{$i^{\text{th}}$ row}\index{Row (of a matrix)} of $A$, $A\indices{^i_{\blankdot}}$\index[notation]{$A\indices{^i_{\blankdot}}$}, is the $1\times n$ matrix $N\ni j\mapsto A\indices{^i_j}$.
+		\item For $j\in N$, the \term{$j^{\text{th}}$ column}\index{Column (of a matrix)} of $A$, $A\indices{^{\blankdot}_j}$\index[notation]{$A\indices{^{\blankdot}_j}$}, is the $m\times 1$ matrix $M\ni i\mapsto A\indices{^i_j}$.
+	\end{enumerate}
+	\begin{rmk}
+		In particular, you should commit to memory the fact that the superscript indicates the \emph{row} and the subscript indicates the \emph{column}.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Matrix addition}{MatrixAddition}
+	Let $\K$ be a ring, let $m$ and $n$ be sets, and let $A$ and $B$ be $m\times n$ matrices with entries in $\K$.  Then, the \term{sum}\index{Sum of matrices}, $A+B$\index[notation]{$A+B$}, is defined by
+	\begin{equation}
+	[A+B]\indices{^i_j}\ceqq A\indices{^i_j}+B\indices{^i_j}.
+	\end{equation}
+\end{dfn}
+Matrix addition was easy.  Matrix multiplication, however, not so much.  Before our `official' definition of matrices, we briefly explained how one associates a matrix to a linear-transformation (given a choice of bases).  We would like our definition of matrix multiplication to correspond to \emph{composition} of linear-transformations.  That is, if you compose linear-transformations and taken the corresponding matrix, you should get the same result as if you first took the corresponding matrices and multiplied them.  So, let's investigate what such a definition might look like.
+
+Recall \eqref{eqn3.2.4}:
+\begin{equation}\label{eqn3.2.10}
+T(v)=\left( \sum _{i=1}^dv^iT\indices{^1_i}\right) \cdot c_1+\cdots +\left( \sum _{i=1}^dT\indices{^e_i}\right) \cdot c_e.
+\end{equation}
+Now, if $U$ is another vector space with basis $\basis{A}\eqqc \{ a_1,\ldots ,a_c\}$ and $S\colon U\rightarrow V$ is another linear-transformation, the analogous equation for $S$ looks like
+\begin{equation}
+	S(u)=\left( \sum _{h=1}^cu^hS\indices{^1_h}\right) \cdot b_1+\cdots +\left( \sum _{h=1}^cu^hS\indices{^d_h}\right) b_d
+\end{equation}
+Taking $v=S(u)$ in \eqref{eqn3.2.10}, so that
+\begin{equation}
+	v^j=\sum _{h=1}^cu^hS\indices{^j_h},
+\end{equation}
+it becomes
+\begin{equation}
+	T(S(u))=\left( \sum _{h=1}^cu^h\left( \sum _{i=1}^dS\indices{^i_h}T\indices{^1_i}\right) \right) +\cdots +\left( \sum _{h=1}^cu^h\left( \sum _{i=1}^dS\indices{^i_h}T\indices{^e_i}\right) \right) \cdot c_e.
+\end{equation}
+From this, we can read off that the $\coord{j,h}$ entry is
+\begin{equation}
+	\sum _{i=1}^dS\indices{^i_h}T\indices{^j_i}.
+\end{equation}
+\begin{rmk}
+	The notation is perhaps a bit hard to parse, but the idea is quite easy.  \eqref{eqn3.2.10} tells us how to read off the matrix of a linear-transformation.  As we are interested in the matrix associated to $T\circ S$, we compute $T\circ S$ in essentially the only way possible using these equations, and read off the relevant coefficients.
+\end{rmk}
+This yields the following definition.
+\begin{dfn}{Matrix multiplication}{MatrixMultiplication}
+	Let $\K$ be a ring; let $m$, $n$, and $o$ be sets, let $A$ be an $m\times n$ matrix with entries in $\K$, and let $B$ be an $n\times o$ matrix with entries in $\K$.  Then, $A$ and $B$ are \term{multipliable}\index{Multipliable} iff for every $\coord{i,k}\in m\times o$,
+	\begin{equation}
+	\left\{ j\in n:A\indices{^i_j}B\indices{^j_k}\neq 0\right\}
+	\end{equation}
+	is a finite set, in which case the \term{product}\index{Product of matrices} of $A$ and $B$, $AB$\index[notation]{$BA$}, is defined by
+	\begin{equation}\label{eqn1.1.47}
+	[AB]\indices{^i_k}\ceqq \sum _{j\in n}B\indices{^j_k}A\indices{^i_j}.
+	\end{equation}
+	\begin{rmk}
+		Warning:  Note the order of $B\indices{^j_k}$ and $A\indices{^i_j}$.  Of course, this won't matter if $\K$ is commutative, but in general it makes a big difference.  For example, matrices would not define linear-transformations if we didn't do this!  (See \cref{dfn1.1.51} for an elaboration on this.  This is relevant again for similar reasons in \cref{CoordinatesLinearTransformation,prp1.2.120}.)
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Not all authors define it this way and instead use $A\indices{^i_j}B^{j_k}$ in the definition instead of $B\indices{^j_k}A\indices{^i_j}$.  This admittedly makes the definition more natural, but it breaks things later on.  In order to remedy these ``broken'' things, one has to work with the opposite ring (\cref{OppositeRg}) $\K ^{\op}$ in places, which can make the theory quite messy.
+	\end{rmk}
+	\begin{rmk}
+		Note that, in order to multiply $A$ and $B$, the number of columns of $A$ has to be equal to the number of rows of $B$.  Furthermore, $AB$ is an $m\times o$ matrix.  Heuristically, you can think of this as
+		\begin{equation}
+		(m\times n)\cdot (n\times o)=m\times o.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		The definition of multipliable is defined the way it is so that the sum in \eqref{eqn1.1.47} makes sense.
+	\end{rmk}
+	\begin{rmk}
+		Note how awkward this definition is from a naive perspective.  Think about this:  if you went up to a high school student, showed them how to add matrices, and then asked them how they think matrices should be multiplied, what do you think they would say?  Unless they already knew the answer (or were particularly clever), not this!  Most likely, they probably would have guessed something like
+		\begin{equation}
+		[AB]\indices{^i_j}\ceqq A\indices{^i_j}B\indices{^i_j},
+		\end{equation}
+		that is, simply `componentwise multiplication', which of course would require that they be of the same dimension.  Nevertheless, the definition \eqref{eqn1.1.47} is the right one.  The sense in which it is ``right'' is made precise in \cref{prp1.2.120} (this result essentially says that multiplication of matrices corresponds to composition of linear-transformations).
+	\end{rmk}
+\end{dfn}
+What follows is another way of thinking of matrix multiplication.
+\begin{prp}{}{prp3.2.22}
+	Let $\K$ be a ring; let $m$, $n$, and $o$ be sets, and let $A$ and $B$ be multipliable matrices of respective dimensions $m\times n$ and $n\times o$.
+	\begin{enumerate}
+		\item \label{prp3.2.22(i)}
+		\begin{equation}
+			[AB]\indices{^{\blankdot}_i}=A[B\indices{^{\blankdot}_i}]
+		\end{equation}
+		\item \label{prp3.2.22(ii)}
+		\begin{equation}
+			[AB]\indices{^k_{\blankdot}}=[A\indices{^k_{\blankdot}}]B.
+		\end{equation}
+	\end{enumerate}
+	\begin{rmk}
+		\cref{prp3.2.22(i)} says that column $i$ of $AB$ can be computed by multiplying column $i$ of $B$ on the left by $A$.
+		
+		Dually, \cref{prp3.2.22(ii)} says that column $k$ of $AB$ can be computed by multiplying row $k$ of $A$ on the right by $B$.
+	\end{rmk}
+	\begin{rmk}
+		The first, after writing $B$ in terms of its columns, looks something like
+		\begin{equation}
+			AB=A\begin{bmatrix}B\indices{^{\blankdot}_1} & \cdots & B\indices{^{\blankdot}_o}\end{bmatrix}=\begin{bmatrix}AB\indices{^{\blankdot}_1} & \cdots & AB\indices{^{\blankdot}_o}\end{bmatrix}.
+		\end{equation}
+		On the other hand, the second, after writing $A$ in terms of its row, looks something like
+		\begin{equation}
+			AB=\begin{bmatrix}A\indices{^1_{\blankdot}} \\ \vdots \\ A\indices{^m_{\blankdot}}\end{bmatrix}B=\begin{bmatrix}A\indices{^1_{\blankdot}}B \\ \vdots \\ A\indices{^m_{\blankdot}}B\end{bmatrix}.
+		\end{equation}
+		I very much remember these by thinking that matrix multiplication `distributes' over columns on the left and over rows on the right.
+	\end{rmk}
+	\begin{rmk}
+		For what it's worth, I most often find it easiest to think of matrix multiplication as in \cref{prp3.2.22(i)}, that is, as ``distributing'' over the columns on the left.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+In case $B$ happens to be a column vector, there is yet another way to think of matrix multiplication, namely, as a linear-combination of the columns of $A$.
+\begin{prp}{}{}
+	Let $\K$ be a ring, let $A$ be an $m\times n$ matrix with entries in $\K$, and let
+	\begin{equation}
+		v\eqqc \begin{bmatrix}v^1 \\ \vdots \\ v^n\end{bmatrix}\in \K ^n.
+	\end{equation}
+	Then,
+	\begin{equation}
+		Av=v^1\cdot A\indices{^{\blankdot}_1}+\cdots +v^n\cdot A\indices{^{\blankdot}_n}.
+	\end{equation}
+	\begin{rmk}
+		For what it's worth, in practice, I often compute the product of matrices by combining this with \cref{prp3.2.22(i)} of \cref{prp3.2.22}:  I use \cref{prp3.2.22} to reduce the problem to computing a matrix times a column vector, and then I use this result to compute that simpler product.
+	\end{rmk}
+	\begin{rmk}
+		Of course, there is an exact `dual' result involving rows, though we refrain from presenting it here, as, though not strictly necessary, it is more appropriately understood using the concept of a \emph{dual space}, which we have not yet discussed  (I also personally find it slightly less intuitive.)  In brief, however, it says that $wB$ is a linear-combination of the rows of $B$, where $w$ is a row vector.\footnote{Row vectors should almost always be thought of as elements of the dual space of $\K ^d$.}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+We now present some trivial but necessary terminology.
+\begin{dfn}{}{}
+	Let $\K$ be a ring, and $m$ and $n$ be sets, and let $A$ be an $m\times n$ matrix with entries in $\K$.
+	\begin{enumerate}
+		\item $A$ is \term{square}\index{Square matrix} iff $m=n$.
+		\item $A$ is \term{diagonal}\index{Diagonal matrix} iff $A$ is square and $A\indices{^i_j}=0$ for $i\neq j$.
+		\item $A$ is \term{upper-triangular}\index{Upper-triangular matrix} iff $A$ is square, $m$ is preordered, and $A\indices{^i_j}=0$ for $i>j$.
+		\item $A$ is \term{strictly upper-triangular}\index{Strictly upper-triangular matrix} iff $A$ is square, $m$ is preordered, and $A\indices{^i_j}=0$ for $i\geq j$.
+		\item $A$ is \term{lower-triangular}\index{Lower-triangular matrix} iff $A$ is square, $m$ is preordered, and $A\indices{^i_j}=0$ for $i<j$.
+		\item $A$ is \term{strictly lower-triangular}\index{Strictly lower-triangular matrix} iff $A$ is square, $m$ is preordered, and $A\indices{^i_j}=0$ for $i\geq j$.
+		\item For $A$ square, the \term{diagonal}\index{Diagonal} of $A$ is the function $M\ni i\mapsto A\indices{^i_i}\in \K$.
+	\end{enumerate}
+	\begin{rmk}
+		These terms get their names from the following pictures.
+		\begin{subequations}
+			\begin{align}
+			\text{Diagonal:} & \begin{bmatrix}* & 0 & \cdots & 0 \\ 0 & * & \cdots & 0 \\ \vdots & \cdots & \ddots & \vdots \\ 0 & 0 & \cdots & *\end{bmatrix} \\
+			\text{Upper-triangular:} & \begin{bmatrix}* & * & \cdots & * \\ 0 & * & \cdots & * \\ \vdots & \cdots & \ddots & \vdots \\ 0 & 0 & \cdots & *\end{bmatrix} \\
+			\text{Strictly upper-triangular:} & \begin{bmatrix}0 & * & \cdots & * \\ 0 & 0 & \cdots & * \\ \vdots & \cdots & \ddots & \vdots \\ 0 & 0 & \cdots & 0\end{bmatrix} \\
+			\text{Lower-triangular:} & \begin{bmatrix}* & 0 & \cdots & 0 \\ * & * & \cdots & 0 \\ \vdots & \cdots & \ddots & \vdots \\ * & * & \cdots & *\end{bmatrix} \\
+			\text{Strictly lower-triangular:} & \begin{bmatrix}0 & 0 & \cdots & 0 \\ * & 0 & \cdots & 0 \\ \vdots & \cdots & \ddots & \vdots \\ * & * & \cdots & 0\end{bmatrix}
+			\end{align}
+		\end{subequations}
+	\end{rmk}
+\end{dfn}
+
+Unfortunately, if the indexing sets of the matrices are infinite, then we won't be able to multiply any two matrices.  On the other hand, if $m$ is a finite set, the set of all such square matrices can be made into a ring.
+\begin{prp}{Matrix ring}{MatrixRing}
+	Let $\K$ be a ring, let $m$ be a finite set, and define
+	\begin{equation}
+	\Matrix _m(\K )\ceqq \K ^{m\times m}.\footnote{Recall (\cref{Function}) that $\K ^{m\times m}$ is the set of all functions from $m\times m$ into $\K$, that is, the set of all $m\times m$ matrices with entries in $\K$.}
+	\end{equation}\index[notation]{$\Matrix _m(\K )$}
+	Then, $\Matrix _m(\K )$ is a ring with matrix addition and multiplication, additive identity the $0$ matrix, and multiplicative identity the diagonal matrix with $1$s on the diagonal.
+	\begin{rmk}
+		Though it will not be a ring (because we can't multiply them), we may also write $\Matrix _{m\times n}(\K )$\index[notation]{$\Matrix _{m\times n}(\K )$} for the set of all $m\times n$ matrices with entries in $\K$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+This allows us to return to a counter-example we mentioned before in \cref{exr1.1.31}.
+\begin{exm}{A scaling of a linear map that is not linear}{exm1.1.92}
+	Define $\K \ceqq \Matrix _2(\C )$ and $V\ceqq \C ^2$ regarded as a $\K$-module with scaling operation given by matrix multiplication.  Of course, $\id _V\in \End _{\Mod{\K}}(V)$ is $\K$-linear, but yet, for example,
+	\begin{equation}
+	\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}\cdot \id _V=\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}
+	\end{equation}
+	is not $\K$-linear.\footnote{Here, we are being sloppy and writing a matrix when in fact we mean the $\C$-linear-transformation defined by the matrix.  We will make similar abuses of notation throughout.}
+	\begin{exr}[breakable=false]{}{}
+		Check that this is in fact not $\K$-linear.
+		\begin{rmk}
+			Note however that it is \emph{$\C$-linear}.
+		\end{rmk}
+	\end{exr}
+	\begin{rmk}
+		Indeed, it at first might be a bit confusing to think of matrices as ``scalars'' (and in fact, this is one reason why that term is not so often used in the context of general $R$-modules), but, as you can verify, it most certainly satisfies the axioms of a $\K$-module.
+	\end{rmk}
+\end{exm}
+
+We could very well now return to our original objective of studying coordinates of linear-transformations, and if you would like to do so now, feel free to skip to \cref{sbs3.2.2}.  However, this is a set of linear algebra notes after all, and as such, it would be a bit perverse to make no mention of systems of equations, matrices, and row reduction at all, and given that I'm going to discuss it at all, it makes sense to do so here, in the subsection on matrices.\footnote{Shoe-horning this into, e.g., a section on eigenvalues wouldn't make much sense, no?}
+
+\subsubsection{Row reduction}
+
+My understanding is that, historically, the motivation for the study of what we know understand to be linear algebra was the systematic solution of linear systems of equations.  Indeed, even today, this is how the subject is introduced at an elementary level.  While for us the solution of linear systems is not exactly the raison d'être of linear algebra, this does very much serve to illustrate the concepts.
+
+The first step in applying techniques of linear algebra to solve systems of linear equations is to encode the system of linear equations in a matrix.  For example, we associate to the linear system of equations
+\begin{subequations}\label{eqn1.1.100}
+	\begin{align}
+	3x_1 & & & & -5x_3 & & & =2 \\
+	-4x_1 & & +2x_2& & +3x_3& & &=-1
+	\end{align}
+\end{subequations}
+the matrix
+\begin{equation}\label{eqn1.1.101}
+\begin{bmatrix}3 & 0 & -5 & 2 \\ -4 & 2 & 3 & -1\end{bmatrix}.
+\end{equation}
+(This is really nothing more than eliminating unnecessary symbols---it is clear how one can determine the original equations from the matrix itself.)  Sometimes, we will only be interested in the \term{coefficient matrix}\index{Coefficient matrix}.
+\begin{equation}
+\begin{bmatrix}3 & 0 & -5 \\ -4 & 2 & 3\end{bmatrix}.
+\end{equation}
+If we every need to distinguish between the two, the matrix in \eqref{eqn1.1.101} will be referred to as the \term{augmented matrix}\index{Augmented matrix} associated to the system.
+
+If we were working with the original equations, we would perform blah blah blah algebraic operations in an attempt to isolate each of the ``variables'' $x_1$, $x_2$, and $x_3$.  As it turns out, there are three fundamental operations that one can perform on the equations to solve any system (at least when the coefficients come from a field):  we can reorder the equations, we can scale any equation by a unit\footnote{A scalar that has an inverse---see \cref{dfnA.1.33}.}, and we can add any scalar multiple of one equation to a different one.  These three operations have the property that they do not change the set of solutions, and furthermore, every system can be solved using these three operations.\footnote{Note how some operations you might try are `valid' but yet will change the set of solutions.  For example, while it is true that if $x=2$, then $x^2=4$, these two equations do not have the same set of solutions---the latter also has the solution $x=-2$.}  In terms of the matrix, we can swap any two rows, we can scale any row by a unit, and we can add any multiple of one row to a different one.  The method of solution using these three operations is essentially algorithmic, with the goal being to ``reduce'' the matrix to \emph{reduced echelon form}.
+\begin{dfn}{Row operation}{RowOperation}
+	Let $\K$ be a ring, and let $m$ and $n$ be sets.  A \term{row operation}\index{Row operation} is a function $\Matrix _{m\times n}(\K )\rightarrow \Matrix _{m\times n}(\K )$ that is one of the following.
+	\begin{enumerate}
+		\item For $i_1,i_2\in m$,
+		\begin{equation}
+		A\mapsto \operatorname{Row}_{i_1\leftrightarrow i_2}(A),
+		\end{equation}
+		where $\operatorname{Row}_{i_1\leftrightarrow i_2}(A)$ is the same as $A$ except its $i_1$ row is the $i_2$ row of $A$ and its $i_2$ row is the $i_1$ of $A$.\footnote{That is, $\operatorname{Row}_{i_1\leftrightarrow i_2}(A)$ is the matrix obtained from $A$ by `swapping' the $i_1$ and $i_2$ rows of $A$.}
+		\item For $i_0\in m$ and $\alpha \in \K ^{\times}$,
+		\begin{equation}
+		A\mapsto \operatorname{Row}_{i_0\rightarrow \alpha i_0}(A),
+		\end{equation}
+		where $\operatorname{Row}_{i_0\rightarrow \alpha i_0}(A)$ is the same as $A$ except its $i_0$ row is the $i_0$ row of $A$ scaled by $\alpha$.
+		\item For $i_1,i_2\in m$ distinct and $\alpha \in \K$,
+		\begin{equation}
+		A\mapsto \operatorname{Row}_{i_1\rightarrow i_1+\alpha i_2}(A),
+		\end{equation}
+		where $\operatorname{Row}_{i_1\rightarrow i_1+\alpha i_2}(A)$ is the same as $A$ except its $i_1$ row is the $i_1$ row of $A$ plus the $i_2$ row of $A$ scaled by $\alpha$.
+	\end{enumerate}
+\end{dfn}
+\begin{dfn}{Row-equivalence}{RowEquivalence}
+	Let $\K$ be a ring, let $m$ and $n$ be sets, and let $A$ and $B$ be $m\times n$ matrices.  Then, $A$ and $B$ are \term{row-equivalent}\index{Row-equivalent} iff there is a finite sequence of matrices $C_1,\ldots ,C_l$ such that
+	\begin{enumerate}
+		\item $A=C_1$;
+		\item $B=C_l$; and
+		\item $C_{k+1}$ is obtained from $C_k$ by a row operation for $1\leq k<l$.
+	\end{enumerate}
+	\begin{rmk}
+		In other words, two matrices are row-equivalent iff one can be obtained from the other by application of a finite number of row operations.
+	\end{rmk}
+	\begin{rmk}
+		The whole point of this is that row operations don't change the solution set that the matrix corresponds to.  Thus, if two matrices are row-equivalent, then the systems of equations they correspond to have the same set of solutions.  In fact, it turns out that the converse is true:  two matrices are row-equivalent iff the systems of equations they correspond to have the same set of solutions (over a division ring anyways).  Using language we will learn shortly, we can say that two matrices are row-equivalent iff they have the same null-space.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Reduced echelon form}{ReducedEchelonForm}
+	Let $\K$ be a ring and let $A$ be an $m\times n$ matrix with entries in $\K$.  Then, $A$ is in \term{reduced echelon form}\index{Reduced echelon form} iff
+	\begin{enumerate}
+		\item \label{ReducedEchelonForm(i)}all nonzero rows are above any rows of all zeros;
+		\item \label{ReducedEchelonForm(ii)}each leading entry is in a column to the right of the leading entry of the row above it;
+		\item \label{ReducedEchelonForm(iii)}all entries in a column below a leading entry are zero;
+		\item \label{ReducedEchelonForm(iv)}the leading entry in each nonzero row is $1$; and
+		\item \label{ReducedEchelonForm(v)}each leading $1$ is the only nonzero entry in its column.
+	\end{enumerate}
+	\begin{rmk}
+		An entry is the \term{leading entry}\index{Leading entry} of its row iff it is the first nonzero entry in that row.
+	\end{rmk}
+	\begin{rmk}
+		For what its worth, a matrix satisfying \cref{ReducedEchelonForm(i)}--\cref{ReducedEchelonForm(iii)} is said to be in \term{echelon form}\index{Echelon form}.
+	\end{rmk}
+\end{dfn}
+The significance of reduced echelon form is that one can immediately read off the solution set.  For example, the following matrix is in reduced echelon form
+\begin{equation}\label{eqn1.1.108}
+\begin{bmatrix}1 & 0 & 5 & 2 & 0 & -7 \\ 0 & 1 & -4 & 3 & 0 & 5 \\ 0 & 0 & 0 & 0 & 1 & 5\end{bmatrix},
+\end{equation}
+whence we see that its solution set is described by
+\begin{equation}
+\begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5\end{bmatrix}=x_3\begin{bmatrix}-5 \\ 4 \\ 1 \\ 0 \\ 0\end{bmatrix}+x_4\begin{bmatrix}-2 \\ -3 \\ 0 \\ 1 \\ 0\end{bmatrix}+\begin{bmatrix}-7 \\ 5 \\ 0 \\ 0 \\ 5\end{bmatrix}.
+\end{equation}
+Given your original matrix $A$ then, the strategy is try to \emph{row-reduce}, that is, apply row operations to $A$, to find a row-equivalent matrix in reduced echelon form.  We can then read off the solution set from the matrix in reduced echelon form as above, and this is in turn the solution set for our original matrix $A$.  The following result says that this is always possible (and more).
+\begin{prp}{}{}
+	Let $\F$ be a division ring and let $A$ be an $m\times n$ matrix with entries in $\F$.  Then, there is a unique matrix in reduced echelon form that is row equivalent to $A$.
+	\begin{rmk}
+		This matrix in reduced echelon form is the \term{reduced echelon form}\index{Reduced echelon form} of $A$.
+	\end{rmk}
+	\begin{rmk}
+		Note this obviously fails if $\F$ is not a division ring.  For example, consider the $1\times 1$ matrix in $\Z$, $\begin{bmatrix}2 & 1\end{bmatrix}$---there is no way to make this entry into a $1$ using only integers.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+The uniqueness of the reduced echelon form allows us to make some definitions.
+\begin{dfn}{Pivots and free-variables}{}
+	Let $\F$ be a division ring, let $A$ be an $m\times n$ matrix with entries in $\F$, and let $R$ be the reduced echelon form of $A$.
+	\begin{enumerate}
+		\item An entry of $A$ is a \term{pivot}\index{Pivot} iff the corresponding entry of $R$ is a leading $1$.
+		\item A column of $A$ is a \term{pivot column}\index{Pivot column} iff that columns contains a pivot.
+		\item A column of $A$ is a \term{free-variable column}\index{Free-variable column} iff it is not a pivot column.
+	\end{enumerate}
+	\begin{rmk}
+		In the context of systems of equations, the columns of $A$ (except perhaps the last one if $A$ is the augmented matrix of a system) often correspond to variables.  We then say that a variable is a \term{free-variable}\index{Free-variable} iff the column it corresponds to is a free-variable column.
+		
+		For example, the free-variables of \eqref{eqn1.1.108} are $x_3$ and $x_4$.
+	\end{rmk}
+\end{dfn}
+
+\subsubsection{Matrix linear-transformations}
+
+One of the most important facts about matrices is that they define linear-transformations.  In fact, in a sense we will make precise later (\cref{CoordinatesLinearTransformation}), \emph{every} linear-transformation can be thought of as matrix multiplication.
+\begin{prp}{Linear-transformation of a matrix}{dfn1.1.51}
+	Let $\K$ be a ring, let $m$ and $n$ be finite sets, and let $A$ be an $m\times n$ matrix with entries in $\K$.  Then, $T_A\colon \K ^n\rightarrow \K ^m$\index[notation]{$T_A$}, the \term{linear-transformation defined by $A$}\index{Linear-transformation defined by a matrix}, defined by
+	\begin{equation}
+	T_A(x)\ceqq Ax.
+	\end{equation}
+	is a linear-transformation.
+	\begin{rmk}
+		In one of the remarks in the definition of matrix multiplication (\cref{MatrixMultiplication}), we mentioned that the order of $B\indices{^k_j}$ and $A\indices{^i_j}$ is not what one might have expected, and that the motivation for doing things in this odd way is justified in part because this proposition would not be true otherwise.  To see why, it is probably best to just examine the proof.
+	\end{rmk}
+	\begin{rmk}
+		Here, we are thinking of $x\in \K ^n$ as a $n\times 1$ matrix and $Ax$ is matrix multiplication.
+	\end{rmk}
+	\begin{proof}
+		We leave addition as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Verify that $T_A$ preserves addition.
+		\end{exr}
+		
+		Let $x\in \K ^n$, let $\alpha \in \K$, and let $1\leq i\leq m$.  Then,
+		\begin{equation}
+		\begin{split}
+		T_A(\alpha \cdot x)^i & \ceqq [A(\alpha x)]^i\ceqq \sum _{k=1}^n[\alpha x]^kA\indices{^i_k}=\alpha \sum _{k=1}^dx^kA\indices{^i_k} \\
+		& \eqqc \alpha [Ax]^i=\alpha T_A(x)^i=[\alpha \cdot T_A(x)]^i,
+		\end{split}
+		\end{equation}
+		and so $T_A(\alpha \cdot x)=\alpha \cdot T_A(x)$, as desired.
+	\end{proof}
+	\begin{rmk}
+		It could be instructive to see how this would have gone if we hadn't used the definition of matrix multiplication we did.  Using the other possible definition, we would have found
+		\begin{equation}
+		T_A(\alpha \cdot x)^i\ceqq [A(\alpha x)]^i=\sum _{k=1}^nA\indices{^i_k}[\alpha x]^k=\sum _{k=1}^nA\indices{^i_k}\alpha x^k.
+		\end{equation}
+		But now we have no way of pulling the $\alpha$ out front (if the ring is not commutative) to write this as $\alpha \cdot Ax$!.
+	\end{rmk}
+\end{prp}
+Matrix linear-transformations play quite an important role in the theory.  For one, they are pedagogically useful as they provide an abundance of examples that tend not to scare students.  But more fundamentally, in a sense to be described (\cref{CoordinatesLinearTransformation}), every linear-transformation between finite-dimensional vector spaces is given by a matrix linear-transformation.  As they do play such an important role, it is important to know (i) when such linear-transformations are injective, surjective, and bijective; and (ii) how to calculate their kernel and image.
+
+We begin with the first.
+\begin{prp}{Injectivity and surjectivity of matrix linear-transformations}{}
+	Let $\K$ be a ring, let $d,e\in \N$, let $A$ be an $e\times d$ matrix with entries in $\K$, and let $T_A\colon \K ^d\rightarrow \K ^e$ denote the corresponding linear-transformation.  Then,
+	\begin{enumerate}
+		\item $T_A$ is injective iff the columns of $A$ are linearly-independent in $W$;
+		\item $T_A$ is surjective iff the columns of $A$ are span $W$; and
+		\item $T_A$ is bijective iff the columns of $A$ are a basis of $W$.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+We now turn to the issue of ``computing'' the kernel and image of a matrix linear-transformation.  In this context, ``computing'' is best understood as ``to find a basis for''.  As a first step, it will help to know the \emph{dimension} of the space of solutions.
+\begin{prp}{}{}
+	Let $\F$ be a division ring, let $A$ be an $e\times d$ matrix with entries in $\F$, and let $T_A\colon \F ^d\rightarrow \F ^e$ be the corresponding linear-transformation.  Then,
+	\begin{enumerate}
+		\item $\dim (\Ker (T_A))$ is the number of free-variables of $A$; and
+		\item $\dim (\Ima (T_A))$ is the number of pivots of $A$.
+	\end{enumerate}
+	\begin{rmk}
+		In fact, a basis for $\Ima (T_A)$ is given by the pivot columns of $A$.  It's not much harder to find a basis for the kernel, but it is harder to describe that basis in general, so we instead relegate an explanation of this to the following example.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exm}{Bases for the null space and column space of a matrix}{}\footnote{Taken from \cite{Lay}.  Because I'm too lazy to find my own numbers that work out nice.}
+	Suppose you are interested in solving the following system of equations.
+	\begin{subequations}\label{eqn2.2.58}
+		\begin{align}
+		& & 3x_2& & -6x_3& & +6x_4& & +4x_5& & &=0 \\
+		3x_1& & -7x_2& & +8x_3& & -5x_4& & +8x_5& & &=0 \\
+		3x_1& & -9x_2& & +12x_3& & -9x_4& & +6x_5& & &=0
+		\end{align}
+	\end{subequations}
+	The corresponding coefficient matrix is
+	\begin{equation}
+	A\ceqq \begin{bmatrix}0 & 3 & -6 & 6 & 4 \\ 3 & -7 & 8 & -5 & 8 \\ 3 & -9 & 12 & -9 & 6\end{bmatrix},
+	\end{equation}
+	whose reduced echelon form is
+	\begin{equation}
+	\begin{bmatrix}1 & 0 & -2 & 3 & 0 \\ 0 & 1 & -2 & 2 & 0 \\ 0 & 0 & 0 & 0 & 1 \end{bmatrix}.
+	\end{equation}
+	From this, we can immediately read off the set of solutions:
+	\begin{equation}\label{eqn2.2.63}
+	\begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5\end{bmatrix}=x_3\begin{bmatrix}2 \\ 2 \\ 1 \\ 0 \\ 0\end{bmatrix}+x_4\begin{bmatrix}-3 \\ -2 \\ 0 \\ 1 \\ 0\end{bmatrix}.
+	\end{equation}
+	Thus,
+	\begin{equation}\label{eqn2.2.64}
+	\left\{ \begin{bmatrix}2 \\ 2 \\ 1 \\ 0 \\ 0\end{bmatrix},\begin{bmatrix}-3 \\ -2 \\ 0 \\ 1 \\ 0\end{bmatrix}\right\}
+	\end{equation}
+	is a basis of the space of solutions, that is, the kernel of the linear-transformation defined by $A$.  We can also read off a basis for the image of this linear-transformation by looking at the pivot columns of $A$\footnote{When you do this, it is important to look back to the \emph{original matrix}, not the row-reduced matrix.}
+	\begin{equation}
+	\left\{ \begin{bmatrix}0 \\ 3 \\ 3\end{bmatrix},\begin{bmatrix}3 \\ -7 \\ -9\end{bmatrix}\begin{bmatrix}4 \\ 8 \\ 6\end{bmatrix}\right\} .
+	\end{equation}
+	
+	We explain how we came up with \eqref{eqn2.2.63} as this process can be generalized to find a basis for the null-space of any matrix.  After putting the matrix in reduced echelon form, list the free-variables (in this case, $x_3$ and $x_4$).  Then, for each free-variable, set that free-variable equal to $1$, the remaining free-variables equal to $0$, and solve for the `nonfree' variables.  Thus, for the first vector in \eqref{eqn2.2.64}, we set $x_3=1$ and $x_4=0$, and for the second vector in \eqref{eqn2.2.64} we set $x_4=1$ and $x_3=0$.  As we get one basis element for each free-variable, this procedure makes it `obvious' that the dimension of the null-space is precisely the number of free-variables.
+\end{exm}
+
+\subsection{Coordinates of linear-transformations}\label{sbs3.2.2}
+
+Having take a (longer than necessary) diversion investigating matrices, let us return to the original objective:  \emph{coordinates of linear-transformations}.
+\begin{thm}{Coordinates (of a linear-transformation)}{CoordinatesLinearTransformation}
+	Let $V$ and $W$ be $\K$-modules, let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ and $\basis{C}\eqqc \{ c_1,\ldots ,c_e\}$ be bases for $V$ and $W$ respectively, and let $T\colon V\rightarrow W$ be a linear-transformation.  Then, there is a unique $e\times d$ matrix, $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$\index[notation]{$\coordinates{T}{\basis{C}\leftarrow \basis{B}}$}, the \term{coordinates}\index{Coordinates (of a linear-transformation)} of $T$ with respect to the bases $\basis{B}$ and $\basis{C}$, such that
+	\begin{equation}\label{eqn1.2.115}
+		\coordinates{T(v)}{\basis{C}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}
+	\end{equation}
+	for all $v\in V$.
+	
+	Furthermore, explicitly
+	\begin{equation}
+		\coordinates{T}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{T(b_1)}{\basis{C}} & \cdots & \coordinates{T(b_d)}{\basis{C}}\end{bmatrix}.
+	\end{equation}
+	\begin{rmk}
+		In words, $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$ is computed column-by-column, with the $k^{\text{th}}$ column itself being computed by applying $T$ to $b_k$ and taking coordinates of the result with respect to $\basis{C}$:  $\coordinates{T(b_k)}{\basis{C}}$.
+	\end{rmk}
+	\begin{rmk}
+		The notation is supposed to be suggestive:
+		\begin{equation}
+			\basis{C}=(\basis{C}\leftarrow \basis{B})\, (\basis{B}).
+		\end{equation}
+		I found this particularly helpful for remembering how to compute change of basis matrices (\cref{ChangeOfBasisMatrix}) when I was first learning linear algebra---before I realized this, I was always forgetting whether it should be $[b_k]_{\basis{C}}$ or $[c_k]_{\basis{B}}$.
+	\end{rmk}
+	\begin{rmk}
+		In case $\basis{B}=\basis{C}$, we may write
+		\begin{equation}
+			\coordinates{T}{\basis{B}}\ceqq \coordinates{T}{\basis{B}\leftarrow \basis{B}}
+		\end{equation}\index[notation]{$\coordinates{T}{\basis{B}}$}
+	\end{rmk}
+	\begin{rmk}
+		You can't really generalize this to infinite bases because the matrix product in \eqref{eqn1.2.115} will not make sense in general.
+	\end{rmk}
+	\begin{proof}
+		\Step{Define $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$}
+		Define
+		\begin{equation}
+			\coordinates{T}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{T(b_1)}{\basis{C}} & \cdots & \coordinates{T(b_d)}{\basis{C}}\end{bmatrix}.
+		\end{equation}
+		
+		\Step{Verify $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$ satisfies the desired properties}
+		Let $v\in V$ and write
+		\begin{equation}
+			v=v^1\cdot b_1+\cdots +v^d\cdot b_d
+		\end{equation}
+		for unique $v^k\in \K$, so that
+		\begin{equation}
+			\coordinates{v}{\basis{B}}\ceqq \begin{bmatrix}v^1 \\ \vdots \\ v^d\end{bmatrix}.
+		\end{equation}
+		Then, for $1\leq i\leq e$,
+		\begin{equation}
+			\begin{split}
+				\left[ \coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}\right] ^i & \ceqq \sum _{k=1}^d\coordinates{v}{\basis{B}}^k[T]\indices{_{\basis{C}\leftarrow \basis{B}}^i_k}\ceqq \sum _{k=1}^dv^k\coordinates{T(b_k)}{\basis{C}}^i \\
+				& =\left[ T\left( \sum _{k=1}^dv^k\cdot b_k\right) \right] _{\basis{C}}^i=\coordinates{T(v)}{\basis{C}}^i
+			\end{split}
+		\end{equation}
+		Hence,
+		\begin{equation}
+			\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}=\coordinates{T(v)}{\basis{C}},
+		\end{equation}
+		as desired.
+		
+		\Step{Prove uniqueness}
+		Let $M$ be another $e\times d$ matrix with entries in $\K$ such that
+		\begin{equation}
+			\coordinates{T(v)}{\basis{C}}=M\coordinates{v}{\basis{B}}
+		\end{equation}
+		for all $v\in V$.  Taking $v=b_k$, the left-hand side becomes $\coordinates{T(b_k)}{\basis{C}}$ and the right-hand side becomes the $k^{\text{th}}$ column of $M$, so that indeed $M=\coordinates{T}{\basis{C}\leftarrow \basis{B}}$.
+	\end{proof}
+\end{thm}
+We mentioned before when defining matrix multiplication that its seemingly awkward definition was made precisely so that matrix multiplication corresponds exactly to composition of linear-transformations.  It is about time we make this statement precise.
+\begin{prp}{Coordinates of a composition is the product of the coordinates}{prp1.2.120}
+	Let $U$, $V$, and $W$ be $\K$-modules; let $\basis{A}$, $\basis{B}$, and $\basis{C}$ be finite bases for $U$, $V$, and $W$ respectively; and let $S\colon U\rightarrow V$ and $T\colon V\rightarrow W$ be linear-transformations.  Then,
+	\begin{equation}\label{eqn1.2.50}
+		\coordinates{T\circ S}{\basis{C}\leftarrow \basis{A}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{A}}.
+	\end{equation}
+	\begin{rmk}
+		Besides just giving us conceptual clarity into the meaning of matrix multiplication, this can be useful for proving things.  For example, this makes proving that matrix multiplication is associative trivial---it's associative because composition is associative.  Compare this with the masochistic methods of using the definition \cref{MatrixMultiplication}.
+		
+		Nothing is special about associativity of course.  The same logic can be used to show that essentially all algebraic properties satisfies by composition of linear-transformations is always satisfies by matrix multiplication (e.g.~matrix multiplication distributes over addition, etc.).
+	\end{rmk}
+	\begin{proof}
+		By definition, $\coordinates{T\circ S}{\basis{C}\leftarrow \basis{A}}$ is the unique matrix such that
+		\begin{equation}
+			\coordinates{T(S(v))}{\basis{C}}=\coordinates{T\circ S}{\basis{C}\leftarrow \basis{A}}\coordinates{v}{\basis{A}}
+		\end{equation}
+		for all $v\in V$.  Thus, to demonstrate the equality \eqref{eqn1.2.50}, it suffices to show that the matrix $\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{A}}$ also satisfies this property.
+		
+		So, let $v\in V$.  We then have
+		\begin{equation}
+			\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{A}}\coordinates{v}{\basis{A}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S(v)}{\basis{B}}=\coordinates{T(S(v))}{\basis{A}},
+		\end{equation}
+		as desired.
+	\end{proof}
+\end{prp}
+Similarly, as $V\ni v\mapsto \coordinates{v}{\basis{B}}\in \K ^d$ was an isomorphism, so to is $\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\basis{C}\leftarrow \basis{B}}\in \Matrix _{m\times n}(\K )$.  However, in this case, we need $\K$ to be commutative.\footnote{Otherwise $\Mor _{\Mod{\K}}(V,W)$ won't have the structure of a $\K$-module---see \cref{sss1.1.2}.  That said, they would still be isomorphic as commutative groups (with respect to addition).}
+\begin{prp}{$\coordinates{\blankdot}{\basis{C}\leftarrow \basis{B}}$ is an isomorphism}{}
+	Let $\K$ be a cring, let $V$ and $W$ be $\K$-modules, and let $\basis{B}$ and $\basis{C}$ be bases for $V$ and $W$ respectively with respective finite cardinalities $d$ and $e$.  Then,
+	\begin{equation}
+	\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\basis{C}\leftarrow \basis{B}}\in \Matrix _{e\times d}(\K )
+	\end{equation}
+	is an isomorphism of $\K$-modules.
+	\begin{rmk}
+		In particular, we have that
+		\begin{equation}
+		\coordinates{T_1+T_2}{\basis{C}\leftarrow \basis{B}}=\coordinates{T_1}{\basis{C}\leftarrow \basis{B}}+\coordinates{T_2}{\basis{C}\leftarrow \basis{B}}
+		\end{equation}
+		and
+		\begin{equation}
+		\coordinates{\alpha \cdot T}{\basis{C}\leftarrow \basis{B}}=\alpha \cdot \coordinates{T}{\basis{C}\leftarrow \basis{B}}.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		If $\K$ weren't commutative, this instead would only be an isomorphism of groups.
+	\end{rmk}
+	\begin{proof}
+		We first check linearity.  To show that $\coordinates{T_1+T_2}{\basis{C}\leftarrow \basis{B}}=\coordinates{T_1}{\basis{C}\leftarrow \basis{B}}+\coordinates{T_2}{\basis{C}\leftarrow \basis{B}}$, we wish to show that the matrix $\coordinates{T_1}{\basis{C}\leftarrow \basis{B}}+\coordinates{T_2}{\basis{C}\leftarrow \basis{B}}$ satisfies the property that uniquely defines $\coordinates{T_1+T_2}{\basis{C}\leftarrow \basis{B}}$.  That is, we would like to show that
+		\begin{equation}
+		\coordinates{[T_1+T_2](v)}{\basis{C}}=\left( \coordinates{T_1}{\basis{C}\leftarrow \basis{B}}+\coordinates{T_2}{\basis{C}\leftarrow \basis{B}}\right) \coordinates{v}{\basis{B}}
+		\end{equation}
+		for all $v\in V$.  However, using the definition of coordinates of a linear-transformation and the fact that we already know that taking coordinates of vectors (\cref{prp3.1.7}) is linear, we see that
+		\begin{equation}
+			\begin{split}
+				\MoveEqLeft
+				\left( \coordinates{T_1}{\basis{C}\leftarrow \basis{B}}+\coordinates{T_2}{\basis{C}\leftarrow \basis{B}}\right) \coordinates{v}{\basis{B}}=\coordinates{T_1(v)}{\basis{C}}+\coordinates{T_2(v)}{\basis{C}} \\
+				& =\coordinates{T_1(v)+T_2(v)}{\basis{C}}=\coordinates{[T_1+T_2](v)}{\basis{C}},
+			\end{split}
+		\end{equation}
+		as desired.
+		\begin{exr}[breakable=false]{}{}
+			Show that $\coordinates{\blankdot}{\basis{C}\leftarrow \basis{B}}$ preserves scaling.
+		\end{exr}
+	
+		As for injectivity, suppose that $\coordinates{T}{\basis{C}\leftarrow \basis{B}}=0$.  It follows that
+		\begin{equation}
+			\coordinates{T(v)}{\basis{C}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}=0
+		\end{equation}
+		for all $v\in V$, and so, as $\coordinates{\blankdot}{\basis{C}}$ is injective, $T(v)=0$ for all $v\in V$, that is, $T=0$.
+		
+		As for surjectivity, let $A\in \Matrix _{e\times d}(\K )$.  By virtue of \cref{prp1.2.68}, there is a unique linear-transformation $T\colon V\rightarrow W$ such that
+		\begin{equation}
+			T(b_i)=\sum _{j=1}^eA\indices{^j_i}\cdot c_j
+		\end{equation}
+		for all $1\leq i\leq d$.  We claim that $\coordinates{T}{\basis{C}\leftarrow \basis{B}}=A$.  Again, to do this, we show that $A$ satisfies the unique defining property of $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$.  So, let $v\in V$, and write
+		\begin{equation}
+			v=v^1\cdot b_1+\cdots +v^d\cdot b_d,
+		\end{equation}
+		so that
+		\begin{equation}
+			\coordinates{v}{\basis{B}}=\begin{bmatrix}v^1 \\ \vdots \\ v^d\end{bmatrix}.
+		\end{equation}
+		We then have that
+		\begin{equation}\label{eqn3.2.101}
+			\left[ A\coordinates{v}{\basis{B}}\right] ^j\ceqq \sum _{i=1}^dv^iA\indices{^j_i}.
+		\end{equation}
+		On the other hand,
+		\begin{equation}\label{eqn3.2.102}
+			T(v)=\sum _{i=1}^dv^iT(v_i)=\sum _{i=1}^d\sum _{j=1}^ev^iA\indices{^j_i}\cdot c_j.
+		\end{equation}
+		From \eqref{eqn3.2.101}, we see that the $j$ entry of $A\coordinates{v}{\basis{B}}$ is
+		\begin{equation}
+			\sum _{i=1}^dv^iA\indices{^j_i}.
+		\end{equation}
+		From \eqref{eqn3.2.102}, we see that the $j$ coordinate of $T(v)$ is the same thing, and hence
+		\begin{equation}
+			\coordinates{T(v)}{\basis{C}}=A\coordinates{v}{\basis{B}},
+		\end{equation}
+		as desired.
+	\end{proof}
+\end{prp}
+We saw in \cref{prp3.1.17} that the coordinates of a column vector (with respect to the standard basis) is just the original column vector itself.  As you likely expected, we have an analogous result for matrices.
+\begin{prp}{Coordinates of matrices}{prp3.2.100}
+	Let $\K$ be a ring, let $A$ be an $m\times n$ matrix with entries in $\K$, let $T_A\colon \K ^n\rightarrow \K ^m$ be the associated linear-transformation, and denote by $\basis{S}$ and $\basis{T}$ respectively the standard bases of $\K ^m$ and $\K ^n$.  Then,
+	\begin{equation}
+		\coordinates{T_A}{\basis{T}\leftarrow \basis{S}}=A.
+	\end{equation}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exm}{Rotation}{}
+	Let $\theta \in (-\uppi ,\uppi ]$ and let $T\colon \R ^2\rightarrow \R ^2$ be rotation counter-clockwise about the origin by $\theta$.  Let $\basis{S}\eqqc \{ e_1,e_2\}$ be the standard basis of $\R ^2$.  Using some trig, we see that
+	\begin{equation}
+		T(e_1)=\begin{bmatrix}\cos (\theta ) \\ \sin (\theta )\end{bmatrix}\text{ and }T(e_2)=\begin{bmatrix}-\sin (\theta ) \\ \cos (\theta )\end{bmatrix}.
+	\end{equation}
+	Thus, we have that
+	\begin{equation}
+		\coordinates{T}{\basis{S}\leftarrow \basis{S}}=\begin{bmatrix}\coordinates{T(e_1)}{\basis{S}} & \coordinates{T(e_2)}{\basis{S}}\end{bmatrix}=\begin{bmatrix}\cos (\theta ) & -\sin (\theta ) \\ \sin (\theta ) & \cos (\theta )\end{bmatrix}.
+	\end{equation}
+\end{exm}
+\begin{exr}{}{}
+	The zero vector space, $0$, has a unique basis, the empty-set.  Furthermore, there is a unique linear-transformation $0\rightarrow 0$.  What are the coordinates of this unique linear-transformation with respect to the basis that is the empty-set?
+	\begin{rmk}
+		Hint:  It's the empty matrix.
+	\end{rmk}
+	\begin{rmk}
+		The inclusion of this is in part a joke.  Think about why this is true if you like, but I wouldn't waste too much time on it.
+	\end{rmk}
+\end{exr}
+\begin{exm}{}{}
+	Let $V$ be the kernel of the linear transformation $C^{\infty}(\R )\ni f\mapsto f''+f\in C^{\infty}(\R )$, so that two bases of $V$ are given by $\basis{B}\ceqq \{ x\mapsto \e ^{\im x},x\mapsto \e ^{-\im x}$ and $\basis{C}\ceqq \{ x\mapsto \cos (x),x\mapsto \sin (x)\}$---see \cref{exm1.2.86}, and define $D\colon V\rightarrow V$ by $D(f)\ceqq f'$.
+	\begin{exr}[breakable=false]{}{}
+		Check indeed that if $f\in V$, then $f'\in V$.
+	\end{exr}
+	
+	We compute $\coordinates{D}{\basis{C}\leftarrow \basis{B}}$.  We have that
+	\begin{equation}
+		D(\e ^{\im x})=\im \e ^{\im x}=\im \cos (x)-\sin (x)
+	\end{equation}
+	and
+	\begin{equation}
+		D(\e ^{-\im x})=-\im \e ^{-\im x}=-\im \cos (x)-\sin (x),
+	\end{equation}
+	so that
+	\begin{equation}
+		\coordinates{D(\e ^{\im x})]}{\basis{C}}=\begin{bmatrix}\im \\ -1\end{bmatrix}\text{ and }\coordinates{D(\e ^{-\im x})}{\basis{C}}=\begin{bmatrix}-\im \\ -1\end{bmatrix},
+	\end{equation}
+	and hence
+	\begin{equation}
+		\coordinates{D}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{D(\e ^{\im x})}{\basis{C}} & \coordinates{D(\e ^{-\im x})}{\basis{C}}\end{bmatrix}=\begin{bmatrix}\im & -\im \\ -1 & -1\end{bmatrix}.
+	\end{equation}
+	
+	\begin{exr}[breakable=false]{}{}
+		\begin{enumerate}
+			\item Compute $\coordinates{D}{\basis{B}\leftarrow \basis{B}}$.
+			\item Compute $\coordinates{D}{\basis{B}\leftarrow \basis{C}}$.
+			\item Compute $\coordinates{D}{\basis{C}\leftarrow \basis{C}}$.
+		\end{enumerate}
+	\end{exr}
+\end{exm}
+
+There is an important special case of the coordinates of a linear transformation:  \emph{change-of-basis matrices}.
+\begin{dfn}{Change of basis matrix}{ChangeOfBasisMatrix}
+	Let $V$ be a $\K$-module, and let $\basis{B}_1$ and $\basis{B}_2$ be two well-ordered bases of $V$.  Then, the \term{change-of-basis matrix}\index{Change-of-basis matrix} from $\basis{B}_1$ to $\basis{B}_2$ is defined to be
+	\begin{equation}
+		\coordinates{\id}{\basis{B}_2\leftarrow \basis{B}_1}.
+	\end{equation}
+	\begin{rmk}
+		In other words, the change-of-basis matrix is just the coordinates of the identity linear-transformation with respect to the two bases.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{}{}
+	Using the two well-ordered bases $\basis{B}\ceqq \{ \e ^{\im x},\e ^{-\im x}\}$ and $\basis{C}\ceqq \{ \cos (x),\sin (x)\}$ again of the vector space appearing in \cref{exm1.2.86}, we see from \eqref{eqn1.2.91} that the change-of-basis matrix from $\basis{B}$ to $\basis{C}$ is given by
+	\begin{equation}
+		\coordinates{\id}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{\e ^{\im x}}{\basis{C}} & \coordinates{\e ^{-\im x}}{\basis{B}}\end{bmatrix}=\begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}.
+	\end{equation}
+\end{exm}
+
+\section{Summary}
+
+We met the first big theorem of elementary linear algebra in the last chapter (the \namerefpcref{RankNullityTheorem}).  In this chapter, we came to what I would consider the second big milestone:  the connection between the abstract and the concrete.  This connection is given by \emph{coordinates}.
+
+To define coordinates, however, one my first make a choice of \emph{basis}---no basis, no coordinates.  So, let $V$ and $W$ be (finite-dimensional)\footnote{Some of this will hold in infinite dimensions, but not all, and in any case, for us, the most important special case is by bar the finite-dimensional case.} vector spaces with respective bases $\basis{B}$ and $\basis{C}$.  In what follows, $v\in V$ and $T\colon V\rightarrow W$ is a linear-transformation.
+\begin{enumerate}
+	\item \cref{CoordinatesVector} tells us how to associate column vectors to `abstract' vectors in a vector space---take $v\in V$, write $v$ as a linear-combination of elements of $\basis{B}$, and read off the coefficients.
+	\item \cref{CoordinatesLinearTransformation} tells us how to associate matrices to linear-transformations.  It first defines the matrix implicitly by the condition
+	\begin{equation}
+		\coordinates{T(v)}{\basis{C}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}.
+	\end{equation}
+	It also tells you how to explicitly compute this matrix:  the $k^{\text{th}}$ column is given by $\coordinates{T(b_k)}{\basis{C}}$.
+\end{enumerate}
+
+Finally, as this was our first `official' introduction with matrices, we introduced basic definitions, notation, and terminology regarding them.

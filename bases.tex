@@ -1,0 +1,771 @@
+\chapter{Linear-independence, spanning, bases, and dimension}
+
+\section{Spanning and linear-independence}
+
+If you've studied linear algebra before, you'll almost certainly recall that the concepts of linear-independence, spanning, and basis are of fundamental importance.  We next turn to the study of these concepts.  Before we discuss any of these, however, we must first define the notion of \emph{linear-combination}.
+\begin{dfn}{Linear-combination}{LinearCombination}
+	Let $V$ be a $\K$-module.  Then, a \term{linear-combination}\index{Linear-combination} of $v_1,\ldots ,v_m\in V$ is an element in $V$ of the form
+	\begin{equation}
+		\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m
+	\end{equation}
+	for $\alpha _1,\ldots ,\alpha _m\in \K$.
+\end{dfn}
+
+If we have a collection of vectors, then we can generate a bunch of other vectors by taking linear-combinations of the ones we started with.  The collection of all such linear-combinations will be a subspace, and in fact, the \emph{smallest} subspace containing our original collection.  This subspace has a name:  the \emph{span}.
+\begin{thm}{Span}{Span}
+	Let $V$ be a $\K$-module, and let $S\subseteq V$.  Then, there is a unique subspace of $V$, the \term{span}\index{Span} of $S$, $\Span (S)$\index[notation]{$\Span (S)$}, such that
+	\begin{enumerate}
+		\item $S\subseteq \Span (S)$; and
+		\item if $W\subseteq V$ is another subspace containing $S$, it follows that $\Span (S)\subseteq W$.
+	\end{enumerate}
+	Furthermore, explicitly, $\Span (S)$ is the set of all linear-combinations of elements of $S$.
+	\begin{rmk}
+		Thus, if $S=\{ v_1,\ldots ,v_m\}$, we have that
+		\begin{equation}
+			\begin{split}
+				\MoveEqLeft
+				\Span (v_1,\ldots ,v_m)\ceqq \Span (S) \\
+				& =\left\{ \alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m:\alpha _k\in \K \right\} .
+			\end{split}
+		\end{equation}\index[notation]{$\Span (v_1,\ldots ,v_m)$}
+	\end{rmk}
+	\begin{rmk}
+		In the context of $R$-modules, this is usually referred to as the subspace \term{generated} by $S$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{thm}
+\begin{exr}{}{}
+	What is $\Span (\emptyset )$?
+\end{exr}
+\begin{dfn}{Spanning}{Spanning}
+	Let $V$ be a $\K$-module, and let $S\subseteq V$.  Then, $S$ is \term{spanning}\index{Spanning} iff $\Span (S)=V$.
+	\begin{rmk}
+		Synonymously, we also say that $S$ \term{spans}\index{Spans} $V$.
+	\end{rmk}
+	\begin{rmk}
+		In other words, this means that every vector in $V$ can be written as a linear combination of elements of $S$.
+	\end{rmk}
+\end{dfn}
+
+Given a collection of vectors, we can take the set of all linear-combinations to form the span.  A question we might ask is ``Can we obtain a single vector in this way from two distinct linear-combinations?'', or less precisely, ``Is our collection of vectors `redundant' in some sense?''.  There is a term for this ``redundancy'':  \emph{linear-dependence}.
+\begin{dfn}{Linear-independence}{LinearIndependence}
+	Let $V$ be a $\K$-module, and let $S\subseteq M$.  Then, $S$ is \term{linearly-independent}\index{Linearly-independent} iff for all $m\in \Z ^+$, $\alpha _1,\ldots ,\alpha _m\in \K$, and $v_1,\ldots ,v_m\in S$,
+	\begin{equation}
+	\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0\text{ implies }\alpha _1=0,\ldots ,\alpha _m=0.
+	\end{equation}
+	$S$ is \term{linearly-dependent}\index{Linearly-dependent} iff it is not linearly-independent.
+	\begin{rmk}
+		Explicitly, $S$ is linearly-dependent iff there are $\alpha _1,\ldots ,\alpha _m\in \K$ \emph{not all zero} and $v_1,\ldots ,v_m\in S$ such that
+		\begin{equation}
+			\alpha _1\cdot s_1+\cdots +\alpha _m\cdot s_m=0.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		\cref{prp1.2.28} is probably a more intuitive way to understand linear-dependence.  However, we do not take it as a definition because (i) it is not the right, or at least standard, notion for general $\K$-modules; and (ii) in practice, it is easiest to check whether a collection of vectors is linearly-independent using this definition.
+	\end{rmk}
+	\begin{rmk}
+		Note that $S$ is automatically linearly-dependent if $0\in S$.\footnote{Why?}
+	\end{rmk}
+\end{dfn}
+What follows is arguably a more intuitive way to think about linear (in)dependence.
+\begin{prp}{}{prp1.2.28}
+	Let $V$ be a vector space and let $v_1,\ldots ,v_m\in V$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-dependent iff there is some $1\leq k\leq m$ such that
+	\begin{equation}
+		v_k\in \Span (v_1,\ldots ,v_{k-1}),
+	\end{equation}
+	in which case
+	\begin{equation}
+		\Span (v_1,\ldots ,v_{k-1})=\Span (v_1,\ldots ,v_k).
+	\end{equation}
+	\begin{rmk}
+		That is, a set is linearly-independent iff one of the vectors is a linear-combination of the others.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Note that this is \emph{not} true for $\K$-modules in general---see \cref{exm1.2.37}.\footnote{If you think of the proof, you'll note that at some point you'll have to \emph{divide} by one of the coefficients.}  Instead, what is true is that linear-dependence is equivalent to the statement that some nonzero scalar multiple of some $v_k$ can be written as a linear-combination of the other $v_i$s.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exr}{}{}
+	Let $V$ be a vector space and let $v_1,v_2\in V$.  Show that $\{ v_1,v_2\}$ is linearly-\emph{dependent} iff $v_2$ is a scalar multiple of $v_1$ or $v_1$ is a scalar multiple of $v_2$.
+\end{exr}
+\begin{prp}{}{prp1.2.26}
+	Let $V$ be a $\K$-module, and let $S\subseteq V$.  Then, $S$ is linearly-independent iff for every $v\in \Span (S)$ there are unique $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$ and $s_1,\ldots ,s_m\in S$ such that $v=v^1\cdot s_1+\cdots +v^m\cdot s_m$.
+	\begin{rmk}
+		The significant thing here is the \emph{uniqueness}.  We of course know automatically that there exist some coefficients for which this works from the definition of $\Span$ (\cref{Span})---the linear-independence of $S$ tells us that these coefficients are \emph{unique}.
+	\end{rmk}
+	\begin{rmk}
+		Note that the case $m=0$ corresponds to $v=0$.
+	\end{rmk}
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $S$ is linearly-independent.  Let $v\in \Span (S)$.  From \cref{Span}, the definition of $\Span$, it follows that there are some nonzero $v^1,\ldots ,v^m\in \K$ and $s_1,\ldots ,s_m\in S$ such that $v=v^1\cdot s_1+\cdots +v^m\cdot s_m$.  We wish to show that this linear combination is unique.  So, suppose also that $v=w^1\cdot t_1+\cdots +w^n\cdot t_n$ for nonzero $w^1,\ldots ,w^n\in \K$ and $t_1,\ldots ,t_n\in V$.  Write
+		\begin{equation}
+		\{ u_1,\ldots ,u_o\} \ceqq \{ s_1,\ldots ,s_m\} \cap \{ t_1,\ldots ,t_n\} .
+		\end{equation}
+		After reindexing the $s_k$s and $t_k$s so that $u_1,\ldots ,u_o$ `come first' in both lists, we have
+		\begin{equation}
+		\{ s_1,\ldots ,s_m\} =\{ u_1,\ldots ,u_o,s_{o+1},\ldots ,s_m\}
+		\end{equation}
+		and
+		\begin{equation}
+		\{ t_1,\ldots ,t_n\} =\{ u_1,\ldots ,u_o,t_{o+1},\ldots ,t_n\} .
+		\end{equation}
+		We then have that
+		\begin{equation}
+		\begin{split}
+		0 & =v-v \\
+		& =(v^1-w^1)\cdot u_1+\cdots +(v^o-w^o)\cdot u_o \\ & \qquad +v^{o+1}\cdot s_{o+1}+\cdots +v^m\cdot s_m \\ & \qquad -v^{o+1}\cdot t_{o+1}-\cdots -v^n\cdot t_n.
+		\end{split}
+		\end{equation}
+		By the definition of linear independence, we have that $v^k-w^k=0$ for $1\leq k\leq o$, $v^k=0$ for $k\geq o+1$, and $w^k=0$ for $k\geq o+1$.  However, by assumption the $v^k$s and $w^k$s are nonzero, and hence it must be the case that $m=o=n$, so that we indeed have $v^k=w^k$ for all $k$.
+		
+		\blni
+		Suppose that every $v\in \Span (S)$ there are unique $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$ and $s_1,\ldots ,s_m\in S$ such that $v=v^1\cdot s_1+\cdots +v^m\cdot s_m$.  Let $s_1,\ldots ,s_m\in S$, $\alpha _1,\ldots ,\alpha _m\in \K$, and suppose that
+		\begin{equation}
+		\alpha _1\cdot s_1+\cdots +\alpha _m\cdots s_m=0.
+		\end{equation}
+		However, $0\in \Span (S)$ is also equal to the empty linear combination.  By uniqueness, the left-hand side of this question must also be the empty linear-combination, that is, $m=0$, as desired.
+	\end{proof}
+\end{prp}
+\begin{exm}{}{}
+	The set of functions
+	\begin{equation}
+		\left\{ x\mapsto \cos (x),x\mapsto \sin (x),x\mapsto \e ^{\im x},x\mapsto \e ^{-\im x}\right\} 
+	\end{equation}
+	is linearly-\emph{dependent} in $C^{\infty}(\R )$ regarded as a complex vector space.  However, they are linearly-\emph{independent} when $C^{\infty}(\R )$ is regarded a a real vector space.
+	\begin{exr}[breakable=false]{}{}
+		Check both of these claims.
+		\begin{rmk}
+			Hint:  Euler's Formula.
+		\end{rmk}
+	\end{exr}
+\end{exm}
+\begin{exm}{}{exm1.2.37}
+	Take $R\ceqq \Z$, $V\ceqq \Z$, and $m\cdot n\ceqq mn$.  Then, the set $\{ 2,3\}$ is linearly-\emph{dependent} as $3\cdot 2+(-2)\cdot 3=0$, but yet $2$ is not a linear-combination of other elements of $\{ 2,3\}$:  this would mean that $2$ is a multiple of $3$, but of course it's not.
+\end{exm}
+\begin{exm}{}{}\footnote{Adapted from \href{https://math.stackexchange.com/questions/30687/the-square-roots-of-different-primes-are-linearly-independent-over-the-field-of}{math.stackexchange}.}
+	Define
+	\begin{equation}
+		L\ceqq \left\{ \sqrt{p}\in \R :p\in \Z ^+\text{ is prime.}\right\} .
+	\end{equation}
+	We claim that $L$ is linearly-independent in $\R$ over $\Q$.  To show that, it suffices to show that every finite subset of $L$ is linearly-independent.  So, let $p_1,\ldots ,p_m\in \Z ^+$ be prime.  Denote by
+	\begin{equation}
+		\Q (\sqrt{p_1},\ldots ,\sqrt{p_m})
+	\end{equation}
+	the smallest subfield of $\R$ that contains each $\sqrt{p_k}$.  Note that this is a vector space over $\Q$ (in fact, a subspace of $R$ over $\Q$).
+	\begin{exr}[breakable=false]{}{}
+		Show that
+		\begin{equation}
+			\begin{multlined}
+				\Q (\sqrt{p_1},\ldots ,\sqrt{p_m}) \\ =\Span \left( \left\{ \sqrt{\prod _{k\in S}p_k}:S\subseteq \{ 1,\ldots ,m\} \right\} \right) .
+			\end{multlined}
+		\end{equation}
+		\begin{rmk}
+			To clarify, among the elements appearing inside the $\Span$, $1$ is in this list, each $\sqrt{p_k}$ is in this list, each $\sqrt{p_ip_j}$ for $i<j$ is in this list, each $\sqrt{p_ip_jp_k}$ for $i<j<k$ is in this list, etc..
+		\end{rmk}
+	\end{exr}
+	Thus, if we can show that
+	\begin{equation}\label{eqn1.2.49}
+		\dim \left( \Q (\sqrt{p_1},\ldots ,\sqrt{p_m}\right) =2^m,
+	\end{equation}
+	it must be the case that
+	\begin{equation}
+		\left\{ \sqrt{\prod _{k\in S}p_k}:S\subseteq \{ 1,\ldots ,m\} \right\}
+	\end{equation}
+	is linearly-independent over $\Q$, and in particular $\{ \sqrt{p_1},\ldots ,\sqrt{p_m}\}$ is linearly-independent over $\Q$.  We prove \eqref{eqn1.2.49} by induction.
+	\begin{exr}[breakable=false]{}{}
+		Do the initial step by proving
+		\begin{equation}
+			\dim \left( \Q (\sqrt{p_1})\right) =2.
+		\end{equation}
+	\end{exr}
+
+	For the inductive step, suppose that we have proven that
+	\begin{equation}
+		\dim \left( \Q (\sqrt{p_1},\ldots ,\sqrt{p_k})\right) =2^k
+	\end{equation}
+	for all $k<m$.  Define
+	\begin{equation}
+		\F \ceqq \Q \left( \Q (\sqrt{p_1},\ldots ,\sqrt{p_{m-2}})\right) .
+	\end{equation}
+	By the inductive hypothesis, we have that $\dim _{\Q}(\F )=2^{m-2}$.
+	\begin{exr}[breakable=false]{}{}
+		Show that
+		\begin{enumerate}
+			\item
+			\begin{equation}
+				\Q (\sqrt{p_1},\ldots ,\sqrt{p_m})=\F (\sqrt{p_{m-1}},\sqrt{p_m});
+			\end{equation}
+			and
+			\item
+			\begin{equation}
+				\begin{multlined}
+					\dim _{\Q}\left( \F (\sqrt{p_{m-1}},\sqrt{p_m})\right) \\ =\dim _{\F}\left( \F (\sqrt{p_{m-1}},\sqrt{p_m})\right) \dim _{\Q}(\F ).
+				\end{multlined}
+			\end{equation}
+		\end{enumerate}
+		\begin{rmk}
+			To clarify, $\F (\sqrt{p_{m-1}},\sqrt{p_m})$ is the smallest subfield of $\R$ that contains $\F$, $\sqrt{p_{m-1}}$, and $\sqrt{p_m}$.  It is a vector space over $\F$, and hence may also be regarded as a vector space over $\Q$.
+		\end{rmk}
+	\end{exr}
+	\begin{exr}[breakable=false]{}{}
+		Show that
+		\begin{equation}
+			\dim _{\F}\left( \F (\sqrt{p_{m-1}},\sqrt{p_m})\right) =4.
+		\end{equation}
+	\end{exr}
+
+	Putting the results of the previous to exercises together, we find that
+	\begin{equation}
+		\dim _{\Q}\left( \Q (\sqrt{p_1},\ldots ,\sqrt{p_m})\right) =4\cdot 2^{m-2}=2^m,
+	\end{equation}
+	as desired.
+\end{exm}
+
+\section{Bases}
+
+We have now defined two properties that a collection of vectors may or may not have, \emph{spanning} and \emph{linear-independence}.  If a collection of vectors satisfies both such properties, it is called a \emph{basis}.
+\begin{dfn}{Basis}{Basis}
+	Let $V$ be a $\K$-module, and let $\basis{B}\subseteq V$.  Then, $\basis{B}$ is a \term{basis} of $V$ iff for every $v\in V$ there are unique $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$ and $b_1,\ldots ,b_m\in B$ such that
+	\begin{equation}
+		v=v^1\cdot b_1+\cdots +v^m\cdot b_m.
+	\end{equation}
+	\begin{rmk}
+		In words, $\basis{B}$ is a basis iff every vector can be written as a \emph{unique} linear-combination of elements of $\basis{B}$.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{prp1.2.37}
+	Let $V$ be a $\K$-module, and let $\basis{B}\subseteq V$.  Then, $\basis{B}$ is a basis of $V$ iff $\basis{B}$ is linearly-independent and spans $V$.
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $\basis{B}$ is a basis of $V$.  By definition, every element of $V$ is a linear-combination of elements of $\basis{B}$, and so $\basis{B}$ spans $V$.  It is linearly-independent by \cref{prp1.2.26}.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $\basis{B}$ is linearly-independent and spans $V$.  Let $v\in V$.  As $\basis{B}$ spans $V$, there are $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$, and $b_1,\ldots ,b_m\in V$ such that
+		\begin{equation}
+			v=v^1\cdot b_1+\cdots +v^m\cdot b_m.
+		\end{equation}
+		As $\basis{B}$ is linearly-independent, by \cref{prp1.2.26}, this is the unique such linear-combination, and so $\basis{B}$ is a basis by definition.
+	\end{proof}
+\end{prp}
+\begin{exm}{Standard basis of $\K ^d$}{}
+	Let $\K$ be a ring and let $d\in \N$.  Then, $\K ^d$ has a canonical basis, the \term{standard basis}\index{Standard basis}, which is given by
+	\begin{equation}
+		\left\{ \begin{bmatrix}1 \\ 0 \\ \vdots \\ 0\end{bmatrix},\begin{bmatrix}0 \\ 1 \\ \vdots \\ 0\end{bmatrix},\ldots ,\begin{bmatrix}0 \\ 0 \\ \vdots \\ 1\end{bmatrix}\right\} .
+	\end{equation}
+\end{exm}
+\begin{exm}{}{}
+	$\{ 1,x,x^2,\ldots \}$ is a basis for $\K [x]$.
+\end{exm}
+
+If we start with a collection of linearly-independent vectors, adding more vectors to our collection runs of the risk of making our collection linearly-\emph{dependent}.  In the other direction, if we start with a collection of vectors which span the vector space, removing vectors from our collection runs the risk of obtaining a collection that fails to span.  Likewise, adding vectors makes it easier to span and removing vectors makes it easier to be linearly-independent.  A basis is an exact middle ground between spanning and linear-independence in the following sense.
+\begin{prp}{}{prp1.2.39}
+	Let $V$ be a vector space and let $\basis{B}\subseteq V$.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item \label{prp1.2.39(i)}$\basis{B}$ is a basis.
+		\item \label{prp1.2.39(ii)}$\basis{B}$ is a maximal linearly-independent set.
+		\item \label{prp1.2.39(iii)}$\basis{B}$ is a minimal spanning set.
+	\end{enumerate}
+	\begin{rmk}
+		Intuitively, ``maximal linearly-independent set'' means that if you add any new vector at all to $\basis{B}$, the resulting set must fail to be linearly-independent.  Similarly, ``minimal spanning set'' means that if you remove any vector at all from $\basis{B}$, the resulting set must fail to span.  See \cref{MaximalAndMinimal} for the precise definitions of maximal and minimal.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This fails over general $R$-modules---see \cref{exm1.2.44,exm1.2.45}.  That said, $\cref{prp1.2.39(i)}$ implies both $\cref{prp1.2.39(ii)}$ and $\cref{prp1.2.39(iii)}$ no matter what.
+	\end{rmk}
+	\begin{proof}
+		Denote the ground division ring by $\F$.
+		
+		\blni
+		$(\cref{prp1.2.39(i)}\Rightarrow \cref{prp1.2.39(ii)})$ Suppose that $\basis{B}$ is a basis.  $\basis{B}$ is linearly-independent by \cref{prp1.2.37}, so it only remains to show maximality.  Let $\basis{C}\subseteq V$ be linearly-independent and such that $\basis{C}\supseteq \basis{B}$.  We wish to show that $\basis{B}=\basis{C}$, that is, that $\basis{C}\subseteq \basis{B}$.  So, let $c\in \basis{C}$.  If $c\in \basis{B}$, we're done, so suppose $c\notin \basis{B}$.  As $\basis{B}$ spans by \cref{prp1.2.37} again, there are unique $c^1,\ldots ,c^m\in \K$ and $b_1,\ldots ,b_m\in \basis{B}$ such that
+		\begin{equation}
+			c=c^1\cdot b_1+\cdots +c^m\cdot b_m.
+		\end{equation}
+		It follows that
+		\begin{equation}
+			c^1\cdot b_1+\cdots +c^m\cdot b_m-1\cdot c=0,
+		\end{equation}
+		and so, as each $b_k\in \basis{C}$ and $\basis{C}$ is linearly-independent, it follows in particular that $1=0$,\footnote{This implicitly uses the fact that $c\not \basis{B}$, for otherwise we might have, for example, $c=b_1$, in which case we would instead deduce that $c^1=1$.} and so $\F =0$.  But then the only linear-combinations of elements of $\basis{B}$ is $0$, and so $V=0$, in which case we must have $\basis{B}=\emptyset =\basis{C}$.
+		
+		\blni
+		$(\cref{prp1.2.39(ii)}\Rightarrow \cref{prp1.2.39(i)})$ $\basis{B}$ is a maximal linearly-independent set.  It remains to show that $\basis{B}$ spans.  So, let $v\in V$.  If $v\in \basis{B}$, of course $v\in \Span (\basis{B})$.  Otherwise, $\basis{B}\cup \{ v\}$ is strictly larger than $\basis{B}$, and so as $\basis{B}$ is a maximal linearly-independent set, it must be the case that $\basis{B}\cup \{ v\}$ is linearly-dependent, so that there are $\alpha ^1,\ldots ,\alpha ^m,\alpha \in \F$, not all $0$, and $b_1,\ldots ,b_m\in \basis{B}$ such that
+		\begin{equation}
+			\alpha ^1\cdot b_1+\cdots +\alpha ^m\cdot b_m+\alpha \cdot v=0.
+		\end{equation}
+		If $\alpha =0$, linear-independence of $\basis{B}$ implies that every $\alpha ^k=0$ as well, which is impossible (not all of these coefficients are $0$).  Therefore, $\alpha \neq 0$.  Rearranging and multiplying by $\alpha ^{-1}$ yields
+		\begin{equation}
+			v=-\alpha ^{-1}\alpha ^1\cdot b_1-\cdots -\alpha ^{-1}\alpha ^m\cdot b_m\in \Span (\basis{B}).
+		\end{equation}
+		
+		\blni
+		$(\cref{prp1.2.39(i)}\Rightarrow \cref{prp1.2.39(iii)})$ Suppose that $\basis{B}$ is a basis.  Let $\basis{C}\subseteq V$ be a spanning set such that $\basis{C}\subseteq \basis{B}$.  We wish to show that $\basis{B}\subseteq \basis{C}$.  So, let $b\in \basis{B}$.  If $b\in \basis{C}$, we're done, so suppose that $b\notin \basis{C}$.  As $\basis{C}$ is a spanning set, there are $b^1,\ldots ,b^m\in \F$ and $c_1,\ldots ,c_m\in \basis{C}$ such that
+		\begin{equation}
+			b=b^1\cdot c_1+\cdots +b^m\cdot c_m.
+		\end{equation}
+		It follows that
+		\begin{equation}
+			b^1\cdot c_1+\cdots +b^m\cdot c_m-1\cdot b=0,
+		\end{equation}
+		and so, as each $c_k\in \basis{B}$ and $\basis{B}$ is linearly-independent, it follows in particular that $1=0$, so that $\F =0$, and hence $V=0$, and hence $\basis{B}=\emptyset =\basis{C}$.
+		
+		\blni
+		$(\cref{prp1.2.39(iii)}\Rightarrow \cref{prp1.2.39(i)})$ Suppose that $\basis{B}$ is a minimal spanning set.  We wish to show that $\basis{B}$ is linearly-independent.  So, let $b_1,\ldots ,b_m\in \basis{B}$ and suppose that
+		\begin{equation}
+			\alpha _1\cdot b_1+\cdots +\alpha _m\cdot b_m=0
+		\end{equation}
+		for $\alpha _k\in \F$.  If every $\alpha _k=0$, we're done, so suppose this is not the case.  Without loss of generality, suppose that $\alpha _m\neq 0$.  Then, we can rearrange this to find
+		\begin{equation}
+			b_m=-\alpha _m^{-1}\alpha _1\cdot b_1-\cdots -\alpha _m^{-1}\alpha _{m-1}\cdot b_{m-1}\in \Span (\basis{B}).
+		\end{equation}
+		It then follows that $\basis{B}\setminus \{ b_m\}$ is again a spanning set, which contradicts minimality.
+	\end{proof}
+\end{prp}
+We mentioned before that if we start adding vectors to a linearly-independent set, it's becomes more likely to span but we run the risk of making our set linearly-dependent.  In the other direction, if we start removing vectors from a spanning set, it becomes more likely to be linearly-independent but we run the risk of having our set fail to span.  One might then ask the questions ``Can I always add vectors to a linearly-independent set to get a spanning set without ruining my linear-independence, that is, can I obtain a basis in this way?'' and ``Can I always remove vectors from a spanning set to obtain a linearly-independent set without losing the property of being spanning?''.  Fortunately, it turns out that the answer to both of these questions is ``Yes.''.
+\begin{prp}{}{thm1.2.55}
+	Let $V$ be a vector space and let $S\subseteq V$.
+	\begin{enumerate}
+		\item \label{thm1.2.55(i)}If $S$ is spanning, then there is a subset of $S$ that is a basis.
+		\item \label{thm1.2.55(ii)}If $S$ is linearly-independent, then there is a superset of $S$ that is a basis.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  This fails over general $R$-modules---see \cref{exm1.2.44,exm1.2.45}.
+	\end{rmk}
+	\begin{proof}
+		Denote the ground division ring by $\F$.
+		
+		\blni
+		\cref{thm1.2.55(i)}\footnote{Proof adapted from \cite{Conrad}.} Suppose that $S$ is spanning.  Define
+		\begin{equation}
+			\collection{S}\ceqq \left\{ A\subseteq V:A\subseteq S\text{ and }A\text{ is linearly-independent.}\right\} .
+		\end{equation}
+		$\collection{S}$ a partially-ordered set with respect to the usual inclusion $\subseteq$ partial-order.  We wish to show that $\coord{\collection{S},\subseteq}$ has a maximal element, which will be a basis by \cref{prp1.2.39}.  To show that $\coord{\collection{S},\subseteq}$ has a maximal element, we apply \namerefpcref{ZornsLemma}.
+		
+		So, let $\collection{T}\subseteq \collection{S}$ be a totally-ordered subset and define
+		\begin{equation}
+			T_0\ceqq \bigcup _{T\in \collection{T}}T.
+		\end{equation}
+		Certainly, if indeed $T_0\in \collection{S}$, it will be an upper-bound of $\collection{T}$, whence \nameref{ZornsLemma} will imply the existence of a maximal element, as desired.  To show that $T_0\in \collection{S}$, we wish to show that $T_0$ is linearly-independent.  So, let $v_1,\ldots ,v_m\in T_0$ and suppose that
+		\begin{equation}\label{eqn1.2.58}
+			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0
+		\end{equation}
+		for $\alpha _1,\ldots ,\alpha _m\in \F$.  For each $v_k$, there is some $T_k\in \collection{T}$ such that $v_k\in T_k$.  As $\collection{T}$ is in particular totally-ordered, there is some $T_k$ that contains the rest.  But then, as $T_k$ is linearly-independent, \eqref{eqn1.2.58} implies that every $\alpha _k=0$, so that $T_0$ is linearly-independent, as desired.
+		
+		Thus, there is a maximal element $\basis{B}\in \collection{S}$.  It is linearly-independent and maximal with this property \emph{among subsets of $S$}, but we don't yet know that it is a maximal linearly-independent set \emph{period} (that is, among all subsets of $V$).  Instead of proving that $\basis{B}$ is a method using this technique, we simply show that $\basis{B}$ spans.  As $S$ spans, it suffices to show that $s\in \Span (\basis{B})$ for every $s\in S$.  So, let $s\in S$.  If $s\in \basis{B}$, of course $s\in \Span (\basis{B})$, so suppose this is not the case.  Then, $\basis{B}\cup \{ s\} \subseteq S$ is strictly larger than $\basis{B}$, and so if it were linearly-independent, we would have a contradiction of the maximality of $\basis{B}$.  Thus, $s$ can be written as a linear-combination of elements of $\basis{B}$, as desired.
+		
+		\blni
+		\cref{thm1.2.55(ii)} Suppose that $S$ is linearly-independent.  Define
+		\begin{equation}
+			\collection{S}\ceqq \left\{ A\subseteq V:A\supseteq S\text{ and }A\text{ is linearly-independent.}\right\} .
+		\end{equation}
+		A maximal element of $\collection{S}$ will be a maximal linearly-independent set, and hence a basis by \cref{prp1.2.39}.  To show that $\collection{S}$ has a maximal element, we apply \namerefpcref{ZornsLemma}.
+		
+		So, let $\collection{T}\subseteq \collection{S}$ be a totally-ordered subset and define
+		\begin{equation}
+		T_0\ceqq \bigcup _{T\in \collection{T}}T.
+		\end{equation}
+		Certainly, if indeed $T_0\in \collection{S}$, it will be an upper-bound of $\collection{T}$, whence \nameref{ZornsLemma} will imply the existence of a maximal element, as desired.  To show that $T_0\in \collection{S}$, we wish to show that $T_0$ is linearly-independent.  So, let $v_1,\ldots ,v_m\in T_0$ and suppose that
+		\begin{equation}\label{eqn1.2.59}
+		\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0
+		\end{equation}
+		for $\alpha _1,\ldots ,\alpha _m\in \F$.  For each $v_k$, there is some $T_k\in \collection{T}$ such that $v_k\in T_k$.  As $\collection{T}$ is in particular totally-ordered, there is some $T_k$ that contains the rest.  But then, as $T_k$ is linearly-independent, \eqref{eqn1.2.59} implies that every $\alpha _k=0$, so that $T_0$ is linearly-independent, as desired.
+	\end{proof}
+\end{prp}
+\begin{exm}{A maximal linearly-independent set which is not a basis}{exm1.2.44}
+	Define $\K \ceqq \Z$ and $V\ceqq \Z$.  $V$ is then a $\K$-module with the usual operations.  $\{ 2\} \subseteq V$ is a linearly-independent set, for if $n\cdot 2=0$, we must of course have that $n=0$.  In fact, it is indeed a \emph{maximal} linearly-independent set, for if $m\in V$ is any other integer, we have $(-2)\cdot n+n\cdot 2=0$, and so $\{ 2,n\}$ is not linearly-independent.  On the other hand, it is not a basis as $1\notin \Span (\{ 2\} )$.
+	
+	Note that this also furnishes an example of a linearly-independent set for which no superset is a basis.
+\end{exm}
+\begin{exm}{A minimal spanning set which is not a basis}{exm1.2.45}
+	Define $\K \ceqq \Z$ and $V\ceqq \Z$.  $V$ is then a $\K$-module with the usual operations.  $\{ 2,3\} \subseteq V$ spans $V$, for if $n\in V$, we have that
+	\begin{equation}
+	n=n\cdot 3-n\cdot 2\in \Span (\{ 2,3\} ).
+	\end{equation}
+	In fact, it is indeed a \emph{minimal} spanning set, for neither $\{ 2\}$ nor $\{ 3\}$ span $V$.  On the other hand, it is not a basis because it is not linearly-independent:  $(-3)\cdot 2+2\cdot 3=0$.
+	
+	Note that this also furnishes an example of a spanning set for which no subset is a basis.
+\end{exm}
+
+Bases are incredibly important in the theory of vector spaces for at least three reasons:  they provide a convenient way to define linear-transformations (\cref{prp1.2.68}), they allow us to define \emph{dimension} (\cref{thm1.2.66,Dimension}), and they allow us to define \emph{coordinates} (\cref{CoordinatesVector,CoordinatesLinearTransformation}).  We start with the first.
+\begin{prp}{Linear-transformations and basis of domain}{prp1.2.68}
+	Let $V$ and $W$ be $\K$-modules, let $\basis{B}$ be a basis for $V$, and for every $b\in \basis{B}$ let $w_b\in W$ be some vector in $W$.  Then, there exists a unique linear transformation $T\colon V\rightarrow W$ such that $T(b)=w_b$ for all $b\in \basis{B}$.
+	\begin{rmk}
+		In words, you can define a linear-transformation by specifying where elements of a given basis are mapped to.
+	\end{rmk}
+	\begin{proof}
+		Let $v\in V$.  Then, there are unique $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$, and $b_1,\ldots ,b_m\in \basis{B}$ such that
+		\begin{equation}
+			v=v^1\cdot b_1+\cdots +v^m\cdot b_m.
+		\end{equation}
+		Define $T\colon V\rightarrow W$ by
+		\begin{equation}
+			T(v)\ceqq v^1\cdot w_{b_1}+\cdots +v^m\cdot w_{b_m}.
+		\end{equation}
+		
+		Certainly, $T(b)=w_b$ by definition.
+		\begin{exr}[breakable=false]{}{}
+			Check that $T$ is in fact linear.		
+		\end{exr}
+		Finally, linearity dictated that this was the only possible choice for $T(v)$ if we required that $b$ be mapped to $w_b$, and so $T$ is the unique such linear-transformation.
+	\end{proof}
+\end{prp}
+
+\subsection{Dimension}
+
+Intuitively, the dimension of a vector space is the number of scalars required to uniquely specify any element in that vector space.  For example, I can uniquely specify any element of $\R ^3$ with three real numbers.  The definition of a basis (\cref{Basis}) says that, if the basis has $d$ elements, then any element in the vector space can be uniquely specified by $d$ scalars.  Thus, the idea is to define the dimension to be the cardinality of a given basis.\footnote{Intuitively, just the number of elements in the basis---see \cref{sbs1.1.1}.}  This presents a couple of potential problems:  What if the vector space doesn't have a basis?  What if two different bases have a different number of elements?  For example, if my vector space has one basis with $2$ elements and another basis with $3$?  Should the dimension be $2$ or $3$?  Fortunately, the next result tells us that these pathologies cannot happen.
+\begin{thm}{Fundamental Theorem of Dimension}{thm1.2.66}
+	Let $V$ be a vector space.
+	\begin{enumerate}
+		\item \label{thm1.2.66(i)}$V$ has a basis.
+		\item \label{thm1.2.66(ii)}Let $\basis{B}_1$ and $\basis{B}_2$ be bases of $V$.  Then, $\basis{B}_1$ and $\basis{B}_2$ have the same cardinality.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  $\K$-modules in general need not have a basis---see \cref{exm1.2.80}.
+	\end{rmk}
+	\begin{rmk}
+		In fact, those $\K$-modules which do have a basis are called \term{free modules}---see \cref{FreeModule}.\footnote{Using this terminology, \cref{thm1.2.66(i)} becomes the statement that modules over division rings are free.}  However, even when $\K$-modules do have bases, distinct bases need not have the same cardinality---see \cref{exm1.2.81}.  On the other hand, if $\K$ is commutative, then distinct bases do have the same cardinality---see \cref{thm1.2.80}.
+	\end{rmk}
+	\begin{rmk}
+		``Fundamental Theorem of Dimension'' is not a standard name for this result (it doesn't have a standard name), so don't expect other people to know what you're talking about if you decide to use it.
+	\end{rmk}
+	\begin{proof}
+		\Step{Introduce notation}
+		Denote the ground division ring by $\F$.  To simplify notation by getting rid of some subscripts, let us instead write $\basis{B}\ceqq \basis{B}_1$ and $\basis{C}\ceqq \basis{B}_2$.
+		
+		\Step{Prove \cref{thm1.2.66(i)}}
+		The idea of the proof is to show that $V$ has a maximal linearly-independent set.  This will be a basis by \cref{prp1.2.39}.  The reason this is the strategy is because we have a result that asserts the existence of maximal things---\emph{\namerefpcref{ZornsLemma}}.
+		
+		So, define
+		\begin{equation}
+			\collection{B}\ceqq \left\{ S\subseteq V:S\text{ is linearly-independent.}\right\} .
+		\end{equation}
+		We consider $\collection{B}$ as a partially-ordered set with respect to the relation of inclusion.  As just explained, a maximal element of $\collection{B}$ will be a basis.  Furthermore, Zorn's Lemma states that $\collection{B}$ will have a maximal element if every well-ordered subset of $\collection{B}$ has an upper-bound in $\collection{B}$, and so it suffices to show this.
+		
+		So, let $\collection{S}\subseteq \collection{B}$ be a well-ordered subset of $\collection{B}$.  Define
+		\begin{equation}
+			\basis{B}\ceqq \bigcup _{S\in \collection{S}}S
+		\end{equation}
+		This certainly contains every element of $\collection{S}$, and so it only remains to check that $\basis{B}\in \collection{B}$, that is, we need to check that $\basis{B}$ is linearly-independent.  So, let $b_1,\ldots ,b_m\in \basis{B}$ and suppose that
+		\begin{equation}
+			\alpha _1\cdot b_1+\cdots +\alpha _m\cdot b_m=0
+		\end{equation}
+		for $\alpha _k\in \F$.  As $b_k\in \basis{B}$, there is some $S_k\in \collection{S}$ such that $b_k\in S_k$.  As $\collection{S}$ is totally-ordered, some $S_k$ contains all the others.  Without loss of generality, suppose that $S_1\supseteq S_1,\ldots ,S_m$.  It follows that $b_k\in S_1$ for all $1\leq k\leq m$, and so as $S_1$ is linearly-independent, we find that each $\alpha _k=0$, as desired.
+		
+		\Step{Prove that if $\basis{B}$ is finite, then $\basis{C}$ is finite}
+		Suppose that $\basis{B}$ is finite.  Write $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$.  For each $b_k\in \basis{B}$, there is a nonempty finite subset $\basis{C}_k\subseteq \basis{C}$ such that $b_k\in \Span (\basis{C}_k)$.  Thus,
+		\begin{equation}
+			\{ b_1,\ldots ,b_d\} \subseteq \Span \bigg( \bigcup _{k=1}^d\basis{C}_k\bigg) ,
+		\end{equation}
+		and hence
+		\begin{equation}
+			V=\Span (b_1,\ldots ,b_d)\subseteq \Span \bigg( \bigcup _{k=1}^d\basis{C}_k\bigg) \subseteq \Span (\basis{C})=V,
+		\end{equation}
+		and so all of these inclusions must be equalities.  In particular,
+		\begin{equation}
+			\Span \bigg( \bigcup _{k=1}^d\basis{C}_k\bigg) =V.
+		\end{equation}
+		However, as $\basis{C}$ is a basis, it is a minimal spanning set, and so
+		\begin{equation}
+			\basis{C}=\bigcup _{k=1}^d\basis{C}_k,
+		\end{equation}
+		and so $\basis{C}$ is finite.
+		
+		\Step{Prove \cref{thm1.2.66(ii)} in the case one is finite}
+		Without loss of generality, suppose that $\basis{B}$ is finite.  By the previous step, $\basis{C}$ must also be finite.  Write $\basis{B}=\{ b_1,\ldots ,b_d\}$ and $\basis{C}=\{ c_1,\ldots ,c_e\}$.  We wish of course to show that $d=e$.  Without loss of generality, suppose that $d\leq e$.
+		
+		$b_1\in \Span (\basis{C})$, so we may write
+		\begin{equation}
+			b_1=b\indices{^1_1}\cdot c_1+\cdots +b\indices{^e_1}\cdot c_e
+		\end{equation}
+		for $b\indices{^k_1}\in \F$.  Not all of these coefficients can be $0$, so without loss of generality, suppose that $b\indices{^1_1}\neq 0$.  Then, rearranging, we see that $c_1\in \Span (b_1,c_2,\ldots ,c_e)$, and hence
+		\begin{equation}
+			V=\Span (c_1,\ldots ,c_e)=\Span (b_1,c_2,\ldots ,c_e).
+		\end{equation}
+		\begin{exr}[breakable=false]{}{}
+			Verify that $\{ b_1,c_2,\ldots ,c_e\}$ is still linearly-independent.
+		\end{exr}
+		We thus have a new basis $\{ b_1,c_2,\ldots ,c_e\}$ with exactly $e$ elements.  In particular, $b_2\in \Span (b_1,c_2,\ldots ,c_e)$, and so we can write
+		\begin{equation}
+			b_2=a\indices{^1_2}\cdot b_1+b\indices{^2_2}\cdot c_2+\cdots +b\indices{^e_2}\cdot c_e.
+		\end{equation}
+		We can't have all of the $b\indices{^k_2}=0$, for then $\{ b_1,b_2\}$ would be linearly-dependent.  Thus, again, without loss of generality, $b\indices{^2_2}\neq 0$, and so $c_2\in \Span (b_1,b_2,c_3,\ldots ,c_e)$.  Proceeding as before, we find that $V=\Span (b_1,b_2,c_3,\ldots ,c_e)$.
+		
+		Proceeding inductively, we may replace the $c_k$s with the corresponding $b_k$s to obtain bases, and eventually we find that
+		\begin{equation}
+			\{ b_1,\ldots ,b_d,c_{d+1},\ldots ,c_e\}
+		\end{equation}
+		is a basis, and in particular, is a linearly-independent set that contains $\{ b_1,\ldots ,b_d\}$.  As $\{ b_1,\ldots ,b_d\}$ is maximal linearly-independent, it follows that
+		\begin{equation}
+			\{ b_1,\ldots ,b_d\} =\{ b_1,\ldots ,b_d,c_{d+1},\ldots ,c_e\} ,
+		\end{equation}
+		and hence $d=e$, as desired.
+		
+		\Step{Prove \cref{thm1.2.66(ii)} in the case both are infinite}
+		Now suppose that the cardinalities of both $\basis{B}$ and $\basis{C}$ are infinite.  We wish to show that $\abs{\basis{B}}\leq \abs{\basis{C}}$.  If we can show this, then by $\basis{B}\leftrightarrow \basis{C}$ symmetry, the same argument can be used to show that $\abs{\basis{C}}\leq \abs{\basis{B}}$, whence we will have $\abs{\basis{B}}=\abs{\basis{C}}$ by the \namerefpcref{thm1.1.26}, as desired.
+		
+		So, we would like to show that $\abs{\basis{B}}\leq \abs{\basis{C}}$.  Let $c\in \basis{C}$.  As $\basis{B}$ spans $V$, there are $b_1,\ldots ,b_m\in \basis{B}$ and $c^1,\ldots ,c^m\in \F$ nonzero such that
+		\begin{equation}
+			c=c^1\cdot b_1+\cdots +c^m\cdot b_m.
+		\end{equation}
+		Define $\basis{B}_c\ceqq \{ b_1,\ldots ,b_m\}$, and for $F\subseteq \basis{B}$ finite, define
+		\begin{equation}
+			\basis{C}_F\ceqq \{ c\in \basis{C}:\basis{B}_c=F\} .
+		\end{equation}
+		We have that
+		\begin{equation}
+			\basis{C}=\bigcup _{\substack{F\subseteq \basis{B} \\ F\text{ finite}}}\basis{C}_F.
+		\end{equation}
+		By \cref{prpA.5.25}, the cardinality of the collection of finite subsets of $\basis{B}$ is just $\abs{\basis{B}}$, and so the above is a union of $\abs{\basis{B}}$ many nonempty finite sets, and hence $\abs{\basis{C}}\leq \abs{\basis{B}}$ by \cref{prpA.5.27}.
+	\end{proof}
+\end{thm}
+\begin{crl}{}{prp1.2.66}
+	Let $V$ be a vector space, let $L\subseteq V$ be linearly-independent, and let $S\subseteq V$ be spanning.  Then, $\abs{L}\leq \abs{S}$.
+	\begin{proof}
+		By \cref{thm1.2.55}, there are bases $\basis{B}$ and $\basis{C}$ such that $L\subseteq \basis{B}$ and $\basis{C}\subseteq S$.  It follows from the previous result that
+		\begin{equation}
+			\abs{L}\leq \abs{\basis{B}}=\abs{\basis{C}}\leq \abs{S}.
+		\end{equation}	
+	\end{proof}
+\end{crl}
+\begin{dfn}{Dimension}{Dimension}
+	Let $V$ be a vector space.  Then, the \emph{dimension} of $V$, $\dim (V)$\index[notation]{$\dim (V)$}, is the cardinality of a basis of $V$.
+	\begin{rmk}
+		Of course, this makes sense and is well-defined by \cref{thm1.2.66}.  Indeed, in some sense, that was the entire point of this theorem.
+	\end{rmk}
+	\begin{rmk}
+		Sometimes we will want to consider the same set of vectors as a vector space over different division rings.  In such a case, we will write $\dim _{\F}(V)$\index[notation]{$\dim _{\F}(V)$} to clarify what ground division ring we mean to work over.  For example, we have $\dim _{\C}(\C )=1$ but $\dim _{\R}(\C )=2$.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{A $\K$-module without a basis}{exm1.2.80}
+	Define $V\ceqq \Z /2\Z$ and $\K \ceqq \Z$.  $V$ is then a $\K$-module.  Furthermore, every subset of $V$ is linearly-dependent:  the only subset of $V$ that doesn't contain the $0$ vector is $\{ 1\}$, and this itself is linearly-dependent as $2\cdot 1=0$.  Thus, $V$ cannot have a basis.
+\end{exm}
+\begin{exm}{A $\K$-module with two bases of distinct cardinalities}{exm1.2.81}
+	\begin{rmk}
+		Warning:  This example technically requires a knowledge of matrices, which we haven't yet discussed---see \cref{sbs3.2.1}.  Feel free to come back to this later if you like---the details aren't particularly important.
+	\end{rmk}
+	Define
+	\begin{equation}
+		\begin{multlined}
+			\K \ceqq \left\{ \coord{A\indices{^i_j}:i,j\in \N}\in \R ^{\N \times \N}:\text{for every }j\in \N ,\right. \\ \left. A\indices{^i_j}=0\text{ for cofinitely\footnote{In general, if $S\subseteq X$, we say that $S$ is \term{cofinite}\index{Cofinite} in $X$ iff its complement $S^{\comp}\ceqq X\setminus S$ is finite---see the exposition in what follows for a more explicit description of what that means in this context.} many }i\in \N \text{.}\right\} .
+		\end{multlined}
+	\end{equation}
+	Intuitively, $\K$ is thought of as infinite-dimensional square matrices (with rows and columns indexed by $\N$) such that each column only has finitely many nonzero entries.  $\K$ is regarded as a ring with the usual definition of matrix addition and multiplication.\footnote{The condition that the columns have only finitely many nonzero entries guarantees that the sum involved in the definition of matrix multiplication is just a finite sum, and so makes sense.}
+	
+	Define $V\ceqq \K$ and $W\ceqq \K ^2$ and regard these as $\K$-modules.  We claim that there is an isomorphism of $\K$-modules $V\rightarrow W$.  As $V$ has a basis with $1$ element and $W$ has a basis of $2$ elements, this isomorphism shows in particular that both $V$ and $W$ each have distinct bases with $1$ and $2$ elements.
+	
+	We define a map $V\rightarrow W$ as follows.  Given a matrix $M\in V$, we wish to define two matrices $\coord{M_0,M_1}\in W$.  Let $M_0$ be the matrix whose columns are exactly the even columns of $M$ and $M_1$ be the matrix whose columns are exactly the odd columns of $M$ (in the same order of course from left to right).
+	\begin{exr}[breakable=false]{}{}
+		Verify that this map is indeed an isomorphism.
+	\end{exr}
+\end{exm}
+\begin{exr}{}{}
+	Let $V$ be a vector space and let $W\subseteq V$ be a subspace.
+	\begin{enumerate}
+		\item Show that $\dim (W)\leq \dim (V)$.
+		\item Show that if $\dim (W)=\dim (V)$ is finite, then $W=V$.
+		\item Find a counter-example to the previous part in infinite-dimensions.
+	\end{enumerate}
+\end{exr}
+
+We mentioned awhile back that the subspace associated to a linear-transformation can be used to detect injectivity and surjectivity, though we wanted to state the result until we had talked about dimension.  It is time we return to this.
+\begin{prp}{}{prp1.2.21}
+	Let $T\colon V\rightarrow W$ be a linear-transformation of $\K$-modules.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item $T$ is injective.
+		\item $\Ker (T)=0$.
+		\item $\Coima (T)=V$.
+		\item $\dim (\Ker (T))=0$.
+		\item $\dim (\Coima (T))=\dim (V)$.
+	\end{enumerate}
+	\begin{rmk}
+		The most important of these is the second, which, concretely, says that $T$ is injective iff $T(v)=0$ implies $v=0$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{prp1.2.22}
+	Let $T\colon V\rightarrow W$ be a linear-transformation of $\K$-modules.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item \label{prp1.2.22(i)}$T$ is surjective.
+		\item \label{prp1.2.22(ii)}$\Ima (T)=W$.
+		\item \label{prp1.2.22(iii)}$\Coker (T)=0$.
+		\item \label{prp1.2.22(iv)}$\dim (\Ima (T))=\dim (W)$.
+		\item \label{prp1.2.22(v)}$\dim (\Coker (T))=0$.
+	\end{enumerate}
+	\begin{rmk}
+		Unlike the analogous result for injectivity, there really isn't much content here.  Indeed, that \cref{prp1.2.22(i)} is equivalent to \cref{prp1.2.22(ii)} is essentially the definition of surjectivity.  Nevertheless, we list it here in order to note the `duality' with the corresponding result for injectivity.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+In elementary linear algebra, injectivity and surjectivity are often talked of in the context of solving systems of equations.  For example, let $T\colon V\rightarrow W$ be a linear map, fix $w_0\in W$, and consider the equation $T(x)=w_0$ in which $x$ is the ``unknown''.  Then, $T$ is surjective iff for every $w_0\in W$, there is a solution to this equation; $T$ is injective iff, whenever there is a solution, that solution is unique.
+
+\subsubsection{Rank of \texorpdfstring{$\K$}{K}-modules}
+
+\begin{rmk}
+	This subsubsection is tangential, and can safely be skipped on a first reading.
+\end{rmk}
+We saw above that every vector space has a basis, and furthermore, any two bases must have the same cardinality.  We also saw how both of these results can fail if the ground ring is not a division ring.  Despite this, for any ring $\K$, there are important classes of $\K$-modules for which we still have bases and a notion dimension (usually called \emph{rank} in the context of $\K$-modules).
+\begin{dfn}{Free module}{FreeModule}
+	Let $V$ be a $\K$-module.  Then, $V$ is \term{free}\index{Free module} iff $V$ has a basis.
+	
+	The \term{rank}\index{Rank} of a free module is the smallest cardinality of a basis.
+	\begin{rmk}
+		If $V$ is a vector space, then it has a rank and its rank is the same as its dimension (by definition).  The reason the term ``rank'' is used in this context instead of ``dimension'' is that it would likely give misleading intuition in some cases, though not in any case we will encounter.
+	\end{rmk}
+	\begin{rmk}
+		I suppose if you like you could define the rank of a module that is not free to be $-\infty$, but I've never seen this done.
+	\end{rmk}
+\end{dfn}
+We saw before in \cref{exm1.2.81} that two bases in a $\K$-module need not have the same number of elements, which is why we needed to say ``smallest cardinality'' in the above definition.  This allows us to make sense of the rank of any free module, but it would still be nice to know when any two bases have the same cardinality so that we need not worry about checking whether a basis we find is the smallest.
+\begin{dfn}{Invariant-basis-number property}{InvariantBasisNumberProperty}
+	Let $V$ be a $\K$-module.
+	\begin{enumerate}
+		\item $V$ has the \term{invariant-basis-number property}\index{Invariant-basis-number property (for modules)} iff $V$ is free and any two bases of $V$ have the same cardinality.
+		\item $\K$ has the \term{invariant-basis-number property}\index{Invariant-basis-number property (for rings)} iff every free $\K$-module has the invariant-basis-number property.
+	\end{enumerate}
+	\begin{rmk}
+		The reason we require $V$ be free is because otherwise this condition would be vacuously satisfied.
+	\end{rmk}
+\end{dfn}
+\begin{thm}{}{thm1.2.80}
+	Let $V$ be a $\K$-module.  Then, if $\K$ is commutative, $V$ has invariant-basis-number.
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+			\begin{rmk}
+				Hint:  This really shouldn't be an exercise.  It's only an exercise because I haven't yet had time to write the proof down myself---feel free to look it up.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+\subsection{The Rank-Nullity Theorem}
+
+Having discussed dimension, we can finally present what is arguably the most important result of elementary linear algebra:  the \emph{Rank-Nullity Theorem}.\footnote{Indeed, Axler \cite{Axler} refers to this instead as the \emph{Fundamental Theorem of Linear Maps}\index{Fundamental Theorem of Linear Maps}.}
+\begin{dfn}{Rank}{Rank}
+	Let $V$ and $W$ be vector spaces and let $T\colon V\rightarrow W$ be a linear-transformation.  Then, the \term{rank}\index{Rank} of $T$ is the dimension of the image of $T$.
+\end{dfn}
+\begin{thm}{Rank-Nullity Theorem}{RankNullityTheorem}\index{Nullity}
+	Let $V$ and $W$ be vector spaces and let $T\colon V\rightarrow W$ be a linear-transformation.  Then,
+	\begin{equation}
+		\dim (V)=\dim (\Ker (T))+\dim (\Ima (T)).
+	\end{equation}
+	\begin{rmk}
+		$\dim (\Ima (T))$ is of course the rank of $T$.  Presumably then, $\dim (\Ker (T))$ should probably be the \term{nullity}\index{Nullity} of $T$, though I can't say I've ever heard that term used on its own.
+	\end{rmk}
+	\begin{rmk}
+		In terms of matrices, this can be understood as follows.  If $A$ is a $e\times d$ matrix that defines a linear-transformation from $V\ceqq \F ^d$ to $W\ceqq \F ^e$, then $\dim (V)=d$ is the \emph{number of columns} of $A$.  $\dim (\Ker (T_A))$ is the \emph{number of free-variables} of $A$ and $\dim (\Ima (T_A))$ is the \emph{number of pivots} of $A$.  Thus, for a matrix linear-transformation, this equation reads
+		\begin{equation}
+			\text{\# columns}=\text{\# free-variables}+\text{\# pivots},
+		\end{equation}
+		which is in some sense obvious since every column either corresponds to a free-variable or is a pivot column.
+	\end{rmk}
+	\begin{proof}
+		Denote the ground division ring by $\F$.  Let $\basis{B}$ be a basis of $\Ker (T)$ and let $\basis{C}$ be a basis of $V$ with $\basis{C}\supseteq \basis{B}$.  Define $\basis{A}\ceqq \basis{C}\setminus \basis{B}$, so that $\basis{C}$ is the disjoint union of $\basis{A}$ and $\basis{B}$, and hence
+		\begin{equation}
+			\dim (V)\ceqq \abs{\basis{C}}=\abs{\basis{A}}+\abs{\basis{B}}\eqqc \abs{\basis{A}}+\dim (\Ker (T)).
+		\end{equation}
+		Thus, it suffices to show that $\dim (\Ima (T))=\abs{\basis{A}}$.  First, note that,
+		\begin{equation}
+			\basis{A}\ni a\mapsto T(a)\in T(\basis{A})
+		\end{equation}
+		is a bijection,\footnote{Why?} and hence $\abs{\basis{A}}=\abs{T(\basis{A})}$.  Thus, it suffices to show that $\abs{T(\basis{A})}=\dim (\Ima (T))$.  To do this, we show that $T(\basis{A})$ is a basis for $\Ima (T)$.
+		
+		We first check that $T(\basis{A})$ is linearly-independent.  So, suppose that
+		\begin{equation}
+			\alpha _1\cdot T(a_1)+\cdots +\alpha _m\cdot T(a_m)=0
+		\end{equation}
+		for $\alpha _k\in \F$ and $a_k\in \basis{A}$.  By linearity, it follows that
+		\begin{equation}
+			T(\alpha _1\cdot a_1+\cdots +\alpha _m\cdot a_m)=0,
+		\end{equation}
+		and hence
+		\begin{equation}
+			\alpha _1\cdot a_1+\cdots +\alpha _m\cdot a_m\in \Ker (T).
+		\end{equation}
+		However, as $\basis{B}$ is a basis for $\Ker (T)$, this means that the above linear-combination of elements of $\basis{A}$ can be written as a linear-combination of elements of $\basis{B}$:
+		\begin{equation}
+			\alpha _1\cdot a_1+\cdots +\alpha _m\cdot a_m=\beta _1\cdot b_1+\cdots +\beta _n\cdot b_n
+		\end{equation}
+		for $\beta _k\in \F$ and $b_k\in \basis{B}$.  However, as
+		\begin{equation}
+			\{ a_1,\ldots ,a_m,b_1,\ldots ,b_n\} \subseteq \basis{C},
+		\end{equation}
+		this set is in particular linearly-independent, whence we find that $\alpha _k=0=\beta _k$ for all $k$, as desired.
+		
+		Finally, we check that $\Ima (T)=\Span (T(\basis{A}))$.  Let $T(v)\in \Ima (T)$.  As $\basis{C}=\basis{A}\cup \basis{B}$ is a basis for $V$, we can write
+		\begin{equation}
+			v=\alpha _1\cdot a_1+\cdots +\alpha _m\cdot a_m+\beta _1\cdot b_1+\cdots +\beta _n\cdot b_n
+		\end{equation}
+		for $\alpha _k,\beta _k\in \F$, $a_k\in \basis{A}$, and $b_k\in \basis{B}$.  As $b_k\in \Ker (T)$, it follows that
+		\begin{equation}
+			T(v)=\alpha _1\cdot T(a_1)+\cdots +\alpha _m\cdot T(a_m)\in T(\basis{A}),
+		\end{equation}
+		and so indeed $T(\basis{A})$ spans $\Ima (T)$, as desired.
+	\end{proof}
+\end{thm}
+This result has a number of important corollaries.
+\begin{crl}{}{crl2.2.74}
+	Let $V$ and $W$ be vector spaces and $T\colon V\rightarrow W$ be a linear-transformation.  Then, if $V$ and $W$ are finite-dimensional with the same dimension, then the following are equivalent.
+	\begin{enumerate}
+		\item \label{crl2.2.74(i)}$T$ is injective.
+		\item \label{crl2.2.74(ii)}$T$ is surjective.
+		\item \label{crl2.2.74(iii)}$T$ is bijective.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  This is \emph{false} in infinite-dimensions---see the following counter-example.
+	\end{rmk}
+	\begin{proof}
+		Suppose that $V$ and $W$ are finite-dimensional with the same dimension.
+		
+		\blni
+		$(\cref{crl2.2.74(i)}\Rightarrow \cref{crl2.2.74(ii)})$ Suppose that $T$ is injective.  Then, $\Ker (T)=0$, and so $\dim (\Ker (T))=0$, and so $\dim (V)=\dim (\Ima (T))$.  As we are assuming $\dim (V)=\dim (W)$, it follows that $\dim (W)=\dim (\Ima (T))$, and hence $W=\Ima (T)$, that is, $T$ is surjective.
+		
+		\blni
+		$(\cref{crl2.2.74(ii)}\Rightarrow \cref{crl2.2.74(iii)})$ Suppose that $T$ is surjective.  Then, $\Ima (T)=W$, an so $\dim (\Ima (T))=\dim (W)=\dim (V)$.  As $\dim (V)$ is finite, we can subtract this from the equation $\dim (V)=\dim (\Ker (T))+\dim (\Ima (T))$ to obtain $0=\dim (\Ker (T))$, and hence $\Ker (T)=0$, and hence $T$ is injective.  We already knew it was surjective, and so $T$ is bijective.
+		
+		\blni
+		$(\cref{crl2.2.74(iii)}\Rightarrow \cref{crl2.2.74(i)})$ This is immediate from the definition of bijectivity.
+	\end{proof}
+\end{crl}
+\begin{exm}{A surjective linear operator that is not injective}{}
+	Define $D\colon \R [x]\rightarrow \R [x]$ by $D(p)\ceqq p'$.
+	\begin{exr}[breakable=false]{}{}
+		Check that $D$ is surjective but not injective.
+		\begin{rmk}
+			Note that this does not contradict the preceding corollary as this vector space is infinite-dimensional.
+		\end{rmk}
+	\end{exr}
+\end{exm}
+
+We mentioned three particularly important applications of bases:  they allow us to define linear-transformations (\cref{prp1.2.68}), they allow us to define dimension (\cref{Dimension}), and they allow us to define coordinates.  We've covered the first two.  The third, however, we postpone until the next chapter.
+
+\section{Summary}
+
+Though you should likely know a higher percentage of the material than in the previous chapter, there are again some things that can safely be skipped on a first study (rank of $\K$-modules, for example).  For convenience, we again list some of the big concepts in this chapter you really need to know.
+\begin{enumerate}
+	\item The definition of span (\cref{Span}) and spanning (\cref{Spanning}).
+	\item The definition of linear-independence (\cref{LinearIndependence}).
+	\item The definition of basis (\cref{Basis}).
+	\item Every linearly-independent set can be `enlarged' to a basis and every spanning set can be `shrunk' to a basis (\cref{thm1.2.55}).
+	\item One may define linear-transformations by specifying what it does to a basis (\cref{prp1.2.68}).
+	\item The definition of dimension (\cref{Dimension}).
+	\item The \namerefpcref{RankNullityTheorem}.
+	\item Linear-transformations between vector spaces of the same dimension are injective iff they are surjective iff tey are bijective (\cref{crl2.2.74}).
+\end{enumerate}

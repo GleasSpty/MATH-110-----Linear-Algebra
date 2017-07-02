@@ -1,0 +1,1359 @@
+\chapter{Eigenvalues and eigenvectors}
+
+\section{Motivation}\label{sct4.1}
+
+As mentioned at the very beginning, linear algebra is the study of vector spaces.  More accurately, it is the study of the \emph{category} of vector spaces.  Thus, not only are we interested in vector spaces, but we're also interested in studying linear-transformations.  In fact, linear-transformations are arguably more important than the vector spaces themselves.
+
+We saw in the last chapter that, given choice of bases, we can associate matrices to linear-transformations.  This is incredibly useful as matrices are more concrete and amenable to (scary) things like computation.  However, there isn't just one matrix associated to a linear-transformation, but you get one matrix for every choice of bases.  Some of these matrices might be quite ugly, and others might be quite nice.  The motivating objective for this chapter is to try to find basis in which the associated matrix is \emph{nice}.
+
+Perhaps the simplest matrix one might hope for is a \emph{diagonal} matrix.\footnote{It turns out that one can almost, but not quite, do this.  In any case, having this as an objective, even if it can't always be obtained, it sufficient for motivation.}  Let us investigate what it would require for our matrix to be diagonal.
+
+So, let $V$ be a finite-dimensional vector space, let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ be a basis for $V$, and let $T\colon V\rightarrow V$ be a linear operator.  Looking back to the defining theorem of $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ (\cref{CoordinatesLinearTransformation}), we see that the $k^{\text{th}}$ column of this matrix is given by
+\begin{equation}
+	\coordinates{T(b_k)}{\basis{B}},
+\end{equation}
+that is, the coordinates of the vector $T(b_k)\in V$ with respect to the basis $\basis{B}$.  To compute these coordinates (\cref{CoordinatesVector}), we write $T(b_k)$ as a linear combination of the elements of $\basis{B}$:
+\begin{equation}\label{eqn4.1.2}
+	T(b_k)=T\indices{^1_k}b_1+\cdots +T\indices{^d_k}b_d,
+\end{equation}
+so that
+\begin{equation}
+	\coordinates{T(b_k)}{\basis{B}}=\begin{bmatrix}T\indices{^1_k} \\ \vdots \\ T\indices{^d_k}\end{bmatrix}.
+\end{equation}
+Now, for a matrix to be diagonal, by definition, everything in the $k^{\text{th}}$ column should vanish except for possibly the $k^{\text{th}}$ entry in that column.  Thus, as $\coordinates{T(b_k)}{\basis{B}}$ is the $k^{\text{th}}$ column of $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$, if this matrix is to be diagonal, we had better have that $T\indices{^l_k}=0$ for $l\neq k$.  Plugging this back into \eqref{eqn4.1.2}, we find
+\begin{equation}
+	T(b_k)=T\indices{^k_k}b_k.
+\end{equation}
+We have found the following.
+\begin{displayquote}
+	If $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is to be a diagonal matrix, it had better be the case that $T(b_k)$ is a scalar multiple of $b_k$ for all $b_k\in \basis{B}$.
+\end{displayquote}
+
+It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)$ is a scalar multiple of $b$.  Such vectors have a name:  they are \emph{eigenvectors} of $T$.
+
+\section{Basic definitions}
+
+\begin{dfn}{Eigenspaces, eigenvalues, and eigenvectors}{Eigen}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a nonzero subspace, and let $\lambda \in \K$.  Then, $W$ is a \term{$\lambda$-eigenspace}\index{Eigenspace} iff
+	\begin{enumerate}
+		\item \label{Eigen(i)}$\restr{T}{W}=\lambda \id _W$; and
+		\item \label{Eigen(ii)}$W$ is maximal with this property.
+	\end{enumerate}
+	\begin{rmk}
+		Such a $\lambda$ is referred to as an \term{eigenvalue}\index{Eigenvalue} of $T$.
+	\end{rmk}
+	\begin{rmk}
+		Nonzero elements of $W$ are \term{eigenvectors}\index{Eigenvector} of $T$ with eigenvalue $\lambda$.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  The eigenspace is \emph{not} the set of eigenvectors---we must have $0\in W$ as $W$ is a subspace, but, by definition, $0\in W$ is forbidden from being an eigenvector.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Eigenvalues need not be unique---see \cref{exm4.2.12}.  On the other hand, they certainly will be for vector spaces---see \cref{prp4.2.13}.
+		
+		Eigenvectors on the other hand are essentially never unique:  any scalar multiple of an eigenvector is another eigenvector with the same eigenvalue (because eigenspaces are in particular subspaces).
+	\end{rmk}
+	\begin{rmk}
+		To clarify, \cref{Eigen(ii)} means the following.  If $U\subseteq V$ is a nonzero subspace with $U\supseteq W$ and for which there is some $\mu \in \K$ such that $\restr{T}{U}=\mu \id _U$, then $U=W$.
+	\end{rmk}
+	\begin{rmk}
+		Recall that (\cref{exm1.1.36}) scaling by elements of $\K$ need not actually define a linear-transformation.  Thus, it is implicit in this condition that $\lambda \id _W\colon W\rightarrow W$ is actually a linear-transformation.  If $V$ is a vector space, this will actually force $\lambda$ to commute with everything in $\K$ (in which case scaling by $\lambda$ defines a linear-transformation on all of $V$)---see \cref{thm4.2.17}.
+	\end{rmk}
+	\begin{rmk}
+		One reason to see we need the maximality condition is to get uniqueness of the eigenspace.  For example, consider the linear-transformation $\R ^2\rightarrow \R ^2$ defined by the matrix
+		\begin{equation}
+			\begin{bmatrix}2 & 0 \\ 0 & 2\end{bmatrix}.
+		\end{equation}
+		Without the maximality condition, every nonzero subspace would be considered a $2$-eigenspace.  But that's silly.  We want our definition to be so that, in this example, there is only one $2$-eigenspace, namely all of $\R ^2$.
+	\end{rmk}
+	\begin{rmk}
+		If we allowed $W=0$, then we might have stupid things happening like every scalar being an eigenvalue of $T$.  Thus, unless you're a fan of stupid things, you're going to want $W=0$ here.
+	\end{rmk}
+	\begin{rmk}
+		The \term{eigenspaces}, \term{eigenvalues}, and \term{eigenvectors} of a matrix are respectively the eigenspaces, eigenvalues, and eigenvectors of the associated linear-transformation.
+	\end{rmk}
+\end{dfn}
+Before moving on, there is a common mistake that students make that we should clear up.
+\begin{displayquote}
+	Eigen\emph{vectors} cannot be $0$.  On the other hand, eigen\emph{values} can be.
+	
+	This is of course true just by definition.  The reason we exclude the zero vector from being an eigenvector however is because we would always have $T(0)=\lambda \cdot 0$ for all $\lambda \in \K$, not a particularly interesting condition.
+\end{displayquote}
+
+Our first order of business is to establish the uniqueness of eigenspaces, which will allow us in particular to utilize unambiguous notation to denote them.
+\begin{prp}{Eigenspaces are unique}{prp4.2.3}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $\lambda \in \K$, and let $U,W\subseteq V$ be $\lambda$-eigenspaces of $T$.  Then, $U=W$.
+	\begin{rmk}
+		We denote the unique $\lambda$-eigenspace of $V$ by $\Eig _{\lambda ,T}$\index[notation]{$\Eig _{\lambda ,T}$}.  If $T$ is clear from context, we may simply write $\Eig _{\lambda}\ceqq \Eig _{\lambda ,T}$\index[notation]{$\Eig _{\lambda ,T}$}.
+	\end{rmk}
+	\begin{rmk}
+		If ever we write ``$\Eig _{\lambda ,T}$'' without having explicitly said so, it should be assumed that $\lambda$ is an eigenvalue of $T$.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Though eigenvalues themselves may still not be unique---we may still have $\Eig _{\lambda ,T}=\Eig _{\mu ,T}$ for $\lambda \neq \mu$.
+	\end{rmk}
+	\begin{rmk}
+		Of course, $\lambda$-eigenspaces need not exist---this only says that, \emph{if} they do exist, they must be unique.
+	\end{rmk}
+	\begin{proof}
+		$U+W$ is a subspace of $V$.  Furthermore, for $u+w\in U+W$, with $u\in U$ and $w\in W$, we have
+		\begin{equation}
+			T(u+w)=T(u)+T(w)=\lambda u+\lambda w=\lambda (u+w),
+		\end{equation}
+		and so $\restr{T}{U+W}=\lambda \id _{U+W}$.  As $U+W\supseteq U,W$, by maximality of eigenspaces, we have $U=U+W=W$.
+	\end{proof}
+\end{prp}
+\begin{prp}{Eigenspaces are maximum with their defining property}{}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a subspace, and let $\lambda \in \K$ be an eigenvalue of $V$.  Then, if $\restr{T}{W}=\lambda \id _W$, then $W\subseteq \Eig _{\lambda}$.
+	\begin{rmk}
+		A corollary of this is that, to show that $\lambda$ is an eigenvalue, it suffices to exhibit a single nonzero subspace $W$ such that $\restr{T}{W}=\lambda \id _W$.  For this result implies that $\Eig _{\lambda}\subseteq W$, so that if $W$ is nonzero, so is $\Eig _{\lambda}$, in which case $\lambda$ would be an eigenvalue.
+	\end{rmk}
+	\begin{proof}
+		Suppose that $\restr{T}{W}=\lambda \id _W$.  Define
+		\begin{equation}
+			\collection{U}\ceqq \{ U\subseteq V\text{ a subspace}:\restr{T}{U}=\lambda \id _U\} 
+		\end{equation}
+		and
+		\begin{equation}
+			E\ceqq \sum _{U\in \collection{U}}U.
+		\end{equation}
+		Every element in $E$ can be written as a finite sum $u_1+\cdots +u_m$ where $T(u_k)=\lambda u_k$ for each $u_k$, and so
+		\begin{equation}
+			T(u_1+\cdots +u_m)=\lambda (u_1+\cdots +u_m).
+		\end{equation}
+		That is, $\restr{T}{E}=\lambda \id _E$.  $E$ is maximal with this property, and hence $E=\Eig _{\lambda}$.  Finally, note that $W\in \collection{U}$, and hence $W\subseteq E=\Eig _{\lambda}$. 
+	\end{proof}
+\end{prp}
+\begin{exm}{An eigenspace with infinitely many distinct eigenvalues}{exm4.2.12}
+	Define $V\ceqq \Z /2\Z$, regard it as a $\K \ceqq \Z$-module, and define $T\ceqq 0$.  Then, of course $\restr{T}{V}=0\id _V$, but also $\restr{T}{V}=2\id _V$.  (It is obviously maximal as this is the entire space!)  Thus, $V\subseteq V$ is an eigenspace of $T$ with eigenvalues $0,2\in \K$.  Of course, $2$ is not special---any even integer would have worked just as well, and so there are in fact infinitely many distinct eigenvalues!
+\end{exm}
+\begin{prp}{Eigenvalues are unique (in vector spaces)}{prp4.2.13}
+	Let $V$ be a vector space and let $T\colon V\rightarrow V$ be linear.  Then, if $\Eig _{\lambda ,T}=\Eig _{\mu ,T}$, it follows that $\lambda =\mu$.
+	\begin{proof}
+		Suppose that $\Eig _{\lambda ,T}=\Eig _{\mu ,T}$.  There must be some nonzero $v\in \Eig _{\lambda ,T}=\Eig _{\mu ,T}$.  It follows that
+		\begin{equation}
+			\lambda v=T(v)=\mu v,
+		\end{equation}
+		and so $(\lambda -\mu )v=0$.  As $v\neq 0$ and the ground ring is a division ring, we must have that $\lambda -\mu =0$, that is, $\lambda =\mu$.
+	\end{proof}
+\end{prp}
+
+If you've seen eigenvalues and eigenvectors before, you'll note that this is similar, but not identical to how they are usually defined.  The motivation for this slight deviation has to do with the fact that, even for vector spaces, the ground division ring $\F$ need not be commutative.  In this case, we would like eigenvalues to define linear-transformations by scaling (for reasons we'll see in a moment), even if $\K$ itself is not commutative.  The definition as stated above \emph{implies} that eigenvalues have to be central, and hence define linear-transformations by scaling.  Thus, we don't have to put this condition into the definition by hand---in a sense, we get it for free.
+
+Another advantage it has is that it places the emphasis on eigen\emph{spaces} instead of eigen\emph{vectors}.  Eigenspaces are the more fundamental of the two concepts simply because they are unique---in general, there will be infinitely many eigenvectors with the same eigenvalue, and no one of them is more `correct' than the other, whereas for eigen\emph{spaces} there is no arbitrary choice to be made---there's only one thing to pick from.  In any case, it would be good to know that our presentation is equivalent to the usual one.
+\begin{thm}{}{thm4.2.17}
+	$V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \F$.  Then,
+	\begin{enumerate}
+		\item \label{thm4.2.17(i)}$\lambda$ is an eigenvalue of $T$ iff $\lambda$ is central and there is some nonzero $v\in V$ such that $T(v)=\lambda v$, in which case $v$ is an eigenvector of $T$ with eigenvalue $\lambda$; and
+		\item \label{thm4.2.17(ii)}if $\lambda$ is an eigenvalue, then
+		\begin{equation}
+			\Eig _{\lambda ,T}=\{ v\in V:T(v)=\lambda v\} =\Ker (T-\lambda ).
+		\end{equation}
+	\end{enumerate}
+	\begin{rmk}
+		Recall (\cref{Rg}) that for $\lambda$ to be \emph{central} means that $\lambda$ commutes with everything.  For example, in the quaternions $\H$, $\im ,\jm ,\km \in \H$ are \emph{not} central, though $1\in \H$ is.
+		
+		Of course, if $\F$ is commutative (that is, if $\F$ is a field), then everything is central, and may ignore this part of the result.  Upon doing so, we obtain exactly the condition you are likely familiar with (assuming you've seen eigenvalues before, that is).
+	\end{rmk}
+	\begin{rmk}
+		Perhaps the most relevant fact for us about central elements is that scaling by them defines linear-transformations.  That is, if $\alpha \in \F$ is central, then $V\ni v\mapsto \alpha \cdot v\in V$ is a linear-transformation.
+	\end{rmk}
+	\begin{rmk}
+		In particular, note that, if $0$ is an eigenvalue, then its eigenspace is precisely $\Ker (T)$.  Thus, $T$ is injective iff $0$ is \emph{not} an eigenvalue.
+	\end{rmk}
+	\begin{proof}
+		\cref{thm4.2.17(i)} $(\Rightarrow )$ Suppose that $\lambda$ is an eigenvalue of $T$.  As $\lambda$ is an eigenvalue, there is a nonzero subspace $\Eig _{\lambda}\subseteq V$, such that $T(v)=\lambda v$ for all $v\in \Eig _{\lambda}$.  In particular, there is \emph{some} nonzero $v\in V$ such that $T(v)=\lambda v$.  By definition, $v$ is an eigenvector with eigenvalue $\lambda$.
+		
+		We now check that $\lambda$ is central.  Let $\alpha \in \F$.  Then,
+		\begin{equation}
+			(\alpha \lambda )\cdot v=\alpha (\lambda v)=\alpha T(v)=T(\alpha v)=\footnote{If $v\in \Eig _{\lambda}$, $\alpha v\in \Eig _{\lambda}$ as well because this is a subspace.}\lambda (\alpha v)=(\lambda \alpha )\cdot v.
+		\end{equation}
+		As $v\neq 0$ and we are working over a division ring, it follows that $\alpha \lambda =\lambda \alpha$, that is, $\lambda$ is central.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $\lambda$ is central and that there is some nonzero $v\in V$ such that $T(v)=\lambda v$.  Define
+		\begin{equation}
+			W\ceqq \{ v\in V:T(v)=\lambda v\} .
+		\end{equation}
+		As $\lambda$ is central, this is a subspace.  It is furthermore a nonzero subspace by hypothesis.  By definition, $\restr{T}{W}=\lambda \id _W$.
+		
+		To show maximality, let $U\supseteq W$ be a subspace and let $\mu \in \F$ be such that $\restr{T}{U}=\mu \id _U$.  Then, in particular
+		\begin{equation}
+			\mu v=T(v)=\lambda v,
+		\end{equation}
+		and so $\mu =\lambda$ as $\F$ is a division ring and $v$ is nonzero.  We then have that $T(u)=\mu u$ for all $u\in U$, that is, $U\subseteq W$, showing maximality.  Hence,
+		\begin{equation}\label{eqn4.2.22}
+			W\ceqq \{ v\in V:T(v)=\lambda v\} =\Eig _{\lambda ,T}.
+		\end{equation}
+		In particular, $\lambda$ is an eigenvalue of $T$.
+		
+		\blni
+		\cref{thm4.2.17(ii)} Note that this has already been proven in \eqref{eqn4.2.22}.
+	\end{proof}
+\end{thm}
+
+\begin{exm}{}{}
+	Define $D\colon C^{\infty}(\R )\rightarrow C^{\infty}(\R )$ by $D(f)\ceqq f'$.  Then, $\lambda \in \C$ is an eigenvalue of $f$ iff $f$ is nonzero and $f'\eqqc D(f)=\lambda f$.  If this is true, it follows that $f(x)=C\exp (\lambda x)$ for some constant $C\in \C$, and hence that the function $x\mapsto \exp (\lambda x)$ is an eigenvector of $D$ with eigenvalue $\lambda$.  Thus, every $\lambda \in \C$ is an eigenvalue and
+	\begin{equation}
+		\Eig _{\lambda}=\Span (\exp (\lambda x)).
+	\end{equation}
+\end{exm}
+\begin{exm}{}{}
+	Let $T\colon \R ^2\rightarrow \R ^2$ be the linear-transformation that is counter-clockwise rotation about the origin by $\uppi /2$.  If $v\in \R ^2$ and $T(v)=\lambda v$ for some $\lambda \in \R$, then the rotate of $v$ would have to be parallel to $v$.  This is impossible unless $v=0$.  Thus, this linear-transformation has no eigenvalues.
+\end{exm}
+\begin{exm}{}{}
+	Let $A$ be an upper-triangular matrix with entries in a field.  Then, the eigenvalues of $A$ are the scalars appearing on the diagonal of $A$.
+	\begin{exr}[breakable=false]{}{}
+		Check this.
+	\end{exr}
+\end{exm}
+
+\begin{prp}{}{}
+	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, let $\lambda _1,\ldots ,\lambda _m$ be distinct eigenvalues of $T$, and let $v_k\in \Eig _{\lambda _k}$ be nonzero $1\leq k\leq m$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
+	\begin{rmk}
+		In short, eigenvectors with distinct eigenvalues are linearly-independent.
+	\end{rmk}
+	\begin{proof}
+		Denote the ground division ring by $\F$.  We proceed by induction on $m$.  The $m=0$ case is immediate as eigenvectors are nonzero.  So, let $m\in \Z ^+$ and suppose the result is true $m-1$.  To prove the result for $m$, we proceed by contradiction:  suppose that $\{ v_1,\ldots ,v_m\}$ is linearly-dependent.  By \cref{prp1.2.28}, there is some $v_k$ such that
+		\begin{equation}
+			v_k\in \Span (v_1,\ldots ,v_{k-1}).
+		\end{equation}
+		Without loss of generality, we may assume that $k$ is the smallest such integer.  Thus, there are $\alpha _1,\ldots ,\alpha _{k-1}\in \F$ such that
+		\begin{equation}\label{eqn4.2.25}
+			v_k=\alpha _1\cdot v_1+\cdots +\alpha _{k-1}\cdot v_{k-1}.
+		\end{equation}
+		Applying $T$ to this equation yields
+		\begin{equation}\label{eqn4.2.26}
+			\lambda _kv_k=\alpha _1\lambda _1v_1+\cdots +\alpha _{k-1}\lambda _{k-1}v_{k-1}.
+		\end{equation}
+		Multiplying \eqref{eqn4.2.25} by $\lambda _k$ and subtracting the result from \eqref{eqn4.2.26} yields\footnote{Note that I am allowed to commute $\lambda _k$ past the $\alpha _i$s as $\lambda _k$ is central.}
+		\begin{equation}
+			0=\alpha _1(\lambda _1-\lambda _k)v_1+\cdots +\alpha _{k-1}(\lambda _{k-1}-\lambda _k).
+		\end{equation}
+		Now, by the induction hypothesis, it follows that $\alpha _i(\lambda _i-\lambda _k)=0$ for all $1\leq i\leq k-1$.  If some $\alpha _i\neq 0$, then it would follows that $\lambda _i=\lambda _k$:  a contradiction of the fact that the eigenvalues are distinct.  Thus, we must have that $\alpha _i=0$ for all $1\leq i\leq k-1$, whence it follows from \eqref{eqn4.2.25} that $v_k=0$, which itself is a contradiction (eigenvectors can't be $0$).  Thus, it must have been the case that $\{ v_1,\ldots ,v_m\}$ was linearly-independent, as desired.
+	\end{proof}
+\end{prp}
+\begin{crl}{}{crl4.2.28}
+	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, and let $\mcal{E}$ denote the set of eigenvalues of $T$.  Then, $\abs{\mcal{E}}\leq \dim (V)$.
+	\begin{rmk}
+		In words, the number of eigenvalues is at most the dimension.
+	\end{rmk}
+	\begin{proof}
+		For every $\lambda \in \mcal{E}$, let $v_{\lambda}\in \Eig _{\lambda}$ be an eigenvector.  By the previous result, $\{ v_{\lambda}:\lambda \in \mcal{E}\}$ is linearly-independent, and so\footnote{By \cref{prp1.2.66}---this is the result that says linearly-independent sets have cardinality at most the cardinality of any spanning set.}
+		\begin{equation}
+			\abs{\mcal{E}}=\abs*{\{ v_{\lambda}:\lambda \in \mcal{E}\}}\leq \dim (V).
+		\end{equation}
+	\end{proof}
+\end{crl}
+
+Let $V$ be a vector space over a division ring $\F$ and let $T\colon V\rightarrow V$ be a linear-transformation.  In \cref{exm1.1.34}, we saw that we could make $V$ into an $\F [x]$-module, by having a polynomial $p$ act on $V$ by the $\F$-linear-transformation $p(T)$.  In the following result, we examine how such operators act on eigenvectors.
+\begin{prp}{}{prp4.2.33}
+	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, let $p\in \F [x]$ be a polynomial, and let $\lambda \in \F$ be an eigenvalue of $T$ with eigenvector $v\in V$.  Then,
+	\begin{equation}
+		[p(T)](v)=p(\lambda )v.
+	\end{equation}
+	\begin{rmk}
+		Indeed, note that you can view the equation $T(v)=\lambda v$ as the special case of this result for the polynomial $p(x)\ceqq x$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{crl}{}{crl4.2.36}
+	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $p\in \F [x]$ be a polynomial.  Then, if $p(T)=0$, then $p(\lambda )=0$ for every eigenvalue $\lambda \in \F$ of $T$.
+	\begin{rmk}
+		This can have practical applications for actually \emph{computing} eigenvalues.  For example, if for whatever reason you know that $T^2-1=0$, then you know that $\lambda ^2-1=0$ for any eigenvalue $\lambda \in \F$ of $T$.  Thus, in this case, one could deduce that the only possible eigenvalues for $T$ were $\pm 1$.
+	\end{rmk}
+	\begin{proof}
+		Suppose that $p(T)=0$.  Let $\lambda \in \F$ be an eigenvalue of $T$ with eigenvector $v\in V$.  By the previous result, we have that
+		\begin{equation}
+			0=[p(T)](v)=p(\lambda )v.
+		\end{equation}
+		As $v$ is nonzero, it follows that $p(\lambda )=0$.
+	\end{proof}
+\end{crl}
+\begin{exm}{}{}
+	For example, suppose that $3\in \C$ is an eigenvalue of $T$ with eigenvector $v\in V$, so that $T(v)=3v$.  If $p(x)\ceqq -5x^2+2x+1$, then we would have
+	\begin{equation}
+		[-5T^2+2T+\id ](v)\eqqc [p(T)](v)=p(3)v=[-5\cdot 9+2\cdot 3+1]v=-38v.
+	\end{equation}
+\end{exm}
+
+\section{Diagonalization}
+
+We started this chapter with the objective of finding a basis for which the coordinates of a given linear-transformation was a diagonal matrix.  We now have the tools to discuss this.
+\begin{dfn}{Diagonalizable}{Diagonalizable}
+	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, $T$ is \term{diagonalizable}\index{Diagonalizable} iff there is a basis $\basis{B}$ of $T$ such that $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is a diagonal matrix.
+	\begin{rmk}
+		In this case, $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is the \term{diagonalization}\index{Diagonalization} of $T$.
+	\end{rmk}
+	\begin{rmk}
+		If $A$ is a matrix, we say that $A$ is \term{diagonalizable} iff the associated linear-transformation is diagonalizable.
+	\end{rmk}
+\end{dfn}
+The whole point of discussing the ``eigenstuff'' was, as we saw in \crefnameref{sct4.1}, that the existence of eigenvalues was related to the diagonalizability of the linear-transformation.  We now make this precise.
+\begin{thm}{Fundamental Theorem of Diagonalizability}{}
+	Let $V$ be a finite-dimensional vector space, let $T\colon V\rightarrow V$ be linear, and let $\lambda _1,\ldots ,\lambda _m$ denote the eigenvalues of $T$.\footnote{Note that there are finitely many eigenvalues by \cref{crl4.2.28}.}  Then, the following are equivalent.
+	\begin{enumerate}
+		\item $T$ is diagonalizable.
+		\item There is a basis of $V$ consisting of eigenvectors of $T$.
+		\item
+		\begin{equation}
+			\dim (V)=\dim (\Eig _{\lambda _1})+\cdots +\dim (\Eig _{\lambda _m}).
+		\end{equation}
+	\end{enumerate}
+	In this case, if $\basis{B}$ is a basis of eigenvectors of $V$ consisting of eigenvectors of $T$, then $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is a diagonal matrix.
+	\begin{rmk}
+		In particular, as eigenspaces are of course at least one-dimensional, if $T$ has $\dim (V)$ distinct eigenvalues, then $T$ must be diagonalizable.  That said, the converse is not true---see \cref{exm4.3.4}.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This name is nonstandard---there is no standard name for this result.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+\begin{exm}{}{}
+	Define
+	\begin{equation}
+		A\ceqq \begin{bmatrix}1 & 2 & 3 \\ 0 & 4 & 5 \\ 0 & 0 & 6\end{bmatrix}.
+	\end{equation}
+	As $A$ is upper-triangular, the eigenvalues are the elements on the diagonal  $1$, $4$, and $6$.  Thus, as $A$ has $3$ distinct eigenvalues, it must be diagonalizable.
+\end{exm}
+\begin{exm}{A diagonalizable linear-transformation with fewer eigenvalues than the dimension}{exm4.3.4}
+	The identity $\R ^2\rightarrow \R ^2$ has a single eigenvalue ($1$), but yet it is diagonalizable (with respect to the standard basis).
+\end{exm}
+\begin{exm}{A matrix over $\C$ that is not diagonalizable}{}
+	Define
+	\begin{equation}
+		A\ceqq \begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}.
+	\end{equation}
+	There is only one eigenvalue, $0$.  The eigenspace is the null-space of $A-0=A$, which is just
+	\begin{equation}
+		\Span \left( \begin{bmatrix}1 \\ 0\end{bmatrix}\right) .
+	\end{equation}
+	As the sum of the dimensions of the eigenspaces is only $1$, $A$ cannot be diagonalizable.
+\end{exm}
+\begin{exr}{}{}
+	Define $V\ceqq \{ f\in C^{\infty}(\R ):f''+f=0\}$ and define $D\colon V\rightarrow V$ by $D(f)\ceqq f'$.  Show that $D$ is diagonalizable by exhibiting a basis of $V$ with respect to which the coordinates of $D$ is a diagonal matrix.
+\end{exr}
+
+\subsection{Diagonalization of matrix linear-transformations}
+
+While the concept of diagonalization makes sense for any linear-transformation, there is an extra question one might ask if the linear-transformation happens to be defined by a matrix:  what is the relationship between the original matrix and its diagonalization?  The answer to this question is given by the following result.
+\begin{prp}{}{}
+	Let $A$ be an $m\times m$ diagonalizable matrix with entries in a division ring $\F$ and let $\basis{B}$ be a basis of eigenvectors of $A$.  Then,
+	\begin{equation}\label{eqn4.3.12}
+		\coordinates{A}{\basis{B}\leftarrow \basis{B}}=\coordinates{\id}{\basis{B}\leftarrow \basis{S}}\coordinates{A}{\basis{S}\leftarrow \basis{S}}\coordinates{\id}{\basis{S}\leftarrow \basis{B}},
+	\end{equation}
+	where $\basis{S}$ is the standard basis of $\F ^m$.
+	\begin{rmk}
+		Note that $\coordinates{A}{\basis{S}\leftarrow \basis{S}}=A$ by \cref{prp3.2.100}.\footnote{I wrote \eqref{eqn4.3.12} using $\coordinates{A}{\basis{S}\leftarrow \basis{S}}$ instead of $A$ because I feel as if writing it this way makes it more `obviously' true.}
+		
+		Furthermore, $\coordinates{A}{\basis{B}\leftarrow \basis{B}}$ is the diagonalization of $A$ (by definition) and $\coordinates{\id}{\basis{B}\leftarrow \basis{S}}=\coordinates{\id}{\basis{S}\leftarrow \basis{B}}^{-1}$.  Thus, writing $D\ceqq \coordinates{A}{\basis{B}\leftarrow \basis{B}}$ and $P\ceqq \coordinates{\id}{\basis{S}\leftarrow \basis{B}}$, this equation is sometimes written more concisely (but perhaps less transparently) as
+		\begin{equation}
+			D=P^{-1}AP.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		Note that, by \cref{CoordinatesLinearTransformation}, the columns of $\coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ are given by $\coordinates{b_k}{\basis{S}}$ for $b_k\in \basis{B}$.  However, by \cref{prp3.1.17},\footnote{This is the result that says the coordinates of a column vector with respect to the standard basis is just that original column vector.} this is just $b_k$ itself.  Thus,
+		\begin{displayquote}
+				\emph{$P\ceqq \coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ is the matrix whose columns are the eigenvectors of $A$.}
+		\end{displayquote}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\section{Jordan Canonical Form}
+
+Diagonalizable linear-transformations are great.  There's just one little itsy-bitsy problem:  not all linear-transformations are diagonalizable!  Not even in the context of finite-dimensional vector space over algebraically-closed\footnote{Whatever that means.} fields.  Fortunately, there is something that is almost as good, but \emph{always} exist (at least if the ground ring is sufficiently nice):  the \emph{Jordan Canonical Form} of a linear-transformation.
+
+Before we get there however, we must first take a detour to discuss \emph{direct-sums} and \emph{invariant-subspaces}.  Very roughly speaking, the idea is to decompose a vector space into smaller pieces that are easier to study.  For example, if $b\in V$ is an eigenvector of $T$, then $\Span (b)$ the behavior of $T$ on this subspace is particularly easy to understand.  While we can't quite have the subspaces be that simple in general, we will find that we can still decompose our space into pieces which are not that much more complicated.
+
+\subsection{Direct-sums}
+
+The precise sense in which we are going to decompose vector spaces is called the \emph{direct-sum} and is defined as follows.
+\begin{dfn}{Direct-sum}{DirectSum}
+	Let $V$ be a $\K$-module, and let $\collection{W}$ be a collection of subspaces of $V$.  Then, $V$ is the \term{direct-sum}\index{Direct-sum} of the elements of $\collection{W}$ iff for every $v\in V$ there are unique $v^W\in W$ such that
+	\begin{equation}\label{eqn4.4.2}
+		v=\sum _{W\in \collection{W}}v^W.
+	\end{equation}
+	\begin{rmk}
+		In this case, we write
+		\begin{equation}
+			V=\bigoplus _{W\in \collection{W}}W.
+		\end{equation}\index[notation]{$\bigoplus _{W\in \collection{W}}W$}
+	\end{rmk}
+	\begin{rmk}
+		We say that
+		\begin{equation}
+			V=\bigoplus _{W\in \collection{W}}W
+		\end{equation}
+		or just $\collection{W}$ is a \term{direct-sum decomposition}\index{Direct-sum decomposition} or \term{decomposition}\index{Decomposition} of $V$.
+	\end{rmk}
+	\begin{rmk}
+		It is implicit in this that cofinitely many $v^W$s vanish, so that \eqref{eqn4.4.2} is secretly a finite sum.
+	\end{rmk}
+	\begin{rmk}
+		As per usual, the arbitrary (nonfinite) case obfuscates the simplicity of this concept.  If $\collection{W}=\{ W_1,\ldots ,W_m\}$, then this definition reads:  $V$ is the \term{direct-sum} of $W_1,\ldots ,W_m$ iff for every $v\in V$ there are unique $v^1\in W,\ldots ,v^m\in W_m$ such that
+		\begin{equation}
+			v=v^1+\cdots +v^m,
+		\end{equation}
+		in which case we write
+		\begin{equation}
+			V=W_1\oplus \cdots \oplus W_m.
+		\end{equation}\index[notation]{$W_1\oplus \cdots \oplus W_m$}
+	\end{rmk}
+	\begin{rmk}
+		Note how this definition is similar in ways to that of a basis---see \cref{dfn4.4.6,exr4.4.9}.
+	\end{rmk}
+\end{dfn}
+What follows is a criterion for checking whether a vector space can be written as a direct-sum.
+\begin{prp}{Criterion for direct-sums of an arbitrary collection of subspaces}{prp4.4.7}
+	Let $V$ be a $\K$-module, let $\collection{W}$ be a collection of subspaces of $V$.  Then,
+	\begin{equation}
+		V=\bigoplus _{W\in \collection{W}}W
+	\end{equation}
+	iff (i) $V=\sum _{W\in \collection{W}}W$ and (ii) the equation $0=w_1+\cdots +w_m$ with $w_k\in W_k$, $W_1,\ldots ,W_m$ distinct elements of $\collection{W}$, implies every $w_k=0$.
+	\begin{rmk}
+		Again, the case where $\collection{W}\ceqq \{ W_1,\ldots ,W_M\}$ is clearer.  It says:
+		\begin{equation}
+			V=W_1\oplus \cdots \oplus W_m
+		\end{equation}
+		iff (i) $V=W_1+\cdots +W_m$ and (ii) the equation $0=w_1+\cdots +w_m$ with $w_k\in W_k$ implies every $w_k=0$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+The case of two subspaces is particularly important, and in this case the criterion simplifies, and so we state it separately.
+\begin{crl}{Criterion for direct-sums of two spaces}{crl4.4.11}
+	Let $V$ be a $\K$-module, and let $U,W\subseteq V$ be subspaces.  Then,
+	\begin{equation}
+		V=U\oplus W
+	\end{equation}
+	iff (i) $V=U+W$ and (ii) $U\cap W=0$.
+	\begin{rmk}
+		Warning:  The naive generalization of this criterion to more than two subspaces is not true.  That is, if $W_1,\ldots ,W_m\subseteq V$ are subspaces such that $V=W_1+\cdots +W_m$ and $W_k\cap W_l=0$ for $k\neq l$, it is \emph{not} necessarily the case that $V=W_1\oplus \cdots \oplus W_m$---see \cref{exm4.4.13}.
+	\end{rmk}
+	\begin{proof}
+		From the previous result, it suffices to show that $U\cap W=0$ is true iff it is true that the equation $0=u+w$ with $u\in U$ and $w\in W$ implies $u=0=w$.
+		
+		\blni
+		$(\Rightarrow )$ Suppose that $U\cap W=0$.  Let $u\in U$, $w\in W$, and suppose that $0=u+w$.  Then, $w=-u\in U$, and so $w\in U\cap W$, and so $w=0$.  We then have $u=-w=0$.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that the equation $0=u+w$ with $u\in U$ and $w\in W$ implies $u=0=w$.  Let $v\in U\cap W$.  We have that $0=v+(-v)$, and as $v\in U$ and $-v\in W$, it follows in particular that $v=0$, and hence $U\cap W=0$.
+	\end{proof}
+\end{crl}
+\begin{exm}{$W_1,W_2,W_3\subseteq V$ subspaces with trivial pairwise intersections and $V=W_1+W_2+W_3$ but $V\neq W_1\oplus W_2\oplus W_3$}{exm4.4.13}
+	Define $V\ceqq \R ^2$, $W_1\ceqq \Span (\coord{1,0})$, $W_2\ceqq \Span (\coord{0,1})$, and $W_3\ceqq \Span (\coord{1,1})$.  Then, $W_1\cap W_2=0$, $W_1\cap W_3=0$, $W_2\cap W_3=0$, $W_1+W_2+W_3=V$, but the sum is not direct:  we can write both
+	\begin{equation}
+		\coord{1,1}=0+0+\coord{1,1}
+	\end{equation}
+	and
+	\begin{equation}
+		\coord{1,1}=\coord{1,0}+\coord{0,1}+0.
+	\end{equation}
+\end{exm}
+\begin{exm}{}{}
+	Define
+	\begin{equation}
+	U=\Span \left( \begin{bmatrix}1 \\ 0 \\ 0\end{bmatrix},\begin{bmatrix}0 \\ 1 \\ 0\end{bmatrix}\right) \text{ and }W=\Span \left( \begin{bmatrix}1 \\ 2 \\ 3\end{bmatrix}\right) .
+	\end{equation}
+	Then, $\R ^3=U\oplus V$.
+	\begin{exr}[breakable=false]{}{}
+		Check this.
+	\end{exr}
+\end{exm}
+\begin{exm}{}{}
+	Define
+	\begin{equation}
+	V\ceqq \left\{ f\in \Mor _{\Set}(\R ^2,\R ):\lim _{\abs{x}\to \infty}f(x)\text{ exists.}\right\} .
+	\end{equation}
+	Then,
+	\begin{equation}
+	V=\left\{ f\in V:f\text{ is constant.}\right\} \oplus \left\{ f\in V:\lim _{\abs{x}\to \infty}f(x)=0\right\} .
+	\end{equation}
+	To see this, note that we may write
+	\begin{equation}
+	f=\lim _{\abs{x}\to \infty}f(x)+(f-\lim _{\abs{x}\to \infty}f(x))
+	\end{equation}
+	for any $f\in V$.
+	\begin{exr}[breakable=false]{}{}
+		Check this in more detail.
+	\end{exr}
+\end{exm}
+
+In a way roughly analogous to how we can extend linearly-independent subsets to bases, we can `extend' subspaces into direct-sum decompositions, at least for vector spaces
+\begin{prp}{Subspaces of vector spaces have complements}{prp4.4.24}
+	Let $V$ be a vector space and let $U\subseteq V$ be a subspace.  Then, there is a subspace $W\subseteq V$ such that $V=U\oplus W$.
+	\begin{rmk}
+		If $V$ is a $\K$-module and $U\subseteq V$ is a subspace, then a subspace $W\subseteq V$ such that $V=U\oplus W$ is a \term{complement}\index{Complement} of $U$.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Complements are not unique, even for vector spaces---see \cref{exm4.4.6}.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This will fail in general for $\K$-modules---see \cref{exm4.5.15}.
+	\end{rmk}
+	\begin{proof}
+		Let $\basis{A}$ be a basis of $U$ and extend it to a basis $\basis{B}$ of $V$.  Define $\basis{C}\ceqq \basis{B}\setminus \basis{A}$ and $W\ceqq \Span (\basis{C})$.  We certainly have
+		\begin{equation}
+			V=\Span (\basis{B})=\Span (\basis{A}\cup \basis{C})=\Span (\basis{A})+\Span (\basis{C})=U+W.
+		\end{equation}
+		On the other hand, an element in the intersection $V\cap W$ must be able to be written as a linear-combination of both elements of $\basis{A}$ and elements of $\basis{C}$.  This would then yield a nontrivial linear-dependence relation among elements of $\basis{A}\cup \basis{C}=\basis{B}$ unless the element in the intersection were $0$.  Thus, we must have $U\cap W=0$, and hence $V=U\oplus W$ by \cref{crl4.4.11}.
+	\end{proof}
+\end{prp}
+
+Direct-sums allow us to define \emph{projections}.
+\begin{prp}{Projection}{Projection}
+	Let $V$ be a $\K$-module, and let $\collection{W}$ be a collection of subspaces of $V$ such that $V=\bigoplus _{W\in \collection{W}}W$.  Then, for every $W_0\in \collection{W}$, there is a unique linear-transformation $\proj _{W_0}\colon V\rightarrow W_0$\index[notation]{$\proj _{W_0}$}, the \term{projection}\index{Projection} onto $W$ with respect to the decomposition $V=\bigoplus _{W\in \collection{W}}W$, such that $\proj _{W_0}(v)=v^{W_0}$, where $v=\sum _{W\in \collection{W}}v^W$ for unique $v^W\in W$.
+	\begin{rmk}
+		For example, if $V=U\oplus W$, for $v\in V$, we can write $v=u+w$ for unique $u\in U$ and $w\in U$.  In this case, $\proj _U(v)=u$.  (Similarly, $\proj _W(v)=w$.)
+	\end{rmk}
+	\begin{rmk}
+		Warning:  $\proj _{W_0}$ is \emph{not} uniquely determined by $W_0$ itself---it depends on the other $W$s, on the entire decomposition---see \cref{exm4.4.6} for a concrete example of this.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof} 
+\end{prp}
+\begin{exm}{$V=U\oplus W_1=U\oplus W_2$ for $W_1\neq W_2$}{exm4.4.6}
+	Define $V\ceqq \R ^2$, $U\ceqq \Span (\coord{1,0})$, $W_1\ceqq \Span (\coord{0,1})$, and $W_2\ceqq \Span (\coord{1,1})$.
+	\begin{exr}[breakable=false]{}{}
+		Check that $V=U\oplus W_1$ and $V=U\oplus W_2$.
+	\end{exr}
+
+	Define $v\ceqq \coord{a,b}\in \R ^2$.  The decomposition of $v$ with respect to the decomposition $V=U\oplus W_1$ is given by
+	\begin{equation}
+		v\ceqq \begin{bmatrix}a \\ b\end{bmatrix}=\begin{bmatrix}a \\ 0\end{bmatrix}+\begin{bmatrix}0 \\ b\end{bmatrix}.
+	\end{equation}
+	On the other hand, the decomposition of $v$ with respect to the decomposition $V=U\oplus W_2$ is given by
+	\begin{equation}
+		v\ceqq \begin{bmatrix}a \\ b\end{bmatrix}=\begin{bmatrix}a-b \\ 0\end{bmatrix}+\begin{bmatrix}b \\ b\end{bmatrix}
+	\end{equation}
+	Hence,
+	\begin{equation}
+		\proj _U(w)=\begin{bmatrix}a \\ 0\end{bmatrix}
+	\end{equation}
+	with respect to the first decomposition, but
+	\begin{equation}
+		\proj _U(w)=\begin{bmatrix}a-b \\ 0\end{bmatrix}
+	\end{equation}
+	with respect to the second decomposition.
+\end{exm}
+
+\subsubsection{Coordinates with respect to direct-sum decompositions}
+
+We saw in \cref{CoordinatesVector} that, given a basis of a $\K$-module $V$, we can define the \emph{coordinates} of elements of $v$ with respect to that basis.  In a similar way, we can also talk about the coordinates of elements of $V$ with respect to a direct-sum decomposition.   In fact, the definition of coordinates we learned before is a special case of this---see \cref{exr4.4.9}.
+
+We saw before that the coordinates of an `abstract' vector was an element of $\K ^d$, $\K$ the ground ring.  Given a direct-sum decomposition $V=W_1\oplus \cdots \oplus W_m$, the first question we must address is ``What plays the role of $\K ^d$ in this context?''.  The following result will help us answer this question. To understand this, we first note how a basis yields a direct-sum decomposition.
+\begin{prp}{}{exr4.4.9}
+	Let $V$ be a $\K$-module, and let $\basis{B}$ be a basis of $V$.  Then,
+	\begin{equation}
+	V=\bigoplus _{b\in \basis{B}}\Span (b).
+	\end{equation}
+	\begin{rmk}
+		In finite dimensions, with $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$, this reads
+		\begin{equation}\label{eqn4.4.23}
+			V=\Span (b_1)\oplus \cdots \oplus \Span (b_d).
+		\end{equation}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+Over a division ring $\F$, $\Span (b)\cong _{\Vect _{\F}}\F$ via the map $\F \ni \alpha \mapsto \alpha \cdot b\in \Span (b)$.  Thus, if $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ is a basis for the vector space $V$, after identifying each $\Span (b_k)$ with $\F$, \eqref{eqn4.4.23} reads
+\begin{equation}
+	V\cong \underbrace{\F \oplus \cdots \oplus \F}_d.
+\end{equation}
+On the other hand, we know from \cref{prp3.1.7} that the map that sends an ``abstract'' vector to its coordinates yields an isomorphism
+\begin{equation}
+	V\cong \F ^d\ceqq \underbrace{F\times \cdots \times \F}_d.
+\end{equation}
+These two facts together suggest that in the general case $V=W_1\oplus \cdots \oplus W_d$, $W_1\times \cdots \times W_d$ should play the role that $\F ^d$ did with coordinates before.  That is, the map that sends an ``abstract'' vector to its coordinates should be a map $V\rightarrow W_1\times \cdots \times W_d$ (and with any luck, it will be an isomorphism).  This is exactly how we're doing to define things.  But first, we want to give $W_1\times \cdots \times W_d$ the structure of a vector space.
+\begin{prp}{Product of modules}{}
+	Let $\collection{V}$ be an indexed collection of $\K$-modules, and define $\prod _{V\in \collection{V}}\times \prod _{V\in \collection{V}}\rightarrow \prod _{V\in \collection{V}}$ and $\K \times \prod _{V\in \collection{V}}V\rightarrow \prod _{V\in \collection{V}}V$ respectively by
+	\begin{subequations}
+		\begin{align}
+			[v_1+v_2]^V & \ceqq v_1^V+v_2^V \\
+			[\alpha \cdot v]^V & \ceqq \alpha \cdot v^V.
+		\end{align}
+	\end{subequations}
+	Then, $\prod _{V\in \collection{V}}V$ is a $\K$-module, the \term{product}\index{Product (of $\K$-modules)}, with this addition and scaling.
+	\begin{rmk}
+		$v\in \prod _{V\in \collection{V}}V$, that is, it is a function $\collection{V}\rightarrow \bigsqcup _{V\in \collection{V}}V$ whose value at $V\in \collection{V}$ is an element of $V$---see \cref{CartesianProductCollection}.  $\alpha \cdot v$ is a new function, one we are defining, and $[\alpha \cdot v]^V$ is its value at $v\in \collection{V}$.  Similarly for the definition of addition.
+	\end{rmk}
+	\begin{rmk}
+		In words, addition and scaling are defined \emph{componentwise}.
+	\end{rmk}
+	\begin{rmk}
+		In the finite case $\collection{V}\eqqc \{ V_1,\ldots ,V_m\}$, these definitions (in more suggestive notation) look like
+		\begin{subequations}
+			\begin{align}
+				\coord{v_1,\ldots ,v_m}+\coord{w_1,\ldots ,w_m} & \ceqq \coord{v_1+w_1,\ldots ,v_m+w_m} \\
+				\alpha \cdot \coord{v_1,\ldots ,v_m} & \ceqq \coord{\alpha \cdot v_1,\ldots ,\alpha \cdot v_m}.
+			\end{align}
+		\end{subequations}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  The proof is as easy as verifying the axioms of a $\K$-module---see \cref{RModule}.
+			\end{rmk}
+		\end{exr}
+	\end{proof} 
+\end{prp}
+
+We are now ready define coordinates with respect to a direct-sum decomposition.
+\begin{dfn}{Coordinates (of a vector with respect to a decomposition)}{dfn4.4.6}
+	Let $V$ be a $\K$-module, let $V=\bigoplus _{W\in \collection{W}}W$ be a direct-sum decomposition of $V$, let $v\in V$, and write
+	\begin{equation}
+	v=\sum _{W\in \collection{W}}v^W
+	\end{equation}
+	for unique $v^W\in \collection{W}$.  Then, the \term{coordinates}\index{Coordinates (of a vector with respect to a decomposition)} of $v$ with respect to the decomposition $\collection{W}$, $\coordinates{v}{\collection{W}}$\index[notation]{$\coordinates{v}{\collection{W}}$}, is defined by
+	\begin{equation}
+	\coordinates{v}{\collection{W}}\ceqq \langle v^W:W\in \collection{W}\rangle \in \prod _{W\in \collection{W}}W.
+	\end{equation}
+	\begin{rmk}
+		If $\collection{W}\eqqc \{ W_1,\ldots ,W_m\}$ is finite, where are unique $v^1\in W^1,\ldots ,v^m\in W^m$ such that
+		\begin{equation}
+		v=v^1+\cdots +v^m.
+		\end{equation}
+		Then, the coordinates of $v$ are given by the column vector
+		\begin{equation}
+		\coordinates{v}{\collection{W}}\ceqq \begin{bmatrix}v^1 \\ \vdots \\ v^m\end{bmatrix}\in \prod _{k=1}^mW_k.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		Note that this generalizes coordinates with respect to a basis (\cref{CoordinatesVector}), at least for vector spaces.  Indeed, if $\basis{B}$ is a basis for $V$, then we obtain a corresponding direct-sum decomposition
+		\begin{equation}
+		V=\bigoplus _{b\in \basis{B}}\Span (b)
+		\end{equation}
+		by the previous result.  If the ground ring $\F$ is a division ring, then $\Span (b)$ is isomorphic to the one-dimensional vector space $\F$, and after this identification, we can view the component $v^b\in \Span (B)$ in the sense of this definition as a scalar, which gives us $\coordinates{v}{\basis{B}}$.
+	\end{rmk}
+\end{dfn}
+As before, this is an isomorphism if the direct-sum decomposition is finite.
+\begin{prp}{$\coordinates{\blankdot}{\collection{W}}$ is linear and injective (and surjective in finite dimensions)}{}
+	Let $V$ be a $\K$-module, and let $V=\bigoplus _{W\in \collection{W}}W$ be a direct-sum decomposition of $V$.  Then,
+	\begin{equation}
+		V\ni v\mapsto \coordinates{v}{\collection{W}}\in \prod _{W\in \collection{W}}W
+	\end{equation}
+	is linear and injective with image
+	\begin{equation}
+		\left\{ \coord{v^W:W\in \collection{W}}:v^W=0\text{ for cofinitely many }W\in \collection{W}\text{.}\right\} .
+	\end{equation}
+	\begin{rmk}
+		In particular, if $\collection{W}\eqqc \{ W^1,\ldots ,W^m\}$ is finite, this map is surjective, and so this gives an isomorphism $V\rightarrow W^1\times \cdots \times W^m$.  In particular,
+		\begin{equation}
+			W^1\oplus \cdots \oplus W^m\cong W^1\times \cdots \times W^m.
+		\end{equation}
+		For this reason, people are not always careful to distinguish between the two, and quite often people will write $V\oplus W$ when technically they mean $V\times W$.  Indeed, I have even heard $V\times W$ called the ``external direct sum'' (in which case they referred to what we have been calling ``direct sum'' as ``internal direct sum'').
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+As you might now expect, we obtain an analogous notion of coordinates of linear-transformations with respect to (finite) direct-sum decompositions.  As with coordinates of vectors, our first order of business is to determine what the analogue of matrices is in this context (just as we had to determine what the analogue of $\K ^d$ should be).  We will see that the answer is still essentially ``matrices'', but now matrices whose entries themselves are linear-transformations (similar to how one might think of an element of $W_1\times \cdots \times W_m$ as a ``column vector'' whose entries are themselves vectors).
+\begin{dfn}{Matrix (of linear-transformations)}{}
+	Let $m$ and $n$ be collections of $\K$-modules.  Then, an \term{$m\times n$ matrix}\index{Matrix (of linear-transformations)} is a function
+	\begin{equation}
+		m\times n\ni \coord{i,j}\mapsto A\indices{^i_j}\in \bigsqcup _{\substack{W\in m \\ V\in n}}\Mor _{\Mod{\K}}(V,W)
+	\end{equation}
+	such that $A\indices{^i_j}\in \Mor _{\Mod{\K}}(i,j)$.
+	\begin{rmk}
+		We make use of all of the suggestive notation and language as we did with matrices (of scalars) before.  One thing to note, however, is that in the equation defining matrix multiplication (\eqref{eqn1.1.47}), upon generalizing to this context, the multiplication denoted by juxtaposition should be interpreted there as composition in \emph{postfix notation}, that is, $B\indices{^k_j}A\indices{^i_k}\ceqq A\indices{^i_k}\circ B\indices{^k_j}$ (otherwise the composition wouldn't make sense in general).
+	\end{rmk}
+	\begin{rmk}
+		We write $\Matrix _{m\times n}$\index[notation]{$\Matrix _{m\times n}$} for the set of all $m\times n$ matrices.  Note that we need not specify the ground ring as we did before (e.g.~as $\Matrix _{m\times n}(\K )$) because this is implicitly contained in the data given in $m$ and $n$---they are collections of \emph{$\K$}-modules.  In case $m=n$, we may write $\Matrix _m\ceqq \Matrix _{m\times m}$\index[notation]{$\Matrix _m$}.  As before, $\Matrix _{m\times n}$ has the structure of a (commutative) group always, it will additionally have the structure of a $\K$-module if $\K$ is commutative, and $\Matrix _m$ has the structure of a ring.
+	\end{rmk}
+	\begin{rmk}
+		If the two collection of $\K$-modules are finite, say $\{ W^1,\ldots ,W^m\}$ and $\{ V^1,\ldots ,V^n\}$, then a $\{ W^1,\ldots ,W^m\} \times \{ V^1,\ldots ,V^n\}$ matrix should be thought of as a double-indexed array $A\indices{^i_j}$, $1\leq i\leq m$ and $1\leq j\leq n$, where $A\indices{^i_j}\colon V^j\rightarrow W^i$ is a linear-transformation from $V^j$ to $W^i$.  As before, this will be written
+		\begin{equation}
+			A=\begin{bmatrix}A\indices{^1_1} & \cdots & A\indices{^1_n} \\ \vdots & \ddots & \vdots \\ A\indices{^m_1} & \dots & A\indices{^m_n}\end{bmatrix}.
+		\end{equation}
+		We will see later that this will define a linear-transformation $V^1\times \cdots \times V^n\rightarrow W^1\times \cdots \times W^m$.  Indeed, that is somehow the point of matrices of linear-transformations---they make it easier to think about linear-transformations between products.
+	\end{rmk}
+	\begin{rmk}
+		If $A\indices{^i_j}=0$ for $i\neq j$, we write
+		\begin{equation}
+		A\indices{^1_1}\oplus \cdots \oplus A\indices{^m_m}\ceqq \begin{bmatrix}A\indices{^1_1} & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \dots & A\indices{^m_n}\end{bmatrix}.
+		\end{equation}\index[notation]{$A\indices{^1_1}\oplus \cdots \oplus A\indices{^m_m}$}
+		This matrix of linear-transformations is the \term{direct-sum}\index{Direct-sum (of linear-transformations)}.  Matrices of this form are referred to as \term{Block-diagonal}\index{Block-diagonal matrix}.\footnote{It is of course just a diagonal matrix in our old terminology, but in this context it is far more common to say ``block-diagonal'' to emphasize that the entries on the diagonal are not scalars but linear-transformations.}
+	\end{rmk}
+\end{dfn}
+Before moving on, we introduce a convention that will prove quite convenient.
+
+\paragraph{Identifying matrices with the linear-transformations they define}
+
+Consider a linear-transformation $T\colon V\rightarrow W$.  In case $V=\K ^n$ and $W=\K ^m$, $V$ and $W$ have canonical bases (the standard bases), and so, in a sense, vectors and linear-transformations really are `the same as' column-vectors and matrices respectively.  Ordinarily this identification is arbitrary because it depends on a choice of basis, but not so in this case.  Thus, one can be sloppy and fail to make a distinction between a matrix and the linear-transformation it defines.  Previously, we didn't do this because (i) pedagogy and (ii) it wasn't really necessary.  Of course, it's still not \emph{strictly} necessary, but now it will prove to rather useful.
+
+For example, it is quite cumbersome to say ``Consider the linear-transformation $\C ^3\rightarrow \C ^3$ defined by the follow matrix of linear-transformations
+\begin{equation}
+	\begin{bmatrix}T_A & 0 \\ 0 & T_B\end{bmatrix},
+\end{equation}
+where $T_A\colon \C \rightarrow \C$ is the linear-transformation defined by the matrix $A\ceqq \begin{bmatrix}5\end{bmatrix}$ and $T_B\colon \C ^2\rightarrow \C ^2$ is the linear-transformation defined by the matrix
+\begin{equation}
+	B\ceqq \begin{bmatrix}-3 & 1 \\ 0 & -3\end{bmatrix}.\text{''},
+\end{equation}
+especially when you consider that I could be sloppy and alternatively say ``Consider the following linear-transformation $\C ^3\rightarrow \C ^3$
+\begin{equation}
+	\begin{bmatrix}5 & 0 & 0 \\ 0 & -3 & 1 \\ 0 & 0 & -3\end{bmatrix}.\text{''}.
+\end{equation}
+
+Thus, hereafter, we do not guarantee to be careful about making distinctions between matrices and the linear-transformations they define---we trust that by this point in the notes the conceptual difference between the two is firmly cemented in your mind---though we will still make the distinction if it's convenient.  Related to this is that you should now consider definitions made for linear-transformations as also being `officially' made for matrices.  For example, we defined above the term ``block-diagonal matrix of linear-transformations''.  A \term{block-diagonal matrix} (of scalars) is one such that the matrix of linear-transformations with respect to the given direct-sum decomposition of the linear-transformation defined by the matrix is block-diagonal.  For example,
+\begin{equation}
+	\begin{bmatrix}1 & 2 & 3 & 0 & 0 \\ 4 & 5 & 7 & 0 & 0 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1\end{bmatrix}
+\end{equation}
+is a block-diagonal matrix of scalars, whereas
+\begin{equation}
+	\begin{bmatrix}1 & 2 & 3 & 0 & -13 \\ 4 & 5 & 7 & 0 & 0 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1\end{bmatrix}
+\end{equation}
+is not.  Similarly, we may speak of direct-sums of matrices and so on.
+
+\horizontalrule
+
+We now turn to defining the coordinates of a linear-transformation with respect to direct-sum decompositions.  Our ability to do this will follow from what are in their own right important properties of direct-sum decompositions.  The first of these properties is that direct-sum decompositions of a vector space allow one to define a linear-transformation by defining what it does on all the ``summands''.  The second of these properties is the dual property involving mapping \emph{into} summands.  We state both results here.
+\begin{thm}{Finite direct-sums are biproducts}{thm4.4.14}
+	Let $U$ and $V$ be $\K$-modules, and let $W_1,\ldots ,W_m\subseteq V$ be subspaces such that $V=W_1\oplus \cdots \oplus W_m$.
+	\begin{enumerate}
+		\item \label{thm4.4.14(i)}Let $S_k\colon U\rightarrow W_k$ be linear.  Then, there is a unique linear-transformation $S\colon U\rightarrow V$ such that $S_k=\proj _{W_k}\circ S$ for $1\leq k\leq m$.
+		\item \label{thm4.4.14(ii)}Let $T_k\colon W_k\rightarrow U$ be linear.  Then, there is a unique linear-transformation $T\colon V\rightarrow U$ such that $\restr{T}{W_k}=W_k$ for $1\leq k\leq m$.
+	\end{enumerate}
+	\begin{rmk}
+		More explicitly, the first implies that
+		\begin{equation}
+			S(u)=S_1(u)+\cdots +S_m(u)
+		\end{equation}
+		for all $u\in U$.  Likewise, the second implies that
+		\begin{equation}
+			T(v_1+\cdots +v_m)=T_1(v_1)+\cdots +T_m(v_m)
+		\end{equation}
+		for $v_k\in W_k$.
+	\end{rmk}
+	\begin{rmk}
+		You should draw an analogy between the property stated in \cref{thm4.4.14(i)} and the corresponding property for \emph{Cartesian products} of sets, namely, that you can define a function $Z\rightarrow X\times Y$ by specifying its ``components'' $Z\rightarrow X$ and $Z\rightarrow Y$.  You will learn when you study category theory in more depth that these both serve examples of \emph{limits}, in fact a special type of limit called a \emph{product} (one in the category of $\K$-modules and the other in the category of sets).
+	\end{rmk}
+	\begin{rmk}
+		Dually, you should raw an analogy between the property stated in \cref{thm4.4.14(ii)} and the corresponding property for \emph{disjoint-unions} of sets, namely, that you can define a function $X\coprod Y\rightarrow Z$ by specifying its ``restrictions'' $X\rightarrow Z$ and $Y\rightarrow Z$.  You will learn when you study category theory in more depth that these both serve examples of \emph{colimits}, in fact a special type of colimit called a \emph{coproduct} (one in the category of $\K$-modules and the other in the category of sets).
+	\end{rmk}
+	\begin{rmk}
+		The term \emph{biproduct} comes from the fact that $W_1\oplus \cdots \oplus W_m$ is both a product and a coproduct (though the definition is not quite that simple).
+	\end{rmk}
+	\begin{rmk}
+		Warning:  While \cref{thm4.4.14(ii)} generalizes to arbitrary direct-sums, \cref{thm4.4.14(i)} \emph{fails} in this case---this is why we stuck to the case of finitely-many subspaces in this result.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			We leave this as an exercise.
+		\end{exr}
+	\end{proof}
+\end{thm}
+Combining these two properties, with both the domain and the codomain as a direct-sum, we obtain the following.
+\begin{thm}{Coordinates of a linear-transformation (with respect to a decomposition)}{}
+	Let $V$ and $W$ be $\K$-modules, let $\collection{V}\eqqc \{V_1,\ldots ,V_n\}$ and $\collection{W}\eqqc \{ W_1,\ldots ,W_m\}$ be collections of subspaces of $V$ and $W$ respectively such that $V=V_1\oplus \cdots \oplus V_n$ and $W=W_1\oplus \cdots \oplus W_m$, and let $T\colon V\rightarrow W$ be a linear-transformation.  Then, there is a unique $m\times n$ matrix, $\coordinates{T}{\collection{W}\leftarrow \collection{V}}$, the \term{coordinates}\index{Coordinates (of a linear-transformation with respect to a decomposition)} with respect to the decompositions $\collection{V}$ and $\collection{W}$, such that
+	\begin{equation}
+		\coordinates{T(v)}{\collection{W}}=\coordinates{T}{\collection{W}\leftarrow \collection{V}}\coordinates{v}{\collection{V}}
+	\end{equation}
+	for all $v\in V$.
+	
+	Furthermore, explicitly
+	\begin{equation}
+		\coordinates{T}{\collection{W}\leftarrow \collection{V}}=\begin{bmatrix}T\indices{^1_1} & \cdots & T\indices{^1_n} \\ \vdots & \ddots & \vdots \\ T\indices{^m_1} & \dots & T\indices{^m_n}\end{bmatrix},
+	\end{equation}
+	where we have defined
+	\begin{equation}
+		\proj _{W_i}\circ \restr{T}{V_j}\eqqc T\indices{^i_j}\ceqq \restr{\proj _{W_i}\circ T}{V_j}.
+	\end{equation}
+	\begin{rmk}
+		Perhaps the most important thing for you to remember about this is an expression for $T$ in terms of the $T\indices{^i_j}$s:
+		
+		For $v\in V$, write $v=v^1+\cdots +v^n$ for unique $v^k\in V^k$.  Then,
+		\begin{equation}
+			T(v)=\left( \sum _{j=1}^nT\indices{^1_j}(v^j)\right) +\cdots +\left( \sum _{j=1}^nT\indices{^m_j}(v^j)\right) .
+		\end{equation}
+		That is, the $i^{\text{th}}$ coordinate of $T(v)$ with respect to the decomposition $W=W^1\oplus \cdots \oplus W^m$ is given by
+		\begin{equation}
+			T(v)^i=\sum _{j=1}^nT\indices{^i_j}(v^j).
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		To be clear, $\coordinates{v}{\collection{V}}\in V^1\times \cdots \times V^n$, $\coordinates{T(v)}{\collection{W}}\in W^1\times \cdots \times W^m$, and $\coordinates{T}{\collection{W}\leftarrow \collection{V}}\colon V^1\times \cdots \times V^n\rightarrow W^1\times \cdots \times W^m$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+As before, this yields an isomorphism from the space of linear-transformations to the space of matrices (of linear-transformations).
+\begin{prp}{$\coordinates{\blankdot}{\basis{C}\leftarrow \basis{B}}$ is an isomorphism}{}
+	Let $\K$ be a cring, let $V$ and $W$ be $\K$-modules, and let $V=V^1\oplus \cdots \oplus V^n$ and $W=W^m\oplus \cdots \oplus W^m$ be direct-sum decompositions of $V$ and $W$ respectively.  Then,
+	\begin{equation}
+		\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\collection{W}\leftarrow \collection{V}}\in \Matrix _{\collection{W}\times \collection{V}}
+	\end{equation}
+	is an isomorphism of $\K$-modules, where $\collection{V}\ceqq \{ V^1,\ldots ,V^n\}$ and $\collection{W}\ceqq \{ W^1,\ldots ,W^m\}$.
+	\begin{rmk}
+		In particular, we have that
+		\begin{equation}
+			\coordinates{T_1+T_2}{\collection{W}\leftarrow \collection{V}}=\coordinates{T_1}{\collection{W}\leftarrow \collection{V}}+\coordinates{T_2}{\collection{W}\leftarrow \collection{V}}
+		\end{equation}
+		and
+		\begin{equation}
+			\coordinates{\alpha \cdot T}{\collection{W}\leftarrow \collection{V}}=\alpha \cdot \coordinates{T}{\collection{W}\leftarrow \collection{V}}.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		If $\K$ weren't commutative, this instead would only be an isomorphism of groups.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\subsection{Invariant subspaces}
+
+At the beginning of the previous subsection, we explained that we sought to decompose $V$ into simpler pieces, with the hopes that this would enable us to associate a relatively simple matrix to a linear-transformation.  In this subsection, we investigate the \emph{types} of subspaces we would like to decompose $V$ into in order to achieve this:  \emph{invariant subspaces}.\footnote{In an ideal world, we could choose these smaller pieces to not just be $T$-invariant but in fact be eigenspaces, but of course, if we could do that, everything would be diagonalizable, and we wouldn't be discussing this in the first place.}  If we can decompose $V$ as a direct-sum of smaller $T$-invariant subspaces, then the form that the matrix of $T$ takes will simplify into a \emph{block-diagonal} matrix---see \cref{thm4.5.2}.
+
+Before turning to the the definition of invariant subspace itself, we first investigate a new example of an $R$-module that will prove moderately useful in the things to come.
+\begin{exm}{The $\K [x]$-module defined by a linear-trans-\\formation}{exm1.1.34}
+	Let $\K$ be a ring.  Before we get to the module itself, note that, while we have previously only thought of $\K [x]$ as a $\K$-module, it also has the canonical structure of a ring:  the addition is the same and the multiplication now is just `ordinary' multiplication of polynomials.\footnote{This works just like you think it would, with the caveat that the coefficients are assumed to \emph{commute} with $x$, even if $\K$ is noncommutative.  For example, $(\alpha x)\cdot (\beta +x^2)=\alpha \beta x+\alpha x^2$.  This assumption is a reasonable one because, as you will see shortly, $x$ is going to act as if it were a linear-transformation, and linear-transformations commute with all scalars, no matter how noncommutative $\K$ might be.}  This is exactly analogous to how we can consider $\R$ to be both a vector space and a ring.
+	
+	Having noted that $\K [x]$ has the structure of a ring (so that ``$\K [x]$-module'' actually makes sense), let us turn to examining the $\K [x]$-module itself.  To define this $\K [x]$-module, we must first start with a $\K$-module $V$ and a $\K$-linear operator $T\colon V\rightarrow V$.
+	
+	We now define the $\K [x]$-module as follows:  The underlying set of vectors is the same as before, $V$; the addition is the same as it was before; but now scaling $\K [x]\times V\rightarrow V$ is defined by
+	\begin{equation}
+	(\alpha _0+\alpha _1x+\cdots +\alpha _mx^m)\cdot v\ceqq \alpha _0\cdot v+\alpha _1\cdot T(v)+\cdots +\alpha _m\cdot T^m(v).
+	\end{equation}
+	Intuitively, we require that $x\cdot v\ceqq T(v)$, and then the ``action'' of every other polynomial is determined in the obvious way (e.g.~$x^2\cdot v\ceqq T^2(v)$).
+	\begin{exr}[breakable=false]{}{}
+		Check that this actually satisfies the axioms of a $\K [x]$-module.
+	\end{exr}
+	\begin{rmk}
+		If ever $V$ is a $\K$-module and $T$ is a $\K$-linear operator on $V$, if we say ``$V$ is a $\K [x]$-module'', it should be understood that the $\K [x]$-module structure we are referring to is the one defined in this example.
+	\end{rmk}
+\end{exm}
+Regarding $V$ as a $\K [x]$-module in this way is just a fancy way of saying that we have defined what $p(T)$ means, $T\colon V\rightarrow V$ a $\K$-linear operator and $p$ a polynomial.  For example, if $p(x)\ceqq 3x^3-5x^2+2$, then $p(T)\colon V\rightarrow V$ is the $\K$-linear transformation
+\begin{equation}
+v\mapsto [p(T)](v)\ceqq [3T^3-5T^2+2](v)\ceqq 3T(T(T(v)))-5T(T(v))+2v.
+\end{equation}
+After having discussed eigenvalues, we can say a little more about these operators---see \cref{prp4.2.33}.
+
+This example allows us to make the following definition.
+\begin{dfn}{Invariant subspace}{InvariantSubspace}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be a $\K$-linear operator, and let $W\subseteq V$ be a subspace.  Then, $W$ is \term{$T$-invariant}\index{Invariant subspace} iff $W$ is a $\K [x]$-submodule of $V$.
+	\begin{rmk}
+		If $T$ is clear from context, we may simply say \term{invariant}.
+	\end{rmk}
+	\begin{rmk}
+		This is succinct but obtuse---see the following proposition for a more down-to-earth characterization of what this means.
+	\end{rmk}
+	\begin{rmk}
+		Recall that (\cref{Subspace}) ``submodule'' is synonymous with ``subspace''.  We use the term ``submodule'' here to emphasize the distinction between thinking of $V$ as a $\K$-module versus a $\K [x]$-module.
+	\end{rmk}
+	\begin{rmk}
+		Note that subspaces which satisfy \cref{Eigen}\cref{Eigen(i)} are automatically $T$-invariant.  In particular, eigenspaces are invariant subspaces.
+	\end{rmk}
+	\begin{rmk}
+		Strictly speaking, we didn't really \emph{need} the $\K [x]$-module defined in \cref{exm1.1.34} to state this definition, and it is admittedly easier to understand characterization in the following proposition.  Nonetheless, I decided to present it this was (i) to give you practice thinking about nonartificial examples of $R$-modules that are not vector spaces, (ii) I personally find it more elegant, and (iii) it is more systematic in the sense that the term ``invariant subspace'' is used in more general contexts where it can analogously be defined as a particular submodule.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be a $\K$-linear operator, and let $W\subseteq V$ be a subspace.  Then, $W$ is $T$-invariant iff $T(w)\in W$ for all $w\in W$.
+	\begin{rmk}
+		This makes it clear one reason why invariant subspaces might be useful:  if $W$ is invariant, then $\restr{T}{W}\colon W\rightarrow W$, that is, $T$ can be considered as a linear operator on $W$.
+	\end{rmk}
+	\begin{rmk}
+		Of course, said another way, this is the same as the statement $T(W)\subseteq W$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exm}{}{}
+	Define $D\colon \R [x]\rightarrow \R [x]$ by $D(p)\ceqq p'$.  Then, $\R [x]_m\subseteq \R [x]$ is a $D$-invariant subspace for all $m\in \N$.\footnote{Recall (\cref{Polynomials}) that $\R [x]_m$ is the subspace of all polynomials of degree at most $m$.}
+\end{exm}
+
+One fact we will find useful is that projections onto invariant subspaces are ``compatible'' with the linear operator.
+\begin{prp}{}{prp4.5.9}
+	Let $V$ be a $\K$-module, let $V=U\oplus W$ be a direct-sum decomposition, and let $T\colon V\rightarrow V$ be a linear operator.  Then, if $U$ and $W$ are $T$-invariant, then
+	\begin{equation}
+		\proj _U\circ T=T\circ \proj _U\text{ and }\proj _W\circ T=T\circ \proj _W.
+	\end{equation}
+	\begin{proof}
+		Suppose that $U$ and $W$ are $T$-invariant.  Let $v\in V$ and write $v=u+w$ for unique $u\in U$ and $w\in W$.  Then, $T(v)=T(u)+T(w)$.  By invariance, $T(u)\in U$ and $T(w)\in W$, so by definition of projections, $\proj _U(T(v))=T(u)\ceqq T(\proj _U(v))$.  Hence, $\proj _U\circ T=T\circ \proj _U$.  Similarly for $W$.
+	\end{proof}
+\end{prp}
+
+We know now that we can't always find a basis in which the matrix of a linear operator is diagonal.  Our knowledge of direct-sums from the previous subsection suggests that perhaps we can get what is in a sense the `next best thing':  a \emph{block-diagonal} matrix.  Before, we saw that the matrix our our linear-transformation will be diagonal iff the basis consisted of eigenvectors.  Our goal now then is to determine when the matrix of our linear-transformation with respect to a \emph{direct-sum decomposition} is block-diagonal.  As eigenspaces were special types of invariant subspaces, we might guess that the more general invariant subspaces will work.  Indeed, this is the case.
+\begin{dfn}{Block-diagonalizable}{BlockDiagonalizble}
+	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, $T$ is \term{block-diagonalizable}\index{Block-diagonalizable} iff there is a direct-sum decomposition $V=V^1\oplus \cdots \oplus V^m$ such that $\coordinates{T}{\collection{V}\leftarrow \collection{V}}$ is a block-diagonal matrix, where $\collection{V}\ceqq \{ V^1,\ldots ,V^m\}$.
+	\begin{rmk}
+		In this case, $\coordinates{T}{\collection{V}\leftarrow \collection{V}}$ is the \term{block-diagonalization}\index{Block-diagonalization} of $T$.
+	\end{rmk}
+\end{dfn}
+\begin{thm}{Fundamental Theorem of Block-diagonaliz\-ability}{thm4.5.2}
+	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item $T$ is block-diagonalizable.
+		\item There is a direct-sum decomposition of $V$ consisting of $T$-invariant subspaces.
+		\item There are $T$-invariant subspaces $V^1,\ldots ,V^m$ such that
+		\begin{equation}
+		\dim (V)=\dim (V^1)+\cdots +\dim (V^m).
+		\end{equation}
+	\end{enumerate}
+	In this case, $\coordinates{T}{\collection{V}\leftarrow \collection{V}}$ is a block-diagonal matrix, where $\collection{V}\ceqq \{ V^1,\ldots ,V^m\}$.
+	\begin{rmk}
+		Let $V=V^1\oplus \cdots \oplus V^m$ be a direct-sum decomposition of $V$ consisting of $T$-invariant subspaces.  As each $V^k$ is invariant, $T$ restricts to a linear-transformation $T^k\ceqq \restr{T}{V^k}\colon V^k\rightarrow V^k$.  Using this notation, we have
+		\begin{equation}
+		\coordinates{T}{\collection{V}\leftarrow \collection{V}}=\begin{bmatrix}T^1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & T^m\end{bmatrix}\eqqc T^1\oplus \cdots \oplus T^m.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This name is nonstandard---there is no standard name for this result.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+\subsubsection{Indecomposability}
+
+Of course, $V=V$ is itself a direct-sum decomposition, and one that generally won't be very useful.  In order to simplify the block-diagonal form as much as possible, we wish to break up $V$ into the `smallest' invariant subspaces we can.  The precise sense in which we want these subspaces to the the ``smallest'' possible is called \emph{indecomposable}.
+\begin{dfn}{Indecomposable}{Indecomposable}
+	Let $V$ be a nonzero $R$-module.  Then, $V$ is \term{indecomposable}\index{Indecomposable module} iff whenever $V=U\oplus W$, it follows that either $U=0$ or $W=0$.
+	\begin{rmk}
+		If $V$ is a $\K$-module and $T\colon V\rightarrow V$ is a linear operator, we say that $V$ is \term{$T$-indecomposable} iff $V$ is indecomposable when regarded as a $\K [x]$-module.
+	\end{rmk}
+	\begin{rmk}
+		If we say that a subspace $W\subseteq V$ is $T$-indecomposable, it is implicit that it is also $T$-invariant (otherwise it wouldn't actually possess the structure of a $\K [x]$-module, and so the definition given in the previous remark wouldn't make sense).
+	\end{rmk}
+	\begin{rmk}
+		You can view the requirement that $V$ be nonzero as roughly analogous to how we disallow $1\in \Z$ from being considered prime.
+	\end{rmk}
+\end{dfn}
+We now consider whether we can, and if so, how can we, decompose $V$ into indecomposable submodules.  The basic idea is as follows.  If $V$ is indecomposable, we're done; otherwise, there are proper nonzero submodules $U,W\subseteq V$ such that $V=U\oplus W$.  If $U$ and $W$ are indecomposable, again, we're done; otherwise, we can break up $U$ and/or $W$ as a direct-sum of proper nonzero submodules, and so on.  In general, there is no need for this process to terminate.  However, the next result says that it does in the primary case of interest.
+\begin{prp}{}{prp4.5.17}
+	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, there are finitely-many $T$-indecomposable subspaces $V^1,\ldots ,V^m\subseteq V$ such that
+	\begin{equation}
+		V=V^1\oplus \cdots \oplus V^m.
+	\end{equation}
+	\begin{rmk}
+		For what it's worth, modules that can be written as direct-sums of indecomposable modules are known as \term{completely-decomposable}\index{Completely-decomposable module} modules.  Here, we would be regarding $V$ as a $\F [x]$-module, $\F$ the ground field,\footnote{All vector spaces are `trivially' completely-decomposable---every basis gives a direct-sum decomposition into $\F$-invariant subspaces.} in which case we would say that $V$ is \term{$T$-completely-decomposable} as short-hand for the statement ``$V$ is a completely-decomposable $\F [x]$-module.''.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This will not be true in general---see \cref{exr4.5.17}.
+	\end{rmk}
+	\begin{proof}
+		If $V$ is indecomposable, we are done.  Otherwise, there are proper nonzero invariant subspaces $U_1,U_2\subseteq V$ such that $V=U_1\oplus U_2$.  Note that as $V$ is finite-dimensional and these are proper subspaces, we have that $\dim (U_1),\dim (U_2)<\dim (V)$.  Again, if each $U_1$ and $U_2$ are indecomposable, we are done; otherwise, we can write these as the direct-sum of invariant subspaces whose dimensions are strictly less than $\dim (U_1)$ and $\dim (U_2)$ respectively.
+		
+		Repeating this process inductively, the process either stops because everything is indecomposable, or we have reached that point where there are no proper nonzero subspaces, in which case the subspace has to have dimension $1$, and so must be indecomposable.  Thus, we eventually find that $V=V_1\oplus \cdots \oplus V_M$ for $V_k\subseteq V$ indecomposable subspaces, as desired.
+	\end{proof}
+\end{prp}
+\begin{exr}{}{exr4.5.17}
+	What is an example of an that is not completely-decomposable?  Can you find one that is an $\F [x]$-module?
+\end{exr}
+
+Now seems an appropriate time to return to a counter-example we mentioned previously, namely, a subspace of a $\K$-module with no complement.
+\begin{exm}{A subspace of a $\K$-module with no complement}{exm4.5.15}
+	Define $\K \ceqq \C$, $V\ceqq \C ^2$, $U\ceqq \Span (\coord{1,0})$, and let $T_A\colon V\rightarrow V$ be the $\C$-linear-transformation defined by the matrix
+	\begin{equation}
+		A\ceqq \begin{bmatrix}0 & 1 \\ 0 & 1\end{bmatrix}.
+	\end{equation}
+	Note that $U\subseteq V$ is a $\C [x]$-submodule, that is, it is $T_A$-invariant.  We claim that it has no complement.
+	
+	We proceed by contradiction:  let $W\subseteq V$ be a $\K [x]$-submodule such that $V=U\oplus W$ (as $\C [x]$-modules).  $W$ is then in particular a $\C$-subspace, and so, by a dimension count, we must have $W=\Span (\coord{a,b})$ for $a,b\in \C$, $b\neq 0$.  However, $N(\coord{a,b})=\coord{b,0}\notin W$, and so $W$ is not $N$-invariant, no matter what $a$ and $b$ are.
+	\begin{rmk}
+		Essentially this same argument shows that $V$ is an indecomposable $\C [x]$-module.  In particular, this serves as an example of an indecomposable module with proper nonzero submodules.\footnote{One might naively think that if $U\subseteq V$ is proper and nonzero, we can write $V=U\oplus W$ for $W\subseteq V$ also proper nonzero, as we can with vector spaces, and so the existence of such a $U$ implies decomposability.  This example shows that this naive thinking is wrong.}
+	\end{rmk}
+\end{exm}
+
+\subsection{Generalized ``Eigenstuff''}
+
+After realizing that we won't always be able to find a basis in which the matrix of a given linear-transformation was diagonal, we set out to find the `next best thing'.  In the previous sections, we decided that instead we should only try to find a \emph{block}-diagonal matrix, and in order to do that, we should decompose $V$ into invariant subspaces.  Furthermore, in order to simplify the description as much as possible, we would like these subspaces not to just be invariant but to be \emph{indecomposable}.
+
+\subsubsection{A glimpse of generalized-eigenspaces}
+
+Our first hint at how we might do all this is given by the following result \cref{prp4.6.1}.
+\begin{prp}{}{lma4.6.2}
+	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then,
+	\begin{equation}
+	0\subseteq \Ker (T)\subseteq \cdots \subseteq \Ker (T^{\dim (V)})=\Ker (T^{\dim (V)+1})=\cdots .
+	\end{equation}
+	\begin{proof}
+		Let $v\in \Ker (T^k)$.  Then, $T^k(v)=0$, and so $T^{k+1}(v)\ceqq T(T^k(v))=0$, and so $v\in \Ker (T^{k+1})$.  Hence, $\Ker (T^k)\subseteq \Ker (T^{k+1})$.
+		
+		If $\Ker (T^m)=\Ker (T^{m+1})$, then in fact $\Ker (T^m)=\Ker (T^n)$ for all $n\geq m$.  To see this, write $n=m+k$ for $k\in \N$ and let $v\in \Ker (T^{m+k})$, so that $T^{m+1}(T^{k-1}(v))=T^{m+k}(v)=0$.  Then, $T^{k-1}(v)\in \Ker (T^{m+1})=\Ker (T^m)$, and so in fact $T^m(T^{k-1}(v))=T^{m+k-1}(v)=0$.  Proceeding inductively, we eventually find that $T^m(v)=0$.
+		
+		Thus, if there is some $m\leq \dim (V)$ such that $\Ker (T^m)=\Ker (T^{m+1})$, we are done.  Otherwise, $0$ is properly contained in $\Ker (T)$, which is properly contained in $\Ker (T^2)$, etc..  This means that $\dim (T^k)\geq \dim (T^{k-1})+1$ for $1\leq k\leq \dim (V)$, and hence $\dim (T^{\dim (V)})\geq \dim (V)$, in which case we must have $\Ker (T^{\dim (V)})=\Ker (T^m)$ for all $m\geq \Ker (T)$, as desired.
+	\end{proof}
+\end{prp}
+\begin{prp}{}{prp4.6.1}
+	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, let $\lambda \in \F$ be central, and let $m\in \N$.  Then, if $\Ker ([T-\lambda ]^m)=\Ker ([T-\lambda ]^{m+1})$, then,
+	\begin{equation}
+		V=\Ker ([T-\lambda ]^m)\oplus \Ima ([T-\lambda ]^m)
+	\end{equation}
+	is a direct-sum decomposition of $V$ into $T$-invariant subspaces.
+	\begin{rmk}
+		Note by the previous result that, if $V$ is finite-dimensional, we always have
+		\begin{equation}
+			V=\Ker ([T-\lambda ]^{\dim (V)})\oplus \Ima ([T-\lambda ]^{\dim (V)}).
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		In fact, they are invariant subspaces for all $m\in \N$---we needn't assume anything about $m$ for this part of the result to hold.
+	\end{rmk}
+	\begin{rmk}
+		Note that $\Eig _{\lambda}=\Ker (T-\lambda )\subseteq \Ker ([T-\lambda ]^{\dim (V)})$, that is, the first invariant subspace here contains the $\lambda$-eigenspace of $T$.\footnote{Strictly speaking, we shouldn't be using this notation or language if $\lambda$ is not an eigenvalue.  In any case, the inclusion of the kernels stated remains valid.}
+	\end{rmk}
+	\begin{rmk}
+		We will see later that, if $\lambda \in \F$ is an eigenvalue of $T$, then $\Ker ([T-\lambda ]^{\dim (V)})$ is the \emph{$\lambda$-generalized-eigenspace} of $T$.
+	\end{rmk}
+	\begin{proof}
+		We first check that these are invariant subspaces.  Let $v\in \Ker ([T-\lambda ]^{m})$.  As $T$ computes with $T-\lambda$, we have that
+		\begin{equation}
+			[T-\lambda ]^{m}(T(v))=T\left( [T-\lambda ]^{m}(v)\right) =T(0)=0,
+		\end{equation}
+		and so $T(v)\in \Ker ([T-\lambda ]^{m})$.
+		
+		Let $v=[T-\lambda ]^{m}(w)\in \Ima ([T-\lambda ]^{m})$.  Then,
+		\begin{equation}
+			T(v)=T\left( [T-\lambda ]^{m}(w)\right) =[T-\lambda ]^{m}\left( T(w)\right) ,
+		\end{equation}
+		and so $T(v)\in \Ima ([T-\lambda ]^{m})$.
+		
+		It suffices to prove the rest of the result for $\lambda =0$ (this is the same as proving the result for arbitrary $T$ linear).  By \cref{crl4.4.11}, it suffices to show that (i) $V=\Ker (T^{m})+\Ima (T^{m})$ and that (ii) $\Ker (T^{m})\cap \Ima (T^{m})=0$.
+		
+		We first check that $\Ker (T^{m})\cap \Ima (T^{m})=0$.  So, let $v=T^{m}(w)\in \Ker (T^{m})\cap \Ima (T^{m})$.  We thus have that
+		\begin{equation}
+		0=T^{m}(v)=T^{2m}(w),
+		\end{equation}
+		and hence $w\in \Ker (T^{2m})$.  By \cref{lma4.6.2}, $\Ker (T^{m})=\Ker (T^{2m})$, and so in fact $w\in \Ker (T^{m})$, and hence $v=T^{m}(w)=0$.
+		
+		It now follows that
+		\begin{equation}
+			\begin{split}
+				\MoveEqLeft
+				\dim (\Ker (T^{m})+\Ima (T^{m})) \\
+				& =\dim (\Ker (T^{m}))+\dim (\Ima (T^{m})) \\
+				& =\footnote{By the \namerefpcref{RankNullityTheorem}.}m,
+			\end{split}
+		\end{equation}
+		and hence $V=\Ker (T^{m})+\Ima (T^{m})$.	
+	\end{proof}
+\end{prp}
+
+The next idea is to apply this decomposition inductively:  List the distinct eigenvalues of $T$, $\lambda _1,\ldots ,\lambda _m$, write $V=\Ker ([T-\lambda _1]^{\dim (V)})\oplus W_1$, where we have defined $W_1\ceqq \Ima ([T-\lambda _1]^{\dim (V)})$, write $W_1=\Ker ([\restr{T-\lambda _2}{W_1}])^{\dim (W_1)}\oplus W_2$, where we have defined $W_2\ceqq \Ima (\restr{[T-\lambda _2]^{\dim (V)}}{W_1}$, and so on.  With any luck, we will find $W_m=0$, so that $V$ can be written as a finite direct-sum of subspaces of the form $\Ker ([T-\lambda ]^{\dim (V)})$.
+
+That said, the issue or not of whether we can make such a decomposition is going to be irrelevant if we don't understand the behavior of $T$ on subspaces of the form $\Ker ([T-\lambda ])^{\dim (V)})$.  In brief, $T-\lambda$ is \emph{nilpotent} on this subspace, which brings us to the next subsubsection.
+
+\subsubsection{Nilpotent linear operators}
+
+Before we begin a study if nilpotency proper, let us briefly consider an alternative perspective one can take on finding the ``next best thing'' to diagonalization.
+
+Let $T\colon V\rightarrow V$ be a linear operator and let $\basis{B}$ be a basis for $V$.  As we can't always find a $\basis{B}$ such that $\coordinates{T}{\basis{B}}$ is diagonal, we instead try to see if we can find a $\basis{B}$ such that
+\begin{equation}
+	\coordinates{T}{\basis{B}}=D+N,
+\end{equation}
+where $D$ is diagonal and $N$ is `small' in some sense.
+
+To see what notion of ``small'' we might want, recall that we are going to try to decompose $V$ into subspaces of the form $\Ker ([T-\lambda ]^{\dim (V)})$, and so are also interested in understanding the behavior of the restriction of $T$ to these subspaces.  If this were simply $\Ker (T-\lambda )$, that is, an eigenspace,\footnote{At least for $\lambda$ an eigenvalue.} we would have $T-\lambda =0$ on this subspace---in the notation above, we have $D=\lambda$ and $N=0$.  However, we don't quite have that for the subspace $\Ker ([T-\lambda ]^{\dim (V)})$.  Rather, we only have that the restriction of $T-\lambda$ to this subspace is \emph{nilpotent}.  It is in this sense that $N$ will be small.
+\begin{dfn}{Nilpotent}{Nilpotent}
+	Let $X$ be a rg and let $x\in X$.  Then, $x$ is \term{nilpotent}\index{Nilpotent} iff there is some $m\in \N$ such that $x^m=0$.
+	\begin{rmk}
+		For us, the rg we're going to be interested in is in fact a ring, $\End _{\Mod{\K}}(V)$, $V$ a $\K$-module, and which case for $T\colon V\rightarrow V$ to be nilpotent means that there is some $m\in \N$ such that $T^m=0$, where
+		\begin{equation}
+			T^m\ceqq \underbrace{T\circ \cdots \circ T}_m,
+		\end{equation}
+		that is, $T$ composed with itself $m$ times.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{}{}
+	Let $N$ be a strictly upper-triangular matrix.  Then, $N$ is nilpotent.
+	\begin{exr}[breakable=false]{}{}
+		Check this.
+	\end{exr}
+\end{exm}
+
+One of the first things we note about nilpotent operators is that they have but one possible eigenvalue:  zero.
+\begin{prp}{}{}
+	Let $V$ be a vector space, let $N\colon V\rightarrow V$ be linear, and let $\lambda \in \F$ be an eigenvalue.  Then, if $N$ is nilpotent, $\lambda =0$.
+	\begin{rmk}
+		In fact, except for the silly case $V=0$ (in which case no operator can have any eigenvalue), $0$ will be an eigenvalue of $N$.
+	\end{rmk}
+	\begin{proof}
+		Suppose that $N$ is nilpotent.  By definition, there is then some $m\in \N$ such that $N^m=0$.  By \cref{crl4.2.36}, it follows that $\lambda ^m=0$, whence $\lambda =0$ because the ground ring is a division ring.
+	\end{proof}
+\end{prp}
+This has an important, albeit unfortunate, consequence.
+\begin{crl}{}{}
+	Let $V$ be a finite-dimensional vector space and let $N\colon V\rightarrow V$ be nilpotent linear.  Then, $N$ is diagonalizable iff $N=0$.
+	\begin{rmk}
+		Moreover, we will see later that, in a sense, having a nonzero `nilpotent part' is the only way in which a linear operator can fail to be diagonalizable.
+	\end{rmk}
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $N$ is diagonalizable.  Then, there is a basis of $V$ consisting of eigenvectors of $N$.  By the previous result, the corresponding eigenvalues are all $0$, and so $N$ vanishes on each of these basis vectors.  Hence, $N=0$.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $N=0$.  Then, $\coordinates{N}{\basis{B}}$ will be a diagonal\footnote{To accommodate the silly case in which $V=0$, note that the empty matrix is vacuously diagonal.} matrix for any basis $\basis{B}$ of $V$.
+	\end{proof}
+\end{crl}
+
+We thus know that nilpotent linear-transformations are essentially never diagonalizable, so if we are to come up with a `next best thing' to diagonalization, we had at the very least know how to do so for nilpotent linear-transformations.  The following result is our solution to this problem.
+\begin{thm}{Jordan Canonical Form of Nilpotent Operators}{thm4.6.17}
+	Let $V$ be a finite-dimensional vector space and let $N\colon V\rightarrow V$ be nilpotent linear.  Then, if $V$ is $N$-indecomposable, then there is a basis $\basis{B}$ of $V$ such that
+	\begin{equation}\label{eqn4.6.17}
+		\coordinates{N}{\basis{B}\leftarrow \basis{B}}=\begin{bmatrix}0 & 1 & 0 & \cdots & 0 \\ 0 & 0 & 1 & \cdots & 0 \\ \vdots &\ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & 1 \\ 0 & 0 & 0 & \cdots & 0\end{bmatrix}.
+	\end{equation}
+	\begin{rmk}
+		Note that (\cref{prp4.5.17}) we can always write $V$ as a direct-sum of finitely many $N$-indecomposable submodules, and so in the general case (when $V$ is not necessarily indecomposable), $\coordinates{N}{\basis{B}\leftarrow \basis{B}}$ will be a direct-sum of matrices of the above form.
+	\end{rmk}
+	\begin{proof}
+		\Step{Define the basis}
+		Suppose that $V$ is $N$-indecomposable.  As $N$ is nilpotent, there is a smallest positive integer $m\in \Z ^+$ such that $N^m=0$.  It must then be the case that $N^{m-1}\neq 0$, and so there is some $v\in V$ such that $N^{m-1}(v_0)\neq 0$.  Define
+		\begin{equation}
+			\basis{B}\ceqq \{ N^{m-1}(v_0),\ldots ,N(v_0),v_0\} .
+		\end{equation}
+		As $N(N^{m-1}(v_0))=0$ and $N(N^k(v_0))=N^{k+1}(v_0)$ for $0\leq k<m-1$, \eqref{eqn4.6.17} will follow if we can show that $\basis{B}$ is a basis.
+		
+		\Step{Check linear-independence}
+		Suppose that
+		\begin{equation}
+			0=\alpha _0\cdot v_0+\cdots +\alpha _{m-1}\cdot N^{m-1}(v_0).
+		\end{equation}
+		Applying $N^{m-1}$ to this equation, we obtain $0=\alpha _0\cdot N^{m-1}(v_0)=0$, and hence $\alpha _0$.  Applying $N^{m-2}$ in the same way, we find $\alpha _1$.  Proceeding inductively, we eventually find that every $\alpha _k=0$, establishing linear-independence.
+		
+		\Step{Start the proof of spanning with induction}
+		As for spanning, we proceed by induction on $m$.  That is, we prove the statement
+		\begin{displayquote}
+			If $N$ is a nilpotent operator on an $N$-indecomposable finite-dimensional vector space $V$ where $m\in \Z ^+$ is the smallest positive integer such that $N^m=0$ and $v\in V$ is such that $N^{m-1}(v_0)\neq 0$, then $\{ N^{m-1}(v_0),\ldots ,v_0\}$ spans $V$.
+		\end{displayquote}
+		First take $m=1$, so that $N=0$.  In this case, every subspace is $N$-invariant, and so indecomposability forces $\dim (V)=1$, so that indeed $V=\Span (v_0)$.
+		
+		Now suppose the result is true for $m-1$.  If $m$ is the smallest positive integer such that $N^m=0$ on $V$, then $m-1$ is the smallest positive integer such that $N^{m-1}=0$ on $\Ima (N)$.  Furthermore, $N(v_0)\in \Ima (N)$ is such that $N^{(m-1)-1}(N(v_0))=N^{m-1}(v_0)\neq 0$.  Thus, if we can show that $\Ima (N)$ is indecomposable still, then the induction hypothesis will gives us that $\Ima (N)=\Span (N^{m-1}(v_0),\ldots ,N(v_0))$.
+		
+		\Step{Show that $\Ima (N)$ is indecomposable}[stp4.6.17.4]
+		So, let $U,W\subseteq \Ima (N)$ be subspaces and suppose that $\Ima (N)=U\oplus W$ with $U$ and $W$ $N$-invariant.  Then write $\Ima (N)=U\oplus W\oplus V'$ for some subspace $V'\subseteq V$ (by \cref{prp4.4.24}).  For every $v\in V'$, we may write
+		\begin{equation}
+			\begin{split}
+				N(v) & =\proj _U(N(v))+\proj _W(N(v)) \\
+				& =\footnote{$N$ commutes with the projections because the subspaces are invariant---see \cref{prp4.5.9}.}N(\proj _U(v))+N(\proj _W(v))\eqqc N(v_U)+N(v_W),
+			\end{split}
+		\end{equation}
+		where we have written $v_U\ceqq \proj _U(v)$ and $v_W\ceqq \proj _W(v)$.  Let $\basis{B}'$ be a basis for $V'$, and define
+		\begin{equation}
+			\breve{\basis{B}}\ceqq \{ b-b_U:b\in \basis{B}'\} 
+		\end{equation}
+		and $\breve{V}\ceqq \Span (\breve{\basis{B}})$.  Note that $N(b-b_U)=N(v_w)\in W$, and so $W+\breve{V}$ is an invariant subspace.  Thus, if we can show $V=U\oplus W\oplus \breve{V}$, indecomposability will imply that either $U=0$ or $W\oplus \breve{V}=0$, so that either $U=0$ or $W=0$, as desired.
+		
+		So, suppose that $0=u+w+\breve{v}$ for $u\in U$, $w\in W$, and $\breve{v}\in \breve{V}$.  Write $\breve{v}=\alpha _1(b_1-[b_1]_U)+\cdots +\alpha _m(b_m-[b_m]_U)$, so that
+		\begin{equation}
+			0=\left( u-\sum _{k=1}^m\alpha _k[b_k]_U\right) +w+\sum _{k=1}^m\alpha _kb_k.
+		\end{equation}
+		As $V=U\oplus W\oplus W'$, it follows that $\sum _{k=1}^m\alpha _kb_k=0$, whence each $\alpha _k=0$ by linear-independence, that $w=0$, and that $u=\sum _{k=1}^m\alpha _k[b_k]_U=0$.  By \cref{prp4.4.7}, it just remains to check that $V=U+W+\breve{V}$.
+		
+		So, let $v\in V$.  We may then write $v=u+w+v'$ for $u\in U$, $w\in W$, and $v'\in V'$.  Write $v'=\alpha _1b_1+\cdots +\alpha _mb_m$.  Then,
+		\begin{equation}
+			v'=\left( u+\sum _{k=1}^m\alpha _k[b_k]_U\right) +w+\sum _{k=1}^m\alpha _k(b_k-[b_k]_U)\in U+W+\breve{V},
+		\end{equation}
+		as desired.  Thus, $\Ima (T)$ is indecomposable, and hence $\Ima (N)=\Span (N^{m-1}(v_0),\ldots ,N(v_0))$.
+		
+		\Step{Finish the proof of spanning}
+		Extend the linear-independent set $\basis{B}\ceqq \{ N^{m-1}(v_0),\ldots ,v_0\}$ to a basis $\basis{C}$ of $V$ such that $\basis{C}\supseteq \basis{B}$.  We wish to show that $\basis{C}=\basis{B}$.  So, let $c\in \basis{C}\setminus \basis{B}$.  As $N(c)\in \Ima (N)$, we can write
+		\begin{equation}\label{eqn4.6.21}
+			\begin{split}
+				N(c)& =\alpha _1N(v_0)+\cdots +\alpha _{m-1}N^{m-1}(v_0) \\
+				& =N\left( \alpha _1v_0+\cdots +\alpha _{m-1}N^{m-2}(v_0)\right) .
+			\end{split}
+		\end{equation}
+		Now define
+		\begin{equation}\label{eqn4.6.22}
+			\breve{c}\ceqq c-\sum _{k=1}^{m-1}\alpha _kN^{k-1}(v_0)
+		\end{equation}
+		as well as $\breve{\basis{A}}\ceqq \{ \breve{c}:c\in \basis{C}\setminus \basis{B}\}$.  \eqref{eqn4.6.21} implies that $N(\breve{c})=0$.  In particular, $\breve{V}\ceqq \Span (\breve{\basis{C}})$ is invariant.  Thus, if we can show that $V=\Span (\basis{B})\oplus \Span (\breve{\basis{A}})$, indecomposability will force $\Span (\breve{\basis{A}})=0$, hence $\breve{\basis{A}}=\emptyset$, hence $\basis{C}\setminus \basis{B}=\emptyset$, hence $\basis{C}=\basis{B}$, completing the proof.
+		
+		Thus, it remains only to check that $V=\Span (\basis{B})\oplus \Span (\breve{\basis{A}})$.  So, let $v\in \Span (\basis{B})\cap \Span (\breve{\basis{A}})$.  We could then write this vector as a linear-combination of both elements of $\basis{B}$ and elements of $\breve{\basis{A}}$.  Using the definition of the $\breve{c}$s in \eqref{eqn4.6.22}, we see that this would yield a nontrivial linear-dependence relation about elements of $\basis{B}$ and elements of $\basis{C}\setminus \basis{B}$ unless $v=0$.  By linear-dependence of $\basis{C}$ then, we have that $\Span (\basis{B})\cap \Span (\breve{\basis{A}})=0$.
+		\begin{exr}[breakable=false]{}{}
+			Finish the proof by showing that $V=\Span (\basis{B})+\Span (\basis{C})$.
+			\begin{rmk}
+				Hint:  You might try an argument similar to the one we used to show that $V=U+W+\breve{V}$ in \cref{stp4.6.17.4}.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+The use of nilpotent operators is far more common, and in our primary case of interest, it will work just fine.  However, for the purposes of dealing with generalized-eigenspaces in general, a related concept is more natural, that of \emph{local-nilpotency}.
+\begin{dfn}{Locally-nilpotent}{LocallyNilpotent}
+	Let $V$ be an $R$-module and let $T\in R$.  Then, $T$ is \term{locally-nilpotent}\index{Locally-nilpotent} iff for every $v\in V$ there is some $m_v\in \N$ such that $T^{m_v}\cdot v=0$.
+	\begin{rmk}
+		Of course, we're interested in the case $V$ is a $\K [x]$-module with module structure defined as usual by a given linear-transformation $T\colon V\rightarrow V$, in which case we say that $T$ is \term{locally-nilpotent} iff $x\in \K[x]$ is.  Explicitly, $T$ is locally-nilpotent iff for every $v\in V$ there is some $m_v\in \N$ such that $T^{m_v}(v)=0$.
+	\end{rmk}
+	\begin{rmk}
+		Intuitively, the difference between nilpotency and local-nilpotency if the depends of $m_v$ on $V$.  For local-nilpotency, you are allowed pick a different $m_v$ for each $v\in V$; for nilpotency on the other hand, you must be able to pick a single $m\in \N$ that `works' ``uniformly'' for all $v\in V$.
+		
+		Thus, it is clear from the definitions that a nilpotent linear-transformation is locally-nilpotent.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{A locally-nilpotent operator that is not nilpotent}{exm4.4.129}
+	Consider the left-shift operator $L\colon \C ^{\infty}\rightarrow \C ^{\infty}$ (\cref{ShiftOperator}).  Let $a\in \C ^{\infty}$.  By definition of $\C ^{\infty}$, $m\mapsto a_m$ is eventually $0$, so that there is some $M$ such that whenever $m\geq M$ it follows that $a_m=0$.  Then $L^M(a_m)=0$, and hence $L$ is locally-nilpotent.
+	
+	To see that $L$ is not nilpotent, note that for every $m\in \N$, the sequence $a\in C^{\infty}$ that is identically $0$ except for a $1$ at index $m$ is not `killed' by $L^m$:  $L^m(a)\neq 0$.  Hence, $L^m\neq 0$ for any $m\in \N$, and hence $L$ is not nilpotent.
+	
+	\horizontalrule
+	
+	For $m\in \N$, let $E_m\subseteq \C ^{\infty}$ be the subspace of sequences which vanish for indices larger than $m$.  Note that $T$ is nilpotent on $E_m$, but not nilpotent on all of $\C ^{\infty}$.  Thus, there is no maximal subspace on which $T$ is nilpotent.
+	\begin{rmk}
+		This fact is mentioned later when we discuss generalized-eigenspaces, and in particular, why locally-nilpotent, and not nilpotent, is the notion that should be used in the general definition.
+	\end{rmk}
+\end{exm}
+On the other hand, in finite-dimensions, they are equivalent.
+\begin{prp}{}{}
+	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, $T$ is nilpotent iff it is locally-nilpotent.
+	\begin{proof}
+		$(\Rightarrow )$ This is always true.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $T$ is locally-nilpotent.  Let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ be a basis for $V$.  Let $m_k\in \N$ be such that $T^{m_k}(b_k)=0$.  Define $m\ceqq \max \{ m_1,\ldots ,m_d\}$.  Then, $T^m(b_k)=0$ for all $1\leq k\leq m$.  Let $v\in V$ and write $v=v^1\cdot b_1+\cdots +v^d\cdot b_d$.  Then,
+		\begin{equation}
+			T^m(v)=v^1\cdot T^m(b_1)+\cdots +v^d\cdot T^m(b_d)=0.
+		\end{equation}
+		Hence, $T^m=0$, and so $T$ is nilpotent.
+	\end{proof}
+\end{prp}
+
+\subsubsection{More than a glimpse of generalized-eigenspaces}
+
+Having understood the behavior of $T$ on subspaces of the form $\Ker ([T-\lambda ]^{\dim (V)})$, it is time we actually decompose $V$ into such subspaces.  Before we do so, we give such subspaces a name.
+\begin{dfn}{Generalized-eigenspaces}{GeneralizedEigenspaces}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a nonzero subspace, and let $\lambda \in \K$.  Then, $W$ is a \term{$\lambda$-generalized-eigenspace}\index{Generalized-eigenspace} iff
+	\begin{enumerate}
+		\item $\restr{T}{W}=\lambda \id _W+N$ with $N\colon W\rightarrow W$ locally-nilpotent linear; and
+		\item $W$ is maximal with this property.
+	\end{enumerate}
+	\begin{rmk}
+		Such a $\lambda$ is referred to a \term{generalized-eigenvalue}\index{Generalized-eigenvalue} of $T$.
+	\end{rmk}
+	\begin{rmk}
+		Nonzero elements of $W$ are \term{generalized-eigenvectors} of $T$ with eigenvalue $\lambda$.
+	\end{rmk}
+	\begin{rmk}
+		Note that it follows immediately from this that scaling by $\lambda$ on $W$ is linear.  Furthermore, we shall see shortly (\cref{prp4.6.25}) that generalized-eigenvalues are just eigenvalues,\footnote{Which is why you probably won't see the term ``generalized-eigenvalue'' in most places---it turns out they're just the same as eigenvalues, and so people just stick with using the single term ``eigenvalue'' for everything.} and so will in particular be central, at least for vector spaces (\cref{thm4.2.17}).
+	\end{rmk}
+	\begin{rmk}
+		See the definition of eigenspaces (\cref{Eigen}) for some other potentially useful remarks that apply equally well here.
+	\end{rmk}
+\end{dfn}
+As before, we start by establishing uniqueness of generalized-eigenspaces.
+\begin{prp}{Generalized-eigenspaces are unique}{}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $\lambda \in \K$, and let $U,W\subseteq V$ be $\lambda$-generalized-eigenspaces of $T$.  Then, $U=W$.
+	\begin{rmk}
+		We denote the unique $\lambda$-generalized-eigenspace of $V$ by $\Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda ,T}^{\infty}$} (for reasons that we will understand shortly).  If $T$ is clear from context, we may simply write $\Eig _{\lambda}^{\infty}\ceqq \Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda}^{\infty}$}.
+	\end{rmk}
+	\begin{rmk}
+		If ever we write ``$\Eig _{\lambda ,T}$'' without having explicitly said so, it should be assumed that $\lambda$ is an eigenvalue of $T$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				See the proof of \cref{prp4.2.3}.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{Generalized-eigenspaces are maximum with their defining property}{}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a subspace, and let $\lambda \in \K$ be a generalized-eigenvalue of $V$.  Then, if $\restr{T}{W}=\lambda \id _W+N$ with $N\colon W\rightarrow W$ locally-nilpotent linear, then $W\subseteq \Eig _{\lambda}$.
+	\begin{rmk}
+		A corollary of this is that, to show that $\lambda$ is a generalized-eigenvalue, it suffices to exhibit a single nonzero subspace $W$ on which $T-\lambda$ is locally-nilpotent linear.  For this result implies that $\Eig _{\lambda}^{\infty}\supseteq W$, so that if $W$ is nonzero, so is $\Eig _{\lambda}^{\infty}$, in which case $\lambda$ would be a generalized-eigenvalue.
+	\end{rmk}
+	\begin{rmk}
+		Note that this is one reason why we prefer locally-nilpotent over nilpotent in the definition of generalized-eigenspaces.  Were we to use ``nilpotent'' in place of ``locally-nilpotent'' in the definition, this result would fail.  A counter-example is given by the left-shift operator on $\C ^{\infty}$---see \cref{exm4.4.129}.
+	\end{rmk}
+	\begin{proof}
+		Suppose that $\restr{T}{W}=\lambda \id _W+N$ with $N\colon W\rightarrow N$ locally-nilpotent linear.  Define
+		\begin{equation}
+		\collection{U}\ceqq \{ U\subseteq V\text{ a subspace}:\restr{T}{U}-\lambda \id _U\text{ is locally-nilpotent linear.}\} 
+		\end{equation}
+		and
+		\begin{equation}
+		E\ceqq \sum _{U\in \collection{U}}U.
+		\end{equation}
+		
+		Let $e\in E$ and and write $e=u_1+\cdots +u_m$ for some $u_1\in U_1,\ldots ,u_m\in U_m$ with $U_1,\ldots ,U_m\in \collection{U}$.  As $T-\lambda$ is locally-nilpotent on $U_k$, there is some $n_k\in \N$ such that $[T-\lambda ]^{m_k}(u_k)=0$.  Define $n\ceqq \max \{ n_1,\ldots ,n_m\}$.  Then,
+		\begin{equation}
+			[T-\lambda ]^n(e)=[T-\lambda ]^n(u_1)+\cdots +[T-\lambda ]^n(u_m)=0.
+		\end{equation}
+		That is, $\restr{T}{E}=\lambda \id _E+N$ with $N\colon E\rightarrow E$ locally-nilpotent linear.  $E$ is maximal with this property, and hence $E=\Eig _{\lambda}^{\infty}$.  Finally, note that $W\in \collection{U}$, and hence $W\subseteq E=\Eig _{\lambda}^{\infty}$. 
+	\end{proof}
+\end{prp}
+\begin{prp}{}{prp4.6.25}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \K$.  Then, $\lambda$ is a generalized-eigenvalue of $T$ iff it is an eigenvalue of $T$.
+	\begin{rmk}
+		Thus, hereafter, we will likely stick with just ``eigenvalue'' and stop using the term ``generalized-eigenvalue''.
+	\end{rmk}
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $\lambda$ is a generalized-eigenvalue of $T$.  Then, $\Eig _{\lambda}^{\infty}\subseteq V$ is a subspace of $V$ on which $T-\lambda$ is locally-nilpotent and is maximal with this property.
+		
+		For succinctness of notation, let us temporarily write $N\ceqq \restr{T-\lambda}{\Eig _{\lambda}^{\infty}}$, so that $N\colon \Eig _{\lambda}^{\infty}\rightarrow \Eig _{\lambda}^{\infty}$ is locally-nilpotent linear.  If $\Ker (N)=0$, then $N$ would be injective, and so $N^m$ would be injective for all $m\in \N$, and hence $N$ couldn't possibly be locally-nilpotent.  Thus, $\Ker (N)\subseteq V$ is a nonzero subspace such that $\restr{T}{\Ker (N)}=\lambda \id _{\Ker (N)}$, and therefore $\lambda$ is an eigenvalue of $T$.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $\lambda$ is an eigenvalue of $T$.  Then, $\Eig _{\lambda}$ is a nonzero subspace on which $T-\lambda$ is locally-nilpotent, and so $\lambda$ is a generalized-eigenvalue of $T$.
+	\end{proof}
+\end{prp}
+\begin{prp}{Generalized-eigenvalues are unique (in vector spaces)}{}
+	Let $V$ be a vector space and let $T\colon V\rightarrow V$ be linear.  Then, if $\Eig _{\lambda ,T}^{\infty}=\Eig _{\mu ,T}^{\infty}$, it follows that $\lambda =\mu$.
+	\begin{proof}
+		Suppose that $\Eig _{\lambda ,T}^{\infty}=\Eig _{\mu ,T}^{\infty}$.  For convenience, let us write $\Eig _{\lambda ,T}^{\infty}\eqqc E\ceqq \Eig _{\mu ,T}^{\infty}$.  There is then a locally-nilpotent operator $N\colon E\rightarrow E$ such that
+		\begin{equation}
+			\lambda \id _E+N=\restr{T}{E}=\mu \id _E+N
+		\end{equation}
+		Let $v\in E$ be nonzero.  Then,
+		\begin{equation}
+			\lambda v+N(v)=\mu v+N(v),
+		\end{equation}
+		and hence $(\lambda -\mu )v=0$.  As $v\neq 0$ and the ground ring is a division ring, we must have that $\lambda -\mu =0$, that is, $\lambda =\mu$.
+	\end{proof}
+\end{prp}
+
+\subsection{The Jordan Canonical Form Theorem}
+
+Finally, we can put all the pieces together.

@@ -1,0 +1,726 @@
+\chapter{\texorpdfstring{$\K$}{K}-modules and \texorpdfstring{\hfill \\}{} linear-transformations}
+
+\section{Basic definitions}
+
+Linear algebra is the study of vector spaces.\footnote{Or possibly \emph{finite-dimensional} vector spaces if you prefer---it's not as if there is a strict definition of what the term ``linear algebra'' refers to.}  A vector space is (i) a set, the elements of which are called \emph{vectors}\footnote{This is slightly unfortunate terminology, and I will elaborate on a possible confusion soon.  In brief, one has to be careful not to confuse the term ``vector'' when used to describe elements of an `abstract' vector space and the same term ``vector'' when used to describe column vectors in, e.g., $\R ^d$.}; together with (ii) rules for adding and scaling the vectors.\footnote{Subject to various axioms of course.}  This is the intuition anyways.  In this way, the definition of vector spaces in general is an abstraction of the set of column vectors $\R ^d$ that you know and love.  As another example, the set of all continuous real-valued functions on $\R$ is a vector space, essentially because we can add and scale continuous functions (with the result being another continuous function).
+
+To specify the scaling operation, however, we first need to say what the \emph{scalars} are, that is, the thing by which we scale the vectors (in the two examples mentioned in the previous paragraph, the set of scalars it taken to be the real numbers $\R$).  For vector spaces, the scalars are required to form what is called a \emph{division ring}---see \cref{DivisionRing}.  That said, the axioms of a vector spaces makes just as much sense if you allow your division ring to be a more general (not necessarily division) \emph{ring}---see \cref{Ring}.  This is what is called a \emph{$\K$-module}.  As there is no reason to needlessly throw away this extra generality,\footnote{Except for perhaps, you know, pedagogy.} we present the definition in this form.
+\begin{dfn}{$\K$-module}{RModule}
+	Let $\K$ be a ring.  Then, a \term{$\K$-module} \index{$\K$-module} is
+	\begin{data}
+		\item a commutative group $\coord{V,+,0,-}$; together with
+		\item a function $\cdot \colon \K\times V\rightarrow V$;
+	\end{data}
+	such that
+	\begin{enumerate}
+		\item $(\alpha _1\alpha _2)\cdot v=\alpha _1\cdot (\alpha _2\cdot v)$;
+		\item $1\cdot v=v$;
+		\item $(\alpha _1+\alpha _2)\cdot v=\alpha _1\cdot v+\alpha _2\cdot v$; and
+		\item $\alpha \cdot (v_1+v_2)=\alpha \cdot v_1+\alpha \cdot v_2$;
+	\end{enumerate}
+	for all $\alpha ,\alpha _1,\alpha _2\in R$ and $v,v_1,v_2\in V$.
+	\begin{rmk}
+		$\K$ is called the \term{ground ring}\index{Ground ring}.
+	\end{rmk}
+	\begin{rmk}
+		In order to be less verbose, if every we say something like ``Let $V$ be a $\K$-module\textellipsis '', it should be understood that $\K$ is a ring, even though we may not say so explicitly.
+	\end{rmk}
+	\begin{rmk}
+		Simply unraveling what it means for $\coord{V,+,0,-}$ to be a commutative group, we see that this is equivalent to the following:  $V$ is a $\K$-module iff
+		\begin{enumerate}
+			\item $(v_1+v_2)+v_3=v_1+(v_2+v_3)$;
+			\item $v_1+v_2=v_2+v_1$;
+			\item $0+v=v=v+0$;
+			\item $v+(-v)=0=(-v)+v$;
+			\item $(\alpha _1\alpha _2)\cdot v=\alpha _1\cdot (\alpha _2\cdot v)$;
+			\item $1\cdot v=v$;
+			\item $(\alpha _1+\alpha _2)\cdot v=\alpha _1\cdot v+\alpha _2\cdot v$; and
+			\item $\alpha \cdot (v_1+v_2)=\alpha \cdot v_1+\alpha \cdot v_2$
+		\end{enumerate}
+		for all $\alpha ,\alpha _1,\alpha _2\in R$ and $v,v_1,v_2,v_3\in V$.
+	\end{rmk}
+	\begin{rmk}
+		See \cref{prpD.1.3} for an equivalent slicker but less transparent definition.  In general in mathematics, it is often the case that there are two (or more) ways to think of something---one is the conceptually concise, slick, but not very explicit way; and the other is not as elegant but easier to work with in practice.  This definition is of the latter type and the statement in \cref{prpD.1.3} of the former.
+	\end{rmk}
+	\begin{rmk}
+		In elementary linear algebra textbooks, this is often listed as eight (or more) axioms.  This is quite a bit, and I think it is easy to remember them as follows:  four of those axioms are simply equivalent to the statement that $\coord{V,+,0,-}$ is a commutative group, two of them are distributive axioms, and the other two are natural ``compatibility'' axioms between the multiplication in $\K$ and $\cdot$.
+	\end{rmk}
+	\begin{rmk}
+		In fact, phrasing the definition in this way makes sense even more generally for rigs---see \cref{prpD.1.3} for an explanation of why it is `natural' to specialize to rings.
+	\end{rmk}
+	\begin{rmk}
+		This is sometimes referred to as a \emph{left} $\K$-module because the ``scalars'' appear on the left.  Of course, rewriting things a bit, it is easy enough to write down the definition of a \emph{right} $\K$-module as well.  There really isn't any serious difference between the two definitions, but one convention can be more convenient than the other in certain contexts.\footnote{This is not unlike how it is sometimes convenient to write composition in \term{postfix notation}\index{Postfix notation}:  $f\cdot g\ceqq g\circ f$.}  Having a notion of both left and right modules is probably most useful when one wants to consider two different scalings on a set of vectors simultaneously---see \cref{KLBimodule}.
+	\end{rmk}
+	\begin{rmk}
+		It is more common to use ``$R$'' instead of ``$\K$'', in which case these would of course be called ``$R$-modules''.  The reason we use ``$\K$'' instead of ``$R$'' is because we are primarily interested in vector spaces and ``$\K$'' is more suggestive that the ring we are working over is a division ring, or at the very least, commutative.  That said, we will on occasion use ``$R$'' instead of ``$\K$'' when it feels more natural to do so.
+	\end{rmk}
+\end{dfn}
+
+Our first order of business is to give another equivalent definition of a $\K$-module (\cref{prpD.1.3}).  You should note, however, that while this is the most logical place to put this material, it's not of a particularly high priority, and so if this is your first time through the subject you should feel free to skip to the definition of a vector space (\cref{VectorSpace}).  Before getting to this equivalent definition itself, however, we must prove some basic facts about $\K$-modules that follow immediately from the axioms (as well as \cref{prpD.1.2}).
+\begin{exr}{}{exrD.1.2}
+	Let $V$ be a $\K$-module.
+	\begin{enumerate}
+		\item Show that $0=0\cdot v$ for all $v\in V$.
+		\item Show that $-v=(-1)\cdot v$ for all $v\in V$.
+	\end{enumerate}
+\end{exr}
+\begin{prp}{}{prpD.1.2}
+	Let $V$ be a commutative group.  Then, $\coord{\End _{\Grp}(V),+,0,-,\circ ,\id _V}$ is a ring.
+	\begin{rmk}
+		Recall that (\cref{Endomorphism,TheCategoryOfMagmas}) $\End _{\Grp}(V)$ is the set of all group homomorphisms (\cref{HomomorphismOfMagmas}) from $V$ to itself.
+	\end{rmk}
+	\begin{rmk}
+		$+$ is defined ``pointwise'', that is, $[\phi +\psi ](v)\ceqq \phi (v)+\psi (v)$.  Similarly, $0$ here denotes the \emph{function} that is $0$ for all $v$.
+	\end{rmk}
+	\begin{proof}
+		$\coord{\End _{\Grp}(V),+,0,-}$ is a commutative group because $\coord{V,+,0,-}$ is (write out the verification of the axioms yourself if you don't believe me).  $\coord{\End _{\Grp}(V),\circ ,\id _V}$ is a monoid by \cref{prpB.2.9}.  From the definition of a ring \cref{Rg}, we see that it only remains to check that $\circ$ distributes over $+$, and so, we check.
+		\begin{equation}
+		\begin{split}
+		\left[ \phi \circ (\psi +\chi )\right] (v) & \ceqq \phi \left( [\psi +\chi ](v)\right) \ceqq \phi \left( \psi (v)+\chi (v)\right) \\
+		& =\footnote{Because $\phi$ is a homomorphism.}\phi (\psi (v))=\phi (\chi (v)) \\
+		& \eqqc [\phi \circ \psi ](v)+[\phi \circ \chi ](v) \\
+		& \eqqc \left[ \phi \circ \psi +\phi \circ \chi\right] (v).
+		\end{split}
+		\end{equation}
+		As this is true for all $v$, in fact, the functions themselves must be equal, that is $\phi \circ (\psi +\chi )=\phi \circ \psi +\phi \circ \chi$.  Similarly,
+		\begin{equation}
+		\begin{split}
+		\left[ (\psi +\chi )\circ \phi \right] (v) & \ceqq [\psi +\chi ]\left( \phi (v)\right) \ceqq \psi (\phi (v))+\chi (\phi (v)) \\
+		& \eqqc [\psi \circ \phi ](v)+[\chi \circ \phi ](v) \\
+		& \eqqc \left[ \psi \circ \phi +\chi \circ \phi \right] (v),
+		\end{split}
+		\end{equation}
+		as desired.
+	\end{proof}
+\end{prp}
+\begin{thm}{}{prpD.1.3}
+	Let $R$ be a ring.
+	\begin{enumerate}
+		\item \label{prpD.1.3.i}Let $V$ be a commutative group and let $\rho \colon R\rightarrow \End _{\Grp}(V)$ be a ring homomorphism.  Then, $\coord{V,\cdot _{\rho}}$ is an $R$-module, where $\cdot _{\rho}\colon R\times V\rightarrow V$ is defined by
+		\begin{equation}
+		\alpha \cdot _{\rho}v\ceqq \rho _{\alpha}(v).\footnote{We have writen $\rho _{\alpha}(v)\ceqq [\rho (\alpha )](v)$, as I find this notation more transparent---for each $\alpha$, you obtain a group homomorphism called $\rho _{\alpha}\colon V\rightarrow V$, and so $\rho _{\alpha}(v)$ is the value of that group homomorphism at $v\in M$.  We use similar notation throughout.}
+		\end{equation}
+		\item \label{prpD.1.3.ii}Let $\coord{V,\cdot}$ be an $R$-module.  Then, $\rho _{\cdot}\colon R\rightarrow \End _{\Grp}(V)$, defined by,
+		\begin{equation}
+		[\rho _{\cdot}]_{\alpha}(v)\ceqq \alpha \cdot v
+		\end{equation}
+		is a ring homomorphism.
+	\end{enumerate}
+	Furthermore, these two constructions are inverse two each other, that is, $\cdot _{\rho _{\cdot}}=\cdot$ and $\rho _{\cdot _{\rho}}=\rho$.
+	\begin{rmk}
+		This remark is more important than usual so pay attention.  This result is the precise statement of the fact that we could have equivalently defined an $R$-module to be a pair $\coord{V,\rho}$, where $V$ is a commutative group and $\rho \colon R\rightarrow \End _{\Grp}(V)$ is a ring homomorphism.  This is hugely important as it says that, in language which you will eventually encounter (though not in these notes), \emph{$R$-modules are `the same' as ``representations'' of $R$}.\footnote{In fact, ``$\rho$'' is for \emph{representation}.}
+	\end{rmk}
+	\begin{rmk}
+		Note that $\End _{\Grp}(V)$ is in fact a ring by the previous result.
+	\end{rmk}
+	\begin{rmk}
+		Note that, by \cref{prpD.1.2}, $\End _{\Grp}(V)$ is a \emph{ring}, not just a \emph{rig}, and so it is natural to require that $R$ likewise be a ring, not just a rig.
+	\end{rmk}
+	\begin{proof}
+		\cref{prpD.1.3.i} For the sake of brevity, we shall simply write $\cdot \ceqq \cdot _{\rho}$.  We must verify the four axioms in \cref{RModule}.  So, let $\alpha ,\alpha _1,\alpha _2\in R$ and $v,v_1,v_2\in V$.  Then,
+		\begin{equation}
+		\begin{split}
+		(\alpha _1\alpha _2)\cdot v & \ceqq \rho _{\alpha _1\alpha _2}(v)=\footnote{As $\rho$ is a ring homomorphism, it ``preserves'' multiplication.}[\rho _{\alpha _1}\circ \rho _{\alpha _2}](v)\ceqq \rho _{\alpha _1}\left( \rho _{\alpha _2}(v)\right) \\
+		& \ceqq \rho _{\alpha _1}(\alpha _2\cdot v)\ceqq \alpha _1\cdot (\alpha _2\cdot v).
+		\end{split}
+		\end{equation}
+		As $\rho _1=\id _V$ (as it is a ring homomorphism, it must ``preserve'' the multiplicative identity), we have that $1\cdot v\ceqq \rho _1(v)=\id _V(v)=v$. As for the first distributive axiom, we have
+		\begin{equation}
+		\begin{split}
+		(\alpha_1+\alpha _2)\cdot v & \ceqq \rho _{\alpha _1+\alpha _2}(v)=\footnote{As $\rho$ is a ring homomrphism, it ``preserves'' addtion.}[\rho _{\alpha _1}+\rho _{\alpha _2}](v)\ceqq \rho _{\alpha _1}(v)+\rho _{\alpha _2}(v) \\
+		& \eqqc \alpha _1\cdot v+\alpha _2\cdot v.
+		\end{split}
+		\end{equation}
+		Finally, for the second distributive axiom, we have
+		\begin{equation}
+		\alpha \cdot (v_1+v_2)\ceqq \rho _{\alpha}(v_1+v_2)=\footnote{Becasue $\rho _{\alpha}$ itself is a group homomorphism.}\rho _{\alpha}(v_1)+\rho _{\alpha}(v_2)\eqqc \alpha \cdot v_1+\alpha \cdot v_2.
+		\end{equation}
+		
+		\blankline
+		\noindent
+		\cref{prpD.1.3.ii} For the sake of brevity, we shall simply write $\rho \ceqq \rho _{\cdot}$.  First of all, note that each $\rho _{\alpha}$ is in fact a group homomorphism because $\alpha \cdot (v_1+v_2)=\alpha \cdot v_1+\alpha \cdot v_2$ for all $v_1,v_2\in V$.  We first check that $\rho$ preserve addition.
+		\begin{equation}
+		\begin{split}
+		\rho _{\alpha _1+\alpha _2}(v) & \ceqq (\alpha _1+\alpha _2)\cdot v=\alpha _1\cdot v+\alpha _2\cdot v\eqqc \rho _{\alpha _1}(v)+\rho _{\alpha _2}(v) \\
+		& \eqqc [\rho _{\alpha _1}+\rho _{\alpha _2}](v),
+		\end{split}
+		\end{equation}
+		and so $\rho _{\alpha _1+\alpha _2}=\rho _{\alpha _1}+\rho _{\alpha _2}$.  Similarly, $\rho$ preserves the additive identity and additive inverses by \cref{exrD.1.2}.  Likewise, $\rho$ preserves multiplication as $(\alpha _1\alpha _2)\cdot v=\alpha _1\cdot (\alpha _2\cdot v)$.  Finally, $\rho$ preserves the multiplicative identity as $1\cdot v=v$.
+		
+		\blankline
+		\noindent
+		It remains to check that these constructions are inverse to each other.  This is quite easy and is just a matter of unraveling the definitions.
+		\begin{equation}
+		\alpha \cdot _{\rho _{\cdot}}v\ceqq [\rho _{\cdot}]_{\alpha}(v)\ceqq \alpha \cdot v,
+		\end{equation}
+		and so $\alpha _{\rho _{\cdot}}=\cdot$.  Similarly,
+		\begin{equation}
+		[\rho _{\cdot _{\rho}}]_{\alpha}(v)\ceqq \alpha \cdot _{\rho}v\ceqq \rho _{\alpha}(v),
+		\end{equation}
+		and hence $[\rho _{\cdot _{\rho}}]_{\alpha}=\rho _{\alpha}$ for all $\alpha \in R$, and hence $\rho _{\cdot _{\rho}}=\rho$.
+	\end{proof}
+\end{thm}
+
+Now that we've seen two equivalent definitions of $\K$-module, it's time we present what is perhaps the most important example (at least for us) of $\K$-modules.
+\begin{exm}{Column vectors}{ColumnVectors}
+	Let $\K$ be a ring and let $d\in \N$.  Then, $\K ^d$ is a $\K$-module with ``componentwise'' addition and scaling.  Explicitly,
+	\begin{subequations}
+		\begin{align}
+			\coord{v^1,\ldots ,v^d}+\coord{w^1,\ldots ,w^d} & \ceqq \\
+			\coord{v^1+w^1, & \ldots ,v^d+w^d}\notag \\
+			\alpha \cdot \coord{v^1,\ldots ,v^d} & \ceqq \coord{\alpha v^1,\ldots ,\alpha v^d}.
+		\end{align}
+	\end{subequations}
+	Elements of $\K ^d$ are \term{column vectors}\index{Column vector} with entries or elements in $\K$.
+	\begin{rmk}
+		Note the superscripts here.  $v^k$ simply indicates the $k^{\text{th}}$ component of the vector $v\ceqq \coord{v^1,\ldots ,v^d}$.  The reason we use the superscript instead of a subscript is because we will want to use subscripts to denote lists of \emph{different vectors}.  For example, we might have two vectors $v_1$ and $v_2$.  Then, $[v_1]^2$ and $[v_2]^5$ would respectively denote $2^{\text{nd}}$ component of $v_1$ and $5^{\text{th}}$ component of $v_2$.
+		
+		In practice, this doesn't cause any confusion with exponentiation, but just in case, we will try not to make use of exponents and simply indicate multiplication explicitly, for example, $\alpha \cdot \alpha$ instead of $\alpha ^2$.
+	\end{rmk}
+	\begin{exr}[breakable=false]{}{}
+		Check that $\K ^d$ is indeed a $\K$-module.
+	\end{exr}
+	\begin{rmk}
+		For what it's worth, the ``$d$'' is for \emph{dimension}.
+	\end{rmk}
+\end{exm}
+\begin{exm}{$\K ^{\infty}$}{exm1.1.18}
+	Let $\K$ be a ring and define
+	\begin{equation}
+		\K ^{\infty}\ceqq \left\{ v\in \K ^{\N}:m\mapsto v^m\text{ is eventually }0\text{.}\right\} .
+	\end{equation}\index[notation]{$\K ^{\infty}$}
+	Note that $\K ^{\N}$ is a countably-infinite Cartesian product of $\K$, that is,
+	\begin{equation}
+		\K ^{\N}\ceqq \left\{ \coord{v^0,v^1,v^2,\ldots }:v^k\in \K \right\} .
+	\end{equation}
+	To clarify, ``$m\mapsto v^m$ is eventually $0$'' is equivalent to the statement that only finitely many $v^m$s are nonzero.  So, for example,
+	\begin{equation}
+		\coord{1,1,1,\ldots }\notin \K ^{\infty}
+	\end{equation}
+	(though it \emph{is} an element of $\K ^{\N}$).
+	
+	$\K ^{\infty}$ is a $\K$-module with componentwise addition and scaling (just as $\K ^{\N}$ is).
+\end{exm}
+\begin{exm}{Commutative groups are $\Z$-modules}{exm1.1.22}
+	Let $\coord{V,+,0,-}$ be a commutative group, and for $n\in \Z$, define
+	\begin{equation}
+		n\cdot v\ceqq \sgn (n) (\underbrace{v+\cdots +v}_{\abs{n}}).
+	\end{equation}
+	\begin{exr}[breakable=false]{}{}
+		Check that indeed $\coord{V,+,0,-,\Z ,\cdot}$ is a $\Z$-module.
+	\end{exr}
+	\begin{rmk}
+		In fact, every $\Z$-module also determines a commutative group, simply by ``forgetting'' about the scaling operation.  These constructions, from commutative groups to $\Z$-modules and from $\Z$-modules to commutative groups, are inverse to one another.  (The intuition is that the group structure determines the scaling operation by integers, and so adding the additional structure of a $\Z$-module gives nothing new.)  For this reason, one often does not distinguish between commutative groups and $\Z$-modules, and you may freely change how you think about things depending on what is most convenient to the objective at hand.
+	\end{rmk}
+\end{exm}
+
+And finally, the definition of a vector space.
+\begin{dfn}{Vector space}{VectorSpace}
+	A \term{vector space}\index{Vector space} over $\F$ is an $\F$-module where $\F$ is a division ring.
+	\begin{rmk}
+		Elements of $\F$ are called \term{scalars}\index{Scalar}.  Elements of $V$ are called \term{vectors}\index{Vector}.  $0\in V$ is the \term{origin}\index{Origin}.\footnote{Note that we abuse notation and use the same symbol for $0\in \F$.  I can't say I ever recall this causing any confusion.}
+		
+		I can't guarantee that I won't use the terms ``scalar'' and ``vector'' in the context of $\K$-modules, $\K$ not-necessarily-a-field, though this is not standard.
+	\end{rmk}
+	\begin{rmk}
+		If $\F=\Q$, $V$ is a \term{rational vector space}\index{Rational vector space}.  If $\F =\R$, $V$ is a \term{real vector space}\index{Real vector space}.  If $\F =\C$, $V$ is a \term{complex vector space}\index{Complex vector space}.  If $\F =\H$, $V$ is a \term{quaternionic vector space}\index{Quaternionic vector space}.
+	\end{rmk}
+	\begin{rmk}
+		Often times people require that $\F$ be a field (that is, a commutative division ring) instead of just a division ring.  While the vast majority of the concrete examples we will be interested are over fields and not division rings, most of the general theory works just as well for division rings.\footnote{Contrast this with general $R$-modules where things really break down.}
+	\end{rmk}
+\end{dfn}
+\begin{exm}{$\K$-modules that are not vector spaces}{}
+	Let $m,d\in \N$, take $\K \ceqq \Z /m\Z$, and define $V\ceqq (\Z /m\Z )^d$ to be the set of $d$-component column vectors with entries in $\Z /m\Z$.  As $\Z /m\Z$ is a field iff $m$ is prime, $V$ constitute an example of a $\K$-module that is not a vector space if $m$ is not prime.
+	
+	These are important in that they are perhaps the simplest such examples, and so, if you think a certain property of vector spaces might fail more generally, you might consider checking the $(\Z /m\Z )^d$s first.
+\end{exm}
+\begin{exm}{Polynomials}{Polynomials}
+	Let $\K$ be a ring.  Then, $\K [x]$\index[notation]{$\K [x]$} is the set of all polynomials with coefficients in $\K$.  Addition and scaling are just ordinary addition and scaling of polynomials.
+	
+	For $m\in \N$, we shall write $\K [x]_m$\index[notation]{$\K [x]_m$} for the set of all polynomials in $\K [x]$ of degree \emph{at most} $m$.
+	\begin{rmk}
+		Note that this notation is nonstandard---I am not aware of any universally accepted notation for this.
+	\end{rmk}
+\end{exm}
+\begin{exm}{$C^{\infty}(O)$}{}
+	Let $O\subseteq \R ^d$ be open.  Then, $C^{\infty}(O)$\index[notation]{$C^{\infty}(O)$} is the set of smooth complex-valued functions on $O$.\footnote{This means that the function has infinitely-many continuous derivatives.}  $C^{\infty}(O)$ is then a vector space over $\C$.
+\end{exm}
+\begin{exm}{The same set of vectors over different fields}{}
+	Define $V\ceqq \C ^2$.  Addition is done componentwise, as usual.  Now take $\F \ceqq \C$, $\F \ceqq \R$, or $\F \ceqq \Q$.  Either way, scaling $\F \times V\rightarrow V$ is done componentwise as usual, however, \emph{these are all different scaling operations} because the \emph{domains are different}.  We thus have \emph{three different vector spaces}.  While we haven't defined dimension yet, hopefully your intuition suggests that $V$ should be $2$ dimensional over $\C$, $4$ dimensional over $\R$, and infinite dimensional over $\Q$.
+	
+	The point:
+	\begin{displayquote}
+		\emph{The same set of vectors over different division rings are considered to be different vector spaces.}
+	\end{displayquote}
+	\begin{rmk}
+		Thus, we technically always need to specify the ring we are working over.  However, most of the time, it will be clear from context, and we will not state this explicitly.  For example, even for $V\ceqq \C ^2$, it should be assumed that we are working over $\C$ unless otherwise stated.
+	\end{rmk}
+\end{exm}
+
+\subsubsection{Polynomials vs.~polynomial functions}\label{sss1.1.1}
+
+This subsubsection is an aside meant only to clear up a not-particularly-relevant subtlety, and can likely safely be skipped.
+
+Given a polynomial $p\in \K [x]$, we obtain a corresponding function $\K \rightarrow \K$ defined by $x\mapsto p(x)$, where $p(x)\in \K$ is obtained by ``plugging-in'' the value $x\in \K$ into $p$ and evaluating.  For example, if $\K \ceqq \R$ and $p\ceqq 3x^2-5$, then $p(-2)\ceqq 3(-2)\cdot (-2)-5=7$.  The distinction between this function and the original polynomial is a subtle one.  Elements of $\K [x]$ are merely ``formal''\footnote{I'm not quite sure why this word is used.  I think it's a bit misleading, but the word ``formal'' in this context essentially means that the thing is to be mindlessly manipulated as symbols and nothing more.  For example, I can talk about the formal power series $1+2x+3x^2+4x^3+\cdots$ even though the resulting expression might not make sense when I plug in particular values of $x$---here, $x$ is just a symbol, not a number.} polynomials, and not functions themselves.
+
+To see the difference between the concepts, take $\K \ceqq \Z /2\Z$ and consider the two polynomials $p\ceqq 0$ and $q\ceqq x+x^2=x(x-1)$.  These are manifestly different polynomials---the coefficients are different---but yet they both define the same function on $\Z /2\Z$ as $q(0)=0\cdot 1=0$ and $q(1)=1\cdot 0=0$.
+
+If this doesn't quite make sense, don't worry---this will be of very limited relevance to us.
+
+\horizontalrule
+
+I mentioned before that the term ``vector'' for elements in an ``abstract'' vector space can potentially be confusing for n00bs.  The reason this is potentially confusing is because \emph{the elements of $V$ are not necessarily `actual vectors'}.  For example, the set of real-valued functions on a set can be made into a vector space, and certainly functions themselves are not traditionally thought of as ``vectors''.  Thus, to avoid any possible confusion or ambiguity, I will be careful to make the following distinction.
+\begin{displayquote}
+	Elements of a general vector space will simply be referred to as \emph{vectors}.  Elements of the specific vector space $\R ^d$ will be referred to as \emph{column vectors}.\footnote{More precisely, we will use this terminology when regarding $\R ^d$ as an object in $\Vect _{\R}$, the category of vector spaces over $\R$---see \cref{TheCategoryOfVectorSpaces}.}
+\end{displayquote}
+
+Of fundamental importance in linear algebra is the relationship between the abstract and the concrete.  Of course, the set of all column vectors (with a fixed number of components) forms a vector space, and matrices define linear-transformations.  In the other direction, given a vector space $V$,\footnote{Over $\R$, for the moment.} for every choice of a basis $\basis{B}$ of $V$, there is a unique isomorphism $V\rightarrow \R ^d$ that satisfies such and such properties.  Thus, having fixed a basis, one can associate \emph{column vectors to vectors} and \emph{matrices to linear-transformations}.  I mention this now only to help solidify the distinction between vectors (in a general vector space) and column vectors (and also to foreshadow one of the more important results in elementary linear algebra)---you are not supposed to know what any of this precisely means just yet.  In brief:
+\begin{displayquote}
+	Vectors are to column vectors as linear-transformations are to matrices.
+\end{displayquote}
+
+Having defined a type of mathematical object, we are now morally obligated to specify what the relevant notion of morphism is.
+\begin{dfn}{Linear-transformation}{LinearTransformation}
+	Let $V$ and $W$ be $\K$-modules, and let $T\colon V\rightarrow W$ be a function.  Then, $T$ is a \term{$\K$-linear-transformation}\index{Linear-transformation} iff
+	\begin{enumerate}
+		\item \label{LinearTransformation.i}$T\colon V\rightarrow W$ is a group homomorphism; and
+		\item \label{LinearTransformation.ii}$T(\alpha \cdot v)=\alpha \cdot T(v)$ for all $\alpha \in \K$ and $v\in V$.
+	\end{enumerate}
+	\begin{rmk}
+		Explicitly, \cref{LinearTransformation.i} means that $T(v_1+v_2)=T(v_1)+T(v_2)$ for all $v_1,v_2\in V$.
+	\end{rmk}
+	\begin{rmk}
+		Informally, a function which satisfies \cref{LinearTransformation.i} is said to \emph{preserve addition}.  Similarly, a function which satisfies \cref{LinearTransformation.ii} is said to \emph{preserve scaling} or \emph{preserve scalar multiplication}.
+	\end{rmk}
+	\begin{rmk}
+		It's worth noting that there is an important result that allows one to easily define linear-transformations, though it will have to wait until we first discuss bases---see \cref{prp1.2.68}.
+	\end{rmk}
+	\begin{rmk}
+		If $\K$ is clear from context as it often is, we shall simply say \term{linear-transformation}.
+	\end{rmk}
+	\begin{rmk}
+		A synonym for ``linear-transformation'' is \term{module homomorphism}\index{Module homomorphism}.
+	\end{rmk}
+	\begin{rmk}
+		Another synonym for ``linear-transformation'' is \term{linear operator}\index{Linear operator}, though this is probably more commonly used when the domain and codomain are the same, $T\colon V\rightarrow V$.\footnote{I use a dash in ``linear-transformation'' but not in ``linear operator'' because the term ``transformation'' by itself is meaningless in this context, whereas the term ``operator'' is used in related contexts in its own right (indeed, \emph{nonlinear operators} are definitely a thing, whereas no one talks about ``nonlinear transformations'').}
+	\end{rmk}
+\end{dfn}
+\begin{exr}{Sum and composition of linear maps is linear}{exr1.1.31}
+	Let $\K$ be a ring.
+	\begin{enumerate}
+		\item \label{exr1.1.31(i)}For $T_1,T_2\colon V\rightarrow W$ linear maps of $\K$-modules, show that $T_1+T_2$ is another linear map.
+		\item \label{exr1.1.31(ii)}For $S\colon U\rightarrow V$ and $T\colon V\rightarrow W$ linear maps of $\K$-modules, show that $T\circ S$ is linear.
+		\item \label{exr1.1.31(iii)}For $T\colon V\rightarrow W$ a linear map of $\K$-modules and $\alpha \in \K$, show that $\alpha \cdot T$ is linear \emph{if $\K$ is commutative}.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  \cref{exr1.1.31(iii)} will \emph{fail} if $\K$ is not commutative---see \cref{exm1.1.92}.  We will return to fix this problem the best we can in \cref{sss1.1.2}.
+	\end{rmk}
+	\begin{rmk}
+		To clarify,
+		\begin{equation}
+			[T_1+T_2](v)\ceqq T_1(v)+T_2(v)
+		\end{equation}
+		and
+		\begin{equation}
+			[\alpha \cdot T](v)\ceqq \alpha \cdot T(v).
+		\end{equation}
+	\end{rmk}
+\end{exr}
+\begin{exm}{Identity}{}
+	For any ring $\K$ and $\K$-module $V$, the identity function $\id _V\colon V\rightarrow V$ is a linear-transformation.
+\end{exm}
+\begin{exm}{Zero}{}
+	For any ring $\K$ and $\K$-modules $V$ and $W$, the constant function $V\ni v\mapsto 0\in W$ is a linear-transformation, the \emph{zero linear-transformation}.
+\end{exm}
+\begin{exm}{Scaling}{exm1.1.36}
+	Let $\K$ be a cring, let $V$ be a $\K$-module, and let $\alpha \in \K$.  Then, scaling by $\alpha$, $V\ni v\mapsto \alpha \cdot v\in V$, is a linear-transformation.
+	\begin{ntn}
+		In general (for any $\K$, not necessarily commutative) for $\alpha \in \K$, if the map $V\ni v\mapsto \alpha \cdot v\in V$ is linear, then we shall denote it by
+		\begin{equation}
+			\alpha \ceqq \alpha \id _V.
+		\end{equation}
+		Thus, for example, we may write expressions like $T-\alpha$, $T$ a linear-transformation---a priori this wouldn't make sense, but this should now be understood to be short-hand for the linear-transformation $T-\alpha \cdot \id$.
+	\end{ntn}
+	\begin{rmk}
+		In fact, the identity and zero linear-transformations are respectively the special cases in which $\alpha =1$ and $\alpha =0$.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This makes use of commutativity!  For example, take $\K \ceqq \H$ and $V\ceqq \H$.  Then, scaling by $\im \in \H$ is not linear because it doesn't preserve scaling.  Taking $\alpha \ceqq \jm \in \K$ and $v\ceqq 1\in V$, we see that
+		\begin{equation}
+			\im \cdot (\alpha \cdot v)\ceqq \im \jm =-\jm \im \neq \alpha \cdot (\im \cdot v).
+		\end{equation}
+		Indeed, this is perhaps the most important pathology that occurs in the noncommutative case:  scaling need no longer be linear!
+	\end{rmk}
+\end{exm}
+\begin{exm}{Rotation}{}
+	For any angle $\theta$, rotation about the origin in $\R ^2$ is a linear-transformation $\R ^2\rightarrow \R ^2$.
+\end{exm}
+\begin{exm}{Permutation}{}
+	Let $\K$ be a ring, let $d\in \N$ and let $\sigma \colon \{ 1,\ldots ,d\} \rightarrow \{ 1,\ldots ,d\}$ be any bijection (though of as a permutation of the indices).  Then,
+	\begin{equation}
+		\K ^d\ni \begin{bmatrix}v^1 \\ \vdots \\ v^d\end{bmatrix}\mapsto \begin{bmatrix}v^{\sigma (1)} \\ \vdots \\ v^{\sigma (d)}\end{bmatrix}\in \K ^d.
+	\end{equation}
+	is a linear-transformation.
+	
+	To see an explicit example, consider the bijection $\sigma \colon \{ 1,2,3\} \rightarrow \{ 1,2,3\}$ defined by $\sigma (1)\ceqq 3$, $\sigma (2)\ceqq 1$, $\sigma (3)\ceqq 2$.  Then, the corresponding linear-transformation is defined by
+	\begin{equation}
+		\begin{bmatrix}v^1 \\ v^2 \\ v^3\end{bmatrix}\mapsto \begin{bmatrix}v^3 \\ v^1 \\ v^2\end{bmatrix}.
+	\end{equation}
+\end{exm}
+\begin{exm}{Shift operators}{ShiftOperator}\index{Shift operator}
+	Let $\K$ be a ring.  Then, the \term{left-shift operator}\index{left-shift operator} $L\colon \K ^{\N}\rightarrow \K ^{\N}$ and \term{right-shift operator}\index{Right-shift operator} $R\colon \K ^{\N}\rightarrow \K ^{\N}$ are defined respectively by
+	\begin{equation}
+		L\left( \coord{v^0,v^1,v^2,\ldots }\right) \ceqq \coord{0,v^0,v^1,\ldots} 
+	\end{equation}
+	and
+	\begin{equation}
+		R\left( \coord{v^0,v^1,v^2,\ldots }\right) \ceqq \coord{v^1,v^2,v^3,\ldots }.
+	\end{equation}
+	\begin{rmk}
+		There are similar variants of these shift operators on $\K ^{\Z}$.
+	\end{rmk}
+\end{exm}
+\begin{exm}{Differentiation}{}
+	For any open subset $O\subseteq \R$, differentiation defines a linear-transformation $C^{\infty}(O)\rightarrow C^{\infty}(O)$, $f\mapsto f'$.
+	
+	Similarly, for \emph{any} ring $\K$, differentiation defines a linear-transformation $\K [x]\rightarrow \K [x]$.\footnote{While the limit definition of differentiation won't make sense for arbitrary $\K$, the power rule still does, and so we can still ``formally'' differentiation polynomials with coefficients in any ring.}  Likewise, differentiation defines a different\footnote{It must be different because the domain and codomain are not the same!} linear-transformation $\K [x]_m\rightarrow \K [x]_m$ for any $m\in \N$.
+	
+	In fact, we can be even fancier than this.  More complex ``differential operators'', e.g.~$\frac{\dif ^2}{\dif x^2}+1$, define linear-transformations in the obvious way (in this example, $C^{\infty}(\R )\ni f\mapsto f''+f\in C^{\infty}(\R )$).
+\end{exm}
+\begin{exm}{Integration}{}
+	Integration likewise defines a linear-transformation:
+	\begin{equation}
+		C^{\infty}(\R )\ni f\mapsto (x\mapsto \int _0^x\dif t\, f(t)).
+	\end{equation}
+	\begin{rmk}
+		To clarify, this linear-transformation sends the function $f$ to the function whose value at $x$ is $\int _0^x\dif t\, f(t)$.
+	\end{rmk}
+	\begin{rmk}
+		Note that the ``$\dif t$'' on the left side of the integral, instead of the right side, is just a different convention---this expression means the same thing as $\int _0^xf(t)\dif t$.
+	\end{rmk}
+
+	Similarly as before, ``formal'' integration defines a linear-transformation on polynomials.
+\end{exm}
+With a working notion of morphism in hand, we obtain corresponding categories.
+\begin{exm}{The category of $\K$-modules}{TheCategoryOfRModules}\index{Category of $\K$-modules}
+	Let $\K$ be a ring.  Then, the category of $\K$-modules is the concrete category $\Mod{\K}$\index[notation]{$\Mod{\K}$}
+	\begin{enumerate}
+		\item whose collection of objects $\Obj (\Mod{\K})$ is the collection of all $\K$-modules; and
+		\item with morphism set $\Mor _{\Mod{\K}}(V,W)$ precisely the set of all linear-transformations from $V$ to $W$.
+	\end{enumerate}
+	\begin{rmk}
+		Just as we have the category of left $\K$-modules $\Mod{K}$, we also have the category of right $\K$-modules $\Mod{}[\K]$\index[notation]{$\Mod*{\K}$} defined similarly.
+	\end{rmk}
+\end{exm}
+\begin{exm}{The category of vector spaces}{TheCategoryOfVectorSpaces}\index{Category of vector spaces}
+	Let $\F$ be a division ring.  Then, the category of vector spaces over $\F$ is the category $\Vect _{\F}\ceqq \Mod{\F}$\index[notation]{$\Vect _{\F}$}.
+\end{exm}
+
+\subsection{Morphism sets and bimodules}\label{sss1.1.2}
+
+In fact, we would like the morphism sets $\Mor _{\Mod{\K}}(V,W)$ themselves to furnish examples of $\K$-modules.  Unfortunately, if $\K$ is not commutative, we can't quite do this.  To see this, we would need to be able to define a notion of scaling of linear-transformations, and essentially the only thing one could write down is
+\begin{equation}
+	[\alpha \cdot T](v)\ceqq \alpha \cdot T(v).
+\end{equation}
+Unfortunately, however, this is not linear:
+\begin{equation}
+	[\alpha \cdot T](\beta \cdot v)\ceqq \alpha \cdot T(\beta \cdot v)=\alpha \beta \cdot T(v)\neq \beta \cdot (\alpha \cdot T(v))\eqqc \beta \cdot [\alpha \cdot T](v).
+\end{equation}
+In order for what we have written as an inequality to be an equality, we would need to know that $\K$ is commutative.\footnote{See \cref{exm1.1.92} for a concrete counter-example.}  There is a silly way to fix this, however---instead, let us try scaling $T$ \emph{on the right}:
+\begin{equation}
+	[T\cdot \alpha ](\beta \cdot v)\ceqq T(\beta \cdot v)\cdot \alpha =\beta \cdot T(v)\cdot \alpha =\beta \cdot [T\cdot \alpha ](v),
+\end{equation}
+and so $T\cdot \alpha$ is again $\K$-linear (on the left).\footnote{Note that the scaling in $W$ has to be written on the right in order for this to make sense.}
+
+This situation is one in mathematics where it is easier to keep things straight in the most general situation, even though one (or at least us) will never actually need that amount of generality.  Specifically, we are going to now consider sets of vectors equipped with \emph{two} scaling operations, one on the left and one on the right.
+\begin{rmk}
+	The material on bimodules is of relatively low priority, and so if you find it confusing the first time through, you needn't worry.  What you \emph{should} remember, however, is that when $\K$ is \emph{commutative}, $\End _{\Mod{\K}}(V,W)$ is another $\K$-module with the ``obvious'' definitions of addition and scaling
+	\begin{subequations}
+		\begin{align}
+			[T_1+T_2](v) & \ceqq T_1(v)+T_2(v) \\
+			[\alpha \cdot T](v) & \ceqq \alpha \cdot T(v).
+		\end{align}
+	\end{subequations}
+	It is only for $\K$ noncommutative that one must go to the trouble of worrying about bimodules.
+\end{rmk}
+\begin{dfn}{$\K$-$\L$-bimodule}{KLBimodule}
+	Let $\K$ and $\L$ be rings.  Then, a \term{$\K$-$\L$-bimodule}\index{$\K$-$\L$ bimodule} is
+	\begin{data}
+		\item a left $\K$-module $\coord{V,+,0,-,\K ,\cdot}$; and
+		\item a right $\L$-module $\coord{V,+,0,-,\L ,\cdot}$\footnote{Of course, the two scaling operations here are not the same, even those we abuse notation and simply write ``$\cdot$'' for both.}
+	\end{data}
+	such that
+	\begin{equation}
+		(\alpha \cdot v)\cdot \zeta =\alpha \cdot (v\cdot \zeta )
+	\end{equation}
+	for all $v\in V$, $\alpha \in \K$, and $\zeta \in \K$.
+	\begin{rmk}
+		Similarly as we may view commutative groups as $\Z$-modules (\cref{exm1.1.22}), we may view any left $\K$-module as a $\K$-$\Z$ bimodule, and likewise, we may view any right $\L$-module as a $\Z$-$\L$ bimodule.
+	\end{rmk}
+\end{dfn}
+The following example of a bimodule is one of the most important, and it would likely help your intuition to keep in in the make of your mind in a similar way you might think of $\K ^d$ even when doing ``abstract'' linear algebra.
+\begin{exm}{The $\K$-$\End _{\Mod{\K}}(V)$ bimodule $V$}
+	Let $V$ be a left $\K$-module.  For $T\colon V\rightarrow V$ a $\K$-linear-transformation, let us define
+	\begin{equation}
+		v\cdot T\ceqq T(v).
+	\end{equation}
+	\begin{exr}[breakable=false]{}{}
+		Check that this does indeed make $V$ into a right $\End _{\Mod{\K}}(V)$ module.
+	\end{exr}
+	As for the bimodule property, we simply check
+	\begin{equation}
+		\alpha \cdot (v\cdot T)\ceqq \alpha \cdot T(v)=T(\alpha \cdot v)\eqqc (\alpha \cdot v)\cdot T.
+	\end{equation}
+\end{exm}
+We mentioned before briefly that one needn't introduce the complication of bimodules if the ground ring is commutative.  One can see this from the following example.
+\begin{exm}{$\K$-modules over crings}{exm1.1.55}
+	Let $\K$ be a cring and let $V$ be a $\K$-module.  Then in fact we can view $V$ as a $\K$-$\K$-bimodule by defining
+	\begin{equation}
+		v\cdot \alpha \ceqq \alpha \cdot v.
+	\end{equation}
+	\begin{exr}[breakable=false]{}{}
+		Check that this does indeed make $V$ into a $\K$-$\K$-bimodule.
+		\begin{rmk}
+			Note how this requires commutativity.
+		\end{rmk}
+	\end{exr}
+	Thus, if $\K$ is commutative, left $\K$-modules are `the same as' $\K$-$\K$-bimodules are `the same as' right $\K$-modules, and so in this case, there is no need to really distinguish.
+\end{exm}
+
+We motivated the introduction of bimodules because we wanted to turn morphism sets themselves into modules.  Now that we have bimodules, however, we are again morally obligated to introduce the new relevant of morphism.
+\begin{dfn}{Bilinear-transformation}{BilinearTransformation}
+	Let $\K$ and $\L$ be rings, let $V$ and $W$ be $\K$-$\L$ bimodules, and let $T\colon V\rightarrow W$ be a function.  Then, $T$ is a \term{$\K$-$\L$ bilinear-transformation}\index{$\K$-$\L$-bilinear transformation} iff
+	\begin{enumerate}
+		\item \label{BilinearTransformation(i)}$T$ is a $\K$-linear-transformation; and
+		\item \label{BilinearTransformation(ii)}$T$ is an $\L$-linear-transformation.
+	\end{enumerate}
+	\begin{rmk}
+		Explicitly, this means that (i) $T(v_1+v_2)=T(v_1)+T(v_2)$, (ii) $T(\alpha \cdot v)=\alpha \cdot T(v)$, and (iii) $T(v\cdot \zeta )=T(v)\cdot \zeta$.
+	\end{rmk}
+	\begin{rmk}
+		If $\K$ and $\L$ are clear from context, we shall simply say \term{bilinear-transformation}\index{Bilinear-transformation}.
+	\end{rmk}
+	\begin{rmk}
+		If $T$ only satisfies \cref{BilinearTransformation(i)}, then we may say that $T$ is \term{left linear}\index{Left linear-transformation} or \term{linear on the left}.  Likewise, if $T$ only satisfies \cref{BilinearTransformation(ii)}, we may say that $T$ is \term{right linear}\index{Right linear-transformation} or \term{linear on the right}.
+	\end{rmk}
+	\begin{rmk}
+		A synonym for ``bilinear-transformation'' is \term{bimodule-homomorphism}\index{Bimodule-homomorphism}.
+	\end{rmk}
+\end{dfn}
+Again, having defined a new type of object as well as the relevant notion of morphism, we obtain a corresponding category.
+\begin{exm}{The category of $\K$-$\L$-bimodules}{}
+	Let $\K$ and $\L$ be rings.  Then, the category of $\K$-$\L$-bimodules is the concrete category $\Mod{\K}[\L]$\index[notation]{$\Mod{\K}[\L]$}
+	\begin{enumerate}
+		\item whose collection of objects $\Obj (\Mod{\K}[\L])$ is the collection of all $\K$-$\L$-bimodules; and
+		\item with morphism set $\Mor _{\Mod{\K}[\L]}(V,W)$ precisely the set of all bilinear-transformations from $V$ to $W$.
+	\end{enumerate}
+\end{exm}
+
+We now turn to the issue of equipping morphism sets of \emph{bimodules} with another bimodule structure.  As we can view any $\K$-module $V$ as a $\K$-$\Z$-bimodule, this will allow us to equip $\Mor _{\Mod{\K}}(V,W)$ with the structure of a bimodule.  We will find, however, that the bimodule structure on $\Mor _{\Mod{\K}}(V,W)$ is not just that of a left $\K$-module---if it were that simple, we wouldn't have needed to take this excursion on bimodules in the first place.
+\begin{exm}{$\Mor _{\Mod{R}}(V,W)$}{}
+	Let $R$, $S$, and $T$ be rings, and let $V$ be an $R$-$S$-bimodule and let $W$ be an $R$-$T$-bimodule.  Then, as $V$ and $W$ are both left $R$-modules, and so while we cannot speak of bilinear-transformations, we can speak of left linear-transformations.  In fact, $\Mor _{\Mod{R}}(V,W)$ can be given the structure of an $S$-$T$ bimodule:\footnote{Addition is defined pointwise.  We don't mention this explicitly because addition is always pointwise and the sum of two linear-transformations is always again linear.}
+	\begin{equation}
+		[s\cdot T\cdot t](v)\ceqq T(v\cdot s)\cdot t.
+	\end{equation}
+	\begin{exr}[breakable=false]{}{}
+		Check that $s\cdot T\cdot t$ is still left linear.
+	\end{exr}
+	\begin{exr}[breakable=false]{}{}
+		Check that this makes $\Mor _{\Mod{R}}(V,W)$ into an $S$-$T$-bimodule.
+	\end{exr}
+\end{exm}
+\begin{exm}{$\Mor _{\Mod{}[S]}(V,W)$}{}
+	Let $R$, $S$, and $T$ be rings, let $V$ be an $R$-$S$-bimodule and let $W$ be a $T$-$S$-bimodule.\footnote{Note that $V$ is still an $R$-$S$-bimodule as in the previous example, but now $W$ is a $T$-$S$-bimodule (before it was an $R$-$T$-bimodule).}  Thus, in this case, we can speak of the \emph{right} linear-transformations.  In fact, $\Mor _{\Mod{}[S]}(V,W)$ can be given the structure of a $T$-$R$-bimodule:
+	\begin{equation}
+		[t\cdot T\cdot r](v)\ceqq t\cdot T(r\cdot v).
+	\end{equation}
+	\begin{exr}[breakable=false]{}{}
+		Check that $t\cdot T\cdot t$ is still right linear.
+	\end{exr}
+	\begin{exr}[breakable=false]{}{}
+		Check that this makes $\Mor _{\Mod{}[S]}(V,W)$ into a $T$-$R$-bimodule.
+	\end{exr}
+\end{exm}
+While this might seem complicated, there is actually a relatively simple mnemonic to keep this straight.  You can remember these respectively as
+\begin{equation}
+(R\text{-}S)^{\co}\times (R\text{-}T)\mapsto S\text{-}T
+\end{equation}
+and
+\begin{equation}
+(R\text{-}S)^{\co}\times (T\text{-}S)\mapsto T\text{-}R.
+\end{equation}
+(The common $R$s and $S$s `annihilate' each other, similar to the mnemonic for the dimensions for multiplication of matrices.)  That is, the morphism set\footnote{Note how it only makes sense to speak of the left linear transformations, and so I there is no ambiguity as to what morphism set I could possibly be referring to.} from a $R$-$S$-bimodule to a $R$-$T$-bimodule is and $S$-$T$-bimodule, and the morphism set from a $R$-$S$-bimodule to a $T$-$S$-bimodule is a $T$-$R$-bimodule.
+
+Finally, let us return to the important special case where the ring we are working over is commutative.  So, let $\K$ be a cring, and let $V$ and $W$ be $\K$-modules.  On account of \cref{exm1.1.55}, we can view both of these as $\K$-$\K$-bimodules, and so according to the general case we just discussed, both $\Mor _{\Mod{\K}}(V,W)$ and $\Mor _{\Mod*{\K}}(V,W)$ have the structure of $\K$-$\K$-bimodules.  Again, by \cref{exm1.1.55}, we don't think of these as bimodules, but just simply $\K$-modules.  Anyways, the TL;DR version is:  if $\K$ is commutative, then $\Mor _{\K}(V,W)$ is a $\K$-module with addition and scaling defined by
+\begin{subequations}\label{eqn1.1.62}
+	\begin{align}
+		[T_1+T_2](v) & \ceqq T_1(v)+T_2(v) \\
+		[\alpha \cdot T](v) & \ceqq \alpha \cdot T(v).
+	\end{align}
+\end{subequations}
+
+\section{Basic concepts}
+
+In the previous section, we gave two equivalent definitions of $\K$-modules, and likewise gave the definition of a linear-transformation.  We now turn to the basic theory $\K$-modules and linear-transformations.
+
+\subsection{Subspaces and quotient spaces}
+
+If you've studied linear algebra before, you're almost certainly familiar with the concept of a \emph{subspace}.  Intuitively, you should think of subspaces of a vector space as lines, planes, etc. that contain the origin.
+\begin{dfn}{Subspace}{Subspace}
+	Let $\coord{V,\cdot}$ be an $\K$-module.  Then, a \term{subspace}\index{Subspace} of $V$ is a subset $W\subseteq V$ such that $\coord{W,\cdot}$ is an $\K$-module.
+	\begin{rmk}
+		That is, a subspace is a subset that is also a $\K$-module (with respect to the same scaling operation).
+	\end{rmk}
+	\begin{rmk}
+		Warning:  It is incredibly uncommon to use the term ``subspace'' in the context of more general $R$-modules, in which case the term \term{submodule}\index{Submodule} is usually used instead.  Because the focus is on vector spaces, I will be using the terminology that is standard in that context, even when I'm not working over a division ring.  This applies throughout, though I will try to mention when there is terminology that is more common in the context of $R$-modules.
+	\end{rmk}
+\end{dfn}
+A priori, to show that $\coord{W,\cdot}$ is a subspace, there are quite a few axioms one would have to check.  Fortunately, in practice, it is relatively easy to check whether or not something is a subspace.
+\begin{prp}{}{prp1.2.2}
+	Let $V$ be a $\K$-module, and let $W\subseteq V$.  Then, $W$ is a subspace iff
+	\begin{enumerate}
+		\item $0\in W$;
+		\item $v_1,v_2\in W$ implies $v_1+v_2\in W$; and
+		\item $v\in W$ implies $\alpha \cdot v\in W$ for all $\alpha \in \K$.
+	\end{enumerate}
+	\begin{rmk}
+		The first condition here is just to excluded the stupid case of the empty-set.  Thus, in other words, a nonempty subset of $V$ is a subspace iff it is closed under addition and scaling.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exm}{$0$ and $V$}{}
+	Every $\K$-module $V$ has two subspace:\footnote{Well, they might coincide in the trivial case $V=0$.}  $0$ and $V$.  Note that we are writing
+	\begin{equation}
+		0\ceqq \{ 0\} ,
+	\end{equation}
+	that is, we abuse notation and write $0$ for the subspace whose only element is the $0$ vector.
+	
+	I won't even bother making it an exercise, but you should quickly convince yourself that these are in fact subspaces.
+\end{exm}
+\begin{exm}{Polynomials and smooth functions}{}
+	$\R [x]$ is\footnote{Technically, I should say ``embeds as''.  The reason for this technicality is because polynomials are not quite the same as polynomial functions---see \cref{sss1.1.1}.  In any case, this is not a huge deal, and if it confuses you, you should ignore this technicality.} a subspace of $C^{\infty}(\R )$, which in turn is a subspace of $\Mor _{\Set}(\R ,\R )$.\footnote{See \cref{BasicCategoryTheory} for an explanation, but ``$\Mor _{\Set}(X,Y)$'' is just fancy notation for the set of all functions from $X$ to $Y$.}
+\end{exm}
+\begin{exr}{$\K ^{\infty}$}{}
+	Let $\K$ be a ring.  Show that $\K ^{\infty}$ is a subspace of $\K ^{\N}$.
+	\begin{rmk}
+		See \cref{exm1.1.18} to recall the definition of $\K ^{\infty}$ (and $\K ^{\N}$).
+	\end{rmk}
+\end{exr}
+\begin{exr}{$\K [x]_m$}{}
+	Let $\K$ be a ring and let $m\in \N$.
+	\begin{enumerate}
+		\item Show that $\K [x]_m$ is a subspace of $\K [x]$.
+		\item Explain why the set of all polynomials of degree exactly equal to $m$, together with the $0$ polynomial, do not necessarily form a subspace of $\K [x]$.
+	\end{enumerate}
+	\begin{rmk}
+		Recall that $\K [x]$ is the vector space of all polynomials with coefficients in $\K$, and $\K [x]_m$ is the subset of polynomials with degree at most $m$---see \cref{Polynomials}.
+	\end{rmk}
+\end{exr}
+
+`Dual' to the concept of subspace is that of \emph{quotient space}, something you likely did not encounter in a first course on linear algebra.  We won't have much use for this concept, but it feels wrong to talk about subspaces with no mention of quotient spaces.  That said, I recommend you skip this topic unless you know you need to know it.
+
+Quotient objects are actually relatively difficult the first time one encounters them.  However, the intuition is essentially always the same---whether for quotient groups, quotient rings, quotient spaces, etc.---and we have already discussed this intuition before \cref{Cosets}, and so don't repeat this intuition here.  Finally, I want to add that the ratio of difficulty to usefulness (for us) regarding the material on quotient spaces here is pretty large, and so I might even go so far as to recommend you skip the quotient stuff---it's really here for the sake of completeness, not pedagogy.\footnote{In fact, I would not expect anyone to be able to fully understand this material from what little I have written about it, but that's okay, because that's not why it's here.}
+\begin{prp}{Cosets (in $\K$-modules)}{CosetsInRModules}
+	Let $V$ be a $\K$-module, let $W\subseteq V$, and define
+	\begin{equation}
+	v_1\cong v_2\bpmod{W}\text{ iff }-v_2+v_1\in N\text{ for }v_1,v_2\in V.
+	\end{equation}
+	Then, $\cong \bpmod{W}$ is an equivalence relation iff $\coord{W,+,0,-}$ is a subgroup of $\coord{V,+,0,-}$.
+	
+	Furthermore, in the case this is an equivalence relation,
+	\begin{equation}
+	[v]_{\cong \bpmod{W}}=v+W.
+	\end{equation}
+	\begin{rmk}
+		To clarify, $[v]_{\cong \bpmod{W}}$ is the equivalence class of $v$ with respect to $\cong \bpmod{W}$ and $v+W\ceqq \{ v+w:w\in W\}$.
+	\end{rmk}
+	\begin{rmk}
+		The equivalence class of $v$ with respect $\cong \bpmod{W}$ is the \term{left $W$-coset}.  The set of all left $W$-cosets is denoted by $V/W\ceqq V/\sim _{\cong \bpmod{W}}=\left\{ v+W:v\in M\right\}$\index[notation]{$V/W$}.
+	\end{rmk}
+	\begin{rmk}
+		By changing the definition of the equivalent relation to ``\textellipsis iff $v_1-v_2\in W$'', then we obtain the corresponding definition of \term{right $W$-cosets}, given explicitly by $W+v$.  In this case, however, the binary operation in question ($+$) is commutative, and so $v+W=W+v$, that is, the left and right cosets coincide, and so we can simply say \term{coset}.  In particular, there is no need to talk about the set of right $W$-cosets, which would have been denoted $W\backslash V$.
+	\end{rmk}
+	\begin{rmk}
+		Note how this result itself says nothing about the action of $\K$.  The action of $\K$ itself will definitely play a role in the next definition, however, when we attempt to make the set of cosets $V/W$ itself into an $\K$-module.
+	\end{rmk}
+\end{prp}
+\begin{dfn}{Quotient space}{QuotientModules}
+	Let $\coord{V,\cdot}$ be a $\K$-module, let $W\subseteq \coord{V,0,+,-}$ be a subgroup, and let $v,v_1,v_2\in V$ and $\alpha \in \K$.  Define
+	\begin{equation}
+	(v_1+W)+(v_2+W)\coloneqq (v_1+v_2)+W\text{ and }\alpha \cdot (v+W)\ceqq \alpha \cdot v+W.
+	\end{equation}
+	$W$ is an \term{ideal}\index{Ideal (in a $\K$-module)} iff both of these operations are well-defined.  In this case, $V/W$ is the \term{quotient space}\index{Quotient space} of $V$ modulo $W$.
+	\begin{rmk}
+		The term ``ideal'' is never used in this context.  This is because, by the the following result, this condition is equivalent to being a subspace, and so people use only term the ``subspace''.
+	\end{rmk}
+	\begin{rmk}
+		By now, as we've seen the concepts of subobject and quotient object of algebraic structures pop up on several occasions, you might be wondering whether one can develop theory that would generalize and be capable of tackling all these cases at once (so that we don't have to separately define ``quotient group'', ``quotient rng'', ``quotient space'', etc.).  Of course the answer is ``Yes, there is such a generalization.'', and this generalization is known as \emph{general algebra}\index{General algebra} or \emph{universal algebra}\index{Universal algebra}.  As this is an introductory \emph{analysis} text, it would be insane to develop any of this theory at all.  Indeed, all of the algebra we're doing is being done for tangential reasons as it is.
+	\end{rmk}
+\end{dfn}
+\begin{exr}{}{}
+	Let $V$ be a $\K$-module, and let $W\subseteq V$ be a subset.  Show that $W$ is an ideal iff it is a subspace.
+	\begin{rmk}
+		Hereafter, we shall adhere to the standard convention and only use the term ``subspace'' in this context.
+	\end{rmk}
+\end{exr}
+
+\subsection{The (co)kernel and (co)image}
+
+A fact with which you are likely familiar is that, to each linear-transformation, are associated two subspaces, a subspace of the domain and a subspace of the codomain.  A fact with which you are unlikely familiar is that there are likewise two \emph{quotient} modules associated to each linear-transformation as well.  One of the subspaces is just the image, something you (hopefully) are already quite comfortable with.  The other three, however, we should probably define.  Note again that the concepts of coimage and cokernel can likely safely be skipped for the time being.
+\begin{dfn}{Kernel}{Kernel}
+	Let $T\colon V\rightarrow W$ be a linear-transformation.  Then, the \term{kernel}\index{Kernel} of $T$, $\Ker (T)$\index[notation]{$\Ker (T)$}, is defined by
+	\begin{equation}
+	\Ker (T)\ceqq \left\{ v\in M:T(v)=0\right\} .
+	\end{equation}
+	\begin{rmk}
+		If the term ``kernel'' is unfamiliar to you, perhaps the term \term{null-space}\index{Null-space} is.  While I prefer to try to reserve the term ``null-space'' for matrices and ``kernel'' for linear-transformations, they are essentially the same thing.  Similarly, the term \term{column-space}\index{Column-space} is essentially the same as the image of a linear-transformation, though, again, this terminology is more appropriate in the context of matrices.
+	\end{rmk}
+	\begin{rmk}
+		Note the \emph{capital} ``$\mrm{K}$'' in ``$\Ker$''.    I don't promise you that everyone will be strict about this, but it is common to use a capital letter to refer to the kernel as an object (set) and to use a lowercase letter to refer to the corresponding map $\Ker (T)\xrightarrow{\ker (T)}M$\index[notation]{$\ker (T)$}.  In this context, this distinction is a pedantic one, but it's a distinction that will matter as you progress in your studies.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{prp1.2.17}
+	Let $T\colon V\rightarrow W$ be a linear-transformation.  Then,
+	\begin{enumerate}
+		\item $\Ker (T)\subseteq V$ is a subspace; and
+		\item $\Ima (T)\subseteq W$ is a subspace.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+We now turn to the two quotient spaces.
+\begin{dfn}{Coimage}{Coimage}
+	Let $T\colon V\rightarrow W$ be a linear-transformation.  Then, the \term{coimage}\index{Coimage} of $T$, $\Coima (T)$\index[notation]{$\Coima (T)$} is defined by
+	\begin{equation}
+	\Coima (T)\ceqq V/\Ker (T).
+	\end{equation}
+\end{dfn}
+\begin{dfn}{Cokernel}{Cokernel}
+	Let $T\colon V\rightarrow W$ be a linear-transformation.  Then, the \term{cokernel}\index{Cokernel} of $T$, $\Coker (T)$\index[notation]{$\Coker (T)$} is defined by
+	\begin{equation}
+	\Coker (T)\ceqq W/\Ima (T).
+	\end{equation}
+\end{dfn}
+Thus, to each linear-transformation is associated a subspace of the domain and a subspace of the codomain (the kernel and image respectively).  Quotienting by these respective subspaces gives you a quotient of the domain and a quotient of the codomain (the coimage and cokernel respectively).
+
+One application of these concepts is that they give us alternative methods to test for injectivity and surjectivity, though we wait to state the results until we can speak of \emph{dimension}---see \cref{prp1.2.21,prp1.2.22}.
+
+\section{Summary}
+
+So far, we've covered \thepage \ pages worth of material, but not all of it is equally important.  For example, things like the coimage and bimodules can safely be ignored on a first reading.  We recall here things covered in the chapter that you really must absolutely know.
+\begin{enumerate}
+	\item The definition of \emph{$\K$-modules} (\cref{RModule}) and \emph{vector spaces} (\cref{VectorSpace}).
+	\item The definition of \emph{linear-transformations} (\cref{LinearTransformation}).
+	\item The definition of \emph{subspaces} (\cref{Subspace}) and the criterion to test whether a subset is in fact a subspace (\cref{prp1.2.2}).
+	\item Each linear-transformation has a \emph{kernel}, a subspace of the domain (\cref{prp1.2.17}).
+	\item Each linear-transformation has an \emph{image}, a subspace of the codomain (\cref{prp1.2.17}).
+\end{enumerate}
