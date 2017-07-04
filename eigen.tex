@@ -1,4 +1,4 @@
-\chapter{Eigenvalues and eigenvectors}
+\chapter{``Eigensuff''}
 
 \section{Motivation}\label{sct4.1}
 
@@ -177,11 +177,7 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 		\end{equation}
 		As $\lambda$ is central, this is a subspace.  It is furthermore a nonzero subspace by hypothesis.  By definition, $\restr{T}{W}=\lambda \id _W$.
 		
-		To show maximality, let $U\supseteq W$ be a subspace and let $\mu \in \F$ be such that $\restr{T}{U}=\mu \id _U$.  Then, in particular
-		\begin{equation}
-			\mu v=T(v)=\lambda v,
-		\end{equation}
-		and so $\mu =\lambda$ as $\F$ is a division ring and $v$ is nonzero.  We then have that $T(u)=\mu u$ for all $u\in U$, that is, $U\subseteq W$, showing maximality.  Hence,
+		To show maximality, let $U\supseteq W$ be a subspace such that $\restr{T}{U}=\lambda \id _U$.  We then of course have that $T(u)=\lambda u$ for all $u\in U$, that is, $U\subseteq W$, showing maximality.  Hence,
 		\begin{equation}\label{eqn4.2.22}
 			W\ceqq \{ v\in V:T(v)=\lambda v\} =\Eig _{\lambda ,T}.
 		\end{equation}
@@ -208,10 +204,10 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 	\end{exr}
 \end{exm}
 
-\begin{prp}{}{}
+\begin{prp}{Eigenvectors with distinct eigenvalues are linearly-independent}{prp4.2.22}
 	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, let $\lambda _1,\ldots ,\lambda _m$ be distinct eigenvalues of $T$, and let $v_k\in \Eig _{\lambda _k}$ be nonzero $1\leq k\leq m$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
 	\begin{rmk}
-		In short, eigenvectors with distinct eigenvalues are linearly-independent.
+		When we investigate generalized-eigenvectors, we will encounter a strict generalization of this---see \cref{prp4.4.157}.
 	\end{rmk}
 	\begin{proof}
 		Denote the ground division ring by $\F$.  We proceed by induction on $m$.  The $m=0$ case is immediate as eigenvectors are nonzero.  So, let $m\in \Z ^+$ and suppose the result is true $m-1$.  To prove the result for $m$, we proceed by contradiction:  suppose that $\{ v_1,\ldots ,v_m\}$ is linearly-dependent.  By \cref{prp1.2.28}, there is some $v_k$ such that
@@ -295,7 +291,7 @@ We started this chapter with the objective of finding a basis for which the coor
 	\end{rmk}
 \end{dfn}
 The whole point of discussing the ``eigenstuff'' was, as we saw in \crefnameref{sct4.1}, that the existence of eigenvalues was related to the diagonalizability of the linear-transformation.  We now make this precise.
-\begin{thm}{Fundamental Theorem of Diagonalizability}{}
+\begin{thm}{Fundamental Theorem of Diagonalizability}{FundamentalTheoremOfDiagonalizability}
 	Let $V$ be a finite-dimensional vector space, let $T\colon V\rightarrow V$ be linear, and let $\lambda _1,\ldots ,\lambda _m$ denote the eigenvalues of $T$.\footnote{Note that there are finitely many eigenvalues by \cref{crl4.2.28}.}  Then, the following are equivalent.
 	\begin{enumerate}
 		\item $T$ is diagonalizable.
@@ -326,6 +322,31 @@ The whole point of discussing the ``eigenstuff'' was, as we saw in \crefnameref{
 	\end{equation}
 	As $A$ is upper-triangular, the eigenvalues are the elements on the diagonal  $1$, $4$, and $6$.  Thus, as $A$ has $3$ distinct eigenvalues, it must be diagonalizable.
 \end{exm}
+Diagonalizability is yet another context where the ground division ring matters.
+\begin{exm}{A matrix diagonalizable over $\C$ but not over $\R$}{exm4.3.7}
+	Define
+	\begin{equation}
+		A\ceqq \begin{bmatrix}0 & -1 \\ 1 & 0\end{bmatrix}.
+	\end{equation}
+	This matrix defines a linear-transformation $\R ^2\rightarrow \R ^2$ and also $\C ^2\rightarrow \C ^2$.  In either case, if $\lambda$ is an eigenvalue, then it must be the case that
+	\begin{equation}
+		\lambda ^2+1=0.
+	\end{equation}
+	\begin{exr}[breakable=false]{}{}
+		Check this, that is, show that in both case $F=\R ,\C$, $\lambda \in \F$ is an eigenvalue iff $\lambda ^2+1=0$.
+	\end{exr}
+
+	Thus, if the ground field is $\R$, there are no eigenvalues.  On the other hand, if the ground field in $\C$, then there are two distinct eigenvalues, $\pm 1$.  Thus, according to \namerefpcref{FundamentalTheoremOfDiagonalizability}, this linear-transformation is diagonalizable over $\C$ but not over $\R$.
+\end{exm}
+The phenomenon we observed in the previous example is quite general, so it's worth it to take the time to point out its significance.
+\begin{displayquote}
+	As we will see later, it turns out that to every linear operator, there is an associated polynomial, the \emph{characteristic polynomial}, that has the property that a scalar is an eigenvalue iff it is a root of that polynomial. 
+\end{displayquote}
+In the previous example, the characteristic polynomial was $\lambda ^2+1$.  Thus, if the characteristic polynomial doesn't have any roots, the linear operator doesn't have any eigenvalues.  Thus, we observe the following.
+\begin{displayquote}
+	If order to guarantee that all linear operators have an eigenvalue, we're going to want to require all polynomials to have at least one root.
+\end{displayquote}
+The property that all polynomials have a root is an important one called \emph{algebraically-closed}, and we will return to it later.  For now, however, we resume discussion of examples regarding diagonalizability.
 \begin{exm}{A diagonalizable linear-transformation with fewer eigenvalues than the dimension}{exm4.3.4}
 	The identity $\R ^2\rightarrow \R ^2$ has a single eigenvalue ($1$), but yet it is diagonalizable (with respect to the standard basis).
 \end{exm}
@@ -590,7 +611,7 @@ Over a division ring $\F$, $\Span (b)\cong _{\Vect _{\F}}\F$ via the map $\F \ni
 \end{equation}
 On the other hand, we know from \cref{prp3.1.7} that the map that sends an ``abstract'' vector to its coordinates yields an isomorphism
 \begin{equation}
-	V\cong \F ^d\ceqq \underbrace{F\times \cdots \times \F}_d.
+	V\cong \F ^d\ceqq \underbrace{\F \times \cdots \times \F}_d.
 \end{equation}
 These two facts together suggest that in the general case $V=W_1\oplus \cdots \oplus W_d$, $W_1\times \cdots \times W_d$ should play the role that $\F ^d$ did with coordinates before.  That is, the map that sends an ``abstract'' vector to its coordinates should be a map $V\rightarrow W_1\times \cdots \times W_d$ (and with any luck, it will be an isomorphism).  This is exactly how we're doing to define things.  But first, we want to give $W_1\times \cdots \times W_d$ the structure of a vector space.
 \begin{prp}{Product of modules}{}
@@ -1285,7 +1306,7 @@ As before, we start by establishing uniqueness of generalized-eigenspaces.
 \begin{prp}{Generalized-eigenspaces are unique}{}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $\lambda \in \K$, and let $U,W\subseteq V$ be $\lambda$-generalized-eigenspaces of $T$.  Then, $U=W$.
 	\begin{rmk}
-		We denote the unique $\lambda$-generalized-eigenspace of $V$ by $\Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda ,T}^{\infty}$} (for reasons that we will understand shortly).  If $T$ is clear from context, we may simply write $\Eig _{\lambda}^{\infty}\ceqq \Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda}^{\infty}$}.
+		We denote the unique $\lambda$-generalized-eigenspace of $V$ by $\Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda ,T}^{\infty}$} (for reasons that we will understand shortly).\footnote{See \cref{RankOfGeneralizedEigenvectors} to see why the use of ``$\infty$'' is appropriate here.}  If $T$ is clear from context, we may simply write $\Eig _{\lambda}^{\infty}\ceqq \Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda}^{\infty}$}.
 	\end{rmk}
 	\begin{rmk}
 		If ever we write ``$\Eig _{\lambda ,T}$'' without having explicitly said so, it should be assumed that $\lambda$ is an eigenvalue of $T$.
@@ -1311,7 +1332,9 @@ As before, we start by establishing uniqueness of generalized-eigenspaces.
 	\begin{proof}
 		Suppose that $\restr{T}{W}=\lambda \id _W+N$ with $N\colon W\rightarrow N$ locally-nilpotent linear.  Define
 		\begin{equation}
-		\collection{U}\ceqq \{ U\subseteq V\text{ a subspace}:\restr{T}{U}-\lambda \id _U\text{ is locally-nilpotent linear.}\} 
+			\begin{split}
+				\collection{U} & \ceqq \left\{ U\subseteq V\text{ a subspace}:\restr{T}{U}-\lambda \id _U\text{ is}\right. \\ & \qquad \left. \text{locally-nilpotent linear.}\right\} 
+			\end{split}
 		\end{equation}
 		and
 		\begin{equation}
@@ -1353,7 +1376,289 @@ As before, we start by establishing uniqueness of generalized-eigenspaces.
 		and hence $(\lambda -\mu )v=0$.  As $v\neq 0$ and the ground ring is a division ring, we must have that $\lambda -\mu =0$, that is, $\lambda =\mu$.
 	\end{proof}
 \end{prp}
+We also have a result analogous to \cref{thm4.2.17} that is useful for actually `calculating' generalized-eigenspaces.
+\begin{thm}{}{thm4.4.143}
+	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \F$.  Then, if $\lambda$ is an eigenvalue of $T$, then
+	\begin{equation}
+		\begin{split}
+			\Eig _{\lambda ,T}^{\infty} & =\left\{ v\in V:[T-\lambda ]^m(v)=0\text{for some }m\in \N \text{.}\right\} \\
+			& =\bigcup _{m\in \N}\Ker ([T-\lambda ]^m).
+		\end{split}
+	\end{equation}
+	In fact, if $V$ is finite-dimensional, then
+	\begin{equation}
+		\Eig _{\lambda ,T}^{\infty}=\Ker ([T-\lambda ]^{\dim (V)}).
+	\end{equation}
+	The analogous result for eigenvalues \cref{thm4.2.17} had two parts whereas this result only has one.  This is because the first part of \cref{thm4.2.17} gives an explicit characterization of eigenvalues, but as eigenvalue and generalized-eigenvalues are the same, there is no additional characterization here.
+	\begin{proof}
+		Suppose that $\lambda$ is an eigenvalue of $T$.  Define
+		\begin{equation}
+			W\ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{for some }m\in \N \text{.}\right\} =\bigcup _{m\in \N}\Ker ([T-\lambda ]^m).
+		\end{equation}
+		\begin{exr}[breakable=false]{}{}
+			Check that $W$ is a subspace.
+		\end{exr}
+		$W$ contains $\Ker (T-\lambda )$, and so is nonzero as $\lambda$ is an eigenvalue.  By definition, $T-\lambda$ is locally-nilpotent on $W$.
+		
+		To show maximality, let $U\supseteq W$ be a subspace such that $\restr{T}{U}=\lambda \id _U+N$ for $N\colon U\rightarrow U$ locally-nilpotent.  Then, for every $u\in U$, there is some $m\in \N$ such that $N^m(u)=0$, in which case $[T-\lambda ]^m(u)=N^m(u)=0$.  Thus, $u\in W$, so that $U\subseteq W$, showing maximality.  Hence,
+		\begin{equation}
+		W\ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{for some }m\in \N \text{.}\right\} =\Eig _{\lambda ,T}^{\infty}.
+		\end{equation}
+		
+		Now suppose that $V$ is finite-dimensional.  It follows from \cref{lma4.6.2} that
+		\begin{equation}
+			\Eig _{T,\lambda}^{\infty}=\bigcup _{m\in \N}\Ker ([T-\lambda ]^m)=\Ker ([T-\lambda ]^{\dim (V)}).
+		\end{equation}
+	\end{proof}
+\end{thm}
+Related to the fact that we can write the generalized-eigenspace as a union in this way is that we now have a notion of \emph{rank}.\footnote{Well, I suppose we had a notion of rank before with just eigenvalues, but it's a bit silly because all eigenvalues have rank $1$, as you'll see in the following definition.}
+\begin{dfn}{Rank (of generalized-eigenvectors)}{RankOfGeneralizedEigenvectors}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $\lambda \in \K$ be an eigenvalue of $T$, and let $v\in \Eig _{\lambda}^{\infty}$.  Then, the \term{rank}\index{Rank (of a generalized-eigenvector)} of $v$ is the smallest natural number $\Rank (v)$\index[notation]{$\Rank (v)$} such that $[T-\lambda ]^{\Rank (v)}(v)=0$.
+	\begin{rmk}
+		For $m\in \N$, the \term{rank $m$ $\lambda$-eigenspace}\index{Rank $m$ eigenspace}, $\Eig _{T,\lambda}^m$, is defined by
+		\begin{equation}
+			\Eig _{T,\lambda}^m\ceqq \left\{ v\in \Eig _{T,\lambda}^{\infty}:\Rank (v)\leq m\right\} .
+		\end{equation}\index[notation]{$\Eig _{T,\lambda}^m$}
+		As before, we will often write $\Eig _{\lambda}^m\ceqq \Eig _{\lambda ,T}^m$\index[notation]{$\Eig _{\lambda}^m$}.
+	\end{rmk}
+	\begin{rmk}
+		We may say ``rank $m$ eigenvector'' instead of the more verbose ``rank $m$ generalized-eigenvector''---the fact that we are mentioning the rank at all implies that we do not mean eigenvectors is the `usual' sense (unless of course $m$ happens to be $1$).
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Note that $\Eig _{\lambda ,T}^m$ is \emph{not} the space of rank $m$ eigenvectors, but rather, the space of generalized-eigenvectors with rank \emph{at most} $m$.  The set of generalized-eigenvectors with rank exactly equal to $m$ is not a subspace in general.
+	\end{rmk}
+	\begin{rmk}
+		As $\restr{T-\lambda}{\Eig _{\lambda}^{\infty}}$ is locally-nilpotent, there is by definition some such natural number.
+	\end{rmk}
+	\begin{rmk}
+		Note that the rank $1$ generalized-eigenvectors are precisely the (`ordinary') eigenvectors.  Also note that $0\in \Eig _{\lambda ,T}^{\infty}$ has rank $0$, though it is technically not a generalized-eigenvector.
+	\end{rmk}
+	\begin{rmk}
+		Hence,
+		\begin{equation}
+			\Eig _{\lambda ,T}^1=\Eig _{\lambda ,T}
+		\end{equation}
+		and
+		\begin{equation}
+			\Eig _{\lambda ,T}^0=0.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		Note that $\Rank (v)\leq \dim (V)$ if $V$ is finite-dimensional by the previous result \cref{thm4.4.143}.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{Properties of higher rank eigenspaces}{}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \K$ be an eigenvalue of $T$.  Then,
+	\begin{enumerate}
+		\item
+		\begin{equation}
+			\Eig _{\lambda}^m=\Ker ([T-\lambda ]^m);
+		\end{equation}
+		\item $\Eig _{\lambda}^m\subseteq V$ is a subspace; and
+		\item
+		\begin{equation}
+			\Eig _{\lambda}^0\subseteq \Eig _{\lambda}^1\subseteq \Eig _{\lambda}^2\subseteq \cdots ;
+		\end{equation}
+		and
+		\item if $v\in \Eig _{\lambda}$ has rank $m\in Z^+$, then $[T-\lambda ](v)$ has rank $m-1$.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+Recall (\cref{prp4.2.22}) that eigenvectors with distinct eigenvalues are linearly-independent.  The same is true for generalized-eigenvectors (and in fact this is a strict generalization of the previous result).
+\begin{prp}{Generalized-eigenvectors with distinct ei\-genvalues are linearly-independent}{prp4.4.157}
+	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, let $\lambda _1,\ldots ,\lambda _m$ be distinct eigenvalues of $T$, and let $v_k\in \Eig _{\lambda _k}^{\infty}$ be nonzero $1\leq k\leq m$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
+	\begin{proof}
+		Denote the ground division ring by $\F$.  Suppose that
+		\begin{equation}
+			0=\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m.
+		\end{equation}
+		Let $n\in \Z$ be the smallest positive integer such that $w_1\ceqq [T-\lambda _1]^n(v_1)\neq 0$, so that $[T-\lambda _1](w_1)=0$, that is, $T(w_1)=\lambda _1w_1$.  It follows that $[T-\lambda ](w_1)=(\lambda _1-\lambda )w$ for any $\lambda \in \F$.  Apply $[T-\lambda _1]^n$ to this equation to obtain
+		\begin{equation}
+			0=\alpha _1\cdot w_1+\cdots +\alpha _m\cdot w_m,
+		\end{equation}
+		where we have defined $w_k\ceqq [T-\lambda _1]^n(v_k)$.  Note that, as generalized-eigenspaces are $T$-invariant subspaces and $\lambda _1\in \F$ is central, $w_k\ceqq [T-\lambda _1]^n(v_k)\in \Eig _{\lambda _k}^{\infty}$ is still in the $\lambda _k$-generalized-eigenspace.  Hence, for each $2\leq k\leq m$, there is some $n_k\in \Z ^+$ such that $[T-\lambda _k]^{n_k}(w_k)=0$.  Applying $[T-\lambda _2]^{n_2}\cdots [T-\lambda _m]^{n_m}$ to this equation, we thus find
+		\begin{equation}
+			0=\alpha _1(\lambda _1-\lambda _2)^{n_2}\cdots (\lambda _1-\lambda _m)^{n_m}.
+		\end{equation}
+		As the eigenvalues are distinct and we're working over a division ring, this implies that $\alpha _1=0$.
+		
+		Proceeding inductively and doing the same thing for $\alpha _2$, $\alpha _3,$ and so on, we eventually obtain $0=\alpha _1=\cdots =\alpha _m$, and so $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
+	\end{proof}
+\end{prp}
+
+We are now essentially ready to put all the pieces together.
 
 \subsection{The Jordan Canonical Form Theorem}
 
-Finally, we can put all the pieces together.
+Okay, so that was a lie.  There is still one minor detail we need to address:  how do we know we have any eigenvalues at all!?  Indeed, we don't know that.  It's just not true.  We saw in \cref{exm4.3.7} an example of a linear-transformation that didn't have any eigenvalues.  Fortunately, there is a natural hypothesis would can impose on the ground division ring in order to guarantee we have eigenvalues, in which case (\cref{GeneralizedEigenspaceDecomposition}), not only do we have a single eigenvalue, but we have `enough' generalized-eigenvectors to generate the entire space.  To state this hypothesis, however, we're going to need to study polynomials in a bit more depth.
+
+\subsubsection{Polynomials and algebraic-closure}
+
+We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a polynomial, called the characteristic polynomial, of which all the eigenvalues are a root, and that essentially the reason that the matrix given in \cref{exm4.3.7} was diagonalizable over $\C$ but not over $\R$ was because the characteristic polynomial in this case had complex but not real roots.  This suggests that the property we want to impose on the ground division ring has something to do with roots of polynomials.  So, before anything else, let's be absolutely clear what we mean by the term ``root''.
+\begin{dfn}{Root}{Root}
+	Let $\K$ be a ring, let $p\in \K [x]$, and let $x_0\in \K$.  Then, $x_0$ is a \term{root}\index{Root} of $p$ iff $p(x_0)=0$.
+	\begin{rmk}
+		Write $p(x)=a_0+a_1x+\cdots +a_mx^m$.  Then,
+		\begin{equation}
+			p(x_0)\ceqq a_0+a_1x_0+\cdots +a_mx_0^m.
+		\end{equation}
+		Note that in general this is \emph{not} the same as $a_0+x_0a_1+\cdots +x_0^ma_m$.  For this reason, this is sometimes called a \term{right root} of $p$ for emphasis, though strictly speaking this is not necessary as one is only interested in right roots of elements of $\K [x]$.  Roots of elements of $[x]\K$\index[notation]{$[x]\K$},\footnote{I can't say I've ever actually seen this notation used, but what else could it possibly mean?} polynomials with coefficients written on the right, would then be called \term{left roots}.  
+	\end{rmk}
+	\begin{rmk}
+		Thus, the definition was probably exactly what you thought it would be, but we gave it just to be absolutely sure that noncommutativity didn't change the definition in any serious way.  Be warned, however:  though it didn't change the definition, it \emph{will} change the behavior of roots.  For example, we no longer have $[pq](x_0)=p(x_0)q(x_0)$, and so we can no longer conclude that $x_0$ is a root of $pq$ if it is a root of $p$.  (It will be true that $x_0$ is a root of $pq$ if it's a root of $q$, though hopefully this makes it clear we have to be more careful with our proof than you might have previously thought.)
+	\end{rmk}
+\end{dfn}
+\begin{exm}{A degree $2$ polynomial with infinitely many roots}{}
+	The polynomial $x^2+1$ has infinitely many roots in $\H$.\footnote{Of course, it has none in $\R$ and $2$ in $\C$.}
+	\begin{exr}[breakable=false]{}{}
+		Check this.
+	\end{exr}
+	\begin{exr}[breakable=false]{}{}
+		On the other hand, show that $x^2+1$ doesn't have \emph{any} central roots.
+	\end{exr}
+	\begin{rmk}
+		For fields, it is well-known (perhaps even to you) that a polynomial of degree $m$ can have at most $m$ roots.  Thus, this phenomenon is perhaps quite startling:  in what is arguably the simplest of all noncommutative division rings, we have a polynomial of degree $2$ with infinitely many roots!.\footnote{Of course, we can't do this with degree less than $2$.}  Instead, this classical result generalizes to the statement that the set of all roots of $p$ belong to at most $m$ \emph{conjugacy classes} in $D$.\footnote{You don't need to know what ``conjugacy class'' means.  This is just a comment for those that already know and those that are curious enough to look up the details.  By the way, this theorem has a name:  it's called the \emph{Gordon-Motzkin Theorem}\index{Gordon-Motzkin Theorem}.}  Furthermore, it \emph{is} true that either (i) there are infinitely many roots or (ii) the number of roots is less than $m$.  For example, even over the most noncommutative division rings, you can't find a degree $3$ polynomial with $6$ roots:  the only possibilities are $0$, $1$, $2$, $3$, and infinitely many roots.
+	\end{rmk}
+\end{exm}
+\begin{dfn}{Algebraically-closed}{AlgebraicallyClosed}
+	Let $\K$ be a ring.
+	\begin{enumerate}
+		\item $\K$ is \term{right algebraically-closed}\index{Right algebraically-closed} iff every nonconstant $p\in \K [x]$ has a root.
+		\item $\K$ is \term{left algebraically-closed}\index{Left algebraically-closed} iff every nonconstant $p\in [x]\K$ has a root.
+		\item $\K$ is \term{algebraically-closed}\index{Algebraically-closed} iff it is both right and left algebraically-closed.
+	\end{enumerate}
+	\begin{rmk}
+		The reason why this is \emph{right} algebraically-closed (and not left) is that the statement that $\alpha \in \K$ is a root of $p$ is equivalent to the statement that $p(x)=q(x)(x-\alpha )$ for some $q\in \K [x]$\footnote{This is \emph{not} in general equivalent to the statement that $p(x)=(x-\alpha )r(x)$ for some $r\in \K [x]$ if $\K$ is noncommutative.}---see the following result \cref{prp4.4.174}.  Similarly for left algebraically-closed.
+	\end{rmk}
+	\begin{rmk}
+		In the commutative case, the left and right versions are equivalent to one another.  Thus, in the commutative case, there is essentially just one condition, simply ``algebraically-closed''.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{}{}
+	Note that $\C$ is algebraically-closed but $\R$ is not.  $\H$ is also (left and right) algebraically-closed.
+\end{exm}
+\begin{exr}{}{}
+	Can you find an example of a division ring that is left algebraically-closed but not right algebraically-closed (or vice versa)?
+\end{exr}
+\begin{prp}{}{prp4.4.174}
+	Let $\F$ be a division ring and let $x_0\in \F$.
+	\begin{enumerate}
+		\item $x_0$ is a root of $p\in \F[x]$ iff there is some $q\in \F [x]$ such that $p(x)=q(x)(x-x_0)$.
+		\item $x_0$ is a root of $p\in [x]\F$ iff there is some $q\in [x]\F$ such that $p(x)=(x-x_0)q(x)$.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  See \cite[Proposition 16.2]{Lam}.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\subsubsection{The theorem.  Finally.}
+
+We now come to one of the most important theorems of the chapter (indeed, of the entire notes).
+\begin{thm}{Generalized-eigenspace decomposition\hfill}{GeneralizedEigenspaceDecomposition}
+	Let $V$ be a finite-dimensional vector space over an algebraically-closed field $\F$, let $T\colon V\rightarrow V$ be linear, and denote the eigenvalues of $T$ by $\lambda _1,\ldots ,\lambda _m$.  Then,
+	\begin{equation}
+	V=\Eig _{\lambda _1}^{\infty}\oplus \cdots \oplus \Eig _{\lambda _m}^{\infty}.
+	\end{equation}
+	\begin{rmk}
+		The reason for the asymmetry of the handedness in this statement is because $V$ is a \emph{left} $\F$-module.  Had we written scaling on the right so that $V$ were a right $\F$-module, then the hypothesis would instead be that $\F$ is \emph{left} algebraically-closed.
+	\end{rmk}
+	\begin{rmk}
+		In particular, $T$ has at least one eigenvalue.
+	\end{rmk}
+	\begin{rmk}
+		In particular, generalized-eigenvectors with distinct eigenvalues are linearly-independent.
+	\end{rmk}
+	\begin{rmk}
+		Finally, we have succeeded in decomposing $V$ as a direct-sum of $T$-invariant subspaces on which the behavior of $T$ is relatively well-understood.  All that remains is to put the final pieces together to determine exactly what form the matrix of $T$ will take with respect to this direct-sum decomposition.
+	\end{rmk}
+	\begin{rmk}
+		This is one of the few times, and most likely the most significant time, where I was not able to remove the assumption of commutativity.  The reason for this is that eigenvalues are central, and so you would need to assume that all nonconstant polynomials have \emph{central} roots.  But if you do that, then you automatically have a field!\footnote{For every $\alpha \in \F$, $x-\alpha$ would have a central root, implying that $\alpha$ is central.}
+	\end{rmk}
+	\begin{proof}
+		We proceed by (strong induction) on $\dim (V)$.  If $\dim (V)=0$, the statement is vacuously true.
+		
+		So, let $d\ceqq \dim (V)\in \Z ^+$ and suppose that the result is true whenever the dimension of the vector space is less than $d$.
+		\begin{lma}{}{}
+			Let $V$ be a finite-dimensional vector space over an algebraically-closed field and let $T\colon V\rightarrow V$ be linear.  Then, $T$ has an eigenvalue.
+			\begin{proof}
+				Let $v\in V$ be nonzero.
+				\begin{equation}
+				\{ v,T(v),T^2(v),\ldots ,T^d(v)\}
+				\end{equation}
+				is a set of $d+1$ vectors in a vector space of dimension $d$, and so it must be linearly-depend.  Thus, there are $\alpha _0,\ldots ,\alpha _d\in \F$, not all zero, such that
+				\begin{equation}\label{eqn4.4.180}
+				0=\alpha _0\cdot v+\cdots +\alpha _d\cdot T^d(v).
+				\end{equation}
+				Note that it cannot be the case that $0=\alpha _1=\cdots =\alpha _d$, for then the above equation would in turn imply $\alpha _0=0$.  Hence,
+				\begin{equation}
+					p(x)\ceqq \alpha _0+\alpha _1x+\cdots +\alpha _dx^d\in \F [x]
+				\end{equation}
+				is a nonconstant polynomial.  As $\F$ is right algebraically-closed, there is a root $\lambda _1\in \F$ of $p$.  Hence, by \cref{prp4.4.174}, there is a polynomial $p_2\in \F [x]$ such that
+				\begin{equation}
+					p(x)=p_2(x)(x-\lambda _1).
+				\end{equation}
+				If $p_2$ is constant, stop.  Otherwise, $p_2$ has another root $\lambda _2\in \F$, in which case we can write
+				\begin{equation}
+					p(x)=p_3(x)(x-\lambda _2)(x-\lambda _1)
+				\end{equation}
+				for some $p_3\in \F [x]$.  Continuing inductively, we eventually find
+				\begin{equation}
+					p(x)=\alpha (x-\lambda _d)\cdots (x-\lambda _1)
+				\end{equation}
+				for some nonzero $\alpha \in \F$.
+				
+				By \eqref{eqn4.4.180}, we have that $[p(T)](v)=0$, and hence
+				\begin{equation}
+					0=\alpha [T-\lambda _d]\left( [T-\lambda _{d-1}]\left( \cdots ([T-\lambda _1](v))\cdots \right) \right) .
+				\end{equation}
+				If $[T-\lambda _{d-1}](\cdots )$ is nonzero, then $T-\lambda _d$ has nonzero kernel.  Otherwise, in fact we have $[T-\lambda _{d-1}](\cdots )=0$.  Now, if $[T-\lambda _{d-2}](\cdots )$ is nonzero, $T-\lambda _{d-1}$ has nonzero kernel.  Continuing inductively, we eventually find some $k$ such that $\Ker (T-\lambda _k)\neq 0$.  Thus, $\lambda _k$ is an eigenvalue of $T$.
+			\end{proof}
+		\end{lma}
+	
+		So, let $\lambda _1$ be an eigenvalue of $T$.  By \cref{thm4.4.143}, we have that $\Eig _{\lambda}^{\infty ,T}=\Ker ([T-\lambda ]^{\dim (V)})$.  Then, by \cref{prp4.6.1}, we have
+		\begin{equation}\label{eqn4.4.178}
+			V=\Eig _{\lambda ,T}^{\infty}\oplus U,
+		\end{equation}
+		where $U\ceqq \Ima ([T-\lambda ]^{\dim (V)})$ is $T$-invariant.
+	
+		Enumerate all the eigenvalues of $T$ by $\lambda _1,\ldots ,\lambda _m$.
+		\begin{exr}[breakable=false]{}{}
+			Show that the eigenvalues of $\restr{T}{U}\colon U\rightarrow U$ are $\lambda _2,\ldots ,\lambda _m$.
+		\end{exr}
+		By the induction hypothesis, we now have
+		\begin{equation}\label{eqn4.4.180x}
+			U=\Eig _{\lambda _2,\restr{T}{U}}^{\infty}\oplus \cdots \oplus \Eig _{\lambda _m,\restr{T}{U}}^{\infty}.
+		\end{equation}
+		Combining this with \eqref{eqn4.4.178} will complete the proof if we can show that $\Eig _{\lambda _k,\restr{T}{U}}^{\infty}=\Eig _{\lambda _k,T}^{\infty}$.  As the proof is the same for all $k$, it suffices to prove this for $k=2$.
+	
+		So, let $u\in \Eig _{\lambda _2,\restr{T}{U}}^{\infty}$.  There is then some $m\in \N$ such that $[T-\lambda _2]^m(u)=0$, and so $u\in \Eig _{\lambda _2,T}^{\infty}$.  In the other direction, let $v\in \Eig _{\lambda _2,T}^{\infty}$.  As before, we know that there is some $m\in \N$ such that $[T-\lambda _2]^m(v)=0$, but now we need to show additionally that $v\in U$.
+	
+		By \eqref{eqn4.4.178}, we can write
+		\begin{equation}\label{eqn4.4.181}
+			v=v_1+u
+		\end{equation}
+		for unique $v_1\in \Eig _{\lambda _1,T}^{\infty}$ and $u\in U$.  We wish to show that $v_1=0$.
+	
+		By \eqref{eqn4.4.180x}, we may write
+		\begin{equation}
+			u=u_2+\cdots +u_m
+		\end{equation} 
+		for unique $u_k\in \Eig _{\lambda _k,\restr{T}{U}}^{\infty}$.  Hence,
+		\begin{equation}
+			v=v_1+u_2+\cdots +u_m.
+		\end{equation}
+		As generalized-eigenvectors with distinct eigenvalues are linearly-independent (\cref{prp4.4.157}), this implies that $v_1=0$, $u_2=v$, and $u_3=\cdots =u_m=0$.  Thus, $v\in U$, as desired.
+	\end{proof}
+\end{thm}
