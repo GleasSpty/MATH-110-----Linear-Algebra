@@ -13,7 +13,7 @@ If you've studied linear algebra before, you'll almost certainly recall that the
 
 If we have a collection of vectors, then we can generate a bunch of other vectors by taking linear-combinations of the ones we started with.  The collection of all such linear-combinations will be a subspace, and in fact, the \emph{smallest} subspace containing our original collection.  This subspace has a name:  the \emph{span}.
 \begin{thm}{Span}{Span}
-	Let $V$ be a $\K$-module, and let $S\subseteq V$.  Then, there is a unique subspace of $V$, the \term{span}\index{Span} of $S$, $\Span (S)$\index[notation]{$\Span (S)$}, such that
+	Let $V$ be a $\K$-module and let $S\subseteq V$.  Then, there is a unique subspace of $V$, the \term{span}\index{Span} of $S$, $\Span (S)$\index[notation]{$\Span (S)$}, such that
 	\begin{enumerate}
 		\item $S\subseteq \Span (S)$; and
 		\item if $W\subseteq V$ is another subspace containing $S$, it follows that $\Span (S)\subseteq W$.
@@ -43,7 +43,7 @@ If we have a collection of vectors, then we can generate a bunch of other vector
 	What is $\Span (\emptyset )$?
 \end{exr}
 \begin{dfn}{Spanning}{Spanning}
-	Let $V$ be a $\K$-module, and let $S\subseteq V$.  Then, $S$ is \term{spanning}\index{Spanning} iff $\Span (S)=V$.
+	Let $V$ be a $\K$-module and let $S\subseteq V$.  Then, $S$ is \term{spanning}\index{Spanning} iff $\Span (S)=V$.
 	\begin{rmk}
 		Synonymously, we also say that $S$ \term{spans}\index{Spans} $V$.
 	\end{rmk}
@@ -54,7 +54,7 @@ If we have a collection of vectors, then we can generate a bunch of other vector
 
 Given a collection of vectors, we can take the set of all linear-combinations to form the span.  A question we might ask is ``Can we obtain a single vector in this way from two distinct linear-combinations?'', or less precisely, ``Is our collection of vectors `redundant' in some sense?''.  There is a term for this ``redundancy'':  \emph{linear-dependence}.
 \begin{dfn}{Linear-independence}{LinearIndependence}
-	Let $V$ be a $\K$-module, and let $S\subseteq M$.  Then, $S$ is \term{linearly-independent}\index{Linearly-independent} iff for all $m\in \Z ^+$, $\alpha _1,\ldots ,\alpha _m\in \K$, and $v_1,\ldots ,v_m\in S$,
+	Let $V$ be a $\K$-module and let $S\subseteq M$.  Then, $S$ is \term{linearly-independent}\index{Linearly-independent} iff for all $m\in \Z ^+$, $\alpha _1,\ldots ,\alpha _m\in \K$, and $v_1,\ldots ,v_m\in S$,
 	\begin{equation}
 	\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0\text{ implies }\alpha _1=0,\ldots ,\alpha _m=0.
 	\end{equation}

@@ -345,6 +345,13 @@ Unfortunately, if the indexing sets of the matrices are infinite, then we won't 
 	\Matrix _m(\K )\ceqq \K ^{m\times m}.\footnote{Recall (\cref{Function}) that $\K ^{m\times m}$ is the set of all functions from $m\times m$ into $\K$, that is, the set of all $m\times m$ matrices with entries in $\K$.}
 	\end{equation}\index[notation]{$\Matrix _m(\K )$}
 	Then, $\Matrix _m(\K )$ is a ring with matrix addition and multiplication, additive identity the $0$ matrix, and multiplicative identity the diagonal matrix with $1$s on the diagonal.
+	
+	\begin{rmk}
+		The multiplicative identity, that is, the diagonal matrix with $1$s on the diagonal has a name:  surprise surprise, the \term{$m\times m$ identity matrix}\index{Identity matrix}
+		\begin{equation}
+			\id _{m\times m}\ceqq \begin{bmatrix}1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & 1\end{bmatrix}.
+		\end{equation}\index[notation]{$\id _{m\times m}$}
+	\end{rmk}
 	\begin{rmk}
 		Though it will not be a ring (because we can't multiply them), we may also write $\Matrix _{m\times n}(\K )$\index[notation]{$\Matrix _{m\times n}(\K )$} for the set of all $m\times n$ matrices with entries in $\K$.
 	\end{rmk}
@@ -388,13 +395,13 @@ The first step in applying techniques of linear algebra to solve systems of line
 \end{subequations}
 the matrix
 \begin{equation}\label{eqn1.1.101}
-\begin{bmatrix}3 & 0 & -5 & 2 \\ -4 & 2 & 3 & -1\end{bmatrix}.
+\begin{bmatrix}[c c c | c]3 & 0 & -5 & 2 \\ -4 & 2 & 3 & -1\end{bmatrix}.
 \end{equation}
 (This is really nothing more than eliminating unnecessary symbols---it is clear how one can determine the original equations from the matrix itself.)  Sometimes, we will only be interested in the \term{coefficient matrix}\index{Coefficient matrix}.
 \begin{equation}
 \begin{bmatrix}3 & 0 & -5 \\ -4 & 2 & 3\end{bmatrix}.
 \end{equation}
-If we every need to distinguish between the two, the matrix in \eqref{eqn1.1.101} will be referred to as the \term{augmented matrix}\index{Augmented matrix} associated to the system.
+If we every need to distinguish between the two, the matrix in \eqref{eqn1.1.101} will be referred to as the \term{augmented matrix}\index{Augmented matrix} associated to the system.   (Incidentally, the vertical bar in this matrix only serves to remind us that the far right-hand column corresponds to the constants on the right-hand side of the equations \eqref{eqn1.1.100} instead of coefficients of a fourth variable as one might have guessed if the bar weren't there.)
 
 If we were working with the original equations, we would perform blah blah blah algebraic operations in an attempt to isolate each of the ``variables'' $x_1$, $x_2$, and $x_3$.  As it turns out, there are three fundamental operations that one can perform on the equations to solve any system (at least when the coefficients come from a field):  we can reorder the equations, we can scale any equation by a unit\footnote{A scalar that has an inverse---see \cref{dfnA.1.33}.}, and we can add any scalar multiple of one equation to a different one.  These three operations have the property that they do not change the set of solutions, and furthermore, every system can be solved using these three operations.\footnote{Note how some operations you might try are `valid' but yet will change the set of solutions.  For example, while it is true that if $x=2$, then $x^2=4$, these two equations do not have the same set of solutions---the latter also has the solution $x=-2$.}  In terms of the matrix, we can swap any two rows, we can scale any row by a unit, and we can add any multiple of one row to a different one.  The method of solution using these three operations is essentially algorithmic, with the goal being to ``reduce'' the matrix to \emph{reduced echelon form}.
 \begin{dfn}{Row operation}{RowOperation}
@@ -449,10 +456,12 @@ If we were working with the original equations, we would perform blah blah blah 
 \end{dfn}
 The significance of reduced echelon form is that one can immediately read off the solution set.  For example, the following matrix is in reduced echelon form
 \begin{equation}\label{eqn1.1.108}
-\begin{bmatrix}1 & 0 & 5 & 2 & 0 & -7 \\ 0 & 1 & -4 & 3 & 0 & 5 \\ 0 & 0 & 0 & 0 & 1 & 5\end{bmatrix},
+\begin{bmatrix}[c c c c c | c]
+1 & 0 & 5 & 2 & 0 & -7 \\ 0 & 1 & -4 & 3 & 0 & 5 \\ 0 & 0 & 0 & 0 & 1 & 5
+\end{bmatrix},
 \end{equation}
-whence we see that its solution set is described by
-\begin{equation}
+whence we see that its solution set of the corresponding system of equations is described by\footnote{See \cref{exm3.2.53} below if you don't see how to read this off immediately from the matrix.}
+\begin{equation}\label{eqn3.2.50}
 \begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5\end{bmatrix}=x_3\begin{bmatrix}-5 \\ 4 \\ 1 \\ 0 \\ 0\end{bmatrix}+x_4\begin{bmatrix}-2 \\ -3 \\ 0 \\ 1 \\ 0\end{bmatrix}+\begin{bmatrix}-7 \\ 5 \\ 0 \\ 0 \\ 5\end{bmatrix}.
 \end{equation}
 Given your original matrix $A$ then, the strategy is try to \emph{row-reduce}, that is, apply row operations to $A$, to find a row-equivalent matrix in reduced echelon form.  We can then read off the solution set from the matrix in reduced echelon form as above, and this is in turn the solution set for our original matrix $A$.  The following result says that this is always possible (and more).
@@ -485,6 +494,148 @@ The uniqueness of the reduced echelon form allows us to make some definitions.
 		For example, the free-variables of \eqref{eqn1.1.108} are $x_3$ and $x_4$.
 	\end{rmk}
 \end{dfn}
+\begin{exm}{}{exm3.2.53}
+	Above, we simply read off the set of solutions \eqref{eqn3.2.50} from the corresponding matrix in reduced echelon form in \eqref{eqn1.1.108}.  At the time, we glossed over how to make that jump, essentially because we wanted to stress how easy reduced echelon form makes this.  The catch, of course, is that it's only very easy \emph{after} you've learned how to do it.  So, in case this is not so familiar, let's look at this in more detail.
+	
+	I'm going to explain this in two ways.  The first time, I'm going to be more explicit and give more detail.  This is so you understand what's going on and why the ``jump'' we make is legitimate.  This is fine for understanding, but in practice you won't want to go through that much work every time, so the second time through I'll explain what you want to do in practice after you understand what's going on (in particular, you're not going to want to waste your time working with any actual equations).
+	
+	Recall that the we had an augmented matrix corresponding to a system of equations in reduced echelon form,
+	\begin{equation}
+		\begin{bmatrix}[c c c c c | c]
+		1 & 0 & 5 & 2 & 0 & -7 \\ 0 & 1 & -4 & 3 & 0 & 5 \\ 0 & 0 & 0 & 0 & 1 & 5
+		\end{bmatrix},
+	\end{equation}
+	and the objective was to determine the set of solutions.  First of all, note that this matrix corresponds to the following system of equations.
+	\begin{subequations}
+		\begin{align}
+			&x_1 & & & +5&x_3 & +2&x_4 & & & &=-7 \\
+			& & &x_2 & -4&x_3 & +3&x_4 & & & &=5 \\
+			& & & & & & & & & x_5 & &=5
+		\end{align}
+	\end{subequations}
+	Looking at the above, we see that we can vary $x_3$ and $x_4$ ``freely'', that is, we can choose any values for them we like, and the above equations will dictate the values of the other variables.\footnote{These aren't necessarily the only two variables with this property, but given the form of the equations, they are the easiest ones to work with in this regard (all the other variables appear in just one equation).}  For convenience, let us move those variables to the other side.  Furthermore, for the purpose of having $5$ equations and $5$ unknowns (instead of $3$ equations and $5$ unknowns), let us introduce the tautological equations $x_3=x_3$ and $x_4=x_4$---it will become more apparent why this is helpful for us now in a moment.
+	\begin{subequations}
+		\begin{align}
+			x_1&= & -5&x_3 & -2&x_4 & -&7 \\
+			x_2&= & 4&x_3 & -3&x_4 & +&5 \\
+			x_3&= & &x_3 & & & & \\
+			x_4&= & & & &x_4 & &\\
+			x_5&= & & & & & &5
+		\end{align}
+	\end{subequations}
+	Alternatively, using column-vectors, we can write this as
+	\begin{equation}\label{eqn3.2.57}
+		\begin{bmatrix}x_1 \\ x_2 \\ x_3 \\ x_4 \\ x_5\end{bmatrix}=x_3\begin{bmatrix}-5 \\ 4 \\ 1 \\ 0 \\ 0\end{bmatrix}+x_4\begin{bmatrix}-2 \\ -3 \\ 0 \\ 1 \\ 0\end{bmatrix}+\begin{bmatrix}-7 \\ 5 \\ 0 \\ 0 \\ 5\end{bmatrix}.
+	\end{equation}
+	
+	So that was the easier-to-understand but less efficient way.  The trick to figuring this out fast is as follows.  First of all, forget the constant terms---pretend they aren't there---they will come back in the final solution as the far right-hand column vector in \eqref{eqn3.2.57}.  Then, for each free variable, set that free variable equal to $1$, set the other free variables equal to $0$, and solve for the remaining nonfree variables.  This will give you a column vector of scalars, and those column-vectors correspond to the column-vectors appearing in \eqref{eqn3.2.57} with coefficients $x_3$ and $x_4$.
+	
+	For example, first set $x_3=1$ and $x_4=0$.  Solving for the other three,\footnote{Remember we are pretending the constants aren't there!} we find $x_1=-5$, $x_2=4$, and $x_5=0$ (note with practice you can easily read this off from the matrix without every writing down any equations).  This yields the column-vector
+	\begin{equation}
+		\begin{bmatrix}-5 \\ 4 \\ 1 \\ 0 \\ 0\end{bmatrix}.
+	\end{equation}
+	Similarly, setting $x_4=1$ and $x_3=0$, we find that $x_1=-2$, $x_2=-3$, and $x_5=0$, giving us the column-vector
+	\begin{equation}
+		\begin{bmatrix}-2 \\ -3 \\ 0 \\ 1 \\ 0\end{bmatrix}.
+	\end{equation}
+	
+	To determine what the `constant' column-vector should be, set all the free variables to $0$.  In this case, we see this gives the solution
+	\begin{equation}
+		\begin{bmatrix}-7 \\ 5 \\ 0 \\ 0 \\ 5\end{bmatrix}.
+	\end{equation}
+	Putting this together gives the same result as in \eqref{eqn3.2.57}.
+	
+	Thus, in brief:  the coefficient column-vector of the free variable $x_k$ is the solution you find when you set that free variable equal to $1$ and the other free variables equal to $0$, and the constant column-vector is the solution you find when you set all free variables equal to $0$.
+\end{exm}
+
+There is another important application of row-reduction besides solving equations, namely, computing inverses of matrices.  To best understand how this works, I think it is easiest to think in terms of \emph{elementary matrices}.
+\begin{thm}{Elementary matrices}{ElementaryMatrices}
+	Let $\K$ be a ring, let $m,n\in \N$, and let $R\colon \Matrix _{m\times n}(\K )\rightarrow \Matrix _{m\times n}(\K )$ be a row operation.  Then, there is an $m\times m$ matrix $E_R$, unique if $\K$ is a division-ring, such that
+	\begin{equation}
+		E_RA=R(A)
+	\end{equation}
+	for all $A\in \Matrix _{m\times n}(\K )$.
+	
+	Furthermore, explicitly,
+	\begin{equation}\label{eqn3.2.65}
+		E_R=R(\id _{m\times m})
+	\end{equation}
+	\begin{rmk}
+		In other words, you could do the row operation directly, or you could just multiply on the left by $E_R$.
+	\end{rmk}
+	\begin{rmk}
+		\eqref{eqn3.2.65} says that $E_R$ is obtained by applying the given row operation to the identity matrix.  So, for example, for $m=3$,\footnote{Note how this doesn't depend on $n$---the same elementary matrix would work for any number of columns.}
+		\begin{equation}
+			E_{\mrm{2}\rightarrow \mrm{2}-5\cdot \mrm{3}}=\begin{bmatrix}1 & 0 & 0 \\ 0 & 1 & -5 \\ 0 & 0 & 1\end{bmatrix}.
+		\end{equation}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{thm}
+Elementary matrices can be used to prove that an algorithm to compute inverses of matrices actually works.  That algorithm is called \term{Gauss-Jordan elimination}.\footnote{Some people actually use this term to refer more generally to just ``row reduction''.}
+\begin{thm}{Gauss-Jordan elimination}{GaussJordanElimination}\index{Gauss-Jordan elimination}
+	Let $\F$ be a division ring, let $A$ be an invertible $m\times m$ matrix with entries in $\F$ so that it's reduced echelon form is $\id _{m\times m}$, and let $R\colon \Matrix _m(\F )\rightarrow \Matrix _m(\F )$ be any composition of row operations such that $R(A)=\id _{m\times m}$.  Then, $A^{-1}=R(\id _{m\times m})$.
+	\begin{rmk}
+		In practice, this is done as follows.  Take the matrix $A$ and ``augment'' it with the identity matrix $\id _{m\times m}$ to form an $m\times 2m$ matrix as follows.
+		\begin{equation}
+			\begin{bmatrix}[c | c]
+				A | \id _{m\times m}
+			\end{bmatrix}
+		\end{equation}
+		Now, row-reduce this matrix until you obtain the identity matrix on the left---what pops out on the right is $A^{-1}$:
+		\begin{equation}
+			\begin{bmatrix}[c | c]
+				\id _{m\times m} | A^{-1}
+			\end{bmatrix}
+		\end{equation}
+	\end{rmk}
+	\begin{proof}
+		Write $R=R_1\circ \cdots \circ R_n$, where $R_1,\ldots ,R_n$ are the individual row operations appearing in the composition $R$.  For convenience, let us write
+		\begin{equation}
+			E_R\ceqq E_{R_1}\cdots E_{R_n},
+		\end{equation}
+		where $E_{R_k}$ is the elementary matrix corresponding to the row operation $R_k$.  The defining result of elementary matrices (\cref{ElementaryMatrices}) implies that
+		\begin{equation}
+			R(A)=E_RA.
+		\end{equation}
+		On the other hand, by hypothesis, $R(A)=\id _{m\times m}$, and hence
+		\begin{equation}
+			E_RA=\id _{m\times m}.
+		\end{equation}
+		\begin{exr}[breakable=false]{}
+			We have just shown that $E_R$ is a left-inverse of $A$.  Show that it is also a right-inverse, so that we can conclude $A^{-1}=E_R$.
+			\begin{rmk}
+				Warning:  In general, if $A$ and $B$ are matrices such that $AB=\id _{m\times m}$, one \emph{cannot} conclude that $A^{-1}=B$.
+			\end{rmk}
+		\end{exr}
+		However, \cref{ElementaryMatrices} also said that each $E_{R_k}=R_k(\id _{m\times m})$.  It follows that $E_R=R(\id _{m\times m})$, and hence
+		\begin{equation}
+			A^{-1}=E_R=R(\id _{m\times m}).
+		\end{equation}
+	\end{proof}
+\end{thm}
+\begin{exm}{}{}
+	Suppose we would like to find the inverse of the matrix
+	\begin{equation}
+		\frac{1}{2}\begin{bmatrix}1 & 2 & 0 \\ -1 & 1 & -1 \\ -3 & 2 & 0\end{bmatrix}.
+	\end{equation}
+	Using Gauss-Jordan elimination, we form the $3\times 6$ augmented matrix
+	\begin{equation}
+		\begin{bmatrix}[c c c | c c c]\tfrac{1}{2} & 1 & 0 & 1 & 0 & 0 \\ -\tfrac{1}{2} & \tfrac{1}{2} & -\tfrac{1}{2} & 0 & 1 & 0\\ -\tfrac{3}{2} & 1 & 0 & 0 & 0 & 1\end{bmatrix}.
+	\end{equation}
+	Row reducing this to row-echelon form as if it were any old $3\times 6$ matrix, we find
+	\begin{equation}
+		\begin{bmatrix}[c c c | c c c]1 & 0 & 0 & \tfrac{1}{2} & 0 & -\tfrac{1}{2} \\ 0 & 1 & 0 & \tfrac{3}{4} & 0 & \tfrac{1}{4} \\ 0 & 0 & 1 & \tfrac{1}{4} & -2 & \tfrac{3}{4}\end{bmatrix}.
+	\end{equation}
+	Thus, we can read off
+	\begin{equation}
+		A^{-1}=\frac{1}{4}\begin{bmatrix}2 & 0 & -2 \\ 3 & 0 & 4 \\ 1 & -8 & 3\end{bmatrix}.
+	\end{equation}
+\end{exm}
 
 \subsubsection{Matrix linear-transformations}
 
