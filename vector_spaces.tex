@@ -100,13 +100,13 @@ Our first order of business is to give another equivalent definition of a $\K$-m
 		\begin{equation}
 		\alpha \cdot _{\rho}v\ceqq \rho _{\alpha}(v).\footnote{We have writen $\rho _{\alpha}(v)\ceqq [\rho (\alpha )](v)$, as I find this notation more transparent---for each $\alpha$, you obtain a group homomorphism called $\rho _{\alpha}\colon V\rightarrow V$, and so $\rho _{\alpha}(v)$ is the value of that group homomorphism at $v\in M$.  We use similar notation throughout.}
 		\end{equation}
-		\item \label{prpD.1.3.ii}Let $\coord{V,\cdot}$ be an $R$-module.  Then, $\rho _{\cdot}\colon R\rightarrow \End _{\Grp}(V)$, defined by,
+		\item \label{prpD.1.3.ii}Let $\coord{V,\cdot}$ be an $R$-module.  Then, $\rho _{\cdot}\colon R\rightarrow \End _{\Grp}(V)$, defined by
 		\begin{equation}
-		[\rho _{\cdot}]_{\alpha}(v)\ceqq \alpha \cdot v
+		[\rho _{\cdot}]_{\alpha}(v)\ceqq \alpha \cdot v,
 		\end{equation}
 		is a ring homomorphism.
 	\end{enumerate}
-	Furthermore, these two constructions are inverse two each other, that is, $\cdot _{\rho _{\cdot}}=\cdot$ and $\rho _{\cdot _{\rho}}=\rho$.
+	Furthermore, these two constructions are inverse to each other, that is, $\cdot _{\rho _{\cdot}}=\cdot$ and $\rho _{\cdot _{\rho}}=\rho$.
 	\begin{rmk}
 		This remark is more important than usual so pay attention.  This result is the precise statement of the fact that we could have equivalently defined an $R$-module to be a pair $\coord{V,\rho}$, where $V$ is a commutative group and $\rho \colon R\rightarrow \End _{\Grp}(V)$ is a ring homomorphism.  This is hugely important as it says that, in language which you will eventually encounter (though not in these notes), \emph{$R$-modules are `the same' as ``representations'' of $R$}.\footnote{In fact, ``$\rho$'' is for \emph{representation}.}
 	\end{rmk}
@@ -184,6 +184,9 @@ Now that we've seen two equivalent definitions of $\K$-module, it's time we pres
 		For what it's worth, the ``$d$'' is for \emph{dimension}.
 	\end{rmk}
 \end{exm}
+\begin{exm}{$\K$}{}
+	Taking $d=1$ in the previous example, we note that every ring can be viewed as a module over itself.  This might seem trivial, and I suppose in some sense it is, but it's actually relatively important, if for no other reasons than it allows us to apply results and definitions we know about modules to rings.  For example, you will learn at some point in your mathematical life that a ring is left( resp.~right) \emph{Noetherian} (by definition) iff is is Noetherian when regarded as a left (resp.~right) module over itself.
+\end{exm}
 \begin{exm}{$\K ^{\infty}$}{exm1.1.18}
 	Let $\K$ be a ring and define
 	\begin{equation}
@@ -235,7 +238,7 @@ And finally, the definition of a vector space.
 	These are important in that they are perhaps the simplest such examples, and so, if you think a certain property of vector spaces might fail more generally, you might consider checking the $(\Z /m\Z )^d$s first.
 \end{exm}
 \begin{exm}{Polynomials}{Polynomials}
-	Let $\K$ be a ring.  Then, $\K [x]$\index[notation]{$\K [x]$} is the set of all polynomials with coefficients in $\K$.  Addition and scaling are just ordinary addition and scaling of polynomials.
+	Let $\K$ be a ring.  Then, $\K [x]$ is the set of all polynomials with coefficients in $\K$ (\cref{PolynomialAlgebra}).  Addition and scaling are just ordinary addition and scaling of polynomials.
 	
 	For $m\in \N$, we shall write $\K [x]_m$\index[notation]{$\K [x]_m$} for the set of all polynomials in $\K [x]$ of degree \emph{at most} $m$.
 	\begin{rmk}
@@ -256,18 +259,6 @@ And finally, the definition of a vector space.
 		Thus, we technically always need to specify the ring we are working over.  However, most of the time, it will be clear from context, and we will not state this explicitly.  For example, even for $V\ceqq \C ^2$, it should be assumed that we are working over $\C$ unless otherwise stated.
 	\end{rmk}
 \end{exm}
-
-\subsubsection{Polynomials vs.~polynomial functions}\label{sss1.1.1}
-
-This subsubsection is an aside meant only to clear up a not-particularly-relevant subtlety, and can likely safely be skipped.
-
-Given a polynomial $p\in \K [x]$, we obtain a corresponding function $\K \rightarrow \K$ defined by $x\mapsto p(x)$, where $p(x)\in \K$ is obtained by ``plugging-in'' the value $x\in \K$ into $p$ and evaluating.  For example, if $\K \ceqq \R$ and $p\ceqq 3x^2-5$, then $p(-2)\ceqq 3(-2)\cdot (-2)-5=7$.  The distinction between this function and the original polynomial is a subtle one.  Elements of $\K [x]$ are merely ``formal''\footnote{I'm not quite sure why this word is used.  I think it's a bit misleading, but the word ``formal'' in this context essentially means that the thing is to be mindlessly manipulated as symbols and nothing more.  For example, I can talk about the formal power series $1+2x+3x^2+4x^3+\cdots$ even though the resulting expression might not make sense when I plug in particular values of $x$---here, $x$ is just a symbol, not a number.} polynomials, and not functions themselves.
-
-To see the difference between the concepts, take $\K \ceqq \Z /2\Z$ and consider the two polynomials $p\ceqq 0$ and $q\ceqq x+x^2=x(x-1)$.  These are manifestly different polynomials---the coefficients are different---but yet they both define the same function on $\Z /2\Z$ as $q(0)=0\cdot 1=0$ and $q(1)=1\cdot 0=0$.
-
-If this doesn't quite make sense, don't worry---this will be of very limited relevance to us.
-
-\horizontalrule
 
 I mentioned before that the term ``vector'' for elements in an ``abstract'' vector space can potentially be confusing for n00bs.  The reason this is potentially confusing is because \emph{the elements of $V$ are not necessarily `actual vectors'}.  For example, the set of real-valued functions on a set can be made into a vector space, and certainly functions themselves are not traditionally thought of as ``vectors''.  Thus, to avoid any possible confusion or ambiguity, I will be careful to make the following distinction.
 \begin{displayquote}
@@ -409,7 +400,7 @@ With a working notion of morphism in hand, we obtain corresponding categories.
 		\item with morphism set $\Mor _{\Mod{\K}}(V,W)$ precisely the set of all linear-transformations from $V$ to $W$.
 	\end{enumerate}
 	\begin{rmk}
-		Just as we have the category of left $\K$-modules $\Mod{K}$, we also have the category of right $\K$-modules $\Mod{}[\K]$\index[notation]{$\Mod*{\K}$} defined similarly.
+		Just as we have the category of left $\K$-modules $\Mod{\K}$, we also have the category of right $\K$-modules $\Mod*{\K}$\index[notation]{$\Mod*{\K}$} defined similarly.
 	\end{rmk}
 \end{exm}
 \begin{exm}{The category of vector spaces}{TheCategoryOfVectorSpaces}\index{Category of vector spaces}

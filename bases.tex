@@ -2,14 +2,44 @@
 
 \section{Spanning and linear-independence}
 
-If you've studied linear algebra before, you'll almost certainly recall that the concepts of linear-independence, spanning, and basis are of fundamental importance.  We next turn to the study of these concepts.  Before we discuss any of these, however, we must first define the notion of \emph{linear-combination}.
-\begin{dfn}{Linear-combination}{LinearCombination}
-	Let $V$ be a $\K$-module.  Then, a \term{linear-combination}\index{Linear-combination} of $v_1,\ldots ,v_m\in V$ is an element in $V$ of the form
-	\begin{equation}
-		\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m
-	\end{equation}
-	for $\alpha _1,\ldots ,\alpha _m\in \K$.
+If you've studied linear algebra before, you'll almost certainly recall that the concepts of linear-independence, spanning, and basis are of fundamental importance.  We next turn to the study of these concepts.  Before we discuss any of these, however, we must first discuss some preliminaries.
+
+\subsection{Linear-combinations and cofiniteness}
+
+Let $V$ be a $\K$-module, let $\mcal{I}$ be an indexing set, and for every $i\in \mcal{I}$ let $v_i\in V$.  In the course of these notes, you will eventually see us write something like the following.
+\begin{equation}\label{eqn2.1.8}
+\sum _{i\in \mcal{I}}v_i.
+\end{equation}
+If $\mcal{I}=\{ 1,\ldots ,m\}$ is finite, there is no worry about what this might mean:
+\begin{equation}
+\sum _{i\in \mcal{I}}v_i\ceqq v_1+\cdots +v_m.
+\end{equation}
+However, if $\mcal{I}$ is infinite, the corresponding sum is infinite, and it a priori has no meaning.  If we wanted to give such an infinite sum meaning, we would have to define a notion of convergence.  For us, however, it will be most convenient to use the following convention.\footnote{For what it's worth, this convention is equivalent to the notion of convergence defined by the \emph{discrete topology}, whatever that means.}
+\begin{dfn}{Cofinite}{Cofinite}
+	Let $X$ be a set and let $S\subseteq X$.  Then, $S$ is \term{cofinite}\index{Cofinite} in $X$ iff $X\setminus S$ is finite.
 \end{dfn}
+\begin{displayquote}
+	Whenever a sum that is not necessarily finite appears, it should be assumed that all but cofinitely many terms are $0$.
+\end{displayquote}
+Thus, if ever we write down a sum as in \eqref{eqn2.1.8}, you should pretend that the sum comes suffixed with the clause ``\textellipsis where cofinitely many $v_i$s are $0$.''.  This essentially had to be the case in order for the sum to make sense, and not having to explicitly say this every time will cut down on the verbosity.
+
+Our first experience with this convention appears in the following fundamental definition.
+\begin{dfn}{Linear-combination}{LinearCombination}
+	Let $V$ be a $\K$-module and let $S\subseteq V$.  Then, a \term{linear-combination}\index{Linear-combination} of elements of $S$ is an element in $V$ of the form
+	\begin{equation}
+		\sum _{v\in S}\alpha _v\cdot v
+	\end{equation}
+	for $\alpha _v\in \K$.
+	\begin{rmk}
+		We will find that many concepts are most clearly illustrated in the finite case, and the definition of linear-combination is no exception:  If $S=\{ v_1,\ldots ,v_m\}$, then a linear-combination of $v_1,\ldots ,v_m$ is an element in $V$ of the form
+		\begin{equation}
+			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m
+		\end{equation}
+		for $\alpha _1,\ldots ,\alpha _m\in \K$.
+	\end{rmk}
+\end{dfn}
+
+\subsection{Spanning}
 
 If we have a collection of vectors, then we can generate a bunch of other vectors by taking linear-combinations of the ones we started with.  The collection of all such linear-combinations will be a subspace, and in fact, the \emph{smallest} subspace containing our original collection.  This subspace has a name:  the \emph{span}.
 \begin{thm}{Span}{Span}
@@ -52,13 +82,31 @@ If we have a collection of vectors, then we can generate a bunch of other vector
 	\end{rmk}
 \end{dfn}
 
+\subsection{Linear-independence}
+
 Given a collection of vectors, we can take the set of all linear-combinations to form the span.  A question we might ask is ``Can we obtain a single vector in this way from two distinct linear-combinations?'', or less precisely, ``Is our collection of vectors `redundant' in some sense?''.  There is a term for this ``redundancy'':  \emph{linear-dependence}.
 \begin{dfn}{Linear-independence}{LinearIndependence}
-	Let $V$ be a $\K$-module and let $S\subseteq M$.  Then, $S$ is \term{linearly-independent}\index{Linearly-independent} iff for all $m\in \Z ^+$, $\alpha _1,\ldots ,\alpha _m\in \K$, and $v_1,\ldots ,v_m\in S$,
+	Let $V$ be a $\K$-module and let $S\subseteq M$.  Then, $S$ is \term{linearly-independent}\index{Linearly-independent} iff whenever
 	\begin{equation}
-	\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0\text{ implies }\alpha _1=0,\ldots ,\alpha _m=0.
+		\sum _{v\in S}\alpha _v\cdot v=0
 	\end{equation}
+	for $\alpha _v\in \K$, it follows that $\alpha _v=0$ for all $v\in S$.
+	
 	$S$ is \term{linearly-dependent}\index{Linearly-dependent} iff it is not linearly-independent.
+	\begin{rmk}
+		In words, $S$ is linearly-independent iff the only way to obtain $0$ by taking linear-combinations of elements of $S$ is with the trivial linear combination.
+	\end{rmk}
+	\begin{rmk}
+		If $S=\{ v_1,\ldots ,v_m\}$ is finite, this definition is equivalent to the statement that $S$ is linearly-independent iff
+		\begin{equation}
+			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m\text{ implies }\alpha _1=0,\ldots ,\alpha _m=0.
+		\end{equation}
+		
+		Furthermore, even if $S$ is not necessarily finite, you may prefer to use the equivalent definition:  ``$S$ is linearly-independent iff for every $m\in \N$ and $v_1,\ldots ,v_m\in S$
+		\begin{equation}
+			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0\text{ implies }\alpha _1=0,\ldots ,\alpha _m=0.
+		\end{equation}
+	\end{rmk}
 	\begin{rmk}
 		Explicitly, $S$ is linearly-dependent iff there are $\alpha _1,\ldots ,\alpha _m\in \K$ \emph{not all zero} and $v_1,\ldots ,v_m\in S$ such that
 		\begin{equation}
@@ -99,41 +147,48 @@ What follows is arguably a more intuitive way to think about linear (in)dependen
 	Let $V$ be a vector space and let $v_1,v_2\in V$.  Show that $\{ v_1,v_2\}$ is linearly-\emph{dependent} iff $v_2$ is a scalar multiple of $v_1$ or $v_1$ is a scalar multiple of $v_2$.
 \end{exr}
 \begin{prp}{}{prp1.2.26}
-	Let $V$ be a $\K$-module, and let $S\subseteq V$.  Then, $S$ is linearly-independent iff for every $v\in \Span (S)$ there are unique $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$ and $s_1,\ldots ,s_m\in S$ such that $v=v^1\cdot s_1+\cdots +v^m\cdot s_m$.
+	Let $V$ be a $\K$-module, and let $S\subseteq V$.  Then, $S$ is linearly-independent iff for every $w\in \Span (S)$ there are unique $w^v\in \K$ such that
+	\begin{equation}
+		w=\sum _{v\in S}w^v\cdot v.
+	\end{equation}
 	\begin{rmk}
 		The significant thing here is the \emph{uniqueness}.  We of course know automatically that there exist some coefficients for which this works from the definition of $\Span$ (\cref{Span})---the linear-independence of $S$ tells us that these coefficients are \emph{unique}.
 	\end{rmk}
 	\begin{rmk}
-		Note that the case $m=0$ corresponds to $v=0$.
+		If $S=\{ v_1,\ldots ,v_m\}$ is finite, then this is equivalent to the statement that for every $w\in \Span (S)$ there are unique $w^1,\ldots ,w^m\in \K$ such that
+		\begin{equation}
+			w=w^1\cdot v_1+\cdots +w^m\cdot v_m.
+		\end{equation}
 	\end{rmk}
 	\begin{proof}
-		$(\Rightarrow )$ Suppose that $S$ is linearly-independent.  Let $v\in \Span (S)$.  From \cref{Span}, the definition of $\Span$, it follows that there are some nonzero $v^1,\ldots ,v^m\in \K$ and $s_1,\ldots ,s_m\in S$ such that $v=v^1\cdot s_1+\cdots +v^m\cdot s_m$.  We wish to show that this linear combination is unique.  So, suppose also that $v=w^1\cdot t_1+\cdots +w^n\cdot t_n$ for nonzero $w^1,\ldots ,w^n\in \K$ and $t_1,\ldots ,t_n\in V$.  Write
-		\begin{equation}
-		\{ u_1,\ldots ,u_o\} \ceqq \{ s_1,\ldots ,s_m\} \cap \{ t_1,\ldots ,t_n\} .
+		$(\Rightarrow )$ Suppose that $S$ is linearly-independent.  Let $w\in \Span (S)$.  From \cref{Span}, the definition of $\Span$, it follows that there are $w^v\in \K$ such that
+		\begin{equation}\label{eqn2.1.17}
+			w=\sum _{v\in S}w^v\cdot v.
 		\end{equation}
-		After reindexing the $s_k$s and $t_k$s so that $u_1,\ldots ,u_o$ `come first' in both lists, we have
-		\begin{equation}
-		\{ s_1,\ldots ,s_m\} =\{ u_1,\ldots ,u_o,s_{o+1},\ldots ,s_m\}
+		We wish to show that this linear-combination is unique.  So, suppose also that
+		\begin{equation}\label{eqn2.1.18}
+			w=\sum _{v\in S}\alpha ^v\cdot v
 		\end{equation}
-		and
+		for $\alpha ^v\in \K$.  Subtracting \eqref{eqn2.1.18} from \eqref{eqn2.1.17}, we find
 		\begin{equation}
-		\{ t_1,\ldots ,t_n\} =\{ u_1,\ldots ,u_o,t_{o+1},\ldots ,t_n\} .
+			0=\sum _{v\in S}(w^v-\alpha ^v)\cdot v.
 		\end{equation}
-		We then have that
-		\begin{equation}
-		\begin{split}
-		0 & =v-v \\
-		& =(v^1-w^1)\cdot u_1+\cdots +(v^o-w^o)\cdot u_o \\ & \qquad +v^{o+1}\cdot s_{o+1}+\cdots +v^m\cdot s_m \\ & \qquad -v^{o+1}\cdot t_{o+1}-\cdots -v^n\cdot t_n.
-		\end{split}
-		\end{equation}
-		By the definition of linear independence, we have that $v^k-w^k=0$ for $1\leq k\leq o$, $v^k=0$ for $k\geq o+1$, and $w^k=0$ for $k\geq o+1$.  However, by assumption the $v^k$s and $w^k$s are nonzero, and hence it must be the case that $m=o=n$, so that we indeed have $v^k=w^k$ for all $k$.
+		The definition of linear-independence then implies that $w^v-\alpha ^v=0$, that is, $w^v=\alpha ^v$.
 		
 		\blni
-		Suppose that every $v\in \Span (S)$ there are unique $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$ and $s_1,\ldots ,s_m\in S$ such that $v=v^1\cdot s_1+\cdots +v^m\cdot s_m$.  Let $s_1,\ldots ,s_m\in S$, $\alpha _1,\ldots ,\alpha _m\in \K$, and suppose that
+		Suppose that for every $w\in \Span (S)$ there are unique $w^v\in \K$ such that
 		\begin{equation}
-		\alpha _1\cdot s_1+\cdots +\alpha _m\cdots s_m=0.
+		w=\sum _{v\in S}w^v\cdot v.
 		\end{equation}
-		However, $0\in \Span (S)$ is also equal to the empty linear combination.  By uniqueness, the left-hand side of this question must also be the empty linear-combination, that is, $m=0$, as desired.
+		Suppose that
+		\begin{equation}
+			0=\sum _{v\in S}\alpha _v\cdot v
+		\end{equation}
+		for $\alpha _v\in \K$.  As we also have
+		\begin{equation}
+			0=\sum _{v\in S}0\cdot v,
+		\end{equation}
+		by uniqueness, we have that $\alpha _v=0$.  Hence, by definition, $S$ is linearly-independent.
 	\end{proof}
 \end{prp}
 \begin{exm}{}{}
@@ -235,9 +290,9 @@ What follows is arguably a more intuitive way to think about linear (in)dependen
 
 We have now defined two properties that a collection of vectors may or may not have, \emph{spanning} and \emph{linear-independence}.  If a collection of vectors satisfies both such properties, it is called a \emph{basis}.
 \begin{dfn}{Basis}{Basis}
-	Let $V$ be a $\K$-module, and let $\basis{B}\subseteq V$.  Then, $\basis{B}$ is a \term{basis} of $V$ iff for every $v\in V$ there are unique $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$ and $b_1,\ldots ,b_m\in B$ such that
+	Let $V$ be a $\K$-module, and let $\basis{B}\subseteq V$.  Then, $\basis{B}$ is a \term{basis} of $V$ iff for every $v\in V$ there are unique $v^b\in \basis{B}$ such that
 	\begin{equation}
-		v=v^1\cdot b_1+\cdots +v^m\cdot b_m.
+		v=\sum _{b\in \basis{B}}v^b\cdot b.
 	\end{equation}
 	\begin{rmk}
 		In words, $\basis{B}$ is a basis iff every vector can be written as a \emph{unique} linear-combination of elements of $\basis{B}$.
@@ -249,9 +304,9 @@ We have now defined two properties that a collection of vectors may or may not h
 		$(\Rightarrow )$ Suppose that $\basis{B}$ is a basis of $V$.  By definition, every element of $V$ is a linear-combination of elements of $\basis{B}$, and so $\basis{B}$ spans $V$.  It is linearly-independent by \cref{prp1.2.26}.
 		
 		\blni
-		$(\Leftarrow )$ Suppose that $\basis{B}$ is linearly-independent and spans $V$.  Let $v\in V$.  As $\basis{B}$ spans $V$, there are $m\in \N$, nonzero $v^1,\ldots ,v^m\in \K$, and $b_1,\ldots ,b_m\in V$ such that
+		$(\Leftarrow )$ Suppose that $\basis{B}$ is linearly-independent and spans $V$.  Let $v\in V$.  As $\basis{B}$ spans $V$, there are $v^b\in \K$ such that
 		\begin{equation}
-			v=v^1\cdot b_1+\cdots +v^m\cdot b_m.
+			v=\sum _{b\in \basis{B}}v^b\cdot b.
 		\end{equation}
 		As $\basis{B}$ is linearly-independent, by \cref{prp1.2.26}, this is the unique such linear-combination, and so $\basis{B}$ is a basis by definition.
 	\end{proof}
@@ -284,47 +339,47 @@ If we start with a collection of linearly-independent vectors, adding more vecto
 		Denote the ground division ring by $\F$.
 		
 		\blni
-		$(\cref{prp1.2.39(i)}\Rightarrow \cref{prp1.2.39(ii)})$ Suppose that $\basis{B}$ is a basis.  $\basis{B}$ is linearly-independent by \cref{prp1.2.37}, so it only remains to show maximality.  Let $\basis{C}\subseteq V$ be linearly-independent and such that $\basis{C}\supseteq \basis{B}$.  We wish to show that $\basis{B}=\basis{C}$, that is, that $\basis{C}\subseteq \basis{B}$.  So, let $c\in \basis{C}$.  If $c\in \basis{B}$, we're done, so suppose $c\notin \basis{B}$.  As $\basis{B}$ spans by \cref{prp1.2.37} again, there are unique $c^1,\ldots ,c^m\in \K$ and $b_1,\ldots ,b_m\in \basis{B}$ such that
+		$(\cref{prp1.2.39(i)}\Rightarrow \cref{prp1.2.39(ii)})$ Suppose that $\basis{B}$ is a basis.  $\basis{B}$ is linearly-independent by \cref{prp1.2.37}, so it only remains to show maximality.  Let $\basis{C}\subseteq V$ be linearly-independent and such that $\basis{C}\supseteq \basis{B}$.  We wish to show that $\basis{B}=\basis{C}$, that is, that $\basis{C}\subseteq \basis{B}$.  So, let $c\in \basis{C}$.  If $c\in \basis{B}$, we're done, so suppose $c\notin \basis{B}$.  As $\basis{B}$ spans by \cref{prp1.2.37} again, there are unique $c^b\in \K$ such that
 		\begin{equation}
-			c=c^1\cdot b_1+\cdots +c^m\cdot b_m.
+			c=\sum _{b\in \basis{B}}c^b\cdot b.
 		\end{equation}
 		It follows that
 		\begin{equation}
-			c^1\cdot b_1+\cdots +c^m\cdot b_m-1\cdot c=0,
+			\sum _{b\in \basis{B}}c^b\cdot b-1\cdot c=0,
 		\end{equation}
-		and so, as each $b_k\in \basis{C}$ and $\basis{C}$ is linearly-independent, it follows in particular that $1=0$,\footnote{This implicitly uses the fact that $c\not \basis{B}$, for otherwise we might have, for example, $c=b_1$, in which case we would instead deduce that $c^1=1$.} and so $\F =0$.  But then the only linear-combinations of elements of $\basis{B}$ is $0$, and so $V=0$, in which case we must have $\basis{B}=\emptyset =\basis{C}$.
+		and so as each $b\in \basis{C}$ and $\basis{C}$ is linearly-independent, it follows that $1=0$,\footnote{This implicitly uses the fact that $c\not \basis{B}$, for otherwise we might have, for example, $c=b_1$, in which case we would instead deduce that $c^1=1$.} and so $\F =0$.  But then the only linear-combinations of elements of $\basis{B}$ is $0$, and so $V=0$, in which case we must have $\basis{B}=\emptyset =\basis{C}$.
 		
 		\blni
-		$(\cref{prp1.2.39(ii)}\Rightarrow \cref{prp1.2.39(i)})$ $\basis{B}$ is a maximal linearly-independent set.  It remains to show that $\basis{B}$ spans.  So, let $v\in V$.  If $v\in \basis{B}$, of course $v\in \Span (\basis{B})$.  Otherwise, $\basis{B}\cup \{ v\}$ is strictly larger than $\basis{B}$, and so as $\basis{B}$ is a maximal linearly-independent set, it must be the case that $\basis{B}\cup \{ v\}$ is linearly-dependent, so that there are $\alpha ^1,\ldots ,\alpha ^m,\alpha \in \F$, not all $0$, and $b_1,\ldots ,b_m\in \basis{B}$ such that
+		$(\cref{prp1.2.39(ii)}\Rightarrow \cref{prp1.2.39(i)})$ $\basis{B}$ is a maximal linearly-independent set.  It remains to show that $\basis{B}$ spans.  So, let $v\in V$.  If $v\in \basis{B}$, of course $v\in \Span (\basis{B})$.  Otherwise, $\basis{B}\cup \{ v\}$ is strictly larger than $\basis{B}$, and so as $\basis{B}$ is a maximal linearly-independent set, it must be the case that $\basis{B}\cup \{ v\}$ is linearly-dependent, so that there are $\alpha ^b,\alpha \in \F$, not all $0$, such that
 		\begin{equation}
-			\alpha ^1\cdot b_1+\cdots +\alpha ^m\cdot b_m+\alpha \cdot v=0.
+			\sum _{b\in \basis{B}}\alpha ^b\cdot b+\alpha \cdot v=0.
 		\end{equation}
-		If $\alpha =0$, linear-independence of $\basis{B}$ implies that every $\alpha ^k=0$ as well, which is impossible (not all of these coefficients are $0$).  Therefore, $\alpha \neq 0$.  Rearranging and multiplying by $\alpha ^{-1}$ yields
+		If $\alpha =0$, linear-independent of $\basis{B}$ implies that every $\alpha ^b=0$ as well, which is impossible (not all of these coefficients are $0$).  Therefore, $\alpha \neq 0$.  Rearranging and multiplying by $\alpha ^{-1}$ yields
 		\begin{equation}
-			v=-\alpha ^{-1}\alpha ^1\cdot b_1-\cdots -\alpha ^{-1}\alpha ^m\cdot b_m\in \Span (\basis{B}).
+			v=-\alpha ^{-1}\sum _{b\in \basis{B}}\alpha ^b\cdot b\in \Span (\basis{B}).
 		\end{equation}
 		
 		\blni
-		$(\cref{prp1.2.39(i)}\Rightarrow \cref{prp1.2.39(iii)})$ Suppose that $\basis{B}$ is a basis.  Let $\basis{C}\subseteq V$ be a spanning set such that $\basis{C}\subseteq \basis{B}$.  We wish to show that $\basis{B}\subseteq \basis{C}$.  So, let $b\in \basis{B}$.  If $b\in \basis{C}$, we're done, so suppose that $b\notin \basis{C}$.  As $\basis{C}$ is a spanning set, there are $b^1,\ldots ,b^m\in \F$ and $c_1,\ldots ,c_m\in \basis{C}$ such that
+		$(\cref{prp1.2.39(i)}\Rightarrow \cref{prp1.2.39(iii)})$ Suppose that $\basis{B}$ is a basis.  Let $\basis{C}\subseteq V$ be a spanning set such that $\basis{C}\subseteq \basis{B}$.  We wish to show that $\basis{B}\subseteq \basis{C}$.  So, let $b\in \basis{B}$.  If $b\in \basis{C}$, we're done, so suppose that $b\notin \basis{C}$.  As $\basis{C}$ is a spanning set, there are $b^c\in \F$ such that
 		\begin{equation}
-			b=b^1\cdot c_1+\cdots +b^m\cdot c_m.
+			b=\sum _{c\in \basis{C}}b^c\cdot c.
 		\end{equation}
 		It follows that
 		\begin{equation}
-			b^1\cdot c_1+\cdots +b^m\cdot c_m-1\cdot b=0,
+			\sum _{c\in \basis{C}}b^c\cdot c-b=0,
 		\end{equation}
-		and so, as each $c_k\in \basis{B}$ and $\basis{B}$ is linearly-independent, it follows in particular that $1=0$, so that $\F =0$, and hence $V=0$, and hence $\basis{B}=\emptyset =\basis{C}$.
+		and so, as each $c\in \basis{B}$ and $\basis{B}$ is linearly-independent, it follows in particular that $1=0$, so that $\F =0$, and hence $V=0$, and hence $\basis{B}=\emptyset =\basis{C}$.
 		
 		\blni
-		$(\cref{prp1.2.39(iii)}\Rightarrow \cref{prp1.2.39(i)})$ Suppose that $\basis{B}$ is a minimal spanning set.  We wish to show that $\basis{B}$ is linearly-independent.  So, let $b_1,\ldots ,b_m\in \basis{B}$ and suppose that
+		$(\cref{prp1.2.39(iii)}\Rightarrow \cref{prp1.2.39(i)})$ Suppose that $\basis{B}$ is a minimal spanning set.  We wish to show that $\basis{B}$ is linearly-independent.  So, suppose that
 		\begin{equation}
-			\alpha _1\cdot b_1+\cdots +\alpha _m\cdot b_m=0
+			0=\sum _{b\in \basis{B}}\alpha _b\cdot b
 		\end{equation}
-		for $\alpha _k\in \F$.  If every $\alpha _k=0$, we're done, so suppose this is not the case.  Without loss of generality, suppose that $\alpha _m\neq 0$.  Then, we can rearrange this to find
+		for $\alpha _b\in \K$.  If every $\alpha _b=0$, we're done, so suppose this is not the case.  Then, there is some $b_0\in \basis{B}$ such that $\alpha _{b_0}\neq 0$.  Then, we can rearrange this to find
 		\begin{equation}
-			b_m=-\alpha _m^{-1}\alpha _1\cdot b_1-\cdots -\alpha _m^{-1}\alpha _{m-1}\cdot b_{m-1}\in \Span (\basis{B}).
+			b_0=-\alpha _{b_0}^{-1}\sum _{\substack{b\in \basis{B} \\ b\neq b_0}}\alpha _b\cdot b\in \Span (\basis{B}).
 		\end{equation}
-		It then follows that $\basis{B}\setminus \{ b_m\}$ is again a spanning set, which contradicts minimality.
+		It then follows that $\basis{B}\setminus \{ b_0\}$ is again a spanning set, which contradicts minimality.
 	\end{proof}
 \end{prp}
 We mentioned before that if we start adding vectors to a linearly-independent set, it's becomes more likely to span but we run the risk of making our set linearly-dependent.  In the other direction, if we start removing vectors from a spanning set, it becomes more likely to be linearly-independent but we run the risk of having our set fail to span.  One might then ask the questions ``Can I always add vectors to a linearly-independent set to get a spanning set without ruining my linear-independence, that is, can I obtain a basis in this way?'' and ``Can I always remove vectors from a spanning set to obtain a linearly-independent set without losing the property of being spanning?''.  Fortunately, it turns out that the answer to both of these questions is ``Yes.''.
@@ -552,7 +607,7 @@ Intuitively, the dimension of a vector space is the number of scalars required t
 	Define
 	\begin{equation}
 		\begin{multlined}
-			\K \ceqq \left\{ \coord{A\indices{^i_j}:i,j\in \N}\in \R ^{\N \times \N}:\text{for every }j\in \N ,\right. \\ \left. A\indices{^i_j}=0\text{ for cofinitely\footnote{In general, if $S\subseteq X$, we say that $S$ is \term{cofinite}\index{Cofinite} in $X$ iff its complement $S^{\comp}\ceqq X\setminus S$ is finite---see the exposition in what follows for a more explicit description of what that means in this context.} many }i\in \N \text{.}\right\} .
+			\K \ceqq \left\{ \coord{A\indices{^i_j}:i,j\in \N}\in \R ^{\N \times \N}:\text{for every }j\in \N ,\right. \\ \left. A\indices{^i_j}=0\text{ for cofinitely many }i\in \N \text{.}\right\} .
 		\end{multlined}
 	\end{equation}
 	Intuitively, $\K$ is thought of as infinite-dimensional square matrices (with rows and columns indexed by $\N$) such that each column only has finitely many nonzero entries.  $\K$ is regarded as a ring with the usual definition of matrix addition and multiplication.\footnote{The condition that the columns have only finitely many nonzero entries guarantees that the sum involved in the definition of matrix multiplication is just a finite sum, and so makes sense.}

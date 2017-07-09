@@ -572,7 +572,7 @@ For $x\in \collection{I}$, we may also suggestively write
 \begin{equation}
 \langle x_i:i\in \collection{I}\langle \ceqq x,
 \end{equation}
-analogous to how one writes $\coord{x,y}\in X\times Y$ for elements in a Cartesian product of two sets.  (We have only changed the letter of our indexing set for legibility.)	
+analogous to how one writes $\coord{x,y}\in X\times Y$ for elements in a Cartesian product of two sets.  (We have only changed the letter of our indexing set\footnote{Like the term ``collection'', the term \term{indexing set} is technically just synonymous with the word ``set''.  There is nothing mathematically different about it.  This term is only used to clarify to the human readers out there how one should intuitively think of the set, specifically that it is a set whose elements are being used to ``index'' other things.} for legibility.)	
 \end{rmk}
 \begin{rmk}
 For a function defined on a Cartesian product, say $f\colon X\times Y\rightarrow Z$, we shall write $f(x,y)\ceqq f(\coord{x,y})$\index[notation]{$f(x,y)$}.
@@ -1129,7 +1129,7 @@ Sometimes people use the term \term{skew-field}\index{Skew-field} instead of div
 Show that all division rings are integral.
 \end{exr}
 \begin{dfn}{Field}{Field}
-A \term{field}\index{Field} is a commutative skew-field.
+A \term{field}\index{Field} is a commutative division ring.
 \end{dfn}
 \begin{exr}{}{}
 Let $F$ be a field with positive characteristic $p$.  Show that $p$ is prime.
@@ -1861,3 +1861,996 @@ Let $\cat{C}$ be either the category $\Set$, $\Rg$, or $\Mag$.
 \item Show that a morphism $f$ in $\Pre$ is a quotient iff it is surjective and has the property that $f(x_1)\leq f(x_2)$ iff $x_1\leq x_2$.
 \end{enumerate}
 \end{exr}
+
+\chapter{Results from ring theory}
+
+Linear algebra is the study of vector spaces, which themselves are just $\F$-modules for $\F$ a division ring.  Thus, it should be expected, and is in fact the case, that some basic results about ring theory are used throughout the main text.  In order to avoid interrupting the flow with long tangents on not linear algebra, we have relegated most of these results to this appendix.
+
+\section{Ideals and their quotients}
+
+The primary goal of this section is to prove the ``dictionary'' \cref{thmC.1.9} that establishes a correspondence between properties of ideals $I$ and properties of their quotients $R/I$.  We begin with a discussion of relatively intuitive properties one might like a ring to have (one of which we have already encountered).  For reasons that won't be particularly apparent to us given our limited discussion, these properties, while more intuitive, are arguably not the `correct' notion in the noncommutative setting.  We thus introduce variants of these properties more suited to the noncommutative setting and check that they agree with the first definition if the ring is commutative.  To state these definitions, however, we must first define the corresponding properties of ideals.  Finally, we prove the dictionary itself.
+
+Before we get started, we need a couple of facts.
+\begin{prp}{Product of ideals}{}
+	Let $R$ be a ring and let $I,J\subseteq R$ be ideals.  Then, the \term{product}\index{Product of ideals} of $I$ and $J$, $IJ$, defined by
+	\begin{equation}
+	IJ\ceqq \left\{ \sum _{k=1}^mx_ky_k:m\in \N ,x_k\in I,y_k\in J\right\} ,
+	\end{equation}
+	is an ideal.
+	\begin{rmk}
+		For $n\in \N$, we define
+		\begin{equation}
+			I^n\ceqq \underbrace{I\cdots I}_n
+		\end{equation}
+		(as well as $I^0\ceqq R$).  Note how this is \emph{not} the same as $\left\{ \sum _{k=1}^mx_k^n:m\in \N ,x_k\in I\right\}$, which is in general smaller.
+	\end{rmk}
+	\begin{rmk}
+		For noncommutative rings, there are also notions of left and right ideals,\footnote{Well, the notions exist in the commutative case as well, but there all three notions coincide.} in which case one might refer to what we have been simply calling ``ideals'' as ``two-sided ideals'' for emphasis.  While certainly some of the things we do could be adapted for the one-sided versions, throughout, ``ideal'' should be interpreted as meaning ``two-sided ideal''.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{thm}{Krull's Theorem}{KrullsTheorem}\index{Krull's Theorem}
+	Let $R$ be a ring and let $I\subseteq R$ be a proper ideal.  Then, there is a maximal ideal $M\subseteq R$ containing $I$.
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  \nameref{ZornsLemma}.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+\subsection{Some properties of rings}\label{sbsC.1.1}
+
+As mentioned previously, all of the definitions given here come with the tiny caveat that they are arguably not the best definition, at least for noncommutative rings.
+
+We have already defined what it means for a ring to be a \emph{division ring} (\cref{DivisionRing}) and to be \emph{integral} (\cref{dfnA.1.69}).  We reproduce the definitions here both for convenience and to stress it's relationship to the properties of reduced (\cref{ReducedRing}) and hyper-connected (\cref{HyperConnectedRing}).
+\begin{dfn}{Division ring}{}
+	Let $R$ be a ring.  Then, $R$ is a \term{division ring} iff every element of $R$ has a multiplicative inverse.
+\end{dfn}
+\begin{dfn}{Integral ring}{IntegralRing}
+	Let $R$ be a ring.  Then, $R$ is \term{integral} iff $xy=0$ implies $x=0$ or $y=0$.
+\end{dfn}
+\begin{dfn}{Reduced ring}{ReducedRing}
+	Let $R$ be a ring.  Then, $R$ is \term{reduced}\index{Reduced ring} iff $x^m=0$, $m\in \N$, implies $x=0$.
+	\begin{rmk}
+		In other words, $R$ is reduced iff the only nilpotent element is $0$.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Hyper-connected ring}{HyperConnectedRing}
+	Let $R$ be a ring.  Then, $R$ is \term{hyper-connected}\index{Hyper-connected ring} iff whenever $xy=0$ and one of these elements is nonzero it follows that the other element is nilpotent.
+	\begin{rmk}
+		The name comes from the fact that the Zariski topology on the spectrum is hyper-connected\footnote{Or \emph{irreducible}, in algebraic geometer parlance.} iff $R$ is hyper-connected (for $R$ commutative).
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{prpC.1.6}
+	Let $R$ be a ring.
+	\begin{enumerate}
+		\item \label{prpC.1.6(i)}If $R$ is a division ring, then it is integral.
+		\item \label{prpC.1.6(ii)}$R$ is integral iff it is reduced and hyper-connected.
+	\end{enumerate}
+	\begin{rmk}
+		One can interpret this as saying that a ring can fail to be integral in one of two ways:  it can have nonzero nilpotents or it can fail to be hyper-connected.  The definition of hyper-connected given above is superficially quite unintuitive.  I tend to think of it as ``That property you need together with reducedness to guarantee the ring be integral.''.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\subsection{Some properties of ideals}
+
+\begin{dfn}{Maximal ideal}{MaximalIdeal}
+	Let $R$ be a ring and let $I\subseteq R$ be a proper ideal.  Then, $I$ is \term{maximal}\index{Maximal ideal} iff $I$ is maximal among all proper ideals with respect to the partial-order of inclusion.
+\end{dfn}
+\begin{dfn}{Prime ideal}{PrimeIdeal}
+	Let $R$ be a ring and let $I\subseteq R$ be a proper ideal.  Then, $I$ is \term{prime}\index{Prime ideal} iff $JK\subseteq I$, $J,K\subseteq R$ ideals, implies $J\subseteq I$ or $K\subseteq I$.
+	\begin{rmk}
+		The name comes from the fact that $\Z p\subseteq \Z$ is a prime ideal iff $p\in \Z$ is prime in the classical sense of the word ($p=0$ being an exception---$0\subseteq \Z$ is a prime ideal but $0\in \Z$ is not usually considered a prime integer).
+	\end{rmk}
+	\begin{rmk}
+		You can remember that $R$ itself is excluded from being prime because it is excluded from being maximal (if it weren't, then it would be the only maximal ideal).  Indeed, $I=R$ is excluded from this entire list of classes of ideals, and so making the exclusion in all definitions (instead of just one) is convenient.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Radical ideal}{RadicalIdeal}
+	Let $R$ be a ring and let $I\subseteq R$ be a proper ideal.  Then, $I$ is \term{radical}\index{Radical ideal} iff $J^m\subseteq I$, $J\subseteq R$ an ideal and $m\in \N$, implies $J\subseteq I$.
+	\begin{rmk}
+		The name comes from the following result.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Some authors instead refer to this concept as that of a \term{semiprime ideal}\index{Semiprime ideal}.  For such authors, an ideal $I$ is ``radical'' iff $x^m\in I$ implies $x\in I$.  The two definitions agree in case $R$ is commutative, and as far as I can tell, the definition we have given above is the one that is better-behaved in the noncommutative setting, and so it is the one we make use of.\footnote{Of course, we could have just called it ``semiprime'', but I prefer ``radical'' as this is the more common of the two terms, at least outside of a strictly noncommutative setting.}
+	\end{rmk}
+\end{dfn}
+\begin{thm}{Radical of an ideal}{}
+	Let $R$ be a ring and let $I\subseteq R$ be a proper ideal.  Then, there is a unique radical ideal, the \term{radical}\index{Radical of an ideal}, $\sqrt{I}$, such that
+	\begin{enumerate}
+		\item $I\subseteq \sqrt{I}$ and
+		\item if $J\subseteq R$ is another radical ideal that contains $I$, then $\sqrt{I}\subseteq J$.
+	\end{enumerate}
+	Furthermore, explicitly, we have
+	\begin{equation}
+		\sqrt{I}=\bigcap _{\substack{P\subseteq R\text{ prime} \\ I\subseteq P}}P.
+	\end{equation}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  See \cite[Theorem 10.7]{Lam}.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{thm}
+\begin{dfn}{Primary ideal}{PrimaryIdeal}
+	Let $R$ be a ring and let $I\subseteq R$ be a proper ideal.  Then, $I$ is \term{primary} iff $JK\subseteq I$, $J,K\subseteq R$ ideals, implies that either one of $J,K$ is contained in $I$ or one of $J,K$ is contained in $\sqrt{I}$.
+\end{dfn}
+\begin{prp}{}{prpC.1.4}
+	Let $R$ be a ring and let $I\subseteq R$ be an ideal.
+	\begin{enumerate}
+		\item \label{prpC.1.4(i)}If $I$ is maximal, then it is prime.
+		\item \label{prpC.1.4(ii)}$I$ is prime iff it is radical and primary.
+	\end{enumerate}
+	\begin{proof}
+		\cref{prpC.1.4(i)} Suppose that $I$ is maximal.  Let $J,K\subseteq R$ be ideals such that $JK\subseteq I$.  If $J\subseteq I$, we're done.  Otherwise, there is some $j\in J\setminus I$.  Then, $RjR+I$ is an ideal that properly contains $I$, and so by maximality, $R=RjR+I$.  In particular, there are $a,b\in R$ and $i\in I$ such that $1=ajb+i$.  Let $k\in K$.  Then, $k=ajbk+ik\in JK+I\subseteq I+I\subseteq I$.  Thus, $K\subseteq I$, and so $I$ is prime.
+		
+		\blni
+		\cref{prpC.1.4(ii)} $(\Rightarrow )$ Suppose that $I$ is prime.  We first check that $I$ is radical.  So, let $J\subseteq R$ be an ideal and suppose that $J^m\subseteq I$ for some $m\in \N$.  We can't have $m=0$ as $I$ is proper.  If $m=1$, we're done.  Otherwise, we can write
+		\begin{equation}
+			I\supseteq J^m\ceqq JJ^{m-1},
+		\end{equation}
+		whence we deduce that either $J\subseteq I$ or $J^{m-1}\subseteq I$.  In the former case, we are done.  In the latter case, we have $J^{m-1}\subseteq I$.  Continuing inductively, we eventually find that $J\subseteq I$, and so $I$ is radical.  We now check that $I$ is primary.  So, let $J,K\subseteq R$ be ideals and suppose that $JK\subseteq I$.  If $J\subseteq I$, we're done.  Otherwise, $K\subseteq I\subseteq \sqrt{I}$, and we are again done.
+
+		$(\Leftarrow )$ Suppose that $I$ is radical and primary.  Let $J,K\subseteq R$ be ideals and suppose that $JK\subseteq I$.  If one of $J,K$ is contained in $I$, we're done.  Otherwise, as $I$ is primary, one of $J,K$ is contained in $\sqrt{I}$.  Without loss of generality, suppose that $J\subseteq \sqrt{I}$.  However, as $I$ is radical, $\sqrt{I}=I$, and hence $J\subseteq I$.  Thus, $I$ is prime.
+	\end{proof}
+\end{prp}
+
+\begin{thm}{}{thmC.1.6}
+	Let $R$ be a ring and let $I$ be an ideal.  Then, $R\supseteq J\mapsto J/I\subseteq R/I$ is a bijection from the set of ideals of $R$ that contain $I$ and the set of ideals of $R/I$.  Furthermore,
+	\begin{enumerate}
+		\item \label{thmC.1.6(i)}$J$ is maximal iff $J/I$ is maximal;
+		\item \label{thmC.1.6(ii)}$J$ is prime iff $J/I$ is prime;
+		\item \label{thmC.1.6(iii)}$J$ is radical iff $J/I$ is radical; and
+		\item \label{thmC.1.6(iv)}$J$ is primary iff $J/I$ is primary.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+\subsection{Their noncommutative variants}
+
+Though we call them the ``noncommutative variants'', of course they make just as much sense in commutative rings.  However, for commutative rings, they coincide (\cref{thmC.1.8}) with the more intuitive concepts defined in \cref{sbsC.1.1}, and so in that context it's usually preferable to work with the previous definitions.
+\begin{dfn}{Simple ring}{SimpleRing}
+	Let $R$ be a nonzero ring.  Then, $R$ is \term{simple}\index{Simple} iff the only ideals of $R$ are $0$ and $R$ itself.
+	\begin{rmk}
+		Warning:  This definition is exactly analogous to the definition of a simple module (\cref{SimpleModule}).  \emph{However}, there is a notion of semisimple ring and it is \emph{not} analogous to the definition of a semisimple module (\cref{SemisimpleModule}).  Because mathematicians are literally cancer when it comes to developing systematic terminology, the term ``semisimple ring'' refers to a ring that is semisimple when regarded as a left (equivalently, right) module over itself.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Prime ring}{PrimeRing}
+	Let $R$ be a nonzero ring.  Then, $R$ is \term{prime}\index{Prime ring} iff $IJ=0$, $I,J\subseteq R$ ideals, implies $I=0$ or $J=0$.
+	\begin{rmk}
+		Note that this is just the statement that the zero ideal is prime.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Radical ring}{RadicalRing}
+	Let $R$ be a nonzero ring.  Then, $R$ is \term{radical}\index{Radical ring} iff $I^m=0$, $I\subseteq R$ an ideal and $m\in \N$, implies $I=0$.
+	\begin{rmk}
+		Note that this is just the statement that the zero ideal is radical.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Some authors refer to this concept as that of a \term{semiprime ring}\index{Semiprime ring}, essentially because such authors will instead use the term ``semiprime ideal'' in place of ``radical ideal''---see the remark in \cref{RadicalIdeal}.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Primary ring}{PrimaryRing}
+	Let $R$ be a nonzero ring.  Then, $R$ is \term{primary}\index{Primary ring} iff $IJ=0$, $I,J\subseteq R$ ideals, implies that either one of $I,J$ is $0$ or one of $I,J$ is contained in $\sqrt{0}$.
+	\begin{rmk}
+		Note that this is just the statement that the zero ideal is primary.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This terminology seems nonstandard, and in fact, upon looking it up, it seems to conflict with a usage of the term I had never seen before.  Oh well.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{prpC.1.7}
+	Let $R$ be a ring.
+	\begin{enumerate}
+		\item \label{prpC.1.7(i)}If $R$ is simple, then it is prime.
+		\item \label{prpC.1.7(ii)}$R$ is prime iff it is radical and primary.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+We now check that this definitions do indeed agree with the previous ones in the case that $R$ is commutative.
+\begin{thm}{}{thmC.1.8}
+	Let $\K$ be a cring.
+	\begin{enumerate}
+		\item \label{thmC.1.8(i)}$\K$ is simple iff it is a division ring.\footnote{Or, equivalently, a field.}
+		\item \label{thmC.1.8(ii)}$\K$ is prime iff it is integral.
+		\item \label{thmC.1.8(iii)}$\K$ is radical iff it is reduced.
+		\item \label{thmC.1.8(iv)}$\K$ is primary iff it hyper-connected.
+	\end{enumerate}
+	\begin{proof}
+		\cref{thmC.1.8(i)} $(\Rightarrow )$ Suppose that $\K$ is simple.  Let $x\in \K$ be nonzero.  $\K x\subseteq \K$ is then a nonzero ideal, and hence $\K x=\K$.  Thus, there is some $y\in \K$ such that $yx=1$.
+		
+		$(\Leftarrow )$ Suppose that $\K$ is a division ring.  Let $I\subseteq \K$ be a nonzero ideal.  Let $i\in I$ be nonzero.  $1=ii^{-1}\in I$, and so $x=1x\in I$ for all $x\in \K$, and hence $I=\K$.
+		
+		\blni
+		\cref{thmC.1.8(iii)} $(\Rightarrow )$ Suppose that $\K$ is radical.  Let $x\in \K$ and suppose that $x^m=0$ for some $m\in \N$.  It follows that $(\K x)^m=0$, and so $\K x=0$, and in particular $x=0$.
+		
+		$(\Leftarrow )$ Suppose that $\K$ is reduced.  Let $I\subseteq \K$ be an ideal and suppose that $I^m=0$ for some $m\in \N$.  Let $i\in I$.  Them, $i^m=0$ as $i^m\in I^m$, and so $i=0$.
+		
+		\blni
+		\cref{thmC.1.8(iv)} $(\Rightarrow )$ Suppose that $\K$ is primary.  Let $x,y\in \K$ and suppose that $xy=0$.  It follows that $(\K x)(\K y)=0$.  If $(\K x)=0$, then in particular $x=0$, and we're done.  Otherwise, we must have that $(\K y)^m=0$ for some $m\in \N$, and again, in particular, $y^m=0$.
+		
+		$(\Leftarrow )$ Suppose that $\K$ is hyper-connected.  Let $I,J\subseteq \K$ be ideals and suppose that $IJ=0$.  If $I=0$, we're done, so suppose this is not the case.  Then, there is some nonzero $i\in I$.  For every $j\in J$, we have that $ij=0$, and so as $i\neq 0$, there is some $m_j\in \N$ such that $j^{m_j}=0$.  Thus, $j\in \sqrt{0}$, and hence $J\subseteq \sqrt{0}$.
+		
+		\blni
+		\cref{thmC.1.8(ii)} $\K$ is prime iff it is radical and primary (\cref{prpC.1.7}) iff it is reduced and hyper-connected (by the previous parts) iff it is integral (\cref{prpC.1.6}).
+	\end{proof}
+\end{thm}
+
+\subsection{The dictionary}
+
+We now finish with the ultimate goal of this section.
+\begin{thm}{}{thmC.1.9}
+	Let $R$ be a ring and let $I\subseteq R$ be an ideal.
+	\begin{enumerate}
+		\item \label{thmC.1.9(i)}$I$ is maximal iff $R/I$ is simple.
+		\item \label{thmC.1.9(ii)}$I$ is prime iff $R/I$ is prime
+		\item \label{thmC.1.9(iii)}$I$ is radical iff $R/I$ is radical.
+		\item \label{thmC.1.9(iv)}$I$ is primary iff $R/I$ is primary.
+	\end{enumerate}
+	\begin{rmk}
+		In particular, if $\K$ is commutative, by \cref{thmC.1.8}, we have
+		\begin{enumerate}
+			\item $I$ is maximal iff $\K I$ is a field.
+			\item $I$ is prime iff $\K/ I$ is integral.
+			\item $I$ is radical iff $\K /I$ is reduced.
+			\item $I$ is primary iff $\K /I$ is hyper-connected.
+		\end{enumerate}
+	\end{rmk}
+	\begin{proof}
+		\cref{thmC.1.9(i)} $(\Rightarrow )$ Suppose that $I$ is maximal.  Every ideal of $R/I$ is of the form $J/I$ for an ideal $J\subseteq I$ containing $I$.  As $I$ is maximal, there are only two such ideals, $I$ and $R$.  Hence, the only ideals of $R/I$ are $I/I=0$ and $R/I$ itself.  Thus, $R/I$ is simple.
+		
+		$(\Leftarrow )$ Suppose that $R/I$ is simple.  Let $J\supseteq I$ be a proper ideal.  $J/I\subseteq R/I$ is an ideal, and so as $R/I$ is simple, either $J/I=0$ or $J/I=R/I$.  The latter cannot happen as $J$ is proper, and so $J/I=0$, that is, $J=I$.  Hence, $I$ is maximal.
+		
+		\blni
+		\cref{thmC.1.9(ii)} $(\Rightarrow )$ Suppose that $I$ is prime.  Let $J/I,K/I\subseteq R/I$ be ideals such that $(J/I)(K/I)=0$.  It follows that $JK\subseteq I$, and hence as $I$ is prime, without loss of generality, $J\subseteq I$, so that $J/I=0$.
+		
+		$(\Leftarrow )$ Suppose that $R/I$ is prime.  Let $J,K\subseteq R$ be ideals such that $JK\subseteq I$.  It follows that $(J/I)(K/I)=0$, and hence as $R/I$ is prime, without loss of generality, $J/I=0$, so that $J\subseteq I$.
+		
+		\blni
+		\cref{thmC.1.9(iii)} $(\Rightarrow )$ Suppose that $I$ is radical.  Let $J/I\subseteq R/I$ be an ideal such that $(J/I)^m=0$ for some $m\in \N$.  As $(J/I)^m=J^m/I$, it follows that $J^m=I$, and hence as $I$ is radical, $J\subseteq I$, so that $J/I=0$.
+		
+		$(\Leftarrow )$ Suppose that $R/I$ is radical.  Let $J\subseteq R$ be an ideal such that $J^m\subseteq I$ for some $m\in \N$.  As $J^m/I=(J/I)^m$, it follows that $(J/I)^m=0$, and hence as $R/I$ is radical, $J/I=0$, so that $J\subseteq I$.
+		
+		\blni
+		\cref{thmC.1.9(iv)} $(\Rightarrow )$ Suppose that $I$ is primary.  Let $J/I,K/I\subseteq R/I$ be ideals such that $(J/I)(K/I)=0$.  It follows that $JK\subseteq I$, and hence as $I$ is primary, either one of $J,K$ is contained in $I$ or one of $J,K$ is contained in $\sqrt{I}$.  In the former case, without loss of generality, suppose that $J\subseteq I$, in which case $J/I=0$ and we are done.  Otherwise, without loss of generality, $J\subseteq \sqrt{I}$, so that $J/I\subseteq \sqrt{0}$.
+		
+		$(\Leftarrow )$ Suppose that $R/I$ is primary.  Let $J,K\subseteq R$ be ideals such that $JK\subseteq I$.  It follows that $(J/I)(K/I)=0$, and hence as $R/I$ is primary, either one of $J/I,K/I$ is $0$ or one of $J/I,K/I$ is contained in $\sqrt{0}$.  In the former case, without loss of generality, suppose that $J/I=0$, in which case $J\subseteq I$ and we are done.  Otherwise, without loss of generality, $J/I\subseteq \sqrt{0}$, so that $J\subseteq \sqrt{I}$.
+	\end{proof}
+\end{thm}
+
+\subsection{Summary}
+
+While this might seem like a lot, I claim that it can all be organized quite nicely.  First of all, we have three things:  properties of ideals, the corresponding properties of their quotient rings, and the `simpler' properties these are equivalent to in the commutative case.   Secondly, we also have implications among these properties.  In the table below, the properties in the first row imply the properties in the second row, and the properties in the second row are equivalent to the combination of the corresponding properties in the third and fourth rows.
+\begin{tabu} to \linewidth {X[r]|X[c]|X[l]}
+	Ideal $I$ & Quotient $R/I$ & $R/I$ for $R$ comm. \\ \hline
+	Maximal & Simple & Field \\
+	Prime & Prime & Integral \\
+	Radical & Radical & Reduced \\
+	Primary & Primary & Hyper-connected
+\end{tabu}
+
+\noindent
+To clarify, an ideal $I$ has the property in the left-hand column iff $R/I$ has the property in the middle column.  Likewise, for crings, the properties in the middle column are equivalent to the properties in the right-hand column.
+
+We also covered the result (\cref{thmC.1.6}) that states that ideals in $R/I$ correspond exactly to ideals in $R$ which contain $I$, and that all the properties discussed are preserved in both directions by this correspondence.
+
+\section{Associative algebras}
+
+Intuitively, an associative algebra is like a module\footnote{Actually, a bimodule (\cref{KLBimodule}).} where you are allowed to ``multiply'' the elements of the module.  Equivalently, you might think of an associative algebra as a ring where you can scale elements.  That is, an associative algebra is something with both the structure of a bimodule and a ring for which the two structures are mutually compatible.
+\begin{dfn}{$\K$-algebra}{KAlgebra}
+	Let $\K$ be a ring.  Then, a \term{$\K$-algebra}\index{$\K$-algebra} is
+	\begin{data}
+		\item a ring $\coord{A,+,0,-,\mathlarger{\cdot},1}$; together with
+		\item functions $\cdot _L\colon \K \times A\rightarrow A$ and $\cdot _R\colon A\times \K \rightarrow A$;
+	\end{data}
+	such that
+	\begin{enumerate}
+		\item \label{KAlgebra(i)}$\coord{A,+,0,-,\K ,\cdot _L,\cdot _R}$ is a $\K$-$\K$-bimodule;
+		\item \label{KAlgebra(ii)}
+		\begin{equation}
+			\alpha \cdot _L(a_1\mathlarger{\cdot}a_2)=(\alpha \cdot _La_1)\mathlarger{\cdot}a_2;
+		\end{equation}
+		\item \label{KAlgebra(iii)}
+		\begin{equation}
+			(a_1\mathlarger{\cdot}a_2)\cdot _R\alpha =a_1\mathlarger{\cdot}(a_2\cdot _R\alpha );
+		\end{equation}
+		\item \label{KAlgebra(iiix)}
+		\begin{equation}
+			(a_1\cdot _R\alpha )\mathlarger{\cdot}a_2=a_1\mathlarger{\cdot}(\alpha \cdot _La_2)
+		\end{equation}
+		and
+		\item \label{KAlgebra(iv)}
+		\begin{equation}
+			\alpha \cdot _La=a\cdot _R\alpha
+		\end{equation}
+		if $a\in A$ is central;
+	\end{enumerate}
+	for all $a_1,a_2\in A$ and $\alpha \in \K$.
+	\begin{rmk}
+		Essentially what these axioms state is (i) ``associativity'' holds between elements of $\K$ and elements of $A$,\footnote{Three axioms needed to deal with the three cases of the scalar appearing on the left, on the right, or in the middle.  Note that the case of two scalars and one element of $A$ is part of the definition of a bimodule.}, and (ii) central elements commute with scalars.
+	\end{rmk}
+	\begin{rmk}
+		An \term{associative algebra}\index{Associative algebra} is a $\K$-algebra for some $\K$.  This term is thus used when you don't want to have to specify the ground ring.  The ``associative'' here refers to the associativity of the ring multiplication.  If you drop this hypothesis (in which case the definition becomes a bit more cumbersome to state because $\mathlarger{\cdot}$ is then no longer a ring multiplication), you obtain what is simply an \term{algebra}.  For example, Lie algebras are algebras that are generally not associative.  Thus, the term ``algebra'' by itself should be avoided if one really means ``associative algebra''.  On the other hand, if we say ``$\K$-algebra'', it is of course implicit that the algebra is associative.
+	\end{rmk}
+	\begin{rmk}
+		The reason we require the structure of a bimodule (instead of just a left or right module) is motivated by the fact that doing things this way gives us another standard equivalent definition---see \cref{thmC.1.5}.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{$\K$-algebra homomorphism}{KAlgebraHomomorphism}
+	Let $A$ and $B$ be $\K$-modules and let $\phi \colon A\rightarrow B$ be a function.  Then, $\phi$ is a \term{$\K$-algebra homomorphism} iff it both a ring homomorphism and $\K$-$\K$-bilinear.
+\end{dfn}
+\begin{exm}{The category of $\K$-algebras}{}
+	Let $\K$ be a ring.  Then, the category of $\K$-algebras is the concrete category $\Alg{\K}$\index[notation]{$\Alg{\K}$}
+	\begin{enumerate}
+		\item whose collection of objects $\Obj (\Alg{\K})$ is the collection of all $\K$-algebras; and
+		\item with morphism set $\Mor _{\Alg{\K}}(A,B)$ precisely the set of all $\K$-algebra homomorphisms from $A$ to $B$.
+	\end{enumerate}
+	\begin{rmk}
+		Just as we have the category of left $\K$-algebras $\Alg{\K}$, we also have that category of right $\K$-algebras $\Alg*{\K}$\index[notation]{$\Alg*{\K}$} defined similarly.
+	\end{rmk}
+\end{exm}
+While, in my opinion anyways, ``ring in which you can scale elements'' is by far the more intuitive way to think about the concept, there is an equivalent formulation which some authors take as the definition.
+\begin{thm}{}{thmC.1.5}
+	Let $\K$ be a ring.
+	\begin{enumerate}
+		\item \label{thmC.1.5(i)}Let $A$ be a ring and let $\phi \colon \K \rightarrow A$ be a ring homomorphism.  Then, $\coord{A,\cdot _{L,\phi},\cdot _{R,\phi}}$ is a $\K$-algebra, where $\cdot _{L,\phi}\colon \K \times A\rightarrow A$ and $\cdot _{R,\phi}\colon A\times \K \rightarrow A$ are defined by
+		\begin{equation}
+			\alpha \cdot _{L,\phi}a\ceqq \phi (\alpha )a\text{ and }a\cdot _{R,\phi}\alpha \ceqq a\phi (\alpha ).
+		\end{equation}
+		\item \label{thmC.1.5(ii)}Let $\coord{A,\cdot _L,\cdot _R}$ be a $\K$-$\K$-algebra.  Then, $\phi \colon \K \rightarrow A$, defined by
+		\begin{equation}
+			\alpha \cdot _L1\eqqc \phi _{\cdot _L,\cdot _R}(\alpha )\ceqq 1\cdot _R\alpha ,
+		\end{equation}
+		is a ring homomorphism.
+	\end{enumerate}
+	Furthermore, these two constructions are inverse to each other.
+	\begin{rmk}
+		Given a ring homomorphism $\phi \colon \K \rightarrow A$, $\phi$ will be referred to as the \term{structure morphism}\index{Structure morphism (of a $\K$-algebra)} of the corresponding $\K$-algebra structure on $A$.
+	\end{rmk}
+	\begin{rmk}
+		This result says that we could have equivalently defined a $\K$-algebra to be a ring homomorphism $\K \rightarrow A$ into some ring $A$.  While I think this is an unintuitive way to think about things, it \emph{is} important.\footnote{Indeed, I used this characterization to determine what axioms I wanted to use for the definition of a $\K$-algebra (in the noncommutative case, there is single standard definition).}  In particular, you should note that ring homomorphisms allow you to define $\K$-algebras in this way.
+	\end{rmk}
+	\begin{rmk}
+		In particular, if $\K$ and $\L$ are rings with $\K \subseteq \L$, then $\L$ obtains the structure of a $\K$-algebra via the inclusion map $\K \hookrightarrow \L$.
+	\end{rmk}
+	\begin{rmk}
+		This result is \emph{roughly} analogous to our equivalent characterization of $R$-modules (\cref{prpD.1.3}).
+	\end{rmk}
+	\begin{proof}
+		\cref{thmC.1.5(i)} For the sake of brevity, we shall simply write $\cdot \ceqq \cdot _{L,\phi}$, and by abuse of notation, $\cdot \ceqq \cdot _{R,\phi}$ as well.  We first check that this gives $A$ the structure of a left $\K$-module.  So, let $\alpha _1,\alpha _2\in \K$ and $a\in A$.  Then,
+		\begin{equation}
+			(\alpha _1\alpha _2)\cdot a\ceqq \phi (\alpha _1\alpha _2)a=\phi (\alpha _1)(\phi (\alpha _2)a)\eqqc \alpha _1\cdot (\alpha _2\cdot a).
+		\end{equation}
+		We also have $1\cdot a\ceqq \phi (1)a=1a=a$.  As for the distributivity axioms of a $\K$-module, we have
+		\begin{equation}
+			\begin{split}
+				(\alpha _1+\alpha _2)\cdot a & \ceqq \phi (\alpha _1+\alpha _2)a=\left( \phi (\alpha _1)+\phi (\alpha _2)\right) a \\
+				& =\phi (\alpha _1)a+\phi (\alpha _2)a\eqqc \alpha _1\cdot a+\alpha _2\cdot a
+			\end{split}
+		\end{equation}
+		and
+		\begin{equation}
+			\alpha \cdot (a_1+a_2)\ceqq \phi (\alpha)(a_1+a_2)=\phi (\alpha )a_1+\phi (\alpha )a_2\eqqc \alpha \cdot a_1+\alpha \cdot a_2.
+		\end{equation}
+		Thus, $\cdot$ does indeed give $A$ the structure of a left $\K$-module.  Similarly, it has the structure of a right $\K$-module.  Finally, to see that $A$ is in fact a $\K$-$\K$-bimodule, note that
+		\begin{equation}
+			(\alpha _1\cdot a)\cdot \alpha _2\ceqq \footnote{This uses the associativity of the ring multiplication.}\ceqq \phi (\alpha _1)a\phi (\alpha _2)\eqqc \alpha _1\cdot (a\cdot \alpha _2).
+		\end{equation}
+		
+		We next check \cref{KAlgebra(ii)} of \cref{KAlgebra}.  So, let $\alpha \in \K$ and $a_1,a_2\in A$.  Then,
+		\begin{equation}
+			\alpha \cdot (a_1a_2)\ceqq \phi (\alpha )(a_1a_2)=(\phi (\alpha )a_1)a_2\eqqc (\alpha \cdot a_1)a_2
+		\end{equation}
+		\cref{KAlgebra(iii)} follows similarly.  As for \cref{KAlgebra(iiix)}, we see that
+		\begin{equation}
+			(a_1\cdot \alpha )a_2\ceqq (a_1\phi (\alpha ))a_2=\footnote{Because the ring multiplication is associative.}a_1(\phi (\alpha )a_2)\eqqc a_1(\alpha \cdot a_2).
+		\end{equation}
+		
+		Finally, we check \cref{KAlgebra(iv)}.  So, let $\alpha _1,\alpha _2\in \K$ and let $a\in A$ be central.  Then,
+		\begin{equation}
+			\alpha \cdot a\ceqq \phi (\alpha )a=a\phi (\alpha )\ceqq a\cdot \alpha .
+		\end{equation}
+		
+		\blni
+		\cref{thmC.1.5(ii)} For the sake of brevity, we shall simply write $\phi \ceqq \phi _{\cdot _L,\cdot _R}$.  $\phi$ preserves addition because scaling distributes over addition in $\K$.  As for multiplication, let $\alpha ,\beta \in \K$.  Then,
+		\begin{equation}
+			\begin{split}
+				\phi (\alpha \beta ) & \ceqq (\alpha \beta )\cdot 1=\alpha \cdot (\beta \cdot 1)\eqqc \alpha \cdot \phi (\beta )=\alpha \cdot (1\phi (\beta )) \\
+				& =(\alpha \cdot 1)\phi (\beta )\eqqc \phi (\alpha )\phi (\beta ).
+			\end{split}
+		\end{equation}
+		And of course, $\phi (1)\ceqq 1\cdot 1=1$.
+		
+		\blni
+		It remains to check that these constructions are inverse to one another.
+		\begin{equation}
+			\alpha \cdot _{L,\phi _{\cdot _L,\cdot _R}}a\ceqq \phi _{\cdot _L,\cdot _R}(\alpha )a\ceqq (\alpha \cdot _L1)a=\alpha \cdot _L(1a)=\alpha \cdot _La.
+		\end{equation}
+		Similarly for $\cdot _R$.
+		
+		In the other direction,
+		\begin{equation}
+			\phi _{\cdot _{L,\phi},\cdot _{R,\phi}}(\alpha )\ceqq \alpha \cdot _{L,\phi}1\ceqq \phi (\alpha )1=\phi (\alpha ).
+		\end{equation}
+	\end{proof}
+\end{thm}
+\begin{dfn}{Extension}{Extension}
+	Let $\K$ be a ring.  Then, an \term{extension}\index{Extension} of $\K$ is a $\K$-algebra $\L$ such that $\K \subseteq \L$ and whose structure morphism is given by the inclusion $\K \hookrightarrow \L$.
+\end{dfn}
+\begin{exm}{Rings are $\Z$-algebras}{}
+	Let $R$ be a ring.
+	\begin{exr}[breakable=false]{}{}
+		Show that there is a \emph{unique} ring homomorphism $\Z \rightarrow R$.
+	\end{exr}
+	$R$ thus obtains the structure of a $\Z$-algebra using the previous result.  It turns out that scaling (on both the left and right) $r\in R$ by $m\in \Z ^+$ is nothing more than $r$ added to itself $m$ times.
+	
+	\begin{rmk}
+		Just as commutative groups are `the same as' $\Z$-modules (\cref{exm1.1.22}), rings are `the same as' $\Z$-algebras.
+	\end{rmk}
+\end{exm}
+\begin{exm}{}{}
+	\begin{enumerate}
+		\item $\R$ is an infinite-dimensional $\Q$-algebra.
+		\item $\C$ is a $2$-dimensional $\R$-algebra.
+		\item $\H$ is a $2$-dimensional $\C$-algebra and a $4$-dimensional $\R$-algebra. 
+	\end{enumerate}
+\end{exm}
+
+Polynomials furnish another natural collection of $\K$-algebras.
+
+\subsection{Polynomials}
+
+\begin{prp}{Polynomial algebra}{PolynomialAlgebra}
+	Let $\K$ be a ring.  Define $\cdot \colon \K ^{\infty}\times \K ^{\infty}\rightarrow \K ^{\infty}$ by
+	\begin{equation}
+		[a\cdot b]_k\ceqq \sum _{i+j=k}a_ib_j.
+	\end{equation}
+	Then, $\K [x]\ceqq \coord{\K ^{\infty},+,0,-,\cdot ,1}$, the \term{polynomial algebra}\index{Polynomial algebra (single variable)} in a single variable with coefficients in $\K$, is a $\K$-algebra, where addition and both left and right scaling are defined componentwise, $0$ is the sequence of all $0$s, and $1\ceqq \coord{1,0,0,\ldots }$.
+	\begin{rmk}
+		We suggestively write
+		\begin{equation}
+			\begin{multlined}
+				a_0+a_1x+\cdots +a_{m-1}x^{m-1}+a_mx^m \\ \ceqq \coord{a_0,a_1,\ldots ,a_{m-1},a_m,0,0,\ldots }.
+			\end{multlined}
+		\end{equation}
+		With this notation, addition, multiplication, and scaling all work how you think they would with $x$ commuting with everything.
+	\end{rmk}
+	\begin{rmk}
+		Elements of $\K [x]$ are \term{polynomials}\index{Polynomial} (in a single variable with coefficients in $\K$).
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Elements in $\K [x]$ are \emph{not} functions---see \cref{sss1.1.1}.  That said, it is not uncommon to use notation suggestive of such.  For example, it is not uncommon to write $p(x)\in \K [x]$ for a polynomial.  In fact, the polynomial is just $p$, but it can be useful to write $p(x)$ for the polynomial just as one writes $f(x)$ to denote a function, even though technically the function is just $f$.
+	\end{rmk}
+	\begin{rmk}
+		For $p(x)=a_0+\cdots +a_mx^m\in \K [x]$, $a_m\neq 0$, the \term{degree}\index{Degree (of a polynomial)} of $p$, $\deg (p)$\index[notation]{$\deg (p)$}, is defined by $\deg (p)\ceqq m$.   $a_m$ is the \term{leading coefficient}\index{Leading coefficient} of $p$.  $a_0$ is the \term{constant term}\index{Constant term} of $p$.  $p$ is \term{monic}\index{Monic} iff the leading coefficient is $1$.
+	\end{rmk}
+	\begin{rmk}
+		We also make use of that $\K$-algebra $[x]\K$.  As a $\K$-algebra, $[x]\K$\index[notation]{$[x]\K$} is identical to $\K [x]$.  However, notationally, elements in $[x]\K$ are written as
+		\begin{equation}
+			a_0+xa_1+\cdots +x^{m-1}a_{m-1}+x^ma_m.
+		\end{equation}
+		This of course is just a matter of notation.  What actually \emph{does} change, however, are the corresponding evaluations maps---see \cref{PolynomialFunction}.
+	\end{rmk}
+	\begin{rmk}
+		Recall (\cref{exm1.1.18}) that $\K ^{\infty}$ is the set of all $\K$-valued sequences that are eventually $0$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+Polynomial algebras have an important ``universal property''.
+\begin{thm}{}{thmC.1.8x}
+	Let $\K$ be a ring and let $A$ be a $\K$-algebra.  Then, for every $a\in A$ central, there is a unique $\K$-algebra homomorphism $\phi \colon \K [x]\rightarrow A$ such that $\phi (x)=a$.
+	\begin{rmk}
+		Intuitively, a homomorphism $\K [x]\rightarrow A$ is completely determined by where it sends $x$ (though you do have to ensure that you map it to a central element as $x$ is itself central).  This is not unlike how linear-transformations are completely determined by where they send the elements in a basis.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+Not only is this useful in its own right, it suggests a convenient way to define polynomial algebras in multiple variables.
+\begin{thm}{Polynomial algebras in multiple variables}{}
+	Let $X$ be a set.  Then, there is a unique $\K$-algebra, the \term{polynomial algebra}\index{Polynomial algebra} in the variables $X$ with coefficients in $\K$, $\K [X]$\index[notation]{$\K [X]$}, with $X\subseteq \K [X]$ that has the property that for every $\K$-algebra $A$ and function $f\colon X\rightarrow A$ with central image there is a unique $\K$-algebra homomorphism $\phi \colon \K [X]\rightarrow A$ such that $\restr{\phi}{X}=f$.
+	\begin{rmk}
+		For the purpose of (hopefully) increasing clarity, we are actually being sloppy here.  When we say that $\K [X]$ is ``unique'', what we actually mean is that $\K [X]$ is ``unique up to unique isomorphism'' in the sense that, if $A$ is some other $\K$-algebra with $X\subseteq A$ that satisfies this property, then there is a unique isomorphism (of $\K$-algebras) $\A \rightarrow A$.
+		
+		Similarly, when we write $\A \subseteq A$, we don't \emph{literally} mean that $\A$ is a subset of $A$, but rather, that there is a unique embedding of $\K$-algebras $\A \rightarrow A$.
+	\end{rmk}
+	\begin{rmk}
+		The single variable polynomial algebras are a special case of this:  $\K [x]\ceqq \K [\{ x\} ]$.  Thus, we could have just started with this result as the definition of all polynomial algebras, but I think this might be a bit difficult to understand without seeing the single variable case first, and in particular, the ``universal property'' stated in \cref{thmC.1.8x}.
+	\end{rmk}
+	\begin{rmk}
+		In general, if $X\eqqc \{ x_1,\ldots ,x_m\}$ is a finite set, we write $\K [x_1,\ldots ,x_m]\ceqq \K [X]$\index[notation]{$\K [x_1,\ldots ,x_m]$}.
+	\end{rmk}
+	\begin{rmk}
+		So, for example, $-3x^3yz^2+xy-2y+x+4z-6\in \Z [x,y,z]$.
+	\end{rmk}
+	\begin{rmk}
+		As with the single variable case, we have a corresponding $\K$-algebra of ``right polynomials $[X]\K$ which, as a $\K$-algebra, is the same as $\K [X]$, but will be distinguished from $\K [X]$ by how the polynomials become polynomial functions---see \cref{PolynomialFunction}.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+\subsubsection{Polynomials vs.~polynomial functions}\label{sss1.1.1}
+
+Given a polynomial $p\in \K [x]$, we obtain a corresponding function $\K \rightarrow \K$ defined by $x\mapsto p(x)$, where $p(x)\in \K$ is obtained by ``plugging-in'' the value $x\in \K$ into $p$ and evaluating.  For example, if $\K \ceqq \R$ and $p\ceqq 3x^2-5$, then $p(-2)\ceqq 3(-2)\cdot (-2)-5=7$.  The distinction between this function and the original polynomial is a subtle one.  Elements of $\K [x]$ are merely ``formal''\footnote{I'm not quite sure why this word is used.  I think it's a bit misleading, but the word ``formal'' in this context essentially means that the thing is to be mindlessly manipulated as symbols and nothing more.  For example, I can talk about the ``formal'' power series $1+2x+3x^2+4x^3+\cdots$ even though the resulting expression might not make sense when I plug in particular values of $x$---here, $x$ is just a symbol, not a number.} polynomials, and not functions themselves.
+
+To see the difference between the concepts, take $\K \ceqq \Z /2\Z$ and consider the two polynomials $p\ceqq 0$ and $q\ceqq x+x^2=x(x-1)$.  These are manifestly different polynomials---the coefficients are different---but yet they both define the same function on $\Z /2\Z$ as $q(0)=0\cdot 1=0$ and $q(1)=1\cdot 0=0$.
+
+We now make the distinction between a polynomial and a polynomial function precise by actually giving the definition of the latter.
+\begin{dfn}{Polynomial function}{PolynomialFunction}\index{Polynomial function}
+	Let $\K$ be a ring.
+	\begin{enumerate}
+		\item A \term{left polynomial function} is a function $\K \rightarrow \K$ of the form $\alpha \mapsto p(\alpha )$ for $p\in \K [x]$.
+		\item A \term{right polynomial function} is a function $\K \rightarrow \K$ of the form $\alpha \mapsto p(\alpha )$ for $p\in [x]\K$.
+	\end{enumerate}
+	\begin{rmk}
+		To clarify what is meant by $p(\alpha )$, write $p(x)=a_0+\cdots +a_mx^m\in \K [x]$.  Then,
+		\begin{equation}
+			p(\alpha )\ceqq a_0+\cdots +a_m\alpha ^m.
+		\end{equation}
+		Similarly, for $p(x)=a_0+\cdots +x^ma_m\in [x]\K$,
+		\begin{equation}
+			p(\alpha )\ceqq a_0+\cdots +\alpha ^ma_m.
+		\end{equation}
+	\end{rmk}
+\end{dfn}
+
+\horizontalrule
+
+We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a polynomial, called the characteristic polynomial, of which all the eigenvalues are a root, and that essentially the reason that the matrix given in \cref{exm4.3.7} was diagonalizable over $\C$ but not over $\R$ was because the characteristic polynomial in this case had complex but not real roots.  This suggests that the property we want to impose on the ground division ring has something to do with roots of polynomials.  So, before anything else, let's be absolutely clear what we mean by the term ``root''.
+\begin{cnv}{Two-sided}{TwoSided}
+	In what follows, many definitions have left and right versions (because of the possible commutativity).  We then have a corresponding \term{two-sided}\index{Two-sided} version:  ABC is two-sided XYZ iff ABC is left XYZ and right XYZ.
+	
+	Furthermore, if we every drop these phrases, it should be understood that we are referring to the \emph{two-sided} version (e.g.~just ``XYZ'' instead of ``two-sided XYZ'').
+\end{cnv}
+\begin{dfn}{Root}{Root}
+	Let $\L$ be a $\K$-algebra and let $x_0\in \K$.\footnote{Recall that as $\K$-algebras, $\K [x]\cong [x]\K$, and so we may freely regard a polynomial in one as a polynomial in the other.  These two algebras only differ in how we ``plug-in'' values, as explained in the remarks below.}
+	\begin{enumerate}
+		\item For $p\in \K [x]$, $x_0$ is a \term{right root}\index{Right root} of $p$ iff $p(x_0)=0$.
+		\item For $p\in [x]\K$, $x_0$ is a \term{left root}\index{Left root} of $p$ iff $(x_0)p=0$.
+	\end{enumerate}
+	\begin{rmk}
+		Write $p(x)=a_0+a_1x+\cdots +a_mx^m$.  Then,
+		\begin{equation}
+			p(x_0)\ceqq a_0+a_1x_0+\cdots +a_mx_0^m.
+		\end{equation}\index[notation]{$p(x_0)$}
+		On the other hand, the corresponding polynomial in $[x]\K$ is $p(x)=a_0+xa_1+\cdots +x^ma_m$, in which case
+		\begin{equation}
+			(x_0)p\ceqq a_0+x_0a_1+\cdots +x_0^ma_m
+		\end{equation}\index[notation]{$(x_0)p$}
+		Note that in general these are \emph{not} the same.  
+		
+		That said, I find the notation $(x_0)p$ to be rather awkward and I shall avoid it unless strictly necessary (note how above I still wrote $p(x)=a+xa_1+\cdots +x^ma_m$---I suppose it might be better to denote this by $(x)p$, but as I said, that looks very awkward to me). 
+	\end{rmk}
+	\begin{rmk}
+		Thus, the definition was probably exactly what you thought it would be, but we gave it just to be absolutely sure that noncommutativity didn't change the definition in any serious way.  Be warned, however:  though it didn't change the definition, it \emph{will} change the behavior of roots.  For example, we no longer have $[pq](x_0)=p(x_0)q(x_0)$, and so we can no longer conclude that $x_0$ is a root of $pq$ if it is a root of $p$.  (It will be true that $x_0$ is a root of $pq$ if it's a root of $q$, though hopefully this makes it clear we have to be more careful with our proof than you might have previously thought.)
+	\end{rmk}
+	\begin{rmk}
+		The reason to involve two rings ($\L$ and $\K$) instead of just one is because, for example, we would like to be able to say that $\im \in \C$ is a root of $x^2+1\in \R [x]$ even though $\im \notin \R$.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{A degree $2$ polynomial with infinitely many roots}{}
+	The polynomial $x^2+1$ has infinitely many roots in $\H$.\footnote{Of course, it has none in $\R$ and $2$ in $\C$.}
+	\begin{exr}[breakable=false]{}{}
+		Check this.
+	\end{exr}
+	\begin{exr}[breakable=false]{}{}
+		On the other hand, show that $x^2+1$ doesn't have \emph{any} central roots.
+	\end{exr}
+	\begin{rmk}
+		For fields, it is well-known (perhaps even to you) that a polynomial of degree $m$ can have at most $m$ roots.  Thus, this phenomenon is perhaps quite startling:  in what is arguably the simplest of all noncommutative division rings, we have a polynomial of degree $2$ with infinitely many roots!\footnote{Of course, we can't do this with degree less than $2$.}  Instead, this classical result generalizes to the statement that the set of all roots of $p$ belong to at most $m$ \emph{conjugacy classes} in $D$.\footnote{You don't need to know what ``conjugacy class'' means.  This is just a comment for those that already know and those that are curious enough to look up the details.  By the way, this theorem has a name:  it's called the \emph{Gordon-Motzkin Theorem}\index{Gordon-Motzkin Theorem}.}  Furthermore, it \emph{is} true that either (i) there are infinitely many roots or (ii) the number of roots is less than $m$.  For example, even over the most noncommutative division rings, you can't find a degree $3$ polynomial with $6$ roots:  the only possibilities are $0$, $1$, $2$, $3$, and infinitely many roots.
+	\end{rmk}
+\end{exm}
+
+\subsection{Algebraic and integral}
+
+\begin{dfn}{Algebraically-closed}{AlgebraicallyClosed}
+	Let $\K$ be a ring.
+	\begin{enumerate}
+		\item $\K$ is \term{right algebraically-closed}\index{Right algebraically-closed} iff every nonconstant $p\in \K [x]$ has a right root in $\K$.
+		\item $\K$ is \term{left algebraically-closed}\index{Left algebraically-closed} iff every nonconstant $p\in [x]\K$ has a left root in $\K$.
+		\item $\K$ is \term{algebraically-closed}\index{Algebraically-closed} iff every nonconstant $\K [x]\ni p\in [x]\K$ has a root.
+	\end{enumerate}
+	\begin{rmk}
+		The reason why this is \emph{right} algebraically-closed (and not left) is that the statement that $\alpha \in \K$ is a root of $p$ is equivalent to the statement that $p(x)=q(x)(x-\alpha )$ for some $q\in \K [x]$\footnote{This is \emph{not} in general equivalent to the statement that $p(x)=(x-\alpha )r(x)$ for some $r\in \K [x]$ if $\K$ is noncommutative.}---see the following result \cref{prp4.4.174}.  Similarly for left algebraically-closed.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  $\K$ being (two-sided) algebraically-closed is \emph{not} the same as every nonconstant polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) algebraically-closed means that it is both left algebraically-closed and right algebraically-closed.  Thus, every nonconstant polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
+	\end{rmk}
+\end{dfn}
+There is a related term.
+\begin{dfn}{Integrally-closed}{IntegrallyClosed}
+	Let $\K$ be a ring.
+	\begin{enumerate}
+		\item $\K$ is \term{right integrally-closed}\index{Right integrally-closed} iff every nonconstant monic $p\in \K [x]$ has a right root in $\K$.
+		\item $\K$ is \term{left algebraically-closed}\index{Left algebraically-closed} iff every nonconstant monic $p\in [x]\K$ has a left root in $\K$.
+	\end{enumerate}
+	\begin{rmk}
+		You should see \cref{exmC.2.20} to perhaps better understand the difference between the integrally-closed and algebraically-closed.
+		
+		For me anyways, algebraically-closed is the more intuitive of the two, but this is perhaps just because I was taught it much earlier.  One reason for the introduction of ``integrally-closed'' when one already has the notion of ``algebraically-closed'' is that the former is in general more well-behaved than the latter.  For example, integral elements form a ring (\cref{RelativeIntegralClosure}) whereas the algebraic elements do not necessarily (\cref{exmC.2.24}).
+	\end{rmk}
+	\begin{rmk}
+		Note that in the common case of interest where $\K$ is a field, the notions of ``integral'' and ``algebraic'' are equivalent---see \cref{prpC.2.18}.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  $\K$ being (two-sided) integrally-closed is \emph{not} the same as every nonconstant monic polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) integrally-closed means that it is both left integrally-closed and right integrally-closed.  Thus, every nonconstant monic polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
+	\end{rmk}
+\end{dfn}
+\begin{exm}{}{}
+	Note that $\C$ is algebraically-closed but $\R$ is not.  $\H$ is also (left and right) algebraically-closed.
+\end{exm}
+\begin{exr}{}{}
+	Can you find an example of a division ring that is left algebraically-closed but not right algebraically-closed (or vice versa)?
+\end{exr}
+\begin{prp}{}{prp4.4.174}
+	Let $\F$ be a division ring and let $x_0\in \F$.
+	\begin{enumerate}
+		\item $x_0$ is a right root of $p\in \F[x]$ iff there is some $q\in \F [x]$ such that $p(x)=q(x)(x-x_0)$.
+		\item $x_0$ is a left root of $p\in [x]\F$ iff there is some $q\in [x]\F$ such that $p(x)=(x-x_0)q(x)$.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  See \cite[Proposition 16.2]{Lam}.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+Of course, not everything is algebraically-closed or even integrally-closed (for example, the real numbers).  As being algebraically-closed is such a useful property, it is of interest to `enlarge' a given field to something that is algebraically-closed.  The basic idea is to take your field and just `throw in' all solutions to polynomial equations, not unlike one obtains $\Q$ from $\Z$ by ``throwing in'' all solutions to equations of the form $mx=n$.  The field obtained in this way is the \emph{algebraic-closure} of the original field.  Before we make this intuition precise, however, we must first discuss some preliminaries.
+\begin{dfn}{Algebraic element}{AlgebraicElement}
+	Let $\L$ be a $\K$-algebra and let $\alpha \in \L$.  Then, $\alpha$ is \term{right (resp.~left) algebraic}\index{Algebraic element} over $\K$ iff there is a nonconstant polynomial $p\in \K [x]$ such that $\alpha$ is a right (resp.~left) root of $p$.
+	
+	$\alpha$ is \term{right (resp.~left) transcendental}\index{Transcendental element} over $\K$ iff it is not right (resp.~left) algebraic over $\K$.
+	\begin{rmk}
+		Simply \term{algebraic} (or \term{two-sided algebraic}) means that $\alpha$ is a (two-sided) root of some nonconstant polynomial.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Integral element}{IntegralElement}
+	Let $\L$ be a $\K$-algebra and let $\alpha \in \L$.  Then, $\alpha$ is \term{right (resp.~left) integral}\index{Integral element} over $\K$ iff there is a nonconstant monic polynomial $p\in \K [x]$ such that $\alpha$ is a right (resp.~left) root of $p$.
+	\begin{rmk}
+		Simply \term{integral} (or \term{two-sided integral}) means that $\alpha$ is a (two-sided) root of some nonconstant monic polynomial.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{}{}
+	$\sqrt{2}\in \R$ is algebraic over $\Q$ (it is a root of the polynomial $x^2-2\in \Q [x]$).
+	
+	$\uppi \in \R$ is not algebraic over $\Q$.\footnote{For example, by the Lindemann-Weierstrass Theorem, if you enjoy swatting your flies with sledgehammers (I know I do).}
+\end{exm}
+\begin{prp}{}{prpC.2.18}
+	Let $\F$ be a division ring, let $A$ be an $\F$-algebra, and let $x\in A$.  Then, $x$ is right (resp.~left, resp.~two-sided) integral over $\F$ iff it is right (resp.~left, resp.~two-sided) algebraic over $\F$.
+	\begin{rmk}
+		Similarly, a division ring is right (resp.~left, resp.~two-sided) integrally-closed iff it is right (resp.~left, resp.~two-sided) algebraically-closed.
+	\end{rmk}
+	\begin{proof}
+		$(\Rightarrow )$ Immediate from the definitions.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $x$ is right algebraic over $\F$.  By definition, there is a nonconstant polynomial $p\in \F [x]$ such that $p(x)=0$.  Denote the leading coefficient of $p$ by $a_m$.  Multiplying $p(x)=0$ on the left by $a_m^{-1}$ shows that $[a_m^{-1}p](x)=0$.  As $a_m^{-1}p$ is monic, this shows that $x$ is left-integral.
+	\end{proof}
+\end{prp}
+\begin{exm}{Algebraic but not integral}{exmC.2.20}
+	$\frac{1}{2}\in \Q$ is algebraic but not integral over $\Z$:  it is a root of the polynomial $2x-1$, but it is not the root of any monic polynomial with integer coefficients.
+\end{exm}
+\begin{dfn}{Algebraic $\K$-algebra}{AlgebraicKAlgebra}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is \term{right (resp.~left, resp.~two-sided) algebraic}\index{Algebraic $\K$-algebra} iff every element of $\L$ is right (resp.~left, resp.~two-sided) algebraic over $\K$.
+	\begin{rmk}
+		We may instead say that $\L$ is \term{algebraic} over $\K$.
+	\end{rmk}
+	\begin{rmk}
+		If $\L$ is an extension of $\K$, then people will say that ``$L$ is a \term{right (resp.~left, resp.~two-sided) algebraic extension}\index{Algebraic extension} of $\K$'' instead of that ``$\L$ is a right (resp.~left, resp.~two-sided) algebraic $\K$-algebra''.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Integral $\K$-algebra}{AlgebraicKAlgebra}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is \term{right (resp.~left, resp.~two-sided) integral}\index{Integral $\K$-algebra} iff every element of $\L$ is right (resp.~left, resp.~two-sided) integral over $\K$.
+	\begin{rmk}
+		We may instead say that $\L$ is \term{integral} over $\K$.
+	\end{rmk}
+	\begin{rmk}
+		If $\L$ is an extension of $\K$, then people will say that ``$L$ is a \term{right (resp.~left, resp.~two-sided) algebraic extension}\index{Algebraic extension} of $\K$'' instead of that ``$\L$ is a right (resp.~left, resp.~two-sided) algebraic $\K$-algebra''.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Algebraic-closure}{}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is an \term{right (resp.~left, resp.~two-sided) algebraic-closure}\index{Algebraic-closure} of $\K$ iff it is algebraically-closed and algebraic over $\K$.
+\end{dfn}
+\begin{dfn}{Integral-closure}{IntegralClosure}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is an \term{right (resp.~left, resp.~two-sided) algebraic-closure}\index{Integral-closure} of $\K$ iff it is algebraically-closed and algebraic over $\K$.
+\end{dfn}
+\begin{exm}{}{}
+	\begin{enumerate}
+		\item $\H$ is an algebraic extension of $\C$.
+		\item $\C$ is an algebraic extension of $\R$.
+		\item $\R$ is not an algebraic extension of $\Q$.
+	\end{enumerate}
+\end{exm}
+\begin{prp}{Relative integral closure}{RelativeIntegralClosure}
+	Let $A$ be a commutative $\K$-algebra.  Then,
+	\begin{equation}
+		\left\{ x\in A:x\text{ is integral over }\K \text{.}\right\}
+	\end{equation}
+	is an integral $\K$-subalgebra of $A$, the \term{integral closure}\index{Relative integral closure} of $\K$ in $A$, which is integrally-closed if $A$ is.
+	\begin{rmk}
+		Warning:  The analogous result for algebraic fails---see \cref{exmC.2.24}.  Indeed, this is one motivation for preferring integral over algebraic.  That said, it seems like it will hold for integral crings,\footnote{Different meaning of the word ``integral''.  In fact, just off the top of my head I can think of four different meanings of that word.  Like I said, mathematicians are terrible when it comes developing sensible terminology.} though we won't use this fact---see \href{https://math.stackexchange.com/questions/759345/algebraic-vs-integral-closure-of-a-ring?rq=1}{math.stackexchange}.
+	\end{rmk}
+	\begin{rmk}
+		``Relative''refers to the fact that this is the integral closure of $\K$ \emph{in $A$}---see \cref{AlgebraicClosure} for the ``absolute'' integral closure.  
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exr}{}{}
+	Is the previous result true if $A$ is noncommutative?
+\end{exr}
+\begin{exm}{The algebraic elements need not form a ring}{exmC.2.24}
+	We leave this as an exercise.
+	\begin{exr}[breakable=false]{}{}
+		Find such a counter-example.
+		\begin{rmk}
+			Hint:  See \href{https://mathoverflow.net/questions/163749/algebraic-closure-of-a-ring-is-not-a-ring}{mathoverflow}.
+		\end{rmk}
+	\end{exr}
+\end{exm}
+\begin{thm}{Rings have algebraically-closed algebras}{thmC.2.25}
+	Let $\K$ be a (commutative) ring.  Then, there exists a (commutative) algebraically-closed $\K$-algebra $A$.
+	
+	Furthermore, if $\K$ is field, then $A$ can be taken to be an extension of $\K$ that is itself a field.
+	\begin{proof}
+		\Step{Introduce notation}
+		Define
+		\begin{equation}
+			\mcal{F}\ceqq \left\{ f\in \K [x]:f\text{ nonconstant.}\right\} ,
+		\end{equation}
+		\begin{equation}
+			X\ceqq \left\{ x_f:f\in \mcal{F}\right\} ,
+		\end{equation}
+			and
+		\begin{equation}
+			\L \ceqq \K [X].
+		\end{equation}
+		Intuitively, we have a ``variable'' $x_f$ for each nonconstant monic $f\in \K [X]$ and $\L$ is the polynomial algebra in those variables.  Now define
+		\begin{equation}
+			I\ceqq \left\{ \sum _{f\in \mcal{F}}g_ff(x_f)h_f:g_f,h_f\in \L \right\} ,
+		\end{equation}
+		the ideal ``generated by'' the $f(x_f)$s.
+		
+		\Step{Construct a $\K$-algebra that contains a root for every nonconstant $f\in \K [x]$}
+		Now define
+		\begin{equation}\label{eqnC.2.31}
+			\K _1\ceqq \L /I.
+		\end{equation}
+		$\K _1$ is a $\K$-algebra, and furthermore, it contains a root of every nonconstant $f\in \K [x]$, namely $x_f+I\in \K _1$.\footnote{This is a root because, as $f(x_f)\in I$ (from the definition of $I$), $f(x_f+I)=f(x_f)+I=0$ in $\L /I$.}
+		
+		\Step{Repeat this process inductively}
+		Performing the same construction, we obtain a $\K _1$-algebra $\K _2$ that contains a root of every nonconstant $f\in \K _1[x]$.  Note that $\K _2$ can also be considered a $\K$-algebra via the composite structure map $\K \rightarrow \K _1\rightarrow \K _2$.  Proceeding inductively, we obtain a sequence of $\K$-algebra $\{ \K _m:m\in \N \}$ such that $\K _{m+1}$ contains roots of every nonconstant $f\in \K [x]$.\footnote{Take $\K _0\ceqq \K$.}
+		
+		\Step{Define the algebraically-closed $\K$-algebra}
+		Now define\footnote{This definition doesn't literally make sense as we don't literally have that $\K _m\subsetq \K _{m+1}$.  Instead, what is actually meant is the disjoint union of the $\K _m$s modulo the equivalence relation that identifies elements in $\K _m$ with their images in $\K _{m+1}$.}
+		\begin{equation}
+			\K _{\infty}\ceqq \bigcup _{m\in \N}\K _m.
+		\end{equation}
+		
+		\Step{Check that $\K _{\infty}$ is indeed algebraically-closed}
+		We claim that $\K _{\infty}$ is algebraically-closed.  So, let $f\in \K _{\infty}[x]$ be nonconstant.  Then, as $f$ has finitely many terms, there is some $m\in \N$ such that $f\in \K _m[x]$.  But we know that $f$ then has a root in $\K _{m+1}$, and hence in $\K _{\infty}$.  Thus, $\K _{\infty}$ is algebraically-closed.
+		
+		\Step{Check that $\K _{\infty}$ is commutative if $\K$ is}
+		Looking at the above proof, we see that $\L$ is commutative if $\K$ is, and hence $\K _1$ is commutative if $\K$ is.  Thus, each $\K _m$ is commutative if $\K$ is, and hence so is $\K _{\infty}$.
+		
+		\Step{Check the extra properties if $\K$ is a field}
+		If $\K$ is a field, then either the kernel of the map $\K \rightarrow \K _{\infty}$ is $0$ or all of $\K$.  To show that the kernel can't be all of $\K$, it suffices to show that $1\in \K$ does not get mapped to $0$.  Using induction, it suffices to show that $1\in \K$ doesn't get mapped to $0\in \K _1$.  However, this would be the case iff $1\in I$, and so we could write
+		\begin{equation}
+			g_1f_1(x_{f_1})+\cdots +g_mf_m(x_{f_m})=1
+		\end{equation}
+		for $g_k\in \L$.  For convenience, let us write $x_k\ceqq x_{f_k}$, and enumerate any remaining variables that appear in any $g_k$ as $x_{m+1},\ldots ,x_n$, so that this equation then reads
+		\begin{equation}\label{eqnC.2.34}
+			g_1(x_1,\ldots ,x_n)f_1(x_1)+\cdots +g_m(x_1,\ldots ,x_n)f_m(x_m)=1.
+		\end{equation}
+		Define $A_1\ceqq \K [x]/I_1$, where $I_1\ceqq \{ af_1(x)b:a,b\in \K \}$, the ideal ``generated'' by $f_1$.  $A_1$ is a $\K$-algebra that contains a root of $f_1$ (namely $x+I_1\in A_1$), and furthermore, the image of $1\in \K$ under the quotient map $\K \rightarrow A_1$ is nonzero, for if it were, we would have $1=af_1(x)b$ for some $a,b\in \K$, in which case $f_1(x)$ would be a constant polynomial, a contradiction.  We may now define $A_2\ceqq A_1[x]/I_2$, where $I_2\ceqq \{ af_2(x)b:a,b\in \K _1\}$.  As before, $A_2$ is a $\K$-algebra that now contains roots of both $f_1$ and $f_2$, and furthermore, the image of $1\in \K$ under the map $\K \rightarrow A_2$ is nonzero.  Proceeding inductively, we obtain a $\K$-algebra $A_m$ that contains roots of $f_1,\ldots ,f_m$ and $1\neq 0$ in $A_m$.  Plugging in these roots for $x_1,\ldots ,x_m$ respectively (and anything for the remaining variables), \eqref{eqnC.2.34} reduces to $0=1$ in $A_m$:  a contradiction.\footnote{If $\K$ were noncommutative, then these terms wouldn't just be of the form $g_kf_k$, but rather, $g_kf_kh_k$, and now, the result we get by plugging in the root $\alpha _k$ is not necessarily equal to $g_k(\alpha _k)f_k(\alpha _k)h_k(\alpha _k)$.  This seems to break the proof for $\K$ noncommutative.}  This completes the proof that the kernel of $\K \rightarrow \K _{\infty}$ can't be all of $\K$.  It must therefore by $0$, and hence $\K _{\infty}$ is an extension of $\K$.
+		
+		We just showed that $1\notin I$, and so in particular $I\subseteq \L$ is a proper ideal.  It is thus contained in a maximal ideal $M$, in which case let us replace our definition of $\K _1$ in \eqref{eqnC.2.31} by
+		\begin{equation}
+			\K _1\ceqq \L /M.
+		\end{equation}
+		$\K _1$ now has all the properties it did before, except now it is additionally a field.  Proceeding inductively, we find that each $\K _m$ is a field.  Then, for $x\in \K _{\infty}$ nonzero, we have that $x\in \K _m$ for some $m\in \N$, in which case $x$ has an inverse in $\K _m$, and hence in $\K _{\infty}$.  Thus, $\K _{\infty}$ is likewise a field.
+	\end{proof}
+\end{thm}
+\begin{exr}{}{}
+	In the above result, if $\K$ is a division ring, can we still take $A$ to be an extension of $\K$?  Can we take $A$ to be simple?
+\end{exr}
+\begin{thm}{Integral-closure}{AlgebraicClosure}
+	Let $\K$ be a cring.  Then, there is a unique commutative integral-closure $\A _{\K}$\index[notation]{$\A _{\K}$} of $\K$, the \term{integral-closure}\index{Integral-closure} of $\K$, that has the property that, for any other integrally-closed commutative $\K$-algebra $A$, there is a unique $\K$-algebra homomorphism such that the following diagram commutes.
+	\begin{equation}
+		\begin{tikzcd}
+			\K \ar[r] \ar[rd] & \A \ar[d,dashed] \\
+			& A
+		\end{tikzcd}
+	\end{equation}
+	Furthermore,
+	\begin{enumerate}
+		\item \label{AlgebraicClosure(i)}explicitly, if $A$ is any integrally-closed commutative $\K$-algebra,
+		\begin{equation}
+			\A _{\K}=\left\{ x\in A:x\text{ is integral over }\K \text{.}\right\} ;
+		\end{equation}
+		and
+		\item \label{AlgebraicClosure(ii)}if $\K$ is a field, then $\A _{\K}$ is an extension and itself a field.
+	\end{enumerate}
+	\begin{rmk}
+		A \emph{diagram} in this sense of the word refers to a set of objects and morphisms between them indicated by drawing arrows for each morphism (from the domain to the codomain).  A path from one object to another (in the direction indicated by the arrows) then corresponds to the composition of the corresponding morphisms.If you select any two objects in a given diagram, in general, there will be more than one path from the first to the second; the diagram is said to \emph{commute} iff all corresponding compositions agree.
+		
+		For example, in this case, if we denote the morphisms involved by $\iota \colon \K \rightarrow \A$, $\kappa \K \rightarrow A$, and $\phi \colon \A \rightarrow A$, then the phrase ``the following diagram commutes'' should be understood as short-hand for the statement ``$\phi \circ \iota =\kappa$''.
+	\end{rmk}
+	\begin{rmk}
+		While it is true (\cref{thmC.2.25}) that any ring $\K$ has an algebraically-closed $\K$-algebra, it is \emph{not} true that rings, even commutative ones, have algebraic closures.  Essentially this boils down to the fact that the algebraic elements need not form a ring (\cref{exmC.2.24}), whereas the integral ones do (\cref{RelativeIntegralClosure}).
+	\end{rmk}
+	\begin{rmk}
+		For the purpose of (hopefully) increasing clarity, we are actually being sloppy in a couple of places here.  First of all, when we say ``unique'', what we actually mean is that $\A$ is ``unique up to unique isomorphism'' in the sense that, if $A$ is some other integrally-closed $\K$-algebra that satisfies this property, then there is a unique isomorphism (of $\K$-algebras) $\A \rightarrow A$.
+	\end{rmk}
+	\begin{rmk}
+		In other words, \cref{AlgebraicClosure(i)} says that $\A _{\K}$ is the integral-closure of $\K$ in any integrally-closed $\K$-algebra.
+	\end{rmk}
+	\begin{proof}
+		By \cref{thmC.2.25}, there is a commutative integrally-closed $\K$-algebra $A$.  Define
+		\begin{equation}
+			\A _{\K}=\left\{ x\in A:x\text{ is integral over }\K \text{.}\right\} .
+		\end{equation}
+		By \cref{RelativeIntegralClosure}, $\A _{\K}$ is still a commutative integrally closed $\K$-algebra.
+		
+		Let $\K \rightarrow B$ be another commutative integrally-closed $\K$-algebra.
+	\end{proof}
+\end{thm}
+\begin{exr}{}{}
+	Do noncommutative rings have (left/right) integral-closures?  What about noncommutative division rings in particular?  
+\end{exr}
+
+\section{Perfect fields}
+
+\begin{dfn}{Perfect field}{PerfectField}
+	Let $\F$ be a field.  Then, $\F$ is \term{perfect}\index{Perfect field} iff every irreducible polynomial $p\in \F [x]$ has distinct roots.
+	
+	$\F$ is \term{imperfect}\index{Imperfect field} iff it is not perfect.
+	\begin{rmk}
+		For a ring $R$ and $x\in R$ not a unit, $x$ is \term{irreducible}\index{Irreducible (in a ring)} iff whenever $x=ab$, it follows that either $a$ or $b$ is a unit.\footnote{Recall that (\cref{dfnA.1.33}) a unit is an element with a multiplicative inverse.}
+		
+		This definition of irreducible is one generalization of the concept of a prime integer to a general ring (there are others).
+	\end{rmk}
+	\begin{rmk}
+		$x_0\in \F$ is a root of $p$ iff $x-x_0$ divides $p$.  $p$ \term{has distinct roots}\index{Distinct roots} iff $(x-x_0)^2$ does \emph{not} divide $p$ for every root $x_0$.
+		
+		The intuition of course is that every root of $p$ has ``multiplicity'' $1$.
+	\end{rmk}
+\end{dfn}
+Most fields you have probably encountered are perfect.
+\begin{prp}{}{}
+	Let $\F$ be a field.  Then, $\F$ is perfect if any of the following are true.
+	\begin{enumerate}
+		\item $\F$ is algebraically-closed.
+		\item $\Char (\F )=0$.
+		\item $\F$ is finite.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+Of course, there are examples of imperfect fields.
+\begin{exm}{An imperfect field}{}
+	Let $p\in \Z ^+$ be prime, write $\F _p\ceqq \Z /p\F$, and define $\F \ceqq \F _p(t)$.\footnote{For any cring $\K$, $\K (x)$\index[notation]{$\K (x)$} is the \emph{field of fractions} of $\K [x]$.  That is, $\K (x)$ is constructed from $\K [x]$ in the same way that $\Q$ is constructed from $\Z$.}
+	
+	We claim that $\F$ is imperfect.  To show this, we check that $x^p-t\in \F [x]$ is irreducible but does not have distinct roots.
+	\begin{exr}[breakable=false]{}{}
+		Show that $x^p-t\in \F [x]$ is irreducible.
+	\end{exr}
+	If $x_0$ is a root of $x^p-t$, then $x_0^p-t=0$, and hence $t=x_0^p$.  But then
+	\begin{equation}
+	x^p-t=x^p-x_0^p=(x-x_0)^p,
+	\end{equation}
+	and hence $(x-x_0)^p$ divides $x^p-t$.  As $p\geq 2$, $x^p-t$ cannot have distinct roots.
+	\begin{rmk}
+		This example is quite unimportant for us, and so you shouldn't worry if you don't understand everything going on here.
+	\end{rmk}
+\end{exm}
+
+\section{(Semi)simplicity}
+
+There is a fundamental concept in the theory of modules called \emph{simplicity}.  Indeed, the concept is sufficiently fundamental that direct analogues\footnote{And nonanalogues *cough*Lie algebras*cough*.} appear throughout algebra.
+\begin{dfn}{Simple module}{SimpleModule}
+	Let $V$ be an $R$-module.  Then, $V$ is \term{simple}\index{Simple module} iff the only submodules of $V$ are $0$ and $V$ itself.
+	\begin{rmk}
+		Sometimes the term \term{irreducible}\index{Irreducible module} is used as a synonym for ``simple''.  As far as I can tell, ``irreducible'' seems to be the preferred term in the context of representation theory.  I will use both, depending on what feels most `natural' to me in a given context.
+	\end{rmk}
+	\begin{rmk}
+		You should compare this with the definition of indecomposability (\cref{Indecomposable}).
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{prpC.2.2}
+	Let $V$ be an $R$-module.  Then, if $V$ is irreducible, $V$ is indecomposable.
+	\begin{proof}
+		Suppose that $V$ is irreducible.  Let $U,W\subseteq V$ be submodules such that $V=U\oplus W$.  As $V$ is irreducible, either $U=0$ or $U=V$.  In the former case, we are done.  In the latter case, we must have $W=0$, and we are again done.
+	\end{proof}
+\end{prp}
+\begin{exm}{An indecomposable module that is not irreducible}{exmC.1.2}
+	Define
+	\begin{equation}
+		N\ceqq \begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}
+	\end{equation}
+	and use $\N$ to regard $\C ^2$ as a $\C [x]$-module as in \cref{exm1.1.34}.
+	
+	\begin{exr}[breakable=false]{}{}
+		Show that
+		\begin{equation}
+			\Span \left( \begin{bmatrix}1 \\ 0\end{bmatrix}\right) 
+		\end{equation}
+		is $N$-invariant.  Deduce that $\C ^2$ is not irreducible as a $\C [x]$-module.
+	\end{exr}
+	\begin{exr}[breakable=false]{}{}
+		Show that $\C ^2$ is not an indecomposable $\C [x]$-module.
+	\end{exr}
+\end{exm}
+
+We had a term (\cref{prp4.5.17}), \emph{complete-decomposability}, for a module that can be written as a direct-sum of indecomposable modules.  So to, we have an analogous term for irreducible modules.
+\begin{dfn}{Semisimple module}{SemisimpleModule}
+	Let $V$ be an $R$-module.  Then, $V$ is \term{semisimple}\index{Semisimple module} iff $V$ can be written as the direct-sum of simple submodules.
+	\begin{rmk}
+		Just as the term ``irreducible'' is used as a synonym for ``simple'', the term \term{completely-reducible}\index{Completely-reducible module} is used as a synonym for ``semisimple''.
+	\end{rmk}
+	\begin{rmk}
+		A linear operator $T\colon V\rightarrow V$ on a $\K$-module $V$ is \term{semisimple}\index{Semisimple operator} iff the $\K [x]$-module defined by the action of $T$ is semisimple.
+	\end{rmk}
+	\begin{rmk}
+		By \cref{prpC.2.2}, we immediately see that completely-reducible implies completely-indecomposable, but that the converse fails (\cref{exmC.1.2}).
+	\end{rmk}
+	\begin{rmk}
+		Warning:  As previously mentioned in the definition of simple ring (\cref{SimpleRing}), there is a definition of ``semisimple ring'', but it is not analogous to ``semisimple module'' in the way that ``simple ring'' is analogous to ``simple module''.
+	\end{rmk}
+\end{dfn}
+Our interest in semisemplicity arises from the fact that semisimple operators are in a certain sense a generalization of diagonalizable operators.

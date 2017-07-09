@@ -1,4 +1,4 @@
-\chapter{``Eigensuff''}
+\chapter{``Eigenstuff''}
 
 \section{Motivation}\label{sct4.1}
 
@@ -29,7 +29,7 @@ We have found the following.
 	If $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is to be a diagonal matrix, it had better be the case that $T(b_k)$ is a scalar multiple of $b_k$ for all $b_k\in \basis{B}$.
 \end{displayquote}
 
-It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)$ is a scalar multiple of $b$.  Such vectors have a name:  they are \emph{eigenvectors} of $T$.
+It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)$ is a scalar multiple of $b$.  Such vectors have a name:  they are \emph{eigenvectors} of $T$.\footnote{By the way, in case it's not obvious, ``eigenstuff'' is a catch-all term I'm using as short-hand for ``eigenvalues, eigenvectors, and eigenspaces''.}
 
 \section{Basic definitions}
 
@@ -188,7 +188,7 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 	\end{proof}
 \end{thm}
 
-\begin{exm}{}{}
+\begin{exm}{}{exm4.2.17}
 	Define $D\colon C^{\infty}(\R )\rightarrow C^{\infty}(\R )$ by $D(f)\ceqq f'$.  Then, $\lambda \in \C$ is an eigenvalue of $f$ iff $f$ is nonzero and $f'\eqqc D(f)=\lambda f$.  If this is true, it follows that $f(x)=C\exp (\lambda x)$ for some constant $C\in \C$, and hence that the function $x\mapsto \exp (\lambda x)$ is an eigenvector of $D$ with eigenvalue $\lambda$.  Thus, every $\lambda \in \C$ is an eigenvalue and
 	\begin{equation}
 		\Eig _{\lambda}=\Span (\exp (\lambda x)).
@@ -401,7 +401,7 @@ While the concept of diagonalization makes sense for any linear-transformation, 
 
 \section{Jordan Canonical Form}
 
-Diagonalizable linear-transformations are great.  There's just one little itsy-bitsy problem:  not all linear-transformations are diagonalizable!  Not even in the context of finite-dimensional vector space over algebraically-closed\footnote{Whatever that means.} fields.  Fortunately, there is something that is almost as good, but \emph{always} exist (at least if the ground ring is sufficiently nice):  the \emph{Jordan Canonical Form} of a linear-transformation.
+Diagonalizable linear-transformations are great.  There's just one little itsy-bitsy problem:  not all linear-transformations are diagonalizable!  Not even in the context of finite-dimensional vector space over algebraically-closed\footnote{Whatever that means.} fields.  Fortunately, there is something that is almost as good, but \emph{always} exist (at least if the ground ring is sufficiently nice):  the \emph{Jordan canonical form} of a linear-transformation.
 
 Before we get there however, we must first take a detour to discuss \emph{direct-sums} and \emph{invariant-subspaces}.  Very roughly speaking, the idea is to decompose a vector space into smaller pieces that are easier to study.  For example, if $b\in V$ is an eigenvector of $T$, then $\Span (b)$ the behavior of $T$ on this subspace is particularly easy to understand.  While we can't quite have the subspaces be that simple in general, we will find that we can still decompose our space into pieces which are not that much more complicated.
 
@@ -425,9 +425,6 @@ The precise sense in which we are going to decompose vector spaces is called the
 			V=\bigoplus _{W\in \collection{W}}W
 		\end{equation}
 		or just $\collection{W}$ is a \term{direct-sum decomposition}\index{Direct-sum decomposition} or \term{decomposition}\index{Decomposition} of $V$.
-	\end{rmk}
-	\begin{rmk}
-		It is implicit in this that cofinitely many $v^W$s vanish, so that \eqref{eqn4.4.2} is secretly a finite sum.
 	\end{rmk}
 	\begin{rmk}
 		As per usual, the arbitrary (nonfinite) case obfuscates the simplicity of this concept.  If $\collection{W}=\{ W_1,\ldots ,W_m\}$, then this definition reads:  $V$ is the \term{direct-sum} of $W_1,\ldots ,W_m$ iff for every $v\in V$ there are unique $v^1\in W,\ldots ,v^m\in W_m$ such that
@@ -865,6 +862,12 @@ is a block-diagonal matrix of scalars, whereas
 	\begin{bmatrix}1 & 2 & 3 & 0 & -13 \\ 4 & 5 & 7 & 0 & 0 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 1 & 1\end{bmatrix}
 \end{equation}
 is not.  Similarly, we may speak of direct-sums of matrices and so on.
+\begin{exm}{Direct-sum of matrices}{}
+	For example,
+	\begin{equation}
+		\begin{bmatrix}1 & 2 & 3 \\ 4 & 5 & 6\end{bmatrix}\oplus \begin{bmatrix}-1 & 1 & -2 & 2 \\ -3 & 3 & -4 & 4 \\ 1 & 2 & -5 & -6\end{bmatrix}\coloneqq \begin{bmatrix}1 & 2 & 3 & 0 & 0 & 0 & 0 \\ 4 & 5 & 6 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & -1 & 1 & -2 & 2 \\ 0 & 0 & 0 & -3 & 3 & -4 & 4 \\ 0 & 0 & 0 & 1 & 2 & -5 & -6\end{bmatrix}
+	\end{equation}
+\end{exm}
 
 \horizontalrule
 
@@ -1087,7 +1090,7 @@ We know now that we can't always find a basis in which the matrix of a linear op
 
 Of course, $V=V$ is itself a direct-sum decomposition, and one that generally won't be very useful.  In order to simplify the block-diagonal form as much as possible, we wish to break up $V$ into the `smallest' invariant subspaces we can.  The precise sense in which we want these subspaces to the the ``smallest'' possible is called \emph{indecomposable}.
 \begin{dfn}{Indecomposable}{Indecomposable}
-	Let $V$ be a nonzero $R$-module.  Then, $V$ is \term{indecomposable}\index{Indecomposable module} iff whenever $V=U\oplus W$, it follows that either $U=0$ or $W=0$.
+	Let $V$ be a $R$-module.  Then, $V$ is \term{indecomposable}\index{Indecomposable module} iff whenever $V=U\oplus W$, it follows that either $U=0$ or $W=0$.
 	\begin{rmk}
 		If $V$ is a $\K$-module and $T\colon V\rightarrow V$ is a linear operator, we say that $V$ is \term{$T$-indecomposable} iff $V$ is indecomposable when regarded as a $\K [x]$-module.
 	\end{rmk}
@@ -1098,7 +1101,10 @@ Of course, $V=V$ is itself a direct-sum decomposition, and one that generally wo
 		You can view the requirement that $V$ be nonzero as roughly analogous to how we disallow $1\in \Z$ from being considered prime.
 	\end{rmk}
 	\begin{rmk}
-		Warning:  You will likely hear the term ``irreducible'' at some point.  This is \emph{not} the same as ``indecomposable'', though they are certainly related---irreducible implies indecomposable.
+		Warning:  The term ``irreducible'' (\cref{SimpleModule}) is \emph{not} the same as ``indecomposable'' (\cref{exmC.1.2}), though they are certainly related---irreducible implies indecomposable (\cref{prpC.2.2}).
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Some authors do not consider the $0$ module to be indecomposable.  (Presumably their reason for doing so is similar to the reason why $1\in \Z ^+$ is not considered prime.)
 	\end{rmk}
 \end{dfn}
 We now consider whether we can, and if so, how can we, decompose $V$ into indecomposable submodules.  The basic idea is as follows.  If $V$ is indecomposable, we're done; otherwise, there are proper nonzero submodules $U,W\subseteq V$ such that $V=U\oplus W$.  If $U$ and $W$ are indecomposable, again, we're done; otherwise, we can break up $U$ and/or $W$ as a direct-sum of proper nonzero submodules, and so on.  In general, there is no need for this process to terminate.  However, the next result says that it does in the primary case of interest.
@@ -1230,11 +1236,19 @@ To see what notion of ``small'' we might want, recall that we are going to try t
 \begin{dfn}{Nilpotent}{Nilpotent}
 	Let $X$ be a rg and let $x\in X$.  Then, $x$ is \term{nilpotent}\index{Nilpotent} iff there is some $m\in \N$ such that $x^m=0$.
 	\begin{rmk}
+		The smallest natural number $\Rank (x)\in \N$\index[notation]{$\Rank (x)$} such that $x^{\Rank (x)}=0$ is the \term{rank}\index{Rank (of a nilpotent element)} of $x$.
+	\end{rmk}
+	\begin{rmk}
 		For us, the rg we're going to be interested in is in fact a ring, $\End _{\Mod{\K}}(V)$, $V$ a $\K$-module, and which case for $T\colon V\rightarrow V$ to be nilpotent means that there is some $m\in \N$ such that $T^m=0$, where
 		\begin{equation}
 			T^m\ceqq \underbrace{T\circ \cdots \circ T}_m,
 		\end{equation}
 		that is, $T$ composed with itself $m$ times.
+	\end{rmk}
+	\begin{rmk}
+		For $N\colon V\rightarrow V$ nilpotent and $v\in V$, we say that $v$ is \term{$N$-maximal}\index{$N$-maximal} iff $N^{\Rank (N)-1}(v)\neq 0$.  Of course, the definition of nilpotent always guarantees that there is some $N$-maximal element (except for the stupid case $N=0$).
+		
+		Note that this is the notion of maximal that corresponds to the preorder $\preceq$ defined by $v\preceq w$ iff $v=N^k(m)$ for some $k\in \N$.
 	\end{rmk}
 \end{dfn}
 \begin{exm}{}{}
@@ -1270,74 +1284,106 @@ This has an important, albeit unfortunate, consequence.
 
 We thus know that nilpotent linear-transformations are essentially never diagonalizable, so if we are to come up with a `next best thing' to diagonalization, we had at the very least know how to do so for nilpotent linear-transformations.  The following result is our solution to this problem.
 \begin{thm}{Jordan Canonical Form of Nilpotent Operators}{thm4.6.17}
-	Let $V$ be a finite-dimensional vector space and let $N\colon V\rightarrow V$ be nilpotent linear.  Then, if $V$ is $N$-indecomposable, then there is a basis $\basis{B}$ of $V$ such that
-	\begin{equation}\label{eqn4.6.17}
-		\coordinates{N}{\basis{B}\leftarrow \basis{B}}=\begin{bmatrix}0 & 1 & 0 & \cdots & 0 \\ 0 & 0 & 1 & \cdots & 0 \\ \vdots &\ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & 1 \\ 0 & 0 & 0 & \cdots & 0\end{bmatrix}.
-	\end{equation}
+	Let $V$ be a nonzero finite-dimensional vector space, let $N\colon V\rightarrow V$ be nilpotent linear, let $v_0\in V$ be nonzero, and let $r\in \N$ be the smallest natural number such that $N^r(v_0)=0$.  Then,
+	\begin{enumerate}
+		\item \label{thm4.6.17(i)}
+		\begin{equation}
+			N^{\infty}(v_0)\ceqq \{ N^{r-1}(v_0),\ldots ,N(v_0),v_0\}
+		\end{equation}
+		is linearly-independent;
+		\item \label{thm4.6.17(ii)}
+		\begin{equation}
+			\Span (N^{\infty}(v_0))
+		\end{equation}
+		is $N$-indecomposable;
+		\item \label{thm4.6.17(iii)}
+		\begin{equation}
+			\Span (N^{\infty}(v_0))
+		\end{equation}
+		is maximal $N$-indecomposable if $v_0\in V$ is $N$-maximal; and
+		\item \label{thm4.6.17(iv)}if $V$ is $N$-indecomposable and $v_0\in V$ is $N$-maximal, then $N^{\infty}(v_0)$ is a basis of $V$ that has the property that
+		\begin{equation}\label{eqn4.6.17}
+			\coordinates{N}{N^{\infty}(v_0)\leftarrow N^{\infty}(v_0)}=\begin{bmatrix}0 & 1 & 0 & \cdots & 0 \\ 0 & 0 & 1 & \cdots & 0 \\ \vdots &\ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & 1 \\ 0 & 0 & 0 & \cdots & 0\end{bmatrix}.
+		\end{equation}
+	\end{enumerate}
 	\begin{rmk}
-		Note that (\cref{prp4.5.17}) we can always write $V$ as a direct-sum of finitely many $N$-indecomposable submodules, and so in the general case (when $V$ is not necessarily indecomposable), $\coordinates{N}{\basis{B}\leftarrow \basis{B}}$ will be a direct-sum of matrices of the above form.
+		Intuitively, one can think of this as follows.  Starting with $v_0$, if you want something that is $N$-invariant, that something had better contain $N(v_0)$, $N^2(v_0)$, and so on.  This gives you $N^{\infty}(v_0)$.  If you then want that something to be a subspace, you had better taken the span to obtain $\Span (N^{\infty}(v_0))$.  In turns out that this is $N$-indecomposable, and furthermore, is maximal if $v_0$ is $N$-maximal.
+	\end{rmk}
+	\begin{rmk}
+		Note that (\cref{prp4.5.17}) we can always write $V$ as a direct-sum of finitely many $N$-indecomposable submodules, and so in the general case (when $V$ is not necessarily indecomposable), we can use this result to obtain a basis $\basis{B}$ of $V$ that has the property that $\coordinates{N}{\basis{B}\leftarrow \basis{B}}$ will be a direct-sum of matrices of the above form.
 	\end{rmk}
 	\begin{proof}
-		\Step{Define the basis}
-		Suppose that $V$ is $N$-indecomposable.  As $N$ is nilpotent, there is a smallest positive integer $m\in \Z ^+$ such that $N^m=0$.  It must then be the case that $N^{m-1}\neq 0$, and so there is some $v\in V$ such that $N^{m-1}(v_0)\neq 0$.  Define
+		\cref{thm4.6.17(i)} Suppose that
 		\begin{equation}
-			\basis{B}\ceqq \{ N^{m-1}(v_0),\ldots ,N(v_0),v_0\} .
+		0=\alpha _0\cdot v_0+\cdots +\alpha _{r-1}\cdot N^{r-1}(v_0).
 		\end{equation}
-		As $N(N^{m-1}(v_0))=0$ and $N(N^k(v_0))=N^{k+1}(v_0)$ for $0\leq k<m-1$, \eqref{eqn4.6.17} will follow if we can show that $\basis{B}$ is a basis.
+		Applying $N^{r-1}$ to this equation, we obtain $0=\alpha _0\cdot N^{r-1}(v_0)=0$, and hence $\alpha _0$.  Applying $N^{r-2}$ in the same way, we find $\alpha _1$.  Proceeding inductively, we eventually find that every $\alpha _k=0$, establishing linear-independence.
 		
-		\Step{Check linear-independence}
-		Suppose that
-		\begin{equation}
-			0=\alpha _0\cdot v_0+\cdots +\alpha _{m-1}\cdot N^{m-1}(v_0).
+		\blni
+		\cref{thm4.6.17(ii)} Let $U,W\subseteq \Span (N^{\infty}(v_0))$ be $N$-invariant subspaces such that $\Span (N^{\infty}(v_0))=U\oplus W$.  Either $U$ or $W$ must contain some vector $v$ for which $N^{r-1}(v)\neq 0$.  Without loss of generality, suppose $U$ contains such a vector $v\in U$.  Writing
+		\begin{equation}\label{eqn4.4.139}
+			v=\alpha _0\cdot v_0+\cdots +\alpha _{r-1}\cdot N^{r-1}(v_0),
 		\end{equation}
-		Applying $N^{m-1}$ to this equation, we obtain $0=\alpha _0\cdot N^{m-1}(v_0)=0$, and hence $\alpha _0$.  Applying $N^{m-2}$ in the same way, we find $\alpha _1$.  Proceeding inductively, we eventually find that every $\alpha _k=0$, establishing linear-independence.
+		we see that $\alpha _0\neq 0$ (otherwise $N^{r-1}(v)=0$).  By $N$-invariance, we must have that
+		\begin{equation}
+			\alpha _0\cdot N^{r-1}(v_0)=N^{r-1}(v)\in U,
+		\end{equation}
+		and so as $\alpha _0\neq 0$, $N^{r-1}(v_0)\in U$.  It follows that
+		\begin{equation}
+			v-\alpha _{r-1}\cdot N^{r-1}(v_0)=\alpha _0\cdot v_0+\cdots +\alpha _{r-2}\cdot N^{r-2}(v_0)\in U.
+		\end{equation}
+		Continuing this process inductively, eventually we obtain that all terms in \eqref{eqn4.4.139} with nonzero coefficients are elements of $U$, and so in particular $v_0\in U$.  But then $U=\Span (N^{\infty}(v_0))$, and so $\Span (N^{\infty}(v_0))$ is indecomposable.
+		
+		
+		\blni
+		\cref{thm4.6.17(iii)} Suppose that $v_0\in V$ is $N$-maximal.  Let $W\supseteq \Span (N^{\infty}(v_0))$ be $N$-indecomposable.  We wish to show that $W=\Span (N^{\infty}(v_0))$.  To do this, we proceed by induction.
 		
 		\Step{Start the proof of spanning with induction}
-		As for spanning, we proceed by induction on $m$.  That is, we prove the statement
+		The statement we prove by induction (on $\Rank (N)$) is as follows.
 		\begin{displayquote}
-			If $N$ is a nilpotent operator on an $N$-indecomposable finite-dimensional vector space $V$ where $m\in \Z ^+$ is the smallest positive integer such that $N^m=0$ and $v\in V$ is such that $N^{m-1}(v_0)\neq 0$, then $\{ N^{m-1}(v_0),\ldots ,v_0\}$ spans $V$.
+			If $N$ is a nilpotent linear operator on a finite-dimensional vector space $V$ and $v_0\in V$ is $N$-maximal, then $\{ N^{\Rank (N)-1}(v_0),\ldots ,v_0\}$ spans $V$.
 		\end{displayquote}
-		First take $m=1$, so that $N=0$.  In this case, every subspace is $N$-invariant, and so indecomposability forces $\dim (V)=1$, so that indeed $V=\Span (v_0)$.
+		First take $\Rank (N)\eqqc r=1$, so that $N=0$.  In this case, every subspace is $N$-invariant, and so indecomposability forces $\dim (V)=1$, so that indeed $V=\Span (v_0)$.
 		
-		Now suppose the result is true for $m-1$.  If $m$ is the smallest positive integer such that $N^m=0$ on $V$, then $m-1$ is the smallest positive integer such that $N^{m-1}=0$ on $\Ima (N)$.  Furthermore, $N(v_0)\in \Ima (N)$ is such that $N^{(m-1)-1}(N(v_0))=N^{m-1}(v_0)\neq 0$.  Thus, if we can show that $\Ima (N)$ is indecomposable still, then the induction hypothesis will gives us that $\Ima (N)=\Span (N^{m-1}(v_0),\ldots ,N(v_0))$.
+		Now suppose the result is true for $r-1$.  If $r$ is the smallest positive integer such that $N^m=0$ on $V$, then $r-1$ is the smallest positive integer such that $N^{r-1}=0$ on $\Ima (N)$.  Furthermore, $N(v_0)\in \Ima (N)$ is such that $N^{(r-1)-1}(N(v_0))=N^{r-1}(v_0)\neq 0$.  Thus, if we can show that $\Ima (N)$ is indecomposable still, then the induction hypothesis will gives us that $\Ima (N)=\Span (N^{r-1}(v_0),\ldots ,N(v_0))$.
 		
 		\Step{Show that $\Ima (N)$ is indecomposable}[stp4.6.17.4]
 		So, let $U,W\subseteq \Ima (N)$ be subspaces and suppose that $\Ima (N)=U\oplus W$ with $U$ and $W$ $N$-invariant.  Then write $V=U\oplus W\oplus V'$ for some subspace $V'\subseteq V$ (by \cref{prp4.4.24}).  For every $v\in V'$, we may write
 		\begin{equation}\label{eqn4.4.132}
-			\begin{split}
-				N(v) & =\proj _U(N(v))+\proj _W(N(v)) \\
-				& =\footnote{$N$ commutes with the projections because the subspaces are invariant---see \cref{prp4.5.9}.}N(\proj _U(v))+N(\proj _W(v))\eqqc N(v_U)+N(v_W),
-			\end{split}
+		\begin{split}
+		N(v) & =\proj _U(N(v))+\proj _W(N(v)) \\
+		& =\footnote{$N$ commutes with the projections because the subspaces are invariant---see \cref{prp4.5.9}.}N(\proj _U(v))+N(\proj _W(v))\eqqc N(v_U)+N(v_W),
+		\end{split}
 		\end{equation}
 		where we have written $v_U\ceqq \proj _U(v)$ and $v_W\ceqq \proj _W(v)$.  Let $\basis{B}'$ be a basis for $V'$, and define
 		\begin{equation}
-			\breve{\basis{B}}\ceqq \{ b-b_U:b\in \basis{B}'\} 
+		\breve{\basis{B}}\ceqq \{ b-b_U:b\in \basis{B}'\} 
 		\end{equation}
 		and $\breve{V}\ceqq \Span (\breve{\basis{B}})$.  From \eqref{eqn4.4.132}, we see that $N(b-b_U)=N(b_W)\in W$, and so $W+\breve{V}$ is an invariant subspace.  Thus, if we can show $V=U\oplus W\oplus \breve{V}$, indecomposability will imply that either $U=0$ or $W\oplus \breve{V}=0$, so that either $U=0$ or $W=0$, as desired.
 		
 		So, suppose that $0=u+w+\breve{v}$ for $u\in U$, $w\in W$, and $\breve{v}\in \breve{V}$.  Write $\breve{v}=\alpha _1(b_1-[b_1]_U)+\cdots +\alpha _m(b_m-[b_m]_U)$, so that
 		\begin{equation}
-			0=\left( u-\sum _{k=1}^m\alpha _k[b_k]_U\right) +w+\sum _{k=1}^m\alpha _kb_k.
+		0=\left( u-\sum _{k=1}^m\alpha _k[b_k]_U\right) +w+\sum _{k=1}^r\alpha _kb_k.
 		\end{equation}
-		As $V=U\oplus W\oplus W'$, it follows that $\sum _{k=1}^m\alpha _kb_k=0$, whence each $\alpha _k=0$ by linear-independence, that $w=0$, and that $u=\sum _{k=1}^m\alpha _k[b_k]_U=0$.  By \cref{prp4.4.7}, it just remains to check that $V=U+W+\breve{V}$.
+		As $V=U\oplus W\oplus W'$, it follows that $\sum _{k=1}^r\alpha _kb_k=0$, whence each $\alpha _k=0$ by linear-independence, that $w=0$, and that $u=\sum _{k=1}^r\alpha _k[b_k]_U=0$.  By \cref{prp4.4.7}, it just remains to check that $V=U+W+\breve{V}$.
 		
-		So, let $v\in V$.  We may then write $v=u+w+v'$ for $u\in U$, $w\in W$, and $v'\in V'$.  Write $v'=\alpha _1b_1+\cdots +\alpha _mb_m$.  Then,
+		So, let $v\in V$.  We may then write $v=u+w+v'$ for $u\in U$, $w\in W$, and $v'\in V'$.  Write $v'=\alpha _1b_1+\cdots +\alpha _rb_r$.  Then,
 		\begin{equation}
-			v'=\left( u+\sum _{k=1}^m\alpha _k[b_k]_U\right) +w+\sum _{k=1}^m\alpha _k(b_k-[b_k]_U)\in U+W+\breve{V},
+		v'=\left( u+\sum _{k=1}^r\alpha _k[b_k]_U\right) +w+\sum _{k=1}^r\alpha _k(b_k-[b_k]_U)\in U+W+\breve{V},
 		\end{equation}
-		as desired.  Thus, $\Ima (T)$ is indecomposable, and hence $\Ima (N)=\Span (N^{m-1}(v_0),\ldots ,N(v_0))$.
+		as desired.  Thus, $\Ima (T)$ is indecomposable, and hence $\Ima (N)=\Span (N^{r-1}(v_0),\ldots ,N(v_0))$.
 		
 		\Step{Finish the proof of spanning}
-		Extend the linear-independent set $\basis{B}\ceqq \{ N^{m-1}(v_0),\ldots ,v_0\}$ to a basis $\basis{C}$ of $V$ such that $\basis{C}\supseteq \basis{B}$.  We wish to show that $\basis{C}=\basis{B}$.  So, let $c\in \basis{C}\setminus \basis{B}$.  As $N(c)\in \Ima (N)$, we can write
+		Extend the linear-independent set $\basis{B}\ceqq \{ N^{r-1}(v_0),\ldots ,v_0\}$ to a basis $\basis{C}$ of $V$ such that $\basis{C}\supseteq \basis{B}$.  We wish to show that $\basis{C}=\basis{B}$.  So, let $c\in \basis{C}\setminus \basis{B}$.  As $N(c)\in \Ima (N)$, we can write
 		\begin{equation}\label{eqn4.6.21}
-			\begin{split}
-				N(c)& =\alpha _1N(v_0)+\cdots +\alpha _{m-1}N^{m-1}(v_0) \\
-				& =N\left( \alpha _1v_0+\cdots +\alpha _{m-1}N^{m-2}(v_0)\right) .
-			\end{split}
+		\begin{split}
+		N(c)& =\alpha _1N(v_0)+\cdots +\alpha _{r-1}N^{r-1}(v_0) \\
+		& =N\left( \alpha _1v_0+\cdots +\alpha _{r-1}N^{r-2}(v_0)\right) .
+		\end{split}
 		\end{equation}
 		Now define
 		\begin{equation}\label{eqn4.6.22}
-			\breve{c}\ceqq c-\sum _{k=1}^{m-1}\alpha _kN^{k-1}(v_0)
+		\breve{c}\ceqq c-\sum _{k=1}^{r-1}\alpha _kN^{k-1}(v_0)
 		\end{equation}
 		as well as $\breve{\basis{A}}\ceqq \{ \breve{c}:c\in \basis{C}\setminus \basis{B}\}$.  \eqref{eqn4.6.21} implies that $N(\breve{c})=0$.  In particular, $\breve{V}\ceqq \Span (\breve{\basis{C}})$ is invariant.  Thus, if we can show that $V=\Span (\basis{B})\oplus \Span (\breve{\basis{A}})$, indecomposability will force $\Span (\breve{\basis{A}})=0$, hence $\breve{\basis{A}}=\emptyset$, hence $\basis{C}\setminus \basis{B}=\emptyset$, hence $\basis{C}=\basis{B}$, completing the proof.
 		
@@ -1348,6 +1394,9 @@ We thus know that nilpotent linear-transformations are essentially never diagona
 				Hint:  You might try an argument similar to the one we used to show that $V=U+W+\breve{V}$ in \cref{stp4.6.17.4}.
 			\end{rmk}
 		\end{exr}
+		
+		\blni
+		\cref{thm4.6.17(iv)} Suppose that $V$ is $N$-indecomposable and $v_0\in V$ is $N$-maximal.  By the previous part, $\Span (N^{\infty}(v_0))$ is maximal indecomposable, and so by maximality we have $V=\Span (N^{\infty}(v_0))$.  As we already knew it was linearly-independent (by \cref{thm4.6.17(i)}), it follows that $\Span (N^{\infty}(v_0))$ is a basis of $V$.  Finally, \eqref{eqn4.6.17} follows from the fact that $N(N^{r-1}(v_0))=0$ and $N(N^k(v_0))=N^{k+1}(v_0)$ for $0\leq k<r-1$.
 	\end{proof}
 \end{thm}
 
@@ -1503,7 +1552,7 @@ We also have a result analogous to \cref{thm4.2.17} that is useful for actually 
 	\begin{proof}
 		Suppose that $\lambda$ is an eigenvalue of $T$.  Define
 		\begin{equation}
-			W\ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{for some }m\in \N \text{.}\right\} =\bigcup _{m\in \N}\Ker ([T-\lambda ]^m).
+			W\ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{ for some }m\in \N \text{.}\right\} =\bigcup _{m\in \N}\Ker ([T-\lambda ]^m).
 		\end{equation}
 		\begin{exr}[breakable=false]{}{}
 			Check that $W$ is a subspace.
@@ -1557,6 +1606,22 @@ Related to the fact that we can write the generalized-eigenspace as a union in t
 		Note that $\Rank (v)\leq \dim (V)$ if $V$ is finite-dimensional by the previous result \cref{thm4.4.143}.
 	\end{rmk}
 \end{dfn}
+\begin{exm}{}{}
+	Define $D\colon C^{\infty}(\R )\rightarrow C^{\infty}(\R )$.  From \cref{exm4.2.17}, we know that every $\lambda \in \C$ is an eigenvalue with eigenspace given by $\Eig _{\lambda}=\Span (\e ^{\lambda x})$.  Let us now investigate the generalized-eigenspaces.
+	
+	Let $m\in \N$, $\lambda \in \C$, and $f\in C^{\infty}(\R )$.  Then, $f\in \Eig _{\lambda}^m$ iff
+	\begin{equation}
+		[D-\lambda ]^m(f)=0.
+	\end{equation}
+	A basis for the set of solutions to this differential equation is given by
+	\begin{equation}
+		\left\{ \e ^{\lambda x},x\e ^{\lambda x},\ldots ,x^{m-2}\e ^{\lambda x},x^{m-1}\e ^{\lambda x}\right\} ,\footnote{The existence and uniqueness theorem from ordinary differential equations implies that the set of solutions is an $m$-dimensional vector space.  To find a basis, it thus suffices to exhibit $m$ linearly-independent solutions.  After staring at it for awhile, you realize that functions of the form $x^k\e ^{\lambda x}$ do the job.  (Seriously, while you might have forgotten after it's become so familiar, ultimately even the solution $\e ^{\lambda x}$ is originally found by making an educated guess.)}
+	\end{equation}
+	and hence
+	\begin{equation}
+		\Eig _{\lambda}^m=\Span \left( \e ^{\lambda x},x\e ^{\lambda x},\ldots ,x^{m-2}\e ^{\lambda x},x^{m-1}\e ^{\lambda x}\right) .
+	\end{equation}
+\end{exm}
 \begin{prp}{Properties of higher rank eigenspaces}{prp4.4.154}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \K$ be an eigenvalue of $T$.  Then,
 	\begin{enumerate}
@@ -1609,72 +1674,7 @@ We are now essentially ready to put all the pieces together.
 
 \subsection{The Jordan Canonical Form Theorem}
 
-Okay, so that was a lie.  There is still one minor detail we need to address:  how do we know we have any eigenvalues at all!?  Indeed, we don't know that.  It's just not true.  We saw in \cref{exm4.3.7} an example of a linear-transformation that didn't have any eigenvalues.  Fortunately, there is a natural hypothesis would can impose on the ground division ring in order to guarantee we have eigenvalues, in which case (\cref{GeneralizedEigenspaceDecomposition}), not only do we have a single eigenvalue, but we have `enough' generalized-eigenvectors to generate the entire space.  To state this hypothesis, however, we're going to need to study polynomials in a bit more depth.
-
-\subsubsection{Polynomials and algebraic-closure}
-
-We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a polynomial, called the characteristic polynomial, of which all the eigenvalues are a root, and that essentially the reason that the matrix given in \cref{exm4.3.7} was diagonalizable over $\C$ but not over $\R$ was because the characteristic polynomial in this case had complex but not real roots.  This suggests that the property we want to impose on the ground division ring has something to do with roots of polynomials.  So, before anything else, let's be absolutely clear what we mean by the term ``root''.
-\begin{dfn}{Root}{Root}
-	Let $\K$ be a ring, let $p\in \K [x]$, and let $x_0\in \K$.  Then, $x_0$ is a \term{root}\index{Root} of $p$ iff $p(x_0)=0$.
-	\begin{rmk}
-		Write $p(x)=a_0+a_1x+\cdots +a_mx^m$.  Then,
-		\begin{equation}
-			p(x_0)\ceqq a_0+a_1x_0+\cdots +a_mx_0^m.
-		\end{equation}
-		Note that in general this is \emph{not} the same as $a_0+x_0a_1+\cdots +x_0^ma_m$.  For this reason, this is sometimes called a \term{right root} of $p$ for emphasis, though strictly speaking this is not necessary as one is only interested in right roots of elements of $\K [x]$.  Roots of elements of $[x]\K$\index[notation]{$[x]\K$},\footnote{I can't say I've ever actually seen this notation used, but what else could it possibly mean?} polynomials with coefficients written on the right, would then be called \term{left roots}.  
-	\end{rmk}
-	\begin{rmk}
-		Thus, the definition was probably exactly what you thought it would be, but we gave it just to be absolutely sure that noncommutativity didn't change the definition in any serious way.  Be warned, however:  though it didn't change the definition, it \emph{will} change the behavior of roots.  For example, we no longer have $[pq](x_0)=p(x_0)q(x_0)$, and so we can no longer conclude that $x_0$ is a root of $pq$ if it is a root of $p$.  (It will be true that $x_0$ is a root of $pq$ if it's a root of $q$, though hopefully this makes it clear we have to be more careful with our proof than you might have previously thought.)
-	\end{rmk}
-\end{dfn}
-\begin{exm}{A degree $2$ polynomial with infinitely many roots}{}
-	The polynomial $x^2+1$ has infinitely many roots in $\H$.\footnote{Of course, it has none in $\R$ and $2$ in $\C$.}
-	\begin{exr}[breakable=false]{}{}
-		Check this.
-	\end{exr}
-	\begin{exr}[breakable=false]{}{}
-		On the other hand, show that $x^2+1$ doesn't have \emph{any} central roots.
-	\end{exr}
-	\begin{rmk}
-		For fields, it is well-known (perhaps even to you) that a polynomial of degree $m$ can have at most $m$ roots.  Thus, this phenomenon is perhaps quite startling:  in what is arguably the simplest of all noncommutative division rings, we have a polynomial of degree $2$ with infinitely many roots!.\footnote{Of course, we can't do this with degree less than $2$.}  Instead, this classical result generalizes to the statement that the set of all roots of $p$ belong to at most $m$ \emph{conjugacy classes} in $D$.\footnote{You don't need to know what ``conjugacy class'' means.  This is just a comment for those that already know and those that are curious enough to look up the details.  By the way, this theorem has a name:  it's called the \emph{Gordon-Motzkin Theorem}\index{Gordon-Motzkin Theorem}.}  Furthermore, it \emph{is} true that either (i) there are infinitely many roots or (ii) the number of roots is less than $m$.  For example, even over the most noncommutative division rings, you can't find a degree $3$ polynomial with $6$ roots:  the only possibilities are $0$, $1$, $2$, $3$, and infinitely many roots.
-	\end{rmk}
-\end{exm}
-\begin{dfn}{Algebraically-closed}{AlgebraicallyClosed}
-	Let $\K$ be a ring.
-	\begin{enumerate}
-		\item $\K$ is \term{right algebraically-closed}\index{Right algebraically-closed} iff every nonconstant $p\in \K [x]$ has a root.
-		\item $\K$ is \term{left algebraically-closed}\index{Left algebraically-closed} iff every nonconstant $p\in [x]\K$ has a root.
-		\item $\K$ is \term{algebraically-closed}\index{Algebraically-closed} iff it is both right and left algebraically-closed.
-	\end{enumerate}
-	\begin{rmk}
-		The reason why this is \emph{right} algebraically-closed (and not left) is that the statement that $\alpha \in \K$ is a root of $p$ is equivalent to the statement that $p(x)=q(x)(x-\alpha )$ for some $q\in \K [x]$\footnote{This is \emph{not} in general equivalent to the statement that $p(x)=(x-\alpha )r(x)$ for some $r\in \K [x]$ if $\K$ is noncommutative.}---see the following result \cref{prp4.4.174}.  Similarly for left algebraically-closed.
-	\end{rmk}
-	\begin{rmk}
-		In the commutative case, the left and right versions are equivalent to one another.  Thus, in the commutative case, there is essentially just one condition, simply ``algebraically-closed''.
-	\end{rmk}
-\end{dfn}
-\begin{exm}{}{}
-	Note that $\C$ is algebraically-closed but $\R$ is not.  $\H$ is also (left and right) algebraically-closed.
-\end{exm}
-\begin{exr}{}{}
-	Can you find an example of a division ring that is left algebraically-closed but not right algebraically-closed (or vice versa)?
-\end{exr}
-\begin{prp}{}{prp4.4.174}
-	Let $\F$ be a division ring and let $x_0\in \F$.
-	\begin{enumerate}
-		\item $x_0$ is a root of $p\in \F[x]$ iff there is some $q\in \F [x]$ such that $p(x)=q(x)(x-x_0)$.
-		\item $x_0$ is a root of $p\in [x]\F$ iff there is some $q\in [x]\F$ such that $p(x)=(x-x_0)q(x)$.
-	\end{enumerate}
-	\begin{proof}
-		We leave this as an exercise.
-		\begin{exr}[breakable=false]{}{}
-			Prove the result.
-			\begin{rmk}
-				Hint:  See \cite[Proposition 16.2]{Lam}.
-			\end{rmk}
-		\end{exr}
-	\end{proof}
-\end{prp}
+Okay, so that was a lie.  There is still one minor detail we need to address:  how do we know we have any eigenvalues at all!?  Indeed, we don't know that.  Because it's just not true.  We saw in \cref{exm4.3.7} an example of a linear-transformation that didn't have any eigenvalues.  Fortunately, there is a natural hypothesis would can impose on the ground division ring in order to guarantee we have eigenvalues, in which case (\cref{GeneralizedEigenspaceDecomposition}), not only do we have a single eigenvalue, but we have `enough' generalized-eigenvectors to generate the entire space.  The hypothesis we speak of is that of being \emph{algebraically-closed}, a discussion of which, to a void yet another large interruption before we reach our goal (among other reasons), has been placed in the appendix (\cref{AlgebraicallyClosed}).
 
 \subsubsection{The theorem.  Finally.}
 
@@ -1682,7 +1682,7 @@ We're finally ready to state the Jordan Canonical Form Theorem, which, among oth
 \begin{dfn}{Jordan block}{JordanBlock}
 	Let $\K$ be a ring, let $\lambda \in \K$, and let $m\in \Z ^+$.  Then, the \term{Jordan block}\index{Jordan block}, $\Jord _{\lambda ,m}$\index[notation]{$\Jord _{\lambda ,m}$}, of size $m$ with eigenvalue $\lambda$ is the $m\times m$ matrix
 	\begin{equation}
-	\Jord _{\lambda ,m}\ceqq \begin{bmatrix}\lambda & 1 & 0 & \cdots & 0& 0 \\ 0 & \lambda & 1 & \cdots & 0 & 0 \\ \vdots & \ddots & \ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & \lambda & 1 \\ 0 & 0 & 0 & \cdots & 0 & \lambda\end{bmatrix}.
+	\Jord _{\lambda ,m}\ceqq \begin{bmatrix}\lambda & 1 & 0 & \cdots & 0& 0 \\ 0 & \lambda & 1 & \cdots & 0 & 0 \\ \vdots & \ddots & \ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \ddots & 1 & 0 \\ 0 & 0 & 0 & \cdots & \lambda & 1 \\ 0 & 0 & 0 & \cdots & 0 & \lambda\end{bmatrix}.
 	\end{equation}
 	\begin{rmk}
 		Note that this can be written as
@@ -1692,10 +1692,15 @@ We're finally ready to state the Jordan Canonical Form Theorem, which, among oth
 	\end{rmk}
 	where we have used the notation
 	\begin{equation}
-	N_m\ceqq \begin{bmatrix}0 & 1 & 0 & \cdots & 0 & 0 \\ 0 & 0 & 1 & \cdots & 0 & 0 \\ \vdots & \ddots & \ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & 0 & 1 \\ 0 & 0 & 0 & \cdots & 0 & 0\end{bmatrix}.
+	N_m\ceqq \begin{bmatrix}0 & 1 & 0 & \cdots & 0 & 0 \\ 0 & 0 & 1 & \cdots & 0 & 0 \\ \vdots & \ddots & \ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \ddots & 1 & 0 \\ 0 & 0 & 0 & \cdots & 0 & 1 \\ 0 & 0 & 0 & \cdots & 0 & 0\end{bmatrix}.
 	\end{equation}
 \end{dfn}
-And now, what is arguably the most important theorem in the entirety of the notes.
+\begin{exm}{}{}
+	\begin{equation}
+		\Jord _{-2,3}\coloneqq \begin{bmatrix}-2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -1\end{bmatrix}\text{ and } \Jord _{1,1}\coloneqq \begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}.
+	\end{equation}
+\end{exm}
+And now, what is arguably the most important theorem in the entirety of the notes.\footnote{After reading the statement, if things are still unclear, you might consider jumping to the end of the proof, after which comes some more explanation.}
 \begin{thm}{Jordan Canonical Form Theorem}{GeneralizedEigenspaceDecomposition}
 	Let $V$ be a finite-dimensional vector space over an algebraically-closed field $\F$, let $T\colon V\rightarrow V$ be linear, and denote the eigenvalues of $T$ by $\lambda _1,\ldots ,\lambda _m$.  Then,
 	\begin{enumerate}
@@ -1712,8 +1717,8 @@ And now, what is arguably the most important theorem in the entirety of the note
 		\begin{equation}\label{eqn4.4.175}
 			\coordinates{\lambda _k\id _{\Eig _{\lambda _k}^{\infty}}+N_k}{\basis{B}_k\leftarrow \basis{B}_k}
 		\end{equation}
-		is a direct-sum of Jordan blocks with eigenvalue $\lambda _k$;
-		\item \label{GeneralizedEigenspaceDecomposition(iv)}$\basis{B}\ceqq \basis{B}_1\cup \cdots \basis{B}_m$ is a basis for $V$ such that the coordinates
+		is a direct-sum of Jordan blocks with eigenvalue $\lambda _k$, in fact, $\basis{B}_k$ is the union of $N_k^{\infty}(v_0)\ceqq \{ v_0,N(v_0),\ldots ,N^{\Rank (N_k)-1}(v_0)\}$ as $v_0$ ranges over a chosen $N_k$-maximal from each $N$-indecomposable summand of $\Eig _{\lambda _k}^{\infty}$;
+		\item \label{GeneralizedEigenspaceDecomposition(iv)}$\basis{B}\ceqq \basis{B}_1\cup \cdots \cup \basis{B}_m$ is a basis for $V$ such that the coordinates
 		\begin{equation}\label{eqn4.4.176}
 			\coordinates{T}{\basis{B}\leftarrow \basis{B}}
 		\end{equation}
@@ -1724,7 +1729,7 @@ And now, what is arguably the most important theorem in the entirety of the note
 		\eqref{eqn4.4.173} is the \term{generalized-eigenspace decomposition}\index{Generalized-eigenspace decomposition} of $V$.
 	\end{rmk}
 	\begin{rmk}
-		The matrix in \eqref{eqn4.4.176} is the \term{Jordan Canonical Form}\index{Jordan Canonical Form} of $T$.  It is also called the \term{Jordan Normal Form}\index{Jordan Normal Form} of $T$, but I prefer ``Jordan Canonical Form'' for the simple reason that the word ``normal'' tends to be overused in mathematics.
+		The matrix in \eqref{eqn4.4.176} is the\footnote{``The'' is justified by the fact the the Jordan canonical form is essentially unique by \cref{GeneralizedEigenspaceDecomposition(iv)}.} \term{Jordan canonical form}\index{Jordan canonical form} of $T$.  It is also called the \term{Jordan normal form}\index{Jordan normal form} of $T$, but I prefer ``Jordan canonical form'' for the simple reason that the word ``normal'' tends to be overused in mathematics.  A basis in which the matrix of $T$ is in Jordan canonical form is called a \term{Jordan basis}\index{Jordan basis}.
 	\end{rmk}
 	\begin{rmk}
 		In short:
@@ -1737,10 +1742,13 @@ And now, what is arguably the most important theorem in the entirety of the note
 		 
 		\cref{GeneralizedEigenspaceDecomposition(iv)} says that these bases assemble together to form a basis for all of $V$ for which the matrix of $T$ is a direct-sum of the matrices of the previous part, and so in particular a direct-sum of Jordan blocks.
 		
-		\cref{GeneralizedEigenspaceDecomposition(v)} says that the Jordan Canonical Form of $T$ is essentially unique in the sense that, if you write $T$ as a direct-sum of Jordan blocks, the Jordan blocks appearing in that decomposition must be exactly the same as the ones you found before.
+		\cref{GeneralizedEigenspaceDecomposition(v)} says that the Jordan canonical form of $T$ is essentially unique in the sense that, if you write $T$ as a direct-sum of Jordan blocks, the Jordan blocks appearing in that decomposition must be exactly the same as the ones you found before.
 	\end{rmk}
 	\begin{rmk}
-		The reason for the asymmetry of the handedness in this statement is because $V$ is a \emph{left} $\F$-module.  Had we written scaling on the right so that $V$ were a right $\F$-module, then the hypothesis would instead be that $\F$ is \emph{left} algebraically-closed.
+		Note that a direct-sum of Jordan blocks of size $1$ is a diagonal matrix, and so, by uniqueness, a matrix is diagonalizable iff all the the Jordan blocks appearing it its Jordan canonical form are of size $1$, in which case the diagonalization is the same as its Jordan canonical form.  Thus, Jordan canonical form is indeed a strict generalization of diagonalization.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  For diagonalizable linear operators, any basis of eigenvectors will serve as a diagonalizing basis, the analogous result is \emph{not} true for Jordan canonical form.  That is, it is \emph{not} the case that $\coordinates{T}{\basis{B}}$ will be in Jordan canonical form for any basis of generalized-eigenvectors $\basis{B}$.  One has to be a bit more careful---this is explained in more detail in \cref{GeneralizedEigenspaceDecomposition(iii)} and again after the proof of this result.
 	\end{rmk}
 	\begin{rmk}
 		In particular, $T$ has at least one eigenvalue.
@@ -1755,7 +1763,7 @@ And now, what is arguably the most important theorem in the entirety of the note
 		\cref{GeneralizedEigenspaceDecomposition(i)} We proceed by (strong induction) on $\dim (V)$.  If $\dim (V)=0$, the statement is vacuously true.
 		
 		So, let $d\ceqq \dim (V)\in \Z ^+$ and suppose that the result is true whenever the dimension of the vector space is less than $d$.
-		\begin{lma}[break at=20cm/0pt]{}{}
+		\begin{lma}[break at=19cm/0pt]{}{}
 			Let $V$ be a finite-dimensional vector space over an algebraically-closed field and let $T\colon V\rightarrow V$ be linear.  Then, $T$ has an eigenvalue.
 			\begin{proof}
 				Let $v\in V$ be nonzero.
@@ -1856,5 +1864,164 @@ And now, what is arguably the most important theorem in the entirety of the note
 		
 		\blni
 		\cref{GeneralizedEigenspaceDecomposition(v)} Let $\basis{C}$ is another basis of $V$ that has the property that $\coordinates{T}{\basis{C}\leftarrow \basis{C}}$ is a direct-sum of Jordan blocks.  The eigenvalues of such a direct-sum are the same as the eigenvalues of $T$, and so the eigenvalues appearing among the Jordan blocks are the same for both the bases $\basis{B}$ and $\basis{C}$.  So, fix $\lambda \in \F$ an eigenvalue of $T$, and for the moment consider only the restriction $S\ceqq \restr{T}{\Eig _{\lambda}^{\infty}}\colon \Eig _{\lambda}^{\infty}$.  As $$\coordinates{T}{\basis{C}\leftarrow \basis{C}}$$ is a direct-sum of Jordan blocks, the elements of $\basis{C}$ are all generalized-eigenvectors, and so $\basis{C}_{\lambda}\ceqq \basis{C}\cap \Eig _{\lambda}^{\infty}$ is a basis for $\Eig _{\lambda}^{\infty}$.  Similarly for $\basis{B}_{\lambda}\ceqq \basis{B}\cap \Eig _{\lambda}^{\infty}$.  Thus, $\coordinates{S}{\basis{B}}$ and $\coordinates{S}{\basis{C}}$ are both direct-sums of Jordan blocks and we would like to prove that the size of the Jordan blocks appearing in this decomposition are the same (the eigenvalues are of course all equal to $\lambda$).  Let $m\in \Z ^+$ be the smallest positive integer such that $[S-\lambda ]^m=0$ (there is some such $m$ as we know $S-\lambda$ is nilpotent).  It follows that $m$ is the smallest positive integer such that $\coordinates{[S-\lambda ]}{\basis{B}}^m=0$ and also the smallest positive integer such that $\coordinates{[S-\lambda ]}{\basis{C}}^m=0$.  It follows that the largest Jordan block appearing in both of these matrices is size $m$.  Now, replace $S$ with $S-\Jord _{\lambda ,m}$ and apply the same logic again.  We find again that the largest Jordan blocks appearing in these decompositions have the same size.  Proceeding inductively, we see that they have the same Jordan blocks.
+	\end{proof}
+\end{thm}
+This theorem says a lot, all of which is important and useful, but the short and sweet version can be summed up as saying
+\begin{displayquote}
+	Every linear operator on a finite-dimensional vector space over an algebraically-closed field has a basis in which the associated matrix is a direct-sum of Jordan blocks.
+\end{displayquote}
+
+How this works can be understood in three key steps.  First, $V$ is a direct-sum of the generalized-eigenspaces:
+\begin{equation}
+	V=\Eig _{\lambda _1}^{\infty}\oplus \cdots \oplus \Eig _{\lambda _m}^{\infty}.
+\end{equation}
+Second, we break up each generalized-eigenspace into indecomposable summands (\cref{thm4.6.17}).  Finally, as $T-\lambda _k$ is nilpotent on the corresponding generalized-eigenspace, \cref{prp4.5.17}, whose statement (or part of it) we reproduce below for convenience, explains how $T-\lambda _k$ behaves on these indecomposable components.
+\begin{thm}{}{}
+	Let $V$ be a finite-dimensional vector space and let $N\colon V\rightarrow V$ be nilpotent linear.  Then, if $V$ is $N$-indecomposable,
+	\begin{equation}
+		\basis{B}\ceqq \{ v_0,N(v_0),\ldots ,N^{\dim (V)-1}(v_0)\}
+	\end{equation}
+	is a basis of $V$ for any $N$-maximal $v_0\in V$, that has the property that
+	\begin{equation}
+		\coordinates{N}{\basis{B}\leftarrow \basis{B}}=\begin{bmatrix}0 & 1 & 0 & \cdots & 0 \\ 0 & 0 & 1 & \cdots & 0 \\ \vdots &\ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & 1 \\ 0 & 0 & 0 & \cdots & 0\end{bmatrix}.
+	\end{equation}
+	\begin{proof}
+		This is a part of the conclusion of \cref{thm4.6.17}.
+	\end{proof}
+\end{thm}
+
+To give you an idea of what this means (don't worry---it's not hard), let's take a look at a couple examples of matrices in Jordan canonical form.
+\begin{exm}{}{}
+	\begin{equation}
+		\Jord _{3,2}\oplus \Jord _{4,1}\oplus \Jord _{-2,2}=\begin{bmatrix}3 & 1 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 & 0 \\ 0 & 0 & 4 & 0 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}
+	\end{equation}
+	is in Jordan canonical form.
+	
+	Similarly,
+	\begin{equation}
+		\Jord _{5,3}\oplus \Jord _{-3,2}=\begin{bmatrix}5 & 1 & 0 & 0 & 0 \\ 0 & 5 & 1 & 0 & 0 \\ 0 & 0 & 5 & 0 & 0 \\ 0 & 0 & 0 & -3 & 1 \\ 0 & 0 & 0 & 0 & -3\end{bmatrix}
+	\end{equation}
+	is in Jordan canonical form.
+\end{exm}
+\begin{exm}{}{}
+	Suppose I give you a linear operator $T$ on $\C ^4$ and I tell you that $T$ has a single eigenvalue $3$.  This theorem tells us that the Jordan canonical form of $T$ is going to be a direct-sum of Jordan blocks with eigenvalue $3$, and furthermore, the size of these Jordan blocks must sum to $4$.  Thus, this theorem tells you that the possible Jordan canonical forms of $T$ are as follows.
+	\begin{equation}
+	\begin{split}
+		& \begin{bmatrix}3 & 1 & 0 & 0 \\ 0 & 3 & 1 & 0 \\ 0 & 0 & 3 & 1 \\ 0 & 0 & 0 & 3\end{bmatrix},\ \begin{bmatrix}3 & 1 & 0 & 0 \\ 0 & 3 & 1 & 0 \\ 0 & 0 & 3 & 0 \\ 0 & 0 & 0 & 3\end{bmatrix} \\ & \begin{bmatrix}3 & 1 & 0 & 0 \\ 0 & 3 & 0 & 0 \\ 0 & 0 & 3 & 1 \\ 0 & 0 & 0 & 3\end{bmatrix},\ \begin{bmatrix}3 & 1 & 0 & 0 \\ 0 & 3 & 0 & 0 \\ 0 & 0 & 3 & 0 \\ 0 & 0 & 0 & 3\end{bmatrix} \\ & \begin{bmatrix}3 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 \\ 0 & 0 & 3 & 0 \\ 0 & 0 & 0 & 3\end{bmatrix}
+	\end{split}
+	\end{equation}
+	(These respectively, going across first, correspond to Jordan block sizes of $4=4$, $4=3+1$, $4=2+2$, $4=2+1+1$, and $4=1+1+1+1$.)
+	
+	With just a bit of extra information, you can determine which of these five possibilities it is.  For example, if $T-3=0$, then of course it must the last choice.  If $T-3\neq 0$ but $(T-3)^2=0$, then it must be the third or fourth choice, and you can distinguish between those two by looking at $\dim (\Eig _3)$.\footnote{While the dimension of the generalized-eigenspace is of course always $4$, we have $\dim (\Eig _3)=2$ for the third matrix and $\dim (\Eig _3)=3$ for the third matrix.}  If $(T-3)^2\neq 0$ but $(T-3)^3=0$, then it must be the second choice.  Finally, if $(T-3)^3\neq 0$, then it must be the first choice.
+\end{exm}
+
+\subsubsection{Similarity of linear operators}
+
+While we shall not really make use of the concept ourselves, as you continue in mathematics you will want to be able to determine when two linear operators are \emph{conjugate} or \emph{similar} to one another.  Jordan canonical form gives a characterization of when this is the same.
+\begin{dfn}{Similar (linear operators)}{Similar}
+	Let $V$ be a $\K$-module and let $S,T\colon V\rightarrow V$ be linear operators.  Then, $S$ and $T$ are \term{similar}\index{Simlar (linear operators)} iff the two $\K [x]$-module structures defined by $S$ and $T$ respectively are isomorphic.
+\end{dfn}
+Concretely, this means the following.
+\begin{prp}{}{}
+	Let $V$ be a $\K$-module and let $S,T\colon V\rightarrow V$ be linear operators.  Then, $S$ and $T$ are similar iff there is an invertible linear operator $P\colon V\rightarrow V$ such that
+	\begin{equation}
+		T=P\circ S\circ P^{-1}.
+	\end{equation}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+Another characterization of similarity that makes it more apparent what this concept have to do with Jordan canonical form is given by the following.
+\begin{prp}{}{}
+	Let $V$ be a finite-dimensional vector space and let $S,T\colon V\rightarrow V$ be linear operators.  Then, $S$ and $T$ are similar iff there are bases $\basis{B}$ and $\basis{C}$ of $V$ such that
+	\begin{equation}
+		\coordinates{S}{\basis{B}}=\coordinates{T}{\basis{C}}.
+	\end{equation}
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $S$ and $T$ are similar.  Then, there is an invertible linear operator $P\colon V\rightarrow V$ such that
+		\begin{equation}
+			T=P\circ S\circ P^{-1}.
+		\end{equation}
+		Let $\basis{B}$ be any basis of $V$ and define
+		\begin{equation}
+			\basis{C}\ceqq \{ P(b):b\in \basis{B}\} .
+		\end{equation}
+		\begin{exr}[breakable=false]{}{}
+			Check that $\basis{C}$ is a basis of $V$.
+		\end{exr}
+		Write $\basis{B}=\{ b_1,\ldots ,b_d\}$, so that $\basis{C}=\{ P(b_1),\ldots ,P(b_d)\}$.
+		
+		From the explicit expression given in the defining result of coordinates of linear-transformations (\cref{CoordinatesLinearTransformation}), we see that
+		\begin{equation}
+			\coordinates{P}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{P(b_1)}{\basis{C}} & \cdots & \coordinates{P(b_d)}{\basis{C}}\end{bmatrix}=\id _{d\times d}.
+		\end{equation}
+		Hence,
+		\begin{equation}
+			\coordinates{T}{\basis{C}}\ceqq \coordinates{T}{\basis{C}\leftarrow \basis{C}}=\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}}=\coordinates{S}{\basis{B}}.
+		\end{equation}
+		
+		\blni
+		$(\Leftarrow )$ Suppose there are bases $\basis{B}$ and $\basis{C}$ of $V$ such that
+		\begin{equation}
+		\coordinates{S}{\basis{B}}=\coordinates{T}{\basis{C}}.
+		\end{equation}
+		Write $\basis{B}=\{ b_1,\ldots ,b_d\}$ and $\basis{C}=\{ c_1,\ldots ,c_d\}$ (indexing in such a way that the above equality is true) and let $P\colon V\rightarrow V$ be the unique linear operator such that $P(b_k)=c_k$ for all $1\leq k\leq m$.
+		\begin{exr}[breakable=false]{}{}
+			Show that $P$ is invertible.
+		\end{exr}
+		By construction, we have that $\coordinates{P}{\basis{C}\leftarrow \basis{B}}=\id _{d\times d}$, and so
+		\begin{equation}
+			\coordinates{T}{\basis{C}\leftarrow \basis{C}}=\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}}=\coordinates{P\circ S\circ P^{-1}}{\basis{C}\leftarrow \basis{C}},
+		\end{equation}
+		and hence $T=P\circ S\circ P^{-1}$.
+	\end{proof}
+\end{prp}
+As mentioned before, Jordan canonical form gives a complete characterization of when linear operators are similar.
+\begin{thm}{}{}
+	Let $V$ be a finite-dimensional vector space over an algebraically-closed field and let $S,T\colon V\rightarrow V$ be linear-operators.  Then, $S$ and $T$ are similar iff they have the same Jordan canonical form.
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $S$ and $T$ are similar.  Then, there is an invertible linear operator $P\colon V\rightarrow V$ such that $T=P\circ S\circ P^{-1}$.  Let $\basis{B}$ be a basis for which $\coordinates{S}{\basis{B}}$ is in Jordan canonical form.  Define $\basis{C}\ceqq \{ P(b):b\in \basis{B}\}$.  Then,
+		\begin{equation}
+			\coordinates{T}{\basis{C}}=\coordinates{P\circ S\circ P^{-1}}{\basis{C}\leftarrow \basis{C}}=\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}}=\coordinates{S}{\basis{B}}.
+		\end{equation}
+		Thus, $S$ and $T$ have the same Jordan canonical form.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $S$ and $T$ have the same Jordan canonical form.  If $\basis{B}$ and $\basis{C}$ are bases of $S$ and $T$ respectively such that $\coordinates{S}{\basis{B}}$ and $\coordinates{T}{\basis{C}}$ are the Jordan canonical forms of $S$ and $T$ respectively, then by hypothesis we have that $\coordinates{S}{\basis{B}}=\coordinates{T}{\basis{C}}$, and so by the previous result $S$ and $T$ are similar.
+	\end{proof}
+\end{thm}
+
+\section{The Jordan-Chevalley Decomposition}
+
+The Jordan-Chevalley Decomposition is what I would consider a variant of the Jordan Canonical Form decomposition.  Essentially it says that we can write any linear operator $T$ as a sum
+\begin{equation}
+	T=D+N,
+\end{equation}
+where $D$ is ``diagonalizable''\footnote{In quotes because this may not literally be true.  Instead, what is true is that, if it does fail to be diagonalizable, it only does so because the ground field doesn't contain all the eigenvalues of $T$.} and $N$ is nilpotent.  For example,
+\begin{equation}
+	\Jord _{4,3}\ceqq \begin{bmatrix}4 & 1 & 0 \\ 0 & 4 & 1 \\ 0 & 0 & 4\end{bmatrix}=\begin{bmatrix}4 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 4\end{bmatrix}+\begin{bmatrix}0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0\end{bmatrix}
+\end{equation}
+is the Jordan-Chevalley decomposition of $\Jord _{4,3}$.  They underlying intuition is that, because, in a suitable basis, any linear operator $T$ is a direct-sum of Jordan blocks, we can adapt the trick we just used for $\Jord _{4,3}$ to write $T$ itself as a sum of a ``diagonalizable'' linear operator and a nilpotent one.
+
+The Jordan-Chevalley Decomposition has at least two advantages over the Jordan Canonical Form Theorem.  The first is that it requires weaker hypotheses.  For example, the Jordan-Chevalley Decomposition will work over $\R$ where the Jordan Canonical Form Theorem did not.  Secondly, the statement of the result is a bit `cleaner'.  In particular, you can state the result with no mention of bases or matrices.  The downside is that it's not quite as strong as the Jordan Canonical Form Theorem---all it tells you is that $N$ is nilpotent, whereas the Jordan Canonical Form Theorem says that you can choose a basis in which $N$ takes a particularly nice form.  Despite this, quite often one doesn't need this extra strength, and the Jordan-Chevalley Decomposition proves to be more convenient.
+
+Anyways, let's get to the result.
+\begin{thm}{Jordan-Chevalley Decomposition}{JordanChevalleyDecomposition}
+	Let $V$ be a finite-dimensional vector space over a perfect field and let $T\colon V\rightarrow V$ be linear.  Then, there are unique linear operators $D,N\colon V\rightarrow V$ such that
+	\begin{enumerate}
+		\item $T=D+N$;
+		\item $D$ is semisimple;
+		\item $N$ is nilpotent; and
+		\item $DN=ND$
+	\end{enumerate}
+	Furthermore, $D$ and $N$ are expressible as polynomial in $T$.
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
 	\end{proof}
 \end{thm}
