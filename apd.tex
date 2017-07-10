@@ -2471,60 +2471,6 @@ We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a
 		The reason to involve two rings ($\L$ and $\K$) instead of just one is because, for example, we would like to be able to say that $\im \in \C$ is a root of $x^2+1\in \R [x]$ even though $\im \notin \R$.
 	\end{rmk}
 \end{dfn}
-\begin{exm}{A degree $2$ polynomial with infinitely many roots}{}
-	The polynomial $x^2+1$ has infinitely many roots in $\H$.\footnote{Of course, it has none in $\R$ and $2$ in $\C$.}
-	\begin{exr}[breakable=false]{}{}
-		Check this.
-	\end{exr}
-	\begin{exr}[breakable=false]{}{}
-		On the other hand, show that $x^2+1$ doesn't have \emph{any} central roots.
-	\end{exr}
-	\begin{rmk}
-		For fields, it is well-known (perhaps even to you) that a polynomial of degree $m$ can have at most $m$ roots.  Thus, this phenomenon is perhaps quite startling:  in what is arguably the simplest of all noncommutative division rings, we have a polynomial of degree $2$ with infinitely many roots!\footnote{Of course, we can't do this with degree less than $2$.}  Instead, this classical result generalizes to the statement that the set of all roots of $p$ belong to at most $m$ \emph{conjugacy classes} in $D$.\footnote{You don't need to know what ``conjugacy class'' means.  This is just a comment for those that already know and those that are curious enough to look up the details.  By the way, this theorem has a name:  it's called the \emph{Gordon-Motzkin Theorem}\index{Gordon-Motzkin Theorem}.}  Furthermore, it \emph{is} true that either (i) there are infinitely many roots or (ii) the number of roots is less than $m$.  For example, even over the most noncommutative division rings, you can't find a degree $3$ polynomial with $6$ roots:  the only possibilities are $0$, $1$, $2$, $3$, and infinitely many roots.
-	\end{rmk}
-\end{exm}
-
-\subsection{Algebraic and integral}
-
-\begin{dfn}{Algebraically-closed}{AlgebraicallyClosed}
-	Let $\K$ be a ring.
-	\begin{enumerate}
-		\item $\K$ is \term{right algebraically-closed}\index{Right algebraically-closed} iff every nonconstant $p\in \K [x]$ has a right root in $\K$.
-		\item $\K$ is \term{left algebraically-closed}\index{Left algebraically-closed} iff every nonconstant $p\in [x]\K$ has a left root in $\K$.
-		\item $\K$ is \term{algebraically-closed}\index{Algebraically-closed} iff every nonconstant $\K [x]\ni p\in [x]\K$ has a root.
-	\end{enumerate}
-	\begin{rmk}
-		The reason why this is \emph{right} algebraically-closed (and not left) is that the statement that $\alpha \in \K$ is a root of $p$ is equivalent to the statement that $p(x)=q(x)(x-\alpha )$ for some $q\in \K [x]$\footnote{This is \emph{not} in general equivalent to the statement that $p(x)=(x-\alpha )r(x)$ for some $r\in \K [x]$ if $\K$ is noncommutative.}---see the following result \cref{prp4.4.174}.  Similarly for left algebraically-closed.
-	\end{rmk}
-	\begin{rmk}
-		Warning:  $\K$ being (two-sided) algebraically-closed is \emph{not} the same as every nonconstant polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) algebraically-closed means that it is both left algebraically-closed and right algebraically-closed.  Thus, every nonconstant polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
-	\end{rmk}
-\end{dfn}
-There is a related term.
-\begin{dfn}{Integrally-closed}{IntegrallyClosed}
-	Let $\K$ be a ring.
-	\begin{enumerate}
-		\item $\K$ is \term{right integrally-closed}\index{Right integrally-closed} iff every nonconstant monic $p\in \K [x]$ has a right root in $\K$.
-		\item $\K$ is \term{left algebraically-closed}\index{Left algebraically-closed} iff every nonconstant monic $p\in [x]\K$ has a left root in $\K$.
-	\end{enumerate}
-	\begin{rmk}
-		You should see \cref{exmC.2.20} to perhaps better understand the difference between the integrally-closed and algebraically-closed.
-		
-		For me anyways, algebraically-closed is the more intuitive of the two, but this is perhaps just because I was taught it much earlier.  One reason for the introduction of ``integrally-closed'' when one already has the notion of ``algebraically-closed'' is that the former is in general more well-behaved than the latter.  For example, integral elements form a ring (\cref{RelativeIntegralClosure}) whereas the algebraic elements do not necessarily (\cref{exmC.2.24}).
-	\end{rmk}
-	\begin{rmk}
-		Note that in the common case of interest where $\K$ is a field, the notions of ``integral'' and ``algebraic'' are equivalent---see \cref{prpC.2.18}.
-	\end{rmk}
-	\begin{rmk}
-		Warning:  $\K$ being (two-sided) integrally-closed is \emph{not} the same as every nonconstant monic polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) integrally-closed means that it is both left integrally-closed and right integrally-closed.  Thus, every nonconstant monic polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
-	\end{rmk}
-\end{dfn}
-\begin{exm}{}{}
-	Note that $\C$ is algebraically-closed but $\R$ is not.  $\H$ is also (left and right) algebraically-closed.
-\end{exm}
-\begin{exr}{}{}
-	Can you find an example of a division ring that is left algebraically-closed but not right algebraically-closed (or vice versa)?
-\end{exr}
 \begin{prp}{}{prp4.4.174}
 	Let $\F$ be a division ring and let $x_0\in \F$.
 	\begin{enumerate}
@@ -2541,7 +2487,111 @@ There is a related term.
 		\end{exr}
 	\end{proof}
 \end{prp}
+\begin{exm}{A degree $2$ polynomial with infinitely many roots}{}
+	The polynomial $x^2+1$ has infinitely many roots in $\H$.\footnote{Of course, it has none in $\R$ and $2$ in $\C$.}
+	\begin{exr}[breakable=false]{}{}
+		Check this.
+	\end{exr}
+	\begin{exr}[breakable=false]{}{}
+		On the other hand, show that $x^2+1$ doesn't have \emph{any} central roots.
+	\end{exr}
+	\begin{rmk}
+		For fields, it is well-known (perhaps even to you) that a polynomial of degree $m$ can have at most $m$ roots.  Thus, this phenomenon is perhaps quite startling:  in what is arguably the simplest of all noncommutative division rings, we have a polynomial of degree $2$ with infinitely many roots!\footnote{Of course, we can't do this with degree less than $2$.}  Instead, this classical result generalizes to the statement that the set of all roots of $p$ belong to at most $m$ \emph{conjugacy classes} in $D$.\footnote{You don't need to know what ``conjugacy class'' means.  This is just a comment for those that already know and those that are curious enough to look up the details.  By the way, this theorem has a name:  it's called the \emph{Gordon-Motzkin Theorem}\index{Gordon-Motzkin Theorem}.}  Furthermore, it \emph{is} true that either (i) there are infinitely many roots or (ii) the number of roots is less than $m$.  For example, even over the most noncommutative division rings, you can't find a degree $3$ polynomial with $6$ roots:  the only possibilities are $0$, $1$, $2$, $3$, and infinitely many roots.
+	\end{rmk}
+\end{exm}
 
+\subsection{Algebraic and integral}
+
+\begin{dfn}{Algebraically-closed}{AlgebraicallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{algebraically-closed}\index{Algebraically-closed} iff every nonconstant polynomial with coefficients in $\K$ can be written as a product of linear factors.
+\end{dfn}
+\begin{dfn}{Integrally-closed}{IntegrallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{integrally-closed}\index{Integrally-closed} iff every nonconstant monic polynomial with coefficients in $\K$ can be written as a product of monic linear factors.
+\end{dfn}
+\begin{dfn}{Weakly algebraically-closed}{WeaklyAlgebraicallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{right (resp.~left, resp.~two-sided) weakly algebraically-closed}\index{Weakly algebraically-closed} iff every nonconstant $p\in \K [x]$ has a right (resp.~left, resp.~two-sided) in $\K$.
+	\begin{rmk}
+		The reason why this is \emph{right} weakly algebraically-closed (and not left) is that the statement that $\alpha \in \K$ is a root of $p$ is equivalent to the statement that $p(x)=q(x)(x-\alpha )$ for some $q\in \K [x]$\footnote{This is \emph{not} in general equivalent to the statement that $p(x)=(x-\alpha )r(x)$ for some $r\in \K [x]$ if $\K$ is noncommutative.}---see the following result \cref{prp4.4.174}.  Similarly for left weakly algebraically-closed.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  $\K$ being (two-sided) algebraically-closed is \emph{not} the same as every nonconstant polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) algebraically-closed means that it is both left algebraically-closed and right algebraically-closed.  Thus, every nonconstant polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
+	\end{rmk}
+	\begin{rmk}
+		Of course, algebraically-closed implies weakly algebraically-closed.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Weakly integrally-closed}{WeaklyIntegrallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{right (resp.~left, resp.~two-sided) integrally-closed}\index{Weakly integrally-closed} iff every nonconstant monic $p\in \K [x]$ has a right (resp.~left, resp.~two-sided) root in $\K$.
+	\begin{rmk}
+		Warning:  Don't confuse this with the term ``integrally-closed-domain''!\footnote{This means that it is an integral domain that is integrally-closed in its field of fractions, as opposed to just ``absolutely'' integrally-closed, not relative to another ring.}
+	\end{rmk}
+	\begin{rmk}
+		You should see \cref{exmC.2.20} to perhaps better understand the difference between the integrally-closed and algebraically-closed.
+		
+		For me anyways, algebraically-closed is the more intuitive of the two, but this is perhaps just because I was taught it much earlier.  One reason for the introduction of ``integrally-closed'' when one already has the notion of ``algebraically-closed'' is that the former is in general more well-behaved than the latter.  For example, integral elements form a ring (\cref{RelativeIntegralClosure}) whereas the algebraic elements do not necessarily (\cref{exmC.2.24}).
+	\end{rmk}
+	\begin{rmk}
+		Note that in the common case of interest where $\K$ is a field, the notions of ``integral'' and ``algebraic'' are equivalent---see \cref{prpC.2.18}.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  $\K$ being (two-sided) integrally-closed is \emph{not} the same as every nonconstant monic polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) integrally-closed means that it is both left integrally-closed and right integrally-closed.  Thus, every nonconstant monic polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
+	\end{rmk}
+	\begin{rmk}
+		Of course, integrally-closed implies weakly integrally-closed.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{prpC.2.19}
+	Let $\K$ be a ring.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item $\K$ is integrally-closed.
+		\item $\K$ is right weakly integrally-closed.
+		\item $\K$ is left weakly integrally-closed.
+		\item $\K$ is two-sided weakly integrally-closed.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  The analogous result for ``algebraic'' should be false, though it is true if $\K$ is a field---see \cref{prpC.2.20}.
+	\end{rmk}
+	\begin{rmk}
+		Hence, we need only use the term ``integrally-closed''.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  \href{http://stacks.math.columbia.edu/tag/0DCK}{The Stacks Project}.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{prpC.2.20}
+	Let $\F$ be a field.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item $\F$ is algebraically-closed.
+		\item $\F$ is right weakly algebraically-closed.
+		\item $\F$ is left weakly algebraically-closed.
+		\item $\F$ is two-sided weakly algebraically-closed.
+		\item $\F$ is integrally-closed.
+		\item $\F$ is right weakly integrally-closed.
+		\item $\F$ is left weakly integrally-closed.
+		\item $\F$ is two-sided weakly integrally-closed.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exr}{}{}
+	Can you find a counter-example showing that \cref{prpC.2.19} fails when you replace ``integrally'' with ``algebraically''?
+\end{exr}
+\begin{exm}{}{}
+	Note that $\C$ is algebraically-closed but $\R$ is not.  $\H$ is also (left and right) algebraically-closed.
+\end{exm}
+\begin{exr}{}{}
+	Can you find an example of a division ring that is left algebraically-closed but not right algebraically-closed (or vice versa)?
+\end{exr}
 Of course, not everything is algebraically-closed or even integrally-closed (for example, the real numbers).  As being algebraically-closed is such a useful property, it is of interest to `enlarge' a given field to something that is algebraically-closed.  The basic idea is to take your field and just `throw in' all solutions to polynomial equations, not unlike one obtains $\Q$ from $\Z$ by ``throwing in'' all solutions to equations of the form $mx=n$.  The field obtained in this way is the \emph{algebraic-closure} of the original field.  Before we make this intuition precise, however, we must first discuss some preliminaries.
 \begin{dfn}{Algebraic element}{AlgebraicElement}
 	Let $\L$ be a $\K$-algebra and let $\alpha \in \L$.  Then, $\alpha$ is \term{right (resp.~left) algebraic}\index{Algebraic element} over $\K$ iff there is a nonconstant polynomial $p\in \K [x]$ such that $\alpha$ is a right (resp.~left) root of $p$.
@@ -2562,7 +2612,7 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 	
 	$\uppi \in \R$ is not algebraic over $\Q$.\footnote{For example, by the Lindemann-Weierstrass Theorem, if you enjoy swatting your flies with sledgehammers (I know I do).}
 \end{exm}
-\begin{prp}{}{prpC.2.18}
+\begin{prp}{Integral=algebraic over division rings}{prpC.2.18}
 	Let $\F$ be a division ring, let $A$ be an $\F$-algebra, and let $x\in A$.  Then, $x$ is right (resp.~left, resp.~two-sided) integral over $\F$ iff it is right (resp.~left, resp.~two-sided) algebraic over $\F$.
 	\begin{rmk}
 		Similarly, a division ring is right (resp.~left, resp.~two-sided) integrally-closed iff it is right (resp.~left, resp.~two-sided) algebraically-closed.
@@ -2586,7 +2636,7 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 		If $\L$ is an extension of $\K$, then people will say that ``$L$ is a \term{right (resp.~left, resp.~two-sided) algebraic extension}\index{Algebraic extension} of $\K$'' instead of that ``$\L$ is a right (resp.~left, resp.~two-sided) algebraic $\K$-algebra''.
 	\end{rmk}
 \end{dfn}
-\begin{dfn}{Integral $\K$-algebra}{AlgebraicKAlgebra}
+\begin{dfn}{Integral $\K$-algebra}{IntegralKAlgebra}
 	Let $\L$ be a $\K$-algebra.  Then, $\L$ is \term{right (resp.~left, resp.~two-sided) integral}\index{Integral $\K$-algebra} iff every element of $\L$ is right (resp.~left, resp.~two-sided) integral over $\K$.
 	\begin{rmk}
 		We may instead say that $\L$ is \term{integral} over $\K$.
@@ -2640,9 +2690,12 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 	\end{exr}
 \end{exm}
 \begin{thm}{Rings have algebraically-closed algebras}{thmC.2.25}
-	Let $\K$ be a (commutative) ring.  Then, there exists a (commutative) algebraically-closed $\K$-algebra $A$.
+	Let $\K$ be a (commutative) ring.  Then, there exists a (commutative) weakly algebraically-closed extension $A$ of $\K$.
 	
-	Furthermore, if $\K$ is field, then $A$ can be taken to be an extension of $\K$ that is itself a field.
+	Furthermore, if $\K$ is field, then $A$ itself taken to be a field.
+	\begin{rmk}
+		Note that $A$ is integrally-closed by \cref{prpC.2.19}.
+	\end{rmk}
 	\begin{proof}
 		\Step{Introduce notation}
 		Define
@@ -2672,20 +2725,26 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 		\Step{Repeat this process inductively}
 		Performing the same construction, we obtain a $\K _1$-algebra $\K _2$ that contains a root of every nonconstant $f\in \K _1[x]$.  Note that $\K _2$ can also be considered a $\K$-algebra via the composite structure map $\K \rightarrow \K _1\rightarrow \K _2$.  Proceeding inductively, we obtain a sequence of $\K$-algebra $\{ \K _m:m\in \N \}$ such that $\K _{m+1}$ contains roots of every nonconstant $f\in \K [x]$.\footnote{Take $\K _0\ceqq \K$.}
 		
-		\Step{Define the algebraically-closed $\K$-algebra}
-		Now define\footnote{This definition doesn't literally make sense as we don't literally have that $\K _m\subsetq \K _{m+1}$.  Instead, what is actually meant is the disjoint union of the $\K _m$s modulo the equivalence relation that identifies elements in $\K _m$ with their images in $\K _{m+1}$.}
+		\Step{Define the weakly algebraically-closed $\K$-algebra}
+		Now define\footnote{This definition doesn't literally make sense as we don't literally have that $\K _m\subseteq \K _{m+1}$.  Instead, what is actually meant is the disjoint union of the $\K _m$s modulo the equivalence relation that identifies elements in $\K _m$ with their images in $\K _{m+1}$.}
 		\begin{equation}
 			\K _{\infty}\ceqq \bigcup _{m\in \N}\K _m.
 		\end{equation}
 		
-		\Step{Check that $\K _{\infty}$ is indeed algebraically-closed}
+		\Step{Check that $\K _{\infty}$ is indeed weakly algebraically-closed}
 		We claim that $\K _{\infty}$ is algebraically-closed.  So, let $f\in \K _{\infty}[x]$ be nonconstant.  Then, as $f$ has finitely many terms, there is some $m\in \N$ such that $f\in \K _m[x]$.  But we know that $f$ then has a root in $\K _{m+1}$, and hence in $\K _{\infty}$.  Thus, $\K _{\infty}$ is algebraically-closed.
 		
 		\Step{Check that $\K _{\infty}$ is commutative if $\K$ is}
 		Looking at the above proof, we see that $\L$ is commutative if $\K$ is, and hence $\K _1$ is commutative if $\K$ is.  Thus, each $\K _m$ is commutative if $\K$ is, and hence so is $\K _{\infty}$.
 		
+		\Step{Check that $\K _{\infty}$ is an extension}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Finish this step.
+		\end{exr}
+		
 		\Step{Check the extra properties if $\K$ is a field}
-		If $\K$ is a field, then either the kernel of the map $\K \rightarrow \K _{\infty}$ is $0$ or all of $\K$.  To show that the kernel can't be all of $\K$, it suffices to show that $1\in \K$ does not get mapped to $0$.  Using induction, it suffices to show that $1\in \K$ doesn't get mapped to $0\in \K _1$.  However, this would be the case iff $1\in I$, and so we could write
+		Suppose that $\K$ is a field.  We show in this case that $1\notin I$.  If it were, we could write
 		\begin{equation}
 			g_1f_1(x_{f_1})+\cdots +g_mf_m(x_{f_m})=1
 		\end{equation}
@@ -2693,7 +2752,7 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 		\begin{equation}\label{eqnC.2.34}
 			g_1(x_1,\ldots ,x_n)f_1(x_1)+\cdots +g_m(x_1,\ldots ,x_n)f_m(x_m)=1.
 		\end{equation}
-		Define $A_1\ceqq \K [x]/I_1$, where $I_1\ceqq \{ af_1(x)b:a,b\in \K \}$, the ideal ``generated'' by $f_1$.  $A_1$ is a $\K$-algebra that contains a root of $f_1$ (namely $x+I_1\in A_1$), and furthermore, the image of $1\in \K$ under the quotient map $\K \rightarrow A_1$ is nonzero, for if it were, we would have $1=af_1(x)b$ for some $a,b\in \K$, in which case $f_1(x)$ would be a constant polynomial, a contradiction.  We may now define $A_2\ceqq A_1[x]/I_2$, where $I_2\ceqq \{ af_2(x)b:a,b\in \K _1\}$.  As before, $A_2$ is a $\K$-algebra that now contains roots of both $f_1$ and $f_2$, and furthermore, the image of $1\in \K$ under the map $\K \rightarrow A_2$ is nonzero.  Proceeding inductively, we obtain a $\K$-algebra $A_m$ that contains roots of $f_1,\ldots ,f_m$ and $1\neq 0$ in $A_m$.  Plugging in these roots for $x_1,\ldots ,x_m$ respectively (and anything for the remaining variables), \eqref{eqnC.2.34} reduces to $0=1$ in $A_m$:  a contradiction.\footnote{If $\K$ were noncommutative, then these terms wouldn't just be of the form $g_kf_k$, but rather, $g_kf_kh_k$, and now, the result we get by plugging in the root $\alpha _k$ is not necessarily equal to $g_k(\alpha _k)f_k(\alpha _k)h_k(\alpha _k)$.  This seems to break the proof for $\K$ noncommutative.}  This completes the proof that the kernel of $\K \rightarrow \K _{\infty}$ can't be all of $\K$.  It must therefore by $0$, and hence $\K _{\infty}$ is an extension of $\K$.
+		Define $A_1\ceqq \K [x]/I_1$, where $I_1\ceqq \{ af_1(x)b:a,b\in \K \}$, the ideal ``generated'' by $f_1$.  $A_1$ is a $\K$-algebra that contains a root of $f_1$ (namely $x+I_1\in A_1$), and furthermore, the image of $1\in \K$ under the quotient map $\K \rightarrow A_1$ is nonzero, for if it were, we would have $1=af_1(x)b$ for some $a,b\in \K$, in which case $f_1(x)$ would be a constant polynomial, a contradiction.  We may now define $A_2\ceqq A_1[x]/I_2$, where $I_2\ceqq \{ af_2(x)b:a,b\in \K _1\}$.  As before, $A_2$ is a $\K$-algebra that now contains roots of both $f_1$ and $f_2$, and furthermore, the image of $1\in \K$ under the map $\K \rightarrow A_2$ is nonzero.  Proceeding inductively, we obtain a $\K$-algebra $A_m$ that contains roots of $f_1,\ldots ,f_m$ and $1\neq 0$ in $A_m$.  Plugging in these roots for $x_1,\ldots ,x_m$ respectively (and anything for the remaining variables), \eqref{eqnC.2.34} reduces to $0=1$ in $A_m$:  a contradiction.\footnote{If $\K$ were noncommutative, then these terms wouldn't just be of the form $g_kf_k$, but rather, $g_kf_kh_k$, and now, the result we get by plugging in the root $\alpha _k$ is not necessarily equal to $g_k(\alpha _k)f_k(\alpha _k)h_k(\alpha _k)$.  This seems to break the proof for $\K$ noncommutative.}  Thus, $1\notin I$.
 		
 		We just showed that $1\notin I$, and so in particular $I\subseteq \L$ is a proper ideal.  It is thus contained in a maximal ideal $M$, in which case let us replace our definition of $\K _1$ in \eqref{eqnC.2.31} by
 		\begin{equation}
@@ -2706,44 +2765,35 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 	In the above result, if $\K$ is a division ring, can we still take $A$ to be an extension of $\K$?  Can we take $A$ to be simple?
 \end{exr}
 \begin{thm}{Integral-closure}{AlgebraicClosure}
-	Let $\K$ be a cring.  Then, there is a unique commutative integral-closure $\A _{\K}$\index[notation]{$\A _{\K}$} of $\K$, the \term{integral-closure}\index{Integral-closure} of $\K$, that has the property that, for any other integrally-closed commutative $\K$-algebra $A$, there is a unique $\K$-algebra homomorphism such that the following diagram commutes.
-	\begin{equation}
-		\begin{tikzcd}
-			\K \ar[r] \ar[rd] & \A \ar[d,dashed] \\
-			& A
-		\end{tikzcd}
-	\end{equation}
-	Furthermore,
-	\begin{enumerate}
-		\item \label{AlgebraicClosure(i)}explicitly, if $A$ is any integrally-closed commutative $\K$-algebra,
-		\begin{equation}
-			\A _{\K}=\left\{ x\in A:x\text{ is integral over }\K \text{.}\right\} ;
-		\end{equation}
-		and
-		\item \label{AlgebraicClosure(ii)}if $\K$ is a field, then $\A _{\K}$ is an extension and itself a field.
-	\end{enumerate}
+	Let $\K$ be a cring.  Then, there is a unique commutative integral-closure $\A _{\K}$\index[notation]{$\A _{\K}$} of $\K$ which is an extension of $\K$.
 	\begin{rmk}
-		A \emph{diagram} in this sense of the word refers to a set of objects and morphisms between them indicated by drawing arrows for each morphism (from the domain to the codomain).  A path from one object to another (in the direction indicated by the arrows) then corresponds to the composition of the corresponding morphisms.If you select any two objects in a given diagram, in general, there will be more than one path from the first to the second; the diagram is said to \emph{commute} iff all corresponding compositions agree.
-		
-		For example, in this case, if we denote the morphisms involved by $\iota \colon \K \rightarrow \A$, $\kappa \K \rightarrow A$, and $\phi \colon \A \rightarrow A$, then the phrase ``the following diagram commutes'' should be understood as short-hand for the statement ``$\phi \circ \iota =\kappa$''.
+		While it is true (\cref{thmC.2.25}) that any ring $\K$ has an algebraically-closed $\K$-algebra, it is \emph{not} true that rings, even commutative ones, have algebraic-closures.  Essentially this boils down to the fact that the algebraic elements need not form a ring (\cref{exmC.2.24}), whereas the integral ones do (\cref{RelativeIntegralClosure}).
 	\end{rmk}
 	\begin{rmk}
-		While it is true (\cref{thmC.2.25}) that any ring $\K$ has an algebraically-closed $\K$-algebra, it is \emph{not} true that rings, even commutative ones, have algebraic closures.  Essentially this boils down to the fact that the algebraic elements need not form a ring (\cref{exmC.2.24}), whereas the integral ones do (\cref{RelativeIntegralClosure}).
+		For the purpose of (hopefully) increasing clarity, we are actually being sloppy in a couple of places here.  First of all, when we say ``unique'', what we actually mean is that $\A$ is ``unique up to isomorphism''\footnote{But not unique isomorphism!} in the sense that, if $A$ is some other integrally-closed $\K$-algebra that satisfies this property, then there is an isomorphism (of $\K$-algebras) $\A \rightarrow A$.
 	\end{rmk}
 	\begin{rmk}
-		For the purpose of (hopefully) increasing clarity, we are actually being sloppy in a couple of places here.  First of all, when we say ``unique'', what we actually mean is that $\A$ is ``unique up to unique isomorphism'' in the sense that, if $A$ is some other integrally-closed $\K$-algebra that satisfies this property, then there is a unique isomorphism (of $\K$-algebras) $\A \rightarrow A$.
+		In the important case $\K$ is a field, there is no distinction between integral and algebraic (\cref{prpC.2.18}), and so in this context people almost always just say ``algebraic-closure''.
 	\end{rmk}
 	\begin{rmk}
-		In other words, \cref{AlgebraicClosure(i)} says that $\A _{\K}$ is the integral-closure of $\K$ in any integrally-closed $\K$-algebra.
+		Warning:  As far as I know, the integral-closure does not satisfy any universal property---see \href{https://math.stackexchange.com/questions/1033209/universal-property-of-the-algebraic-closure-of-a-field}{math.stackexchange}.  As such, while $\A _{\K}$ is unique up to isomorphism, it is not unique up to \emph{unique} isomorphism.  For example, it's also true that there is only one, up to isomorphism, $d$-dimensional vector space over $\R$---would you carelessly make no distinction between $\R ^d$ and $\R [x]_{d-1}$ as a result?  Probably not most of the time.  Keep this in mind any time you want to say ``\emph{the} integral-closure''---it probably won't break anything, but, as I said, you should at least keep this in mind.
 	\end{rmk}
 	\begin{proof}
+		\Step{Existence}
 		By \cref{thmC.2.25}, there is a commutative integrally-closed $\K$-algebra $A$.  Define
 		\begin{equation}
 			\A _{\K}=\left\{ x\in A:x\text{ is integral over }\K \text{.}\right\} .
 		\end{equation}
-		By \cref{RelativeIntegralClosure}, $\A _{\K}$ is still a commutative integrally closed $\K$-algebra.
+		By \cref{RelativeIntegralClosure}, $\A _{\K}$ is still a commutative integrally-closed $\K$-algebra.  By construction, it is integral over $\K$, and hence an integral-closure of $\K$.
 		
-		Let $\K \rightarrow B$ be another commutative integrally-closed $\K$-algebra.
+		\Step{Uniqueness}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  Show that any integral extension $A$ of $\K$ embeds in $\A _{\K}$ by using Zorn's Lemma to find a map into $\A _{\K}$ with maximal domain---see \href{http://math.stanford.edu/~conrad/121Page/handouts/algclosure.pdf}{math.stanford.edu}.
+			\end{rmk}
+		\end{exr}
 	\end{proof}
 \end{thm}
 \begin{exr}{}{}
