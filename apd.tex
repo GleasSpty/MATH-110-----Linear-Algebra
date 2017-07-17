@@ -16,7 +16,7 @@ Of course this example might not be very convincing.  Why not just not think of 
 
 Because of this, we consider the idea of a set to be so fundamental as to be undefinable, and we simply assume that we can freely work with this intuitive idea of a collection of things all thought of as one thing, namely a set.
 
-One has to be careful however.  Naive set theory has paradoxes, a famous example of which is Russel's Paradox\index{Russel's Paradox}.  Consider for example the set\footnote{Hopefully you have seen notation like this before.  If not, really quickly skip ahead to \crefnameref{sbsA.1.2} to look-up the meaning of this notation.}
+One has to be careful however.  Naive set theory has paradoxes, a famous example of which is Russel's Paradox\index{Russel's Paradox}.  Consider for example the set\footnote{Hopefully you have seen notation like this before.  If not, really quickly skip ahead to \crefnameref{sbsA.1.2} to look up the meaning of this notation.}
 \begin{equation}\label{A.1.1}
 X\coloneqq \left\{ Y:Y\notin Y\right\} .
 \end{equation}
@@ -1279,7 +1279,11 @@ Of course, however, $\Z /m\Z$ is more than just a set, it has a ring structure o
 \begin{dfn}{Ideals and quotient rngs}{IdealsAndQuotientRngs}
 Let $R$ be a rng, let $S\subseteq \coord{R,+,0,-}$ be a subgroup, and let $r_1,r_2\in R$.  Define
 \begin{equation}
-(r_1+S)+(r_2+S)\coloneqq (r_1+r_2)+S\text{ and }(r_1+S)\cdot (r_2+S)\coloneqq (r_1\cdot r_2)+S.
+(r_1+S)+(r_2+S)\coloneqq (r_1+r_2)+S
+\end{equation}
+and
+\begin{equation}
+(r_1+S)\cdot (r_2+S)\coloneqq (r_1\cdot r_2)+S.
 \end{equation}
 $S$ is an \term{ideal}\index{Ideal (in a ring)} iff both of these operations are well-defined.  In this case, $R/S$ is the \term{quotient rng}\index{Quotient rng} of $R$ modulo $S$.
 \begin{rmk}
@@ -1287,7 +1291,7 @@ I mentioned in a remark of the definition of quotient groups \cref{IdealsAndQuot
 \end{rmk}
 \end{dfn}
 Just as before, we have an easy way of checking whether a given subring is in fact an ideal.
-\begin{exr}{}{}
+\begin{exr}{}{exrA.4.45}
 Let $R$ be a rng and let $S\subseteq R$ be a subset.  Show that $S$ is an ideal iff (i)~it is a subrng and (ii)~$r\in R$ and $s\in S$ implies that $r\cdot s,s\cdot r\in S$.
 \begin{rmk}
 The second property is sometimes called ``absorbing'', because elements in the ideal `absorb' things into the ideal when you multiply them.
@@ -1408,9 +1412,11 @@ That $\leq$ is a preorder is relatively easy.  The next step, showing that it is
 		A\coloneqq \bigcup _{\substack{x\in M\st \\ C_x\cap N\subseteq f(M)}}C_x
 		\end{equation}
 		as well as
-		\begin{equation}
-		X_1\coloneqq M\cap A,\qquad Y_1\coloneqq N\cap A,\qquad X_2\coloneqq M\cap A^{\comp},\qquad Y_2\coloneqq N\cap A^{\comp}.
-		\end{equation}
+		\begin{subequations}
+		\begin{align}
+		X_1\coloneqq&M\cap A, & Y_1\coloneqq&N\cap A,\qquad X_2\coloneqq&M\cap A^{\comp}, & Y_2\coloneqq&N\cap A^{\comp}.
+		\end{align}
+		\end{subequations}
 		Note that, as $\{ C_x:x\in M\}$ is a partition of $M\sqcup N$, we have that
 		\begin{equation}\label{1.1.34}
 		A^{\comp}=\bigcup _{\substack{x\in M\st \\ C_x\cap N\not \subseteq f(M)}}C_x.
@@ -1641,7 +1647,7 @@ First of all, a disclaimer:  it is probably not best pedagogically speaking to s
 \section{What is a category?}
 
 In mathematics, we study many different types of objects:  sets, preordered sets, monoids, rngs, vector spaces, topological spaces, schemes, etc..\footnote{No, you are not expected to know what all of these are.}  In all of these cases, however, we are not only concerned with the objects themselves, but also with maps between them that `preserve' the relevant structure.  In the case of a set, there is no extra structure to preserve, and so the relevant maps are \emph{all} the functions.  In contrast, however, for vector spaces, we will see that the relevant maps are not all the functions, but instead all \emph{linear} functions.  The idea then is to come up with a definition that deals with both the objects and the relevant maps, or morphisms, simultaneously.  This is the motivating idea of the definition of a category.
-\begin{dfn}{Category}{}
+\begin{dfn}{Category}{Category}
 A \term{category}\index{Category} $\cat{C}$ is
 \begin{data}
 \item a collection $\Obj (\cat{C})$\index[notation]{$\Obj (\cat{C})$}, the \term{objects}\index{Objects} of $\cat{C}$; together with
@@ -1654,6 +1660,16 @@ such that
 \item $\circ$ is `associative', that is, $f\circ (g\circ h)=(f\circ g)\circ h$ for all morphisms $f,g,h$ for which these composition make sense,\footnote{In case you're wondering, the quotes around ``associative'' are used because usually the word ``associative'' refers to a property that a binary operation has.  A binary operation on a set $S$ is, by definition, a function from $X\times X$ into $X$.  Composition however in general is a function from $X\times Y$ into $Z$ for $X\coloneqq \Mor _{\cat{C}}(B,C)$, $Y\coloneqq \Mor _{\cat{C}}(A,B)$ and $Z\coloneqq \Mor _{\cat{C}}(A,C)$, and hence not a binary operation.} and
 \item $f\circ \id _A=f=\id _A\circ f$ for all $A\in \Obj (\cat{C})$.
 \end{enumerate}
+\begin{rmk}
+We write
+\begin{equation}
+\Mor _{\cat{C}}\ceqq \bigsqcup _{A,B\in \Obj (\cat{C})}\Mor _{\cat{C}}(A,B)
+\end{equation}\index[notation]{$\Mor _{\cat{C}}$}
+for the collection of all morphisms in $\cat{C}$.
+\end{rmk}
+\begin{rmk}
+The term \term{map}\index{Map} is often used synonymously with the term ``morphism'', though perhaps in a more casual manner.  For example, it is not uncommon to see people say ``linear map'' instead of ``map of vector spaces'' or ``map in the category of vector spaces''.
+\end{rmk}
 \begin{rmk}
 We mentioned above that the morphisms relevant to vector spaces are the linear functions.  Of course, nothing about the definition of a category \emph{requires} this be the case---you could just as well consider the category whose objects are vector spaces and whose morphisms are \emph{all} functions---it just turns out that these weird examples aren't particularly useful.
 \end{rmk}
@@ -1675,7 +1691,7 @@ We also have another example at our disposal, namely the category of preordered 
 The category of preordered sets is the category $\Pre$\index[notation]{$\Pre$}
 \begin{enumerate}
 \item whose collection of objects $\Obj (\Pre )$ is the collection of all preordered sets;
-\item with morphism set $\Mor _{\Pre}(X,Y)$, is precisely the set of all nondecreasing functions from $X$ to $Y$;
+\item with morphism set $\Mor _{\Pre}(X,Y)$ precisely the set of all nondecreasing functions from $X$ to $Y$;
 \item whose composition is given by ordinary function composition; and
 \item whose identities are given by the identity functions.
 \end{enumerate}
@@ -1687,7 +1703,7 @@ We also have the category of magmas.
 The category of magmas is the category $\Mag$\index[notation]{$\Mag$}
 \begin{enumerate}
 \item whose collection of objects $\Obj (\Mag )$ is the collection of all magmas;
-\item with morphism set $\Mor _{\Mag}(X,Y)$, is precisely the set of all homomorphisms from $X$ to $Y$;
+\item with morphism set $\Mor _{\Mag}(X,Y)$ precisely the set of all homomorphisms from $X$ to $Y$;
 \item whose composition is given by ordinary function composition; and
 \item whose identities are given by the identity functions.
 \end{enumerate}
@@ -1862,15 +1878,282 @@ Let $\cat{C}$ be either the category $\Set$, $\Rg$, or $\Mag$.
 \end{enumerate}
 \end{exr}
 
+\section{Functors and natural-transformations}
+
+\subsection{Functors}
+
+The motivating idea behind the definition of a category is we wanted a definition that would contain the data of both the objects under study and the \emph{morphisms} which `preserve' the relevant structure.\footnote{Of course, any choice of morphisms can work so long as they satisfy the axioms, but most of the examples we're interested in the morphisms will be taken to be the ones which ``preserve'' the structure, and furthermore, when dealing with general abstract categories, I find this to be my guiding intuition.}  We've just now introduced a new type of object, namely, a category, and so now what might ask ``What is the `right' notion of morphisms between categories?''.  Well, looking back at the definition (\cref{Category}), we see that there are four pieces of data (I) the objects, (II) the morphisms, (III) the composition, and (IV) the identity morphisms.  One thus comes up with the following definition of a `morphism of categories', what is called a \emph{functor}.
+\begin{dfn}{Functor}{Functor}
+	Let $\cat{C}$ and $\cat{D}$ be categories.  A \term{functor}\index{Functor} is
+	\begin{data}
+		\item a function $\functor{f}\colon \Obj (\cat{C})\rightarrow \Obj (\cat{D})$; together with
+		\item for every $A,B\in \Obj (\cat{C})$, a function\footnote{Of course, this function depends on $A$ and $B$, but by abuse of notation we omit this dependence.}
+		\begin{equation}
+			\functor{f}\colon \Mor _{\cat{C}}(A,B)\rightarrow \Mor _{\cat{D}}(\functor{f}(A),\functor{f}(B))
+		\end{equation}
+	\end{data}
+	such that
+	\begin{enumerate}
+		\item $\functor{f}(g\circ f)=\functor{f}(g)\circ \functor{f}(f)$ for all composable morphisms $f,g\in \Mor _{\cat{C}}$; and
+		\item $\functor{f}(\id _A)=\id _{\functor{f}(A)}$ for all $A\in \Obj (\cat{C})$.
+	\end{enumerate}
+	\begin{rmk}
+		Thus, a functor between two categories maps the objects to objects and the morphisms to the morphisms, and does so in such a way so as to ``preserve'' composition and the identities.
+	\end{rmk}
+\end{dfn}
+\begin{exm}{The category of categories}{}
+	The category of categories is the category $\Cat$
+	\begin{enumerate}
+		\item whose collection of objects $\Obj (\Cat )$ is the collection of all categories;
+		\item with morphism set $\Mor _{\Cat}(\cat{C},\cat{D})$ precisely the set of all functors from $\cat{C}$ to $\cat{D}$;
+		\item whose composition is given by ordinary function composition of both the functions on objects and morphisms;
+		\item and whose identities are given by the functors for which both the functions on objects and morphisms is the identity function.
+	\end{enumerate}
+	\begin{rmk}
+		Okay, so I won't blame you if you think this is total nonsense.  ``Category of categories''?  That's just asking for some sort of paradox.  The answer to this of course is that we're being sloppy.
+		
+		You'll recall during our discussion of Russell's Paradox (around \eqref{A.1.1}), we explained that our method of resolving the paradox was to fix some set $U$, the ``universe'', that satisfied certain properties which made it reasonable to do ``all of mathematics'' inside $U$.  Russel's Paradox was then resolved by concluding that the set in question simply was just not an element of $U$.
+		
+		Something nearly identity is going on here.  Implicitly, we pick a smallest ``universe'' we wish to work in $U_0$.  Then, whenever we say something like ``the category of all rgs'', it is implicit that all those rgs are coming from $U_0$.  Doing this will usually result in categories that are themselves not contained in $U_0$, but rather, a larger universe $U_1$.  Then, when we form ``the category of all categories'', it is implicit that all our categories are coming from $U_1$.  And again, the resulting category will not be in $U_1$.  But so what.  99\% of the time, that doesn't matter.  Yes, yes, technically we should be saying ``The category of all categories in $U_1$.'', but you can see how that would get really annoying really fast, and as it will never matter for us, we are sloppy.\footnote{And also give this remark because we feel guilty about being sloppy.}
+	\end{rmk}
+\end{exm}
+
+When I think of functors intuitively, I think of them as some sort of mathematical ``constructions'', something that takes in objects of $\cat{C}$ and spits out objects of $\cat{D}$.  For example, the entire subject of algebraic topology originated as studying ``constructions'' that associate algebraic objects (like groups) to ``geometric'' objects (like topological spaces).  Unfortunately, our limited background gives us a limited supply of examples, but we do have some things.
+\begin{exm}{The power-set functor}{}
+	Consider the functor $\Set \rightarrow \Pos$ from the category of sets to the category of partially-ordered sets defined by
+	\begin{subequations}
+		\begin{align}
+			\Obj (\Set )\ni X & \mapsto \coord{2^X,\subseteq}\in \Obj (\Pos ) \\
+			\Mor _{\Set}(X,Y)\ni f & \mapsto f\in \Mor _{\Pos}(2^X,2^Y),
+		\end{align}
+	\end{subequations}
+	where $f\in \Mor _{\Pos}(2^X,2^Y)$ is the function that sends $S\subseteq X$ to $f(Y)\subseteq Y$.
+	\begin{exr}[breakable=false]{}{}
+		Check that this defines a functor.
+	\end{exr}
+\end{exm}
+
+The next example we would like to consider is the \emph{dual-space} functor $V\mapsto V^{\T}$ on the category of vector spaces.  Unfortunately, however, we run into a bit of a problem when trying to do this naively.  This functor on objects acts as $V\mapsto V^{\T}$, and so naturally on morphisms this functor acts as $T\mapsto T^{\T}$.  The definition of a functor, however, requires that, if $T\in \Mor _{\Mod{\K}}(V,W)$, then $T^{\T}\in \Mor _{\Mod{\K}}(V^{\T},W^{\T})$.  But it's not.  $T^{\T}$ is not a map from $V^{\T}$ to $W^{\T}$, but rather, a map from $W^{\T}$ to $V^{\T}$.  We get around this little hiccup by defining the \emph{opposite category}.
+\begin{dfn}{Opposite category}{OppositeCategory}
+	Let $\cat{C}$ be a category.  Then, the \term{opposite category}\index{Opposite category} of $\cat{C}$, $\cat{C}^{\op}$\index[notation]{$\cat{C}^{\op}$}, is defined by
+	\begin{data}
+		\item $\Obj (\cat{C}^{\op})\ceqq \Obj (\cat{C})$;
+		\item for $A,B\in \Obj (\cat{C}^{\op})$,
+		\begin{equation}
+			\Mor _{\cat{C}^{\op}}(A,B)\ceqq \Mor _{\cat{C}^{\op}}(B,A);
+		\end{equation}
+		\item for $f,g\in \Mor _{\cat{C}^{\op}}$ composable,
+		\begin{equation}
+			f\circ _{\op}g\ceqq g\circ f;
+		\end{equation}
+		and
+		\item for $A\in \Obj (\cat{C}^{\op})$, $\id _A\ceqq \id _A$.
+	\end{data}
+	\begin{rmk}
+		In brief, $\cat{C}^{\op}$ has the same objects as $\cat{C}$, but the morphisms go in the \emph{opposite} direction.
+	\end{rmk}
+\end{dfn}
+Such a construction might seem a bit silly, but it allows us to make the following convenient definition.
+\begin{dfn}{Cofunctor}{Cofunctor}
+	Let $\cat{C}$ and $\cat{D}$ be categories.  Then, a \term{cofunctor}\index{Cofunctor} from $\cat{C}$ to $\cat{D}$ is a functor $\cat{C}^{\op}\rightarrow \cat{D}$.
+	\begin{rmk}
+		We will often write things like ``Let $\functor{f}\colon \cat{C}\rightarrow \cat{D}$ be a cofunctor\textellipsis ''.  Strictly speaking, the domain category is $\cat{C}$, not $\cat{C}^{\op}$, but this notation is convenient for what will eventually be obvious reasons.
+	\end{rmk}
+	\begin{rmk}
+		This is more commonly referred to as a \term{contravariant functor}\index{Contravariant functor} (in which case an `ordinary' functor is called a \term{covariant functor}\index{Covariant functor} for contrast).  I actually think this is pretty terrible terminology as in pretty much every other context in mathematics something with the prefix ``co'' is the ``dual'' thing, not the `primary' thing.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{}
+	Let $\cat{C}$ and $\cat{D}$ be categories, let $\functor{f}\colon \Obj (\cat{C})\rightarrow \Obj (\cat{D})$ be a function, and for every $A,B\in \Obj (\cat{C})$ let $\functor{f}\colon \Mor _{\cat{C}}(A,B)\rightarrow \Mor _{\cat{D}}(\functor{f}(B),\functor{f}(A))$ be a function.  Then, this defines a cofunctor iff
+	\begin{enumerate}
+		\item $\functor{f}(g\circ f)=\functor{f}(f)\circ \functor{f}(g)$ for all composable morphisms $f,g\in \Mor _{\cat{C}}$; and
+		\item $\functor{f}(\id _A)=\id _{\functor{f}(A)}$.
+	\end{enumerate}
+	\begin{rmk}
+		Note that this is exactly the same as the definition of a functor (\cref{Functor}), except here the requirement is $\functor{f}(g\circ f)=\functor{f}(f)\circ \functor{f}(g)$ (instead of $\functor{f}(g\circ f)=\functor{f}(g)\circ \functor{f}(f)$).  In this sense, cofunctors are just functors which `flip' the order of composition.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+With this language in hand, we can now return to what is probably the most relevant example for us.
+\begin{exm}{Dual-space}{}
+	Let $\K$ be a cring and consider the \emph{co}functor $\Mod{\K}\rightarrow \Mod{\K}$ defined by
+	\begin{subequations}
+		\begin{align}
+			\Obj (\Mod{\K})\ni V & \mapsto V^{\T}\in \Obj (\Mod{\K}) \\
+			\Mor _{\Mod{\K}}(V,W)\ni T & \mapsto T^{\T}\in \Mor _{\Mod{\K}}(W^{\T},V^{\T})
+		\end{align}
+	\end{subequations}
+	\begin{exr}[breakable=false]{}{}
+		Check that this defines a functor.
+	\end{exr}
+\end{exm}
+
+\subsection{Natural transformations}\label{sbsB.2.2}
+
+We can compose the dual-space functor with itself to obtain the ``double-dual-space'' functor $V\mapsto [V^{\T}]^{\T}$.  Recall that (\cref{DualityOfTheDual}), for every $\K$-module $V$, we actually have a linear-transformation $V\rightarrow [V^{\T}]^{\T}$, and in fact, this is an isomorphism in the context of finite-dimensional vector spaces.
+
+On the other hand, if $V$ is a finite-dimensional vector space, then so is $V^{\T}$.  Furthermore, they have the same dimension, and hence are isomorphic.\footnote{Because they are both isomorphic to $\K ^d$ by taking coordinates (after choosing bases).}  The isomorphisms $V\cong V^{\T}$ and $V\cong [V^{\T}]^{\T}$ are fundamentally different, however.  The latter is what is called a \emph{natural isomorphism}.  To see more clearly how these isomorphisms are different, let us recall more explicitly what they are.
+
+First of all, the map $V\rightarrow [V^{\T}]^{\T}$ is given by
+\begin{equation}
+	v\mapsto \braket{\blankdot ,v}.
+\end{equation}
+On the other hand, the isomorphism $V\rightarrow V^{\T}$ is more complicated.  Let $\{ b_1,\ldots ,b_d\}$ be a basis for $V$, so that the dual basis $\{ b_1^{\T},\ldots ,b_d^{\T}\}$ is a basis for $V^{\T}$.  Then,
+\begin{equation}
+	V\ni \alpha _1\cdot b_1+\cdots +\alpha _d\cdot b_d\mapsto \alpha _1\cdot b_1^{\T}+\cdots +\alpha _d\cdot b_d^{\T}\in V^{\T}
+\end{equation}
+is an isomorphism.  The significant thing to note here is that the definition of this morphism \emph{depended on an arbitrary choice} of a basis for $V$.
+
+Thus, in order to define the morphism $V\rightarrow V^{\T}$ for every vector space $V$, you'll have to pick a basis for every single vector space, and there is no single ``natural'' way to do so.  The isomorphisms that I happen to use are almost certainly going to be different than the ones you choose to use.  On the other hand, there is \emph{no choice} when it comes to the isomorphism $V\rightarrow [V^{\T}]^{\T}$.  Intuitively, this isomorphism doesn't depend on $V$, the same definition works for every vector space, whereas the isomorphisms $V\rightarrow V^{\T}$ do depend on $V$.
+
+The precise notion which distinguishes these two is that of a \emph{natural transformation}:  $V\rightarrow [V^{\T}]^{\T}$ will be a natural isomorphism, whereas $V\rightarrow V^{\T}$ will not be.
+\begin{dfn}{Natural transformation}{NaturalTransformation}
+	Let $\cat{C}$ and $\cat{D}$ be functors, and let $\functor{f},\functor{g}\colon \cat{C}\rightarrow \cat{D}$ be functors.  Then, a \term{natural transformation}\index{Natural transformation} from $\functor{f}$ to $\functor{g}$ is, for every $A\in \Obj (\cat{C})$, a morphism $\eta _A\colon \functor{f}(A)\rightarrow \functor{f}(B)$, such that
+	\begin{equation}
+		\begin{tikzcd}
+			\functor{f}(A) \ar[r,"\functor{f}(f)"] \ar[d,"\eta _A"'] & \functor{f}(B) \ar[d,"\eta _B"] \\
+			\functor{g}(A) \ar[r,"\functor{g}(f)"'] & \functor{g}(B)
+		\end{tikzcd}
+	\end{equation}
+	commutes for every morphism $f\in \Mor _{\cat{C}}(A,B)$ and $A,B\in \Obj (\cat{C})$.
+	\begin{rmk}
+		A \emph{diagram} in this sense of the word refers to a set of objects and morphisms between them indicated by drawing arrows for each morphism (from the domain to the codomain).  A path from one object to another (in the direction indicated by the arrows) then corresponds to the composition of the corresponding morphisms.  If you select any two objects in a given diagram, in general, there will be more than one path from the first to the second; the diagram is said to \emph{commute} iff all corresponding compositions agree.
+			
+		For example, in this case, the phrase ``the following diagram commutes'' should be understood as short-hand for the statement ``$\functor{g}(f)\circ \eta _A=\eta _B\circ \functor{f}(f)$''.
+	\end{rmk}
+	\begin{rmk}
+		The entire natural-transformation is usually just denoted ``$\eta$'', in which case $\eta _A$ is referred to as the \term{component}\index{Component (of a natural-transformation)} of $\eta$ at $A$.
+	\end{rmk}
+	\begin{rmk}
+		Admittedly, this definition is difficult to understand at first sight.  For one thing, it's not clear how this captures ``doesn't depend on $A$/$B$''.  I will do the best I can to explain.
+		
+		The idea is that, if I can define the morphisms $\eta _A$ in such a way that doesn't make use of anything special to this particular $A$, then it shouldn't matter whether I `go to a different object' and then apply the morphism, or if I first apply the morphism and then ``go to a different object''.  (Here, ``going to a different object'' corresponds to $\functor{f}(f)$ and $\functor{g}(f)$, and ``the morphism'' refers to $\eta _A$ and $\eta _B$.)
+	\end{rmk}
+\end{dfn}
+It turns out that, in the following sense, natural-transformations should themselves be thought of as \emph{morphisms of functors}.
+\begin{dfn}{Category of functors}{CategoryOfFunctors}
+	Let $\cat{C}$ and $\cat{D}$ be categories.  Then, the \term{category of functors}\index{Category of functors} from $\cat{C}$ to $\cat{D}$, $\Mor _{\Cat}(\cat{C},\cat{D})$, is defined by
+	\begin{data}
+		\item $\Obj \left( \Mor _{\Cat}(\cat{C},\cat{D})\right) \ceqq \Mor _{\Cat}(\cat{C},\cat{D})$;
+		\item $\Mor _{\Mor _{\Cat}(\cat{C},\cat{D})}(\functor{f},\functor{g})$ is the collection of natural-transformations from $\functor{f}$ to $\functor{g}$;
+		\item composition of natural-transformations is defined componentwise; and
+		\item $[\id _{\functor{f}}]_A\ceqq \id _A$.
+	\end{data}
+	\begin{rmk}
+		Thus, the objects are functors, the morphisms are the natural-transformations, composition is done the way you would expect (componentwise), and the identity on $\functor{f}\in \Obj \left( \Mor _{\Cat}(\cat{C},\cat{D})\right)$ is the natural-transformation whose component as the object $A\in \cat{C}$ is $\id _A$.
+	\end{rmk}
+	\begin{rmk}
+		We are abusing notation and using $\Mor _{\Cat}(\cat{C},\cat{D})$ to denote the collection of functors from $\cat{C}$ to $\cat{D}$ as well as the corresponding category.
+	\end{rmk}
+\end{dfn}
+As in every category, we have a notion of isomorphism.  In the case of categories of functors, the following term is used.
+\begin{dfn}{Natural-isomorphism}{NaturalIsomorphism}
+	Let $\eta \colon \functor{f}\rightarrow \functor{g}$ be a natural-transformation of functors $\functor{f},\functor{g}\colon \cat{C}\rightarrow \cat{D}$.  Then, $\eta$ is a \term{natural-isomorphism}\index{Natural-isomorphism} iff $\eta$ is an isomorphism in $\Mor _{\Cat}(\cat{C},\cat{G})$.
+	\begin{rmk}
+		If we're thinking of functors as some sort of mathematical `constructions' (e.g.~taking the dual of a vector space), then, intuitively speaking, saying that ``$\functor{f}$ is naturally-isomorphic to $\functor{g}$'' is saying more than just ``$\functor{f}(A)$ is isomorphic to $\functor{g}(A)$ for all $A\in \Obj (\cat{C})$'', but rather that the entire ``constructions'' $A\mapsto \functor{f}(A)$ and $A\mapsto \functor{g}(A)$ are isomorphic.
+	\end{rmk}
+\end{dfn}
+Fortunately, this is equivalent to what you would hope.
+\begin{prp}{}{}
+	Let $\eta \colon \functor{f}\rightarrow \functor{g}$ be a natural-transformation of functors $\functor{f},\functor{g}\colon \cat{C}\rightarrow \cat{D}$.  Then, $\eta$ is a natural-isomorphism iff $\eta _A\colon \functor{f}(A)\rightarrow \functor{g}(A)$ is an isomorphism for all $A\in \Obj (\cat{C})$.
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+We now finally return to the example of primary interest.
+\begin{exm}{$V\rightarrow [V^{\T}]^{\T}$}{}
+	Let $\K$ be a cring and consider the linear-transformation $\eta _V\colon V\rightarrow [V^{\T}]^{\T}$ defined by $v\mapsto \braket{\blankdot ,v}$.
+	\begin{exr}[breakable=false]{}{}
+		Show that this is a natural-transformation.
+	\end{exr}
+	Thus, by \cref{DualityOfTheDual}, it is in fact a natural-isomorphism in the category of finite-dimensional vector spaces.
+\end{exm}
+
+\cleardoublepage
 \chapter{Results from ring theory}
 
 Linear algebra is the study of vector spaces, which themselves are just $\F$-modules for $\F$ a division ring.  Thus, it should be expected, and is in fact the case, that some basic results about ring theory are used throughout the main text.  In order to avoid interrupting the flow with long tangents on not linear algebra, we have relegated most of these results to this appendix.
 
-\section{Ideals and their quotients}
+\section{Prerequisites}
 
-The primary goal of this section is to prove the ``dictionary'' \cref{thmC.1.9} that establishes a correspondence between properties of ideals $I$ and properties of their quotients $R/I$.  We begin with a discussion of relatively intuitive properties one might like a ring to have (one of which we have already encountered).  For reasons that won't be particularly apparent to us given our limited discussion, these properties, while more intuitive, are arguably not the `correct' notion in the noncommutative setting.  We thus introduce variants of these properties more suited to the noncommutative setting and check that they agree with the first definition if the ring is commutative.  To state these definitions, however, we must first define the corresponding properties of ideals.  Finally, we prove the dictionary itself.
+In this section, we present a miscellany of results used in the sections to come.  You might consider skipping it for now and coming back as the results are referenced.
 
-Before we get started, we need a couple of facts.
+\begin{dfn}{Kernel (of a ring homomorphism)}{}
+	Let $\phi \colon R\rightarrow S$ be a ring homomorphism.  Then, the \term{kernel}\index{Kernel (of a ring homomorphism)}, $\Ker (\phi )$\index[notation]{$\Ker (\phi )$}, is defined by
+	\begin{equation}
+		\Ker (\phi )\ceqq \{ x\in R:\phi (x)=0\} .
+	\end{equation}
+\end{dfn}
+\begin{prp}{}{prpC.1.2}
+	Let $\phi \colon R\rightarrow S$ be a ring homomorphism.  Then, $\Ker (\phi )\subseteq R$ is an ideal.
+	\begin{rmk}
+		Warning:  Unlike the case of modules, it is \emph{not} the case in general that $\Ima (\phi )\subseteq S$ is an ideal.  That said, see the following result.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{}
+	Let $\phi \colon R\rightarrow S$ be a ring homomorphism.  Then,
+	\begin{enumerate}
+		\item the preimage under $\phi$ of a subring of $S$ is a subring of $\phi$;
+		\item the preimage under $\phi$ of an ideal of $S$ is an ideal of $R$;
+		\item the image under $\phi$ of a subring of $R$ is a subring of $S$; and
+		\item the image under $\phi$ of every ideal of $R$ is an ideal of $S$ iff $\phi$ is surjective.Then, $\Ima (\phi )\subseteq S$ is a subring.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exr}{}{}
+	Give an example of a ring homomorphism $\phi \colon R\rightarrow S$ for which $\phi (S)\subseteq R$ is \emph{not} an ideal.
+\end{exr}
+
+By and large, we're going to only be working with \emph{two-sided} ideals.  A ``two-sided ideal'' is just an ideal in the sense you (hopefully) learned back in \cref{IdealsAndQuotientRngs}.  The ``two-sided'' is used for emphasis to distinguish between \emph{left} and \emph{right} sided ideals.
+\begin{dfn}{Left and right ideals}{LeftAndRightIdeals}
+	Let $R$ be a ring and let $I\subseteq R$.  Then, $I$ is a \term{left (resp.~right) ideal}\index{Left ideal}\index{Right ideal} iff it is a submodule of $R$ regarded as a left (resp.~right) module over itself.
+	\begin{rmk}
+		See \cref{exm1.1.18x} to recall exactly what we are referring to when we regard a ring as a module over itself.  It's not hard---for example, when we say that ``$\R$ is a one-dimensional vector space over itself'' we're thinking of $\R$ as a module over itself.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{}
+	Let $R$ be a ring and let $I\subseteq R$.
+	\begin{enumerate}
+		\item $I$ is a left ideal iff (i) it is a subrng and (ii) $r\in R$ and $i\in I$ implies that $r\cdot i\in I$.
+		\item $I$ is a right ideal iff (ii) it is a subrng and (ii) $r\in R$ and $i\in I$ implies that $i\cdot r\in I$.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  Note that it is not a subr\emph{i}ng!  Indeed, you should check that ideals (of any type) contain the multiplicative identity iff they are all of $R$.
+	\end{rmk}
+	\begin{rmk}
+		Note that this is an exact analogue of what we say in the two-sided case (\cref{exrA.4.45})---in addition to being a subrng, you have respectively left and right ``absorption'' properties.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  This is no more difficult than just applying the submodule criterion (\cref{prp1.2.2}) to the left (resp.~right) module $R$.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{prp}
+
 \begin{prp}{Product of ideals}{}
 	Let $R$ be a ring and let $I,J\subseteq R$ be ideals.  Then, the \term{product}\index{Product of ideals} of $I$ and $J$, $IJ$, defined by
 	\begin{equation}
@@ -1880,7 +2163,7 @@ Before we get started, we need a couple of facts.
 	\begin{rmk}
 		For $n\in \N$, we define
 		\begin{equation}
-			I^n\ceqq \underbrace{I\cdots I}_n
+		I^n\ceqq \underbrace{I\cdots I}_n
 		\end{equation}
 		(as well as $I^0\ceqq R$).  Note how this is \emph{not} the same as $\left\{ \sum _{k=1}^mx_k^n:m\in \N ,x_k\in I\right\}$, which is in general smaller.
 	\end{rmk}
@@ -1894,6 +2177,30 @@ Before we get started, we need a couple of facts.
 		\end{exr}
 	\end{proof}
 \end{prp}
+\begin{prp}{Generated ideal}{GeneratedIdeal}
+	Let $\K$ be a ring and let $S\subseteq \K$ be a subset.  Then, there is a unique ideal $\Ide{S}$\index[notation]{$\Ide{S}$}, the ideal \term{generated}\index{Generated ideal} by $S$, such that
+	\begin{enumerate}
+		\item $S\subseteq \Ide{S}$; and
+		\item if $I$ is any other ideal containing $S$, it follows that $S\subseteq \Ide{S}$.
+	\end{enumerate}
+	Furthermore, explicitly,
+	\begin{equation}
+	\Ide{S}=\left\{ \sum _{s\in S}x_ssy_s:x_s,y_s\in \K \right\} \eqqc \K S\K .
+	\end{equation}
+	\begin{rmk}
+		If $S\eqqc \{ s_1,\ldots ,s_m\}$ is finite, people typically write
+		\begin{equation}
+		\Ide{s_1,\ldots ,s_m}\ceqq \Ide (S).
+		\end{equation}\index[notation]{$\Ide{s_1,\ldots ,s_m}$}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
 \begin{thm}{Krull's Theorem}{KrullsTheorem}\index{Krull's Theorem}
 	Let $R$ be a ring and let $I\subseteq R$ be a proper ideal.  Then, there is a maximal ideal $M\subseteq R$ containing $I$.
 	\begin{proof}
@@ -1906,6 +2213,31 @@ Before we get started, we need a couple of facts.
 		\end{exr}
 	\end{proof}
 \end{thm}
+\begin{dfn}{Principal ideal ring}{PrincipalIdealRing}
+	Let $R$ be a ring.  Then, $R$ is a \term{left (resp.~right, resp.~two-sided) principal ideal ring}\index{Principal ideal ring} iff every nonzero left (resp.~right, resp.~two-sided) ideal is generated by a single element.
+	\begin{rmk}
+		It is much more common to see this condition stated only in the case where it is already assumed that $R$ is an integral domain, in which case people say \term{principal ideal domain}\index{Principla ideal domain instead}.  Without question, this term is far more common than ``principal ideal ring'', though of course it would be inappropriate if $R$ isn't actually an integral domain.
+	\end{rmk}
+	\begin{rmk}
+		``Principal ideal domain'' is often abbreviated to \term{PID}\index{PID}.  It thus seems appropriate to abbreviate ``principal ideal ring'' to \term{PIR}\index{PIR}.
+	\end{rmk}
+	\begin{rmk}
+		The primary example we have in mind are polynomial rings---see \cref{PolynomialsArePIDs}.
+	\end{rmk}
+	\begin{rmk}
+		The zero ideal is generated by the empty-set, which of course doesn't have a single element, it has no elements---that's what ``empty'' means.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{}
+	Let $R$ be a ring.  Then, if $R$ is a left or right PIR, then $R$ is a two-sided PIR.
+	\begin{proof}
+		Suppose that $R$ is a left or right PIR.  Without loss of generality, suppose that $R$ is a left PIR.  Let $I\subseteq R$ be a two-sided ideal.  Then, $I$ is in particular a left ideal, and so as $R$ is a left PIR, there is some $x\in R$ such that $I=Rx$.  However, as $I$ is two-sided, $RxR=IR=I$, and hence $x$ generates $I$ as a two-sided ideal as well.
+	\end{proof}
+\end{prp}
+
+\section{Ideals and their quotients}
+
+The primary goal of this section is to prove the ``dictionary'' \cref{thmC.1.9} that establishes a correspondence between properties of ideals $I$ and properties of their quotients $R/I$.  We begin with a discussion of relatively intuitive properties one might like a ring to have (one of which we have already encountered).  For reasons that won't be particularly apparent to us given our limited discussion, these properties, while more intuitive, are arguably not the `correct' notion in the noncommutative setting.  We thus introduce variants of these properties more suited to the noncommutative setting and check that they agree with the first definition if the ring is commutative.  To state these definitions, however, we must first define the corresponding properties of ideals.  Finally, we prove the dictionary itself.
 
 \subsection{Some properties of rings}\label{sbsC.1.1}
 
@@ -2162,7 +2494,37 @@ To clarify, an ideal $I$ has the property in the left-hand column iff $R/I$ has 
 
 We also covered the result (\cref{thmC.1.6}) that states that ideals in $R/I$ correspond exactly to ideals in $R$ which contain $I$, and that all the properties discussed are preserved in both directions by this correspondence.
 
-\section{Associative algebras}
+\section{The integral closure}
+
+Let's take a step back for a moment and forget we know pretty much everything we know about mathematics.  In fact, let's temporarily forget everything except the natural numbers, $\N$.  So, we have the natural numbers in hand, and we write down an equation $x+m=n$, and then we try to solve it (because that's what mathematicians do, yeah?).  Sometimes we can:  if $x+3=5$, then $x=2$.  But eventually we run into a problem:  if $x+3=1$, what should $x$ be?
+
+Uh oh.  For a moment there, you think you just broke math.  But now I come along, the clever man that I am, and I tell you about this super cool idea called the ``integers''.  Basically, you can solve all equations like this just by taking $\N$ and `adding in' all the solutions to the equations you can't solve.  Want to solve $x+5=0$ you say?  Great, I present unto you $-5$.  ``What's $-5$ you ask?''.  ``It's the solution to the equation $x+5=0$'', I reply.  You now have the integers, $\Z$.
+
+It's that easy.  Want to solve an equation?  Cheat.  Pretend you have a solution, give it a name, add it to your set, et voilà:  you can now solve your equation.
+
+Life goes on, things are good, you can solve your equations.  But then one day someone decides to ask this super insanely difficult question:  ``If $2x=1$, what is $x$?''.  You freak out, thinking you broke math again, but then recall my words of wisdom.  And so your mind brings $\frac{1}{2}$ into existence, the solution to the equation $2x=1$.  After a bit more thought, you realize you can perform similar feats of wizardry and solve all equations of the form $mx=n$.  You now have the rationals, $\Q$.
+
+And now something mysterious happens.  Something something limits.  Something something least-upper bound property.  Something something \textellipsis .  You now have the real numbers, $\R$.\footnote{Passing from $\Q$ to $\R$ is about solving a different sort of `problem' that $\Q$ has that doesn't really have much to do with solving equations.}
+
+Again, life is going well, until one day a heretic decides to ask the question ``If $x^2+1=0$, what is $x$?''.  Your fellow mathematicians call this heretic out on his\textellipsis heresy\textellipsis , but you, recalling my wisdom from days long past, realize that you \emph{can} solve such an equation:  all you have to do is make up the solution!
+
+And so, you take $\R$, add this new solution to the mix, which you have quite creatively decided to call ``$\im$'', to obtain a new `number system'.  You now have the complex numbers, $\C$.
+
+But something of a miracle has happened.  You set out to solve a single equation, $x^2+1=0$, but by adding \emph{just a single element}, you can now solve all polynomial equations!  In fact, you can even solve polynomial equations with coefficients in this weird new number system you just cooked up.
+
+\horizontalrule
+
+This passage from $\R$ to $\C$ is one we would like to generalize in this section.  Given a field $\F$, we would like to be able to solve polynomial equations in $\F$.  Of course, you can't always do that, and so the plan is to `enlarge' the field $\F$ to a new field $\A$ which contains all the solutions you needed.\footnote{In general, doing this will be quite a bit more complicated than going from $\R$ to $\C$.  That really was something of a miracle---it turns out that those fields which you can obtain an ``algebraic closure'' by adding just a single new element in this way have a name:  they are the \emph{real-closed fields}.}  This will be the \emph{algebraic closure} of $\A$.
+
+It turns out however, that, in full generality (so for rings and not just fields), there is something that is better-behaved, but yet agrees with the algebraic closure in the case the ring happens to be a field.  This is the \emph{integral closure}.  The integral closure is the thing you obtain only by adding in roots to \emph{monic} polynomials, that is, polynomials whose leading coefficient is $1$.
+
+We investigate both.  A priori, the algebraic closure is the one we'd be interested in (so we can solve \emph{all} polynomial equations, not just the monic ones), but a further investigation will reveal that the integral closure is the one you probably want to work with in general.  That's not a terribly big deal for us, however, as, like I said, the two notions wind up agreeing in the primary case of interest.
+
+In any case, let us begin.
+
+\subsection{Associative algebras}
+
+Suppose we start with a field $\F$ which we enlarge to a field $\A$.  $\A$ is of course a ring, but it also has the structure of a vector space:  you can scale elements of $\A$ by elements of $\F$.  This gives $\A$ the structure of what is called an \emph{associative algebra}.
 
 Intuitively, an associative algebra is like a module\footnote{Actually, a bimodule (\cref{KLBimodule}).} where you are allowed to ``multiply'' the elements of the module.  Equivalently, you might think of an associative algebra as a ring where you can scale elements.  That is, an associative algebra is something with both the structure of a bimodule and a ring for which the two structures are mutually compatible.
 \begin{dfn}{$\K$-algebra}{KAlgebra}
@@ -2205,7 +2567,7 @@ Intuitively, an associative algebra is like a module\footnote{Actually, a bimodu
 	\end{rmk}
 \end{dfn}
 \begin{dfn}{$\K$-algebra homomorphism}{KAlgebraHomomorphism}
-	Let $A$ and $B$ be $\K$-modules and let $\phi \colon A\rightarrow B$ be a function.  Then, $\phi$ is a \term{$\K$-algebra homomorphism} iff it both a ring homomorphism and $\K$-$\K$-bilinear.
+	Let $A$ and $B$ be $\K$-modules and let $\phi \colon A\rightarrow B$ be a function.  Then, $\phi$ is a \term{$\K$-algebra homomorphism} iff it both a ring homomorphism and $\K$-$\K$-linear.
 \end{dfn}
 \begin{exm}{The category of $\K$-algebras}{}
 	Let $\K$ be a ring.  Then, the category of $\K$-algebras is the concrete category $\Alg{\K}$\index[notation]{$\Alg{\K}$}
@@ -2369,6 +2731,39 @@ Polynomials furnish another natural collection of $\K$-algebras.
 		\end{exr}
 	\end{proof}
 \end{prp}
+One important fact is that you can ``divide'' polynomials with coefficients in a division ring.
+\begin{thm}{Division Algorithm}{DivisionAlgorithm}\index{DivisionAlgorithm}
+	Let $\F$ be a division ring and let $f,g\in \F [x]$ with $g\neq 0$.
+	\begin{enumerate}
+		\item There are unique $q,r\in \F [x]$ such that $f=qg+r$ and $\deg (r)<\deg (g)$.
+		\item There are unique $q,r\in \F [x]$ such that $f=gq+r$ and $\deg (r)<\deg (g)$.
+	\end{enumerate}
+	\begin{rmk}
+		$q$ is the \emph{quotient} and $r$ is the \emph{remainder}.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+As mentioned in the definition of the property (\cref{PrincipalIdealRing}), polynomial rings furnish examples of PIDs.
+\begin{prp}{$\F [x]$-is a left and right PID}{PolynomialsArePIDs}
+	Let $\F$ be a division ring.  Then, $\F [x]$ is a left and right PIR.
+	\begin{rmk}
+		This is certainly not true if $\F$ is not a division ring.  For example, the ideal $\Ide{x,y}$ generated by $x,y\in \left[ \C [x]\right] [y]$ is not generated by a single element.\footnote{Can you prove this?}
+	\end{rmk}
+	\begin{rmk}
+		$\F [x]$ is of course integral, but we don't use the term principal ideal \emph{domain} because that suggests commutativity.
+	\end{rmk}
+	\begin{proof}
+		We prove that $\F [x]$ is a left PIR.  That it is a right PIR is similar.  So, let $I\subseteq \F [x]$ be a nonzero left ideal.  Let $g\in I$ be nonzero of minimum degree.  Let $f\in I$.  By the \nameref{DivisionAlgorithm}, there are unique $q,r\in \F [x]$ such that $f=qg+r$ and $\deg (r)<\deg (g)$.  As $I$ is a left ideal, $qg\in I$, and hence $r=f-qg\in I$.  However, as $g$ was chosen to have minimum degree among nonzero elements of $I$ and $\deg (r)<\deg (g)$, this implies that $r=0$, that is, $f=qg\in \Ide{g}$.  Hence, $I\subseteq \Ide{g}$, and so $I=\Ide{g}$.
+	\end{proof}
+\end{prp}
+\begin{exr}{}{}
+	Is it true that $\F [x]$ a left and right PID implies that $\F$ is necessarily a division ring?
+\end{exr}
 
 Polynomial algebras have an important ``universal property''.
 \begin{thm}{}{thmC.1.8x}
@@ -2385,8 +2780,13 @@ Polynomial algebras have an important ``universal property''.
 \end{thm}
 
 Not only is this useful in its own right, it suggests a convenient way to define polynomial algebras in multiple variables.
-\begin{thm}{Polynomial algebras in multiple variables}{}
+\begin{thm}{Polynomial algebras in multiple variables}{PolynomialAlgebraMultiple}
 	Let $X$ be a set.  Then, there is a unique $\K$-algebra, the \term{polynomial algebra}\index{Polynomial algebra} in the variables $X$ with coefficients in $\K$, $\K [X]$\index[notation]{$\K [X]$}, with $X\subseteq \K [X]$ that has the property that for every $\K$-algebra $A$ and function $f\colon X\rightarrow A$ with central image there is a unique $\K$-algebra homomorphism $\phi \colon \K [X]\rightarrow A$ such that $\restr{\phi}{X}=f$.
+	\begin{rmk}
+		Intuitively, this is the statement that any $\K$-algebra homomorphism $\K [X]\rightarrow A$ is determined solely by where you send the elements of $X$.
+		
+		For example, for $X=\{ x,y\}$, a $\K$-algebra homomorphism $\K [X]\rightarrow A$ is determined by a choice of two elements of $A$, say $a_x,a_y\in A$.  This then determines the image of every polynomial.  For example, the polynomial $3xy-16x^2+3y$ is mapped to $3a_xa_y-16a_x^2+3a_y$.
+	\end{rmk}
 	\begin{rmk}
 		For the purpose of (hopefully) increasing clarity, we are actually being sloppy here.  When we say that $\K [X]$ is ``unique'', what we actually mean is that $\K [X]$ is ``unique up to unique isomorphism'' in the sense that, if $A$ is some other $\K$-algebra with $X\subseteq A$ that satisfies this property, then there is a unique isomorphism (of $\K$-algebras) $\A \rightarrow A$.
 		
@@ -2441,16 +2841,20 @@ We now make the distinction between a polynomial and a polynomial function preci
 
 We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a polynomial, called the characteristic polynomial, of which all the eigenvalues are a root, and that essentially the reason that the matrix given in \cref{exm4.3.7} was diagonalizable over $\C$ but not over $\R$ was because the characteristic polynomial in this case had complex but not real roots.  This suggests that the property we want to impose on the ground division ring has something to do with roots of polynomials.  So, before anything else, let's be absolutely clear what we mean by the term ``root''.
 \begin{cnv}{Two-sided}{TwoSided}
-	In what follows, many definitions have left and right versions (because of the possible commutativity).  We then have a corresponding \term{two-sided}\index{Two-sided} version:  ABC is two-sided XYZ iff ABC is left XYZ and right XYZ.
+	In what follows, many definitions have left and right versions (because of the possible noncommutativity).  We then have a corresponding \term{two-sided}\index{Two-sided} version:  ABC is two-sided XYZ iff ABC is left XYZ and right XYZ.
 	
-	Furthermore, if we every drop these phrases, it should be understood that we are referring to the \emph{two-sided} version (e.g.~just ``XYZ'' instead of ``two-sided XYZ'').
+	Furthermore, if we every drop these phrases, it should be understood that we are referring to the \emph{two-sided} version (e.g.~if we just say ``XYZ'' instead of ``two-sided XYZ'').
 \end{cnv}
-\begin{dfn}{Root}{Root}
-	Let $\L$ be a $\K$-algebra and let $x_0\in \K$.\footnote{Recall that as $\K$-algebras, $\K [x]\cong [x]\K$, and so we may freely regard a polynomial in one as a polynomial in the other.  These two algebras only differ in how we ``plug-in'' values, as explained in the remarks below.}
+\begin{dfn}{Relative root}{Root}
+	Let $\L$ be a $\K$-algebra and let $x_0\in \L$.\footnote{Recall that as $\K$-algebras, $\K [x]\cong [x]\K$, and so we may freely regard a polynomial in one as a polynomial in the other.  These two algebras only differ in how we ``plug-in'' values, as explained in the remarks below.}
 	\begin{enumerate}
 		\item For $p\in \K [x]$, $x_0$ is a \term{right root}\index{Right root} of $p$ iff $p(x_0)=0$.
 		\item For $p\in [x]\K$, $x_0$ is a \term{left root}\index{Left root} of $p$ iff $(x_0)p=0$.
+		\item For $\K [x]\ni p\in [x]\K$, $x_0$ is a \term{two-sided root}\index{Two-sided root} of $p$ iff it is both a left and right root of $p$.
 	\end{enumerate}
+	\begin{rmk}
+		``Relative'' refers to the fact that we are only concerned with the roots of $p$ that lie in $\L$, so this is ``relative to $\L$''---see \cref{AbsoluteRoot} for an ``absolute version''.
+	\end{rmk}
 	\begin{rmk}
 		Write $p(x)=a_0+a_1x+\cdots +a_mx^m$.  Then,
 		\begin{equation}
@@ -2502,57 +2906,60 @@ We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a
 
 \subsection{Algebraic and integral}
 
-\begin{dfn}{Algebraically-closed}{AlgebraicallyClosed}
-	Let $\K$ be a ring.  Then, $\K$ is \term{algebraically-closed}\index{Algebraically-closed} iff every nonconstant polynomial with coefficients in $\K$ can be written as a product of linear factors.
+\begin{dfn}{Algebraically closed}{AlgebraicallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{algebraically closed}\index{Algebraically closed} iff every nonconstant polynomial with coefficients in $\K$ can be written as a product of linear factors.
 \end{dfn}
-\begin{dfn}{Integrally-closed}{IntegrallyClosed}
-	Let $\K$ be a ring.  Then, $\K$ is \term{integrally-closed}\index{Integrally-closed} iff every nonconstant monic polynomial with coefficients in $\K$ can be written as a product of monic linear factors.
+\begin{dfn}{Integrally closed}{IntegrallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{integrally closed}\index{Integrally closed} iff every nonconstant monic polynomial with coefficients in $\K$ can be written as a product of monic linear factors.
 \end{dfn}
-\begin{dfn}{Weakly algebraically-closed}{WeaklyAlgebraicallyClosed}
-	Let $\K$ be a ring.  Then, $\K$ is \term{right (resp.~left, resp.~two-sided) weakly algebraically-closed}\index{Weakly algebraically-closed} iff every nonconstant $p\in \K [x]$ has a right (resp.~left, resp.~two-sided) in $\K$.
+\begin{mdf}{Weakly algebraically closed}{WeaklyAlgebraicallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{XYZ weakly algebraically closed}\index{Weakly algebraically closed} iff every nonconstant $p\in \K [x]$ has an XYZ root in $\K$.
 	\begin{rmk}
-		The reason why this is \emph{right} weakly algebraically-closed (and not left) is that the statement that $\alpha \in \K$ is a root of $p$ is equivalent to the statement that $p(x)=q(x)(x-\alpha )$ for some $q\in \K [x]$\footnote{This is \emph{not} in general equivalent to the statement that $p(x)=(x-\alpha )r(x)$ for some $r\in \K [x]$ if $\K$ is noncommutative.}---see the following result \cref{prp4.4.174}.  Similarly for left weakly algebraically-closed.
+		Recall that (\cref{TwoSided}) XYZ can stand for either ``right'', ``left'', or ``two-sided''---this applies throughout though we won't remind you again.\footnote{I imagine that would get slightly annoying\textellipsis}
 	\end{rmk}
 	\begin{rmk}
-		Warning:  $\K$ being (two-sided) algebraically-closed is \emph{not} the same as every nonconstant polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) algebraically-closed means that it is both left algebraically-closed and right algebraically-closed.  Thus, every nonconstant polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
+		The reason why this is \emph{right} weakly algebraically closed (and not left) is that the statement that $\alpha \in \K$ is a root of $p$ is equivalent to the statement that $p(x)=q(x)(x-\alpha )$ for some $q\in \K [x]$\footnote{This is \emph{not} in general equivalent to the statement that $p(x)=(x-\alpha )r(x)$ for some $r\in \K [x]$ if $\K$ is noncommutative.}---see the following result \cref{prp4.4.174}.  Similarly for left weakly algebraically closed.
 	\end{rmk}
 	\begin{rmk}
-		Of course, algebraically-closed implies weakly algebraically-closed.
-	\end{rmk}
-\end{dfn}
-\begin{dfn}{Weakly integrally-closed}{WeaklyIntegrallyClosed}
-	Let $\K$ be a ring.  Then, $\K$ is \term{right (resp.~left, resp.~two-sided) integrally-closed}\index{Weakly integrally-closed} iff every nonconstant monic $p\in \K [x]$ has a right (resp.~left, resp.~two-sided) root in $\K$.
-	\begin{rmk}
-		Warning:  Don't confuse this with the term ``integrally-closed-domain''!\footnote{This means that it is an integral domain that is integrally-closed in its field of fractions, as opposed to just ``absolutely'' integrally-closed, not relative to another ring.}
+		Warning:  $\K$ being (two-sided) algebraically closed is \emph{not} the same as every nonconstant polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) algebraically closed means that it is both left algebraically closed and right algebraically closed.  Thus, every nonconstant polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
 	\end{rmk}
 	\begin{rmk}
-		You should see \cref{exmC.2.20} to perhaps better understand the difference between the integrally-closed and algebraically-closed.
+		Of course, algebraically closed implies weakly algebraically closed.
+	\end{rmk}
+\end{mdf}
+\begin{mdf}{Weakly integrally closed}{WeaklyIntegrallyClosed}
+	Let $\K$ be a ring.  Then, $\K$ is \term{XYZ integrally closed}\index{Weakly integrally closed} iff every nonconstant monic $p\in \K [x]$ has a XYZ root in $\K$.
+	\begin{rmk}
+		Warning:  Don't confuse this with the term ``integrally closed-domain''!\footnote{This means that it is an integral domain that is integrally closed in its field of fractions, as opposed to just ``absolutely'' integrally closed, not relative to another ring.}
+	\end{rmk}
+	\begin{rmk}
+		You should see \cref{exmC.2.20} to perhaps better understand the difference between the integrally closed and algebraically closed.
 		
-		For me anyways, algebraically-closed is the more intuitive of the two, but this is perhaps just because I was taught it much earlier.  One reason for the introduction of ``integrally-closed'' when one already has the notion of ``algebraically-closed'' is that the former is in general more well-behaved than the latter.  For example, integral elements form a ring (\cref{RelativeIntegralClosure}) whereas the algebraic elements do not necessarily (\cref{exmC.2.24}).
+		For me anyways, algebraically closed is the more intuitive of the two, but this is perhaps just because I was taught it much earlier.  One reason for the introduction of ``integrally closed'' when one already has the notion of ``algebraically closed'' is that the former is in general more well-behaved than the latter.  For example, integral elements form a ring (\cref{RelativeIntegralClosure}) whereas the algebraic elements do not necessarily (\cref{exmC.2.24}).
 	\end{rmk}
 	\begin{rmk}
 		Note that in the common case of interest where $\K$ is a field, the notions of ``integral'' and ``algebraic'' are equivalent---see \cref{prpC.2.18}.
 	\end{rmk}
 	\begin{rmk}
-		Warning:  $\K$ being (two-sided) integrally-closed is \emph{not} the same as every nonconstant monic polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) integrally-closed means that it is both left integrally-closed and right integrally-closed.  Thus, every nonconstant monic polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
+		Warning:  $\K$ being (two-sided) integrally closed is \emph{not} the same as every nonconstant monic polynomial having a (two-sided) root.  According to \cref{TwoSided}, $\K$ being (two-sided) integrally closed means that it is both left integrally closed and right integrally closed.  Thus, every nonconstant monic polynomial would have to have a right and a left root, but these roots don't necessarily have to coincide (that is, be a (two-sided) root).
 	\end{rmk}
 	\begin{rmk}
-		Of course, integrally-closed implies weakly integrally-closed.
+		Of course, integrally closed implies weakly integrally closed.
 	\end{rmk}
-\end{dfn}
+\end{mdf}
 \begin{prp}{}{prpC.2.19}
 	Let $\K$ be a ring.  Then, the following are equivalent.
 	\begin{enumerate}
-		\item $\K$ is integrally-closed.
-		\item $\K$ is right weakly integrally-closed.
-		\item $\K$ is left weakly integrally-closed.
-		\item $\K$ is two-sided weakly integrally-closed.
+		\item $\K$ is integrally closed.
+		\item $\K$ is right weakly integrally closed.
+		\item $\K$ is left weakly integrally closed.
+		\item $\K$ is two-sided weakly integrally closed.
 	\end{enumerate}
 	\begin{rmk}
 		Warning:  The analogous result for ``algebraic'' should be false, though it is true if $\K$ is a field---see \cref{prpC.2.20}.
 	\end{rmk}
 	\begin{rmk}
-		Hence, we need only use the term ``integrally-closed''.
+		Hence, we need only use the term ``integrally closed''.
 	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
@@ -2567,14 +2974,14 @@ We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a
 \begin{prp}{}{prpC.2.20}
 	Let $\F$ be a field.  Then, the following are equivalent.
 	\begin{enumerate}
-		\item $\F$ is algebraically-closed.
-		\item $\F$ is right weakly algebraically-closed.
-		\item $\F$ is left weakly algebraically-closed.
-		\item $\F$ is two-sided weakly algebraically-closed.
-		\item $\F$ is integrally-closed.
-		\item $\F$ is right weakly integrally-closed.
-		\item $\F$ is left weakly integrally-closed.
-		\item $\F$ is two-sided weakly integrally-closed.
+		\item $\F$ is algebraically closed.
+		\item $\F$ is right weakly algebraically closed.
+		\item $\F$ is left weakly algebraically closed.
+		\item $\F$ is two-sided weakly algebraically closed.
+		\item $\F$ is integrally closed.
+		\item $\F$ is right weakly integrally closed.
+		\item $\F$ is left weakly integrally closed.
+		\item $\F$ is two-sided weakly integrally closed.
 	\end{enumerate}
 	\begin{proof}
 		We leave this as an exercise.
@@ -2587,35 +2994,29 @@ We mentioned after \cref{exm4.3.7} that, for a given linear operator, there is a
 	Can you find a counter-example showing that \cref{prpC.2.19} fails when you replace ``integrally'' with ``algebraically''?
 \end{exr}
 \begin{exm}{}{}
-	Note that $\C$ is algebraically-closed but $\R$ is not.  $\H$ is also (left and right) algebraically-closed.
+	Note that $\C$ is algebraically closed but $\R$ is not.  $\H$ is also (left and right) algebraically closed.
 \end{exm}
 \begin{exr}{}{}
-	Can you find an example of a division ring that is left algebraically-closed but not right algebraically-closed (or vice versa)?
+	Can you find an example of a division ring that is left algebraically closed but not right algebraically closed (or vice versa)?
 \end{exr}
-Of course, not everything is algebraically-closed or even integrally-closed (for example, the real numbers).  As being algebraically-closed is such a useful property, it is of interest to `enlarge' a given field to something that is algebraically-closed.  The basic idea is to take your field and just `throw in' all solutions to polynomial equations, not unlike one obtains $\Q$ from $\Z$ by ``throwing in'' all solutions to equations of the form $mx=n$.  The field obtained in this way is the \emph{algebraic-closure} of the original field.  Before we make this intuition precise, however, we must first discuss some preliminaries.
-\begin{dfn}{Algebraic element}{AlgebraicElement}
-	Let $\L$ be a $\K$-algebra and let $\alpha \in \L$.  Then, $\alpha$ is \term{right (resp.~left) algebraic}\index{Algebraic element} over $\K$ iff there is a nonconstant polynomial $p\in \K [x]$ such that $\alpha$ is a right (resp.~left) root of $p$.
+Of course, not everything is algebraically closed or even integrally closed (for example, the real numbers).  As being algebraically closed is such a useful property, it is of interest to `enlarge' a given field to something that is algebraically closed.  The basic idea is to take your field and just `throw in' all solutions to polynomial equations, not unlike one obtains $\Q$ from $\Z$ by ``throwing in'' all solutions to equations of the form $mx=n$.  The field obtained in this way is the \emph{algebraic closure} of the original field.  Before we make this intuition precise, however, we must first discuss some preliminaries.
+\begin{mdf}{Algebraic element}{AlgebraicElement}
+	Let $\L$ be a $\K$-algebra and let $\alpha \in \L$.  Then, $\alpha$ is \term{XYZ algebraic}\index{Algebraic element} over $\K$ iff there is a nonconstant polynomial $p\in \K [x]$ such that $\alpha$ is an XYZ root of $p$.
 	
-	$\alpha$ is \term{right (resp.~left) transcendental}\index{Transcendental element} over $\K$ iff it is not right (resp.~left) algebraic over $\K$.
-	\begin{rmk}
-		Simply \term{algebraic} (or \term{two-sided algebraic}) means that $\alpha$ is a (two-sided) root of some nonconstant polynomial.
-	\end{rmk}
-\end{dfn}
-\begin{dfn}{Integral element}{IntegralElement}
-	Let $\L$ be a $\K$-algebra and let $\alpha \in \L$.  Then, $\alpha$ is \term{right (resp.~left) integral}\index{Integral element} over $\K$ iff there is a nonconstant monic polynomial $p\in \K [x]$ such that $\alpha$ is a right (resp.~left) root of $p$.
-	\begin{rmk}
-		Simply \term{integral} (or \term{two-sided integral}) means that $\alpha$ is a (two-sided) root of some nonconstant monic polynomial.
-	\end{rmk}
-\end{dfn}
+	$\alpha$ is \term{XYZ transcendental}\index{Transcendental element} over $\K$ iff it is not XYZ algebraic over $\K$.
+\end{mdf}
+\begin{mdf}{Integral element}{IntegralElement}
+	Let $\L$ be a $\K$-algebra and let $\alpha \in \L$.  Then, $\alpha$ is \term{XYZ integral}\index{Integral element} over $\K$ iff there is a nonconstant monic polynomial $p\in \K [x]$ such that $\alpha$ is an XYZ root of $p$.
+\end{mdf}
 \begin{exm}{}{}
 	$\sqrt{2}\in \R$ is algebraic over $\Q$ (it is a root of the polynomial $x^2-2\in \Q [x]$).
 	
 	$\uppi \in \R$ is not algebraic over $\Q$.\footnote{For example, by the Lindemann-Weierstrass Theorem, if you enjoy swatting your flies with sledgehammers (I know I do).}
 \end{exm}
-\begin{prp}{Integral=algebraic over division rings}{prpC.2.18}
-	Let $\F$ be a division ring, let $A$ be an $\F$-algebra, and let $x\in A$.  Then, $x$ is right (resp.~left, resp.~two-sided) integral over $\F$ iff it is right (resp.~left, resp.~two-sided) algebraic over $\F$.
+\begin{mpr}{Integral=algebraic over division rings}{prpC.2.18}
+	Let $\F$ be a division ring, let $A$ be an $\F$-algebra, and let $x\in A$.  Then, $x$ is XYZ integral over $\F$ iff it is XYZ algebraic over $\F$.
 	\begin{rmk}
-		Similarly, a division ring is right (resp.~left, resp.~two-sided) integrally-closed iff it is right (resp.~left, resp.~two-sided) algebraically-closed.
+		Similarly, a division ring is XYZ integrally closed iff it is XYZ algebraically closed.
 	\end{rmk}
 	\begin{proof}
 		$(\Rightarrow )$ Immediate from the definitions.
@@ -2623,34 +3024,34 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 		\blni
 		$(\Leftarrow )$ Suppose that $x$ is right algebraic over $\F$.  By definition, there is a nonconstant polynomial $p\in \F [x]$ such that $p(x)=0$.  Denote the leading coefficient of $p$ by $a_m$.  Multiplying $p(x)=0$ on the left by $a_m^{-1}$ shows that $[a_m^{-1}p](x)=0$.  As $a_m^{-1}p$ is monic, this shows that $x$ is left-integral.
 	\end{proof}
-\end{prp}
+\end{mpr}
 \begin{exm}{Algebraic but not integral}{exmC.2.20}
 	$\frac{1}{2}\in \Q$ is algebraic but not integral over $\Z$:  it is a root of the polynomial $2x-1$, but it is not the root of any monic polynomial with integer coefficients.
 \end{exm}
-\begin{dfn}{Algebraic $\K$-algebra}{AlgebraicKAlgebra}
-	Let $\L$ be a $\K$-algebra.  Then, $\L$ is \term{right (resp.~left, resp.~two-sided) algebraic}\index{Algebraic $\K$-algebra} iff every element of $\L$ is right (resp.~left, resp.~two-sided) algebraic over $\K$.
+\begin{mdf}{Algebraic $\K$-algebra}{AlgebraicKAlgebra}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is \term{XYZ algebraic}\index{Algebraic $\K$-algebra} iff every element of $\L$ is XYZ algebraic over $\K$.
 	\begin{rmk}
 		We may instead say that $\L$ is \term{algebraic} over $\K$.
 	\end{rmk}
 	\begin{rmk}
-		If $\L$ is an extension of $\K$, then people will say that ``$L$ is a \term{right (resp.~left, resp.~two-sided) algebraic extension}\index{Algebraic extension} of $\K$'' instead of that ``$\L$ is a right (resp.~left, resp.~two-sided) algebraic $\K$-algebra''.
+		If $\L$ is an extension of $\K$, then people will say that ``$L$ is an \term{XYZ algebraic extension}\index{Algebraic extension} of $\K$'' instead of that ``$\L$ is an XYZ algebraic $\K$-algebra''.
 	\end{rmk}
-\end{dfn}
-\begin{dfn}{Integral $\K$-algebra}{IntegralKAlgebra}
-	Let $\L$ be a $\K$-algebra.  Then, $\L$ is \term{right (resp.~left, resp.~two-sided) integral}\index{Integral $\K$-algebra} iff every element of $\L$ is right (resp.~left, resp.~two-sided) integral over $\K$.
+\end{mdf}
+\begin{mdf}{Integral $\K$-algebra}{IntegralKAlgebra}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is \term{XYZ integral}\index{Integral $\K$-algebra} iff every element of $\L$ is XYZ integral over $\K$.
 	\begin{rmk}
 		We may instead say that $\L$ is \term{integral} over $\K$.
 	\end{rmk}
 	\begin{rmk}
-		If $\L$ is an extension of $\K$, then people will say that ``$L$ is a \term{right (resp.~left, resp.~two-sided) algebraic extension}\index{Algebraic extension} of $\K$'' instead of that ``$\L$ is a right (resp.~left, resp.~two-sided) algebraic $\K$-algebra''.
+		If $\L$ is an extension of $\K$, then people will say that ``$L$ is an \term{XYZ integral extension}\index{Integral extension} of $\K$'' instead of that ``$\L$ is an XYZ integral $\K$-algebra''.
 	\end{rmk}
-\end{dfn}
-\begin{dfn}{Algebraic-closure}{}
-	Let $\L$ be a $\K$-algebra.  Then, $\L$ is an \term{right (resp.~left, resp.~two-sided) algebraic-closure}\index{Algebraic-closure} of $\K$ iff it is algebraically-closed and algebraic over $\K$.
-\end{dfn}
-\begin{dfn}{Integral-closure}{IntegralClosure}
-	Let $\L$ be a $\K$-algebra.  Then, $\L$ is an \term{right (resp.~left, resp.~two-sided) algebraic-closure}\index{Integral-closure} of $\K$ iff it is algebraically-closed and algebraic over $\K$.
-\end{dfn}
+\end{mdf}
+\begin{mdf}{Algebraic closure}{AlgebraicClosurex}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is an \term{XYZ algebraic closure}\index{Algebraic closure} of $\K$ iff it is algebraically closed and XYZ algebraic over $\K$.
+\end{mdf}
+\begin{mdf}{Integral closure}{IntegralClosure}
+	Let $\L$ be a $\K$-algebra.  Then, $\L$ is an \term{XYZ integral closure}\index{Integral closure} of $\K$ iff it is integrally closed and XYZ integral over $\K$.
+\end{mdf}
 \begin{exm}{}{}
 	\begin{enumerate}
 		\item $\H$ is an algebraic extension of $\C$.
@@ -2663,9 +3064,15 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 	\begin{equation}
 		\left\{ x\in A:x\text{ is integral over }\K \text{.}\right\}
 	\end{equation}
-	is an integral $\K$-subalgebra of $A$, the \term{integral closure}\index{Relative integral closure} of $\K$ in $A$, which is integrally-closed if $A$ is.
+	is an integral $\K$-subalgebra of $A$, the \term{integral closure}\index{Relative integral closure} of $\K$ in $A$.
+	
+	Furthermore,
+	\begin{enumerate}
+		\item if $A$ is integrally closed, then integral closure of $\K$ in $A$ is integrally closed; and
+		\item if $\K$ and $A$ are fields, then the integral closure of $\K$ in $A$ is a field.
+	\end{enumerate}
 	\begin{rmk}
-		Warning:  The analogous result for algebraic fails---see \cref{exmC.2.24}.  Indeed, this is one motivation for preferring integral over algebraic.  That said, it seems like it will hold for integral crings,\footnote{Different meaning of the word ``integral''.  In fact, just off the top of my head I can think of four different meanings of that word.  Like I said, mathematicians are terrible when it comes developing sensible terminology.} though we won't use this fact---see \href{https://math.stackexchange.com/questions/759345/algebraic-vs-integral-closure-of-a-ring?rq=1}{math.stackexchange}.
+		Warning:  The analogous result for algebraic fails---see \cref{exmC.2.24}.  Indeed, this is one motivation for preferring integral over algebraic.  That said, it seems like it will hold for integral crings,\footnote{Different meaning of the word ``integral''.  In fact, just off the top of my head I can think of four different meanings of that word.  Like I said, mathematicians are terrible when it comes developing sensible terminology.} though we won't use this fact---see \href{https://math.stackexchange.com/questions/759345/algebraic-vs-integral closure-of-a-ring?rq=1}{math.stackexchange}.
 	\end{rmk}
 	\begin{rmk}
 		``Relative''refers to the fact that this is the integral closure of $\K$ \emph{in $A$}---see \cref{AlgebraicClosure} for the ``absolute'' integral closure.  
@@ -2685,16 +3092,16 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 	\begin{exr}[breakable=false]{}{}
 		Find such a counter-example.
 		\begin{rmk}
-			Hint:  See \href{https://mathoverflow.net/questions/163749/algebraic-closure-of-a-ring-is-not-a-ring}{mathoverflow}.
+			Hint:  See \href{https://mathoverflow.net/questions/163749/algebraic closure-of-a-ring-is-not-a-ring}{mathoverflow}.
 		\end{rmk}
 	\end{exr}
 \end{exm}
-\begin{thm}{Rings have algebraically-closed algebras}{thmC.2.25}
-	Let $\K$ be a (commutative) ring.  Then, there exists a (commutative) weakly algebraically-closed extension $A$ of $\K$.
+\begin{thm}{Rings have weakly algebraically closed extensions}{thmC.2.25}
+	Let $\K$ be a (commutative) ring.  Then, there exists a (commutative) weakly algebraically closed extension $A$ of $\K$.
 	
 	Furthermore, if $\K$ is field, then $A$ itself taken to be a field.
 	\begin{rmk}
-		Note that $A$ is integrally-closed by \cref{prpC.2.19}.
+		Note that $A$ is integrally closed by \cref{prpC.2.19}.
 	\end{rmk}
 	\begin{proof}
 		\Step{Introduce notation}
@@ -2709,7 +3116,7 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 		\begin{equation}
 			\L \ceqq \K [X].
 		\end{equation}
-		Intuitively, we have a ``variable'' $x_f$ for each nonconstant monic $f\in \K [X]$ and $\L$ is the polynomial algebra in those variables.  Now define
+		Intuitively, we have a ``variable'' $x_f$ for each monic $f\in \K [X]$ and $\L$ is the polynomial algebra in those variables.  Now define
 		\begin{equation}
 			I\ceqq \left\{ \sum _{f\in \mcal{F}}g_ff(x_f)h_f:g_f,h_f\in \L \right\} ,
 		\end{equation}
@@ -2725,14 +3132,14 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 		\Step{Repeat this process inductively}
 		Performing the same construction, we obtain a $\K _1$-algebra $\K _2$ that contains a root of every nonconstant $f\in \K _1[x]$.  Note that $\K _2$ can also be considered a $\K$-algebra via the composite structure map $\K \rightarrow \K _1\rightarrow \K _2$.  Proceeding inductively, we obtain a sequence of $\K$-algebra $\{ \K _m:m\in \N \}$ such that $\K _{m+1}$ contains roots of every nonconstant $f\in \K [x]$.\footnote{Take $\K _0\ceqq \K$.}
 		
-		\Step{Define the weakly algebraically-closed $\K$-algebra}
+		\Step{Define the weakly algebraically closed $\K$-algebra}
 		Now define\footnote{This definition doesn't literally make sense as we don't literally have that $\K _m\subseteq \K _{m+1}$.  Instead, what is actually meant is the disjoint union of the $\K _m$s modulo the equivalence relation that identifies elements in $\K _m$ with their images in $\K _{m+1}$.}
 		\begin{equation}
 			\K _{\infty}\ceqq \bigcup _{m\in \N}\K _m.
 		\end{equation}
 		
-		\Step{Check that $\K _{\infty}$ is indeed weakly algebraically-closed}
-		We claim that $\K _{\infty}$ is algebraically-closed.  So, let $f\in \K _{\infty}[x]$ be nonconstant.  Then, as $f$ has finitely many terms, there is some $m\in \N$ such that $f\in \K _m[x]$.  But we know that $f$ then has a root in $\K _{m+1}$, and hence in $\K _{\infty}$.  Thus, $\K _{\infty}$ is algebraically-closed.
+		\Step{Check that $\K _{\infty}$ is indeed weakly algebraically closed}
+		We claim that $\K _{\infty}$ is algebraically closed.  So, let $f\in \K _{\infty}[x]$ be nonconstant.  Then, as $f$ has finitely many terms, there is some $m\in \N$ such that $f\in \K _m[x]$.  But we know that $f$ then has a root in $\K _{m+1}$, and hence in $\K _{\infty}$.  Thus, $\K _{\infty}$ is algebraically closed.
 		
 		\Step{Check that $\K _{\infty}$ is commutative if $\K$ is}
 		Looking at the above proof, we see that $\L$ is commutative if $\K$ is, and hence $\K _1$ is commutative if $\K$ is.  Thus, each $\K _m$ is commutative if $\K$ is, and hence so is $\K _{\infty}$.
@@ -2764,27 +3171,29 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 \begin{exr}{}{}
 	In the above result, if $\K$ is a division ring, can we still take $A$ to be an extension of $\K$?  Can we take $A$ to be simple?
 \end{exr}
-\begin{thm}{Integral-closure}{AlgebraicClosure}
-	Let $\K$ be a cring.  Then, there is a unique commutative integral-closure $\A _{\K}$\index[notation]{$\A _{\K}$} of $\K$ which is an extension of $\K$.
+\begin{thm}{Integral closure}{AlgebraicClosure}
+	Let $\K$ be a cring.  Then, there is a unique commutative integral closure $\A _{\K}$\index[notation]{$\A _{\K}$} of $\K$ which is an extension of $\K$.
+	
+	Furthermore, if $\K$ is a field, then $\A _{\K}$ itself is a field.
 	\begin{rmk}
-		While it is true (\cref{thmC.2.25}) that any ring $\K$ has an algebraically-closed $\K$-algebra, it is \emph{not} true that rings, even commutative ones, have algebraic-closures.  Essentially this boils down to the fact that the algebraic elements need not form a ring (\cref{exmC.2.24}), whereas the integral ones do (\cref{RelativeIntegralClosure}).
+		While it is true (\cref{thmC.2.25}) that any ring $\K$ has an algebraically closed $\K$-algebra, it is \emph{not} true that rings, even commutative ones, have algebraic closures.  Essentially this boils down to the fact that the algebraic elements need not form a ring (\cref{exmC.2.24}), whereas the integral ones do (\cref{RelativeIntegralClosure}).
 	\end{rmk}
 	\begin{rmk}
-		For the purpose of (hopefully) increasing clarity, we are actually being sloppy in a couple of places here.  First of all, when we say ``unique'', what we actually mean is that $\A$ is ``unique up to isomorphism''\footnote{But not unique isomorphism!} in the sense that, if $A$ is some other integrally-closed $\K$-algebra that satisfies this property, then there is an isomorphism (of $\K$-algebras) $\A \rightarrow A$.
+		For the purpose of (hopefully) increasing clarity, we are actually being sloppy in a couple of places here.  First of all, when we say ``unique'', what we actually mean is that $\A$ is ``unique up to isomorphism''\footnote{But not unique isomorphism!} in the sense that, if $A$ is some other integrally closed $\K$-algebra that satisfies this property, then there is an isomorphism (of $\K$-algebras) $\A \rightarrow A$.
 	\end{rmk}
 	\begin{rmk}
-		In the important case $\K$ is a field, there is no distinction between integral and algebraic (\cref{prpC.2.18}), and so in this context people almost always just say ``algebraic-closure''.
+		In the important case $\K$ is a field, there is no distinction between integral and algebraic (\cref{prpC.2.18}), and so in this context people almost always just say ``algebraic closure''.
 	\end{rmk}
 	\begin{rmk}
-		Warning:  As far as I know, the integral-closure does not satisfy any universal property---see \href{https://math.stackexchange.com/questions/1033209/universal-property-of-the-algebraic-closure-of-a-field}{math.stackexchange}.  As such, while $\A _{\K}$ is unique up to isomorphism, it is not unique up to \emph{unique} isomorphism.  For example, it's also true that there is only one, up to isomorphism, $d$-dimensional vector space over $\R$---would you carelessly make no distinction between $\R ^d$ and $\R [x]_{d-1}$ as a result?  Probably not most of the time.  Keep this in mind any time you want to say ``\emph{the} integral-closure''---it probably won't break anything, but, as I said, you should at least keep this in mind.
+		Warning:  As far as I know, the integral closure does not satisfy any universal property---see \href{https://math.stackexchange.com/questions/1033209/universal-property-of-the-algebraic closure-of-a-field}{math.stackexchange}.  As such, while $\A _{\K}$ is unique up to isomorphism, it is not unique up to \emph{unique} isomorphism.  For example, it's also true that there is only one, up to isomorphism, $d$-dimensional vector space over $\R$---would you carelessly make no distinction between $\R ^d$ and $\R [x]_{d-1}$ as a result?  Probably not most of the time.  Keep this in mind any time you want to say ``\emph{the} integral closure''---it probably won't break anything, but, as I said, you should at least keep this in mind.
 	\end{rmk}
 	\begin{proof}
 		\Step{Existence}
-		By \cref{thmC.2.25}, there is a commutative integrally-closed $\K$-algebra $A$.  Define
+		By \cref{thmC.2.25}, there is a commutative integrally closed $\K$-algebra $A$.  Take $A$ to be a field if $\K$ is.  Define
 		\begin{equation}
 			\A _{\K}=\left\{ x\in A:x\text{ is integral over }\K \text{.}\right\} .
 		\end{equation}
-		By \cref{RelativeIntegralClosure}, $\A _{\K}$ is still a commutative integrally-closed $\K$-algebra.  By construction, it is integral over $\K$, and hence an integral-closure of $\K$.
+		By \cref{RelativeIntegralClosure}, $\A _{\K}$ is still a commutative integrally closed $\K$-algebra, which is a field if $\K$ is.  By construction, it is integral over $\K$, and hence an integral closure of $\K$.
 		
 		\Step{Uniqueness}
 		We leave this as an exercise.
@@ -2797,13 +3206,72 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 	\end{proof}
 \end{thm}
 \begin{exr}{}{}
-	Do noncommutative rings have (left/right) integral-closures?  What about noncommutative division rings in particular?  
+	Do noncommutative rings have (left/right) integral closures?  What about noncommutative division rings in particular?  
 \end{exr}
+
+One of the most significant implications of the existence of an algebraic closure is that they permit us to make the following definitions.
+\begin{dfn}{Absolute root}{AbsoluteRoot}
+	Let $\F$ be a field, let $\A _{\F}$ be an algebraic closure of $\F$, and let $p\in \F [x]$.  Then, a \term{root}\index{Root} of $p$ is a root of $p$ in $\A _{\F}$.
+	\begin{rmk}
+		Warning:  Note that this \emph{does} technically depend on a choice of algebraic closure.  Thus, if we ever use the word ``root'' in this sense, it should be implicitly understood that we chose an algebraic closure before hand.  As algebraic closures are unique up to isomorphism, this seldom will make a difference (at least for us), but it's still good to keep in mind.
+	\end{rmk}
+	\begin{rmk}
+		Of course, $\A _{\F}$ exists by the previous result.  Note that we need $\F$ to be a field, otherwise we are only guaranteed that only \emph{monic} polynomials have roots.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{Generated field}{GeneratedField}
+	Let $\F$ be a field, let $\A$ be an algebraic closure of $\F$, and let $S\subseteq \A$.  Then, there exists a unique subfield $\F (S)$\index[notation]{$\F (S)$} of $\A$, the subfield \term{generated}\index{Generated subfield} by $S$, such that
+	\begin{enumerate}
+		\item $S\subseteq \F (S)$; and
+		\item if $\K \subseteq \A$ is any other subfield containing $S$, it follows that $\F (S)\subseteq \K$.
+	\end{enumerate}
+	\begin{rmk}
+		If $S\eqqc \{ s_1,\ldots ,s_m\}$ is finite, people typically write
+		\begin{equation}
+			\F (s_1,\ldots ,s_m)\ceqq \F (S).
+		\end{equation}\index[notation]{$\F (s_1,\ldots ,s_m)$}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\subsection{Summary}
+
+We started out with the objective of being able to solve polynomial equations over a given field.  This gives us the concept of \emph{algebraic closure} (\cref{AlgebraicClosurex}), though we found that the related concept of \emph{integral closure} (\cref{IntegralClosure}) was better-behaved in general (\cref{RelativeIntegralClosure,exmC.2.24}), and in any case agree with the algebraic closure for division rings (\cref{prpC.2.18}).
+
+To talk about such things, we needed to discuss $\K$-algebras (\cref{KAlgebra}), algebraic and integral $\K$-algebras (\cref{AlgebraicKAlgebra,IntegralKAlgebra}, and what it meant for these algebras to be algebraically closed and integrally closed (\cref{AlgebraicallyClosed,IntegrallyClosed}).
+
+Finally, we proved that every cring has a unique integral closure that is an extension and a field if the cring was (\cref{AlgebraicClosure}).
+
+Of course, there were other things, but these are the bullet-points.
 
 \section{Perfect fields}
 
+To be honest, the intuition for what are called \emph{perfect fields} is hard for me to describe.  For us, the motivation is simple:  (i) every field we encounter in these notes (with exception of the one I construct below simply for the purpose of producing a field that is not perfect) is perfect and (ii) this is the most general sufficient condition on the ground field I am aware of in order for the \namerefpcref{JordanChevalleyDecomposition} to hold.  It is important for you to know the statement of Jordan-Chevalley, and it's also important to know that it's going to work for a very large class of fields, almost certainly a class large enough that it contains every field you've ever seen before if you're learning linear-algebra for the first time.  On the other hand, it is not important for you to know the details of the theory of perfect fields.
+
+So I basically just told you that you shouldn't care about the details about perfect fields, only that essentially everything you'll encounter in the notes is perfect, and so the Jordan-Chevalley Decomposition can be applied.  If you're one of those pesky students\footnote{That's a joke.  Such students are the best type of students.} that likes to know everything ``beyond the scope of this course'', that's probably not very satisfying, so let me try a little bit harder to motivate perfect fields.
+
+The proof of Jordan-Chevalley uses Galois theory, and, in some sense, perfect fields make Galois theory `work'.  The largest extension of a given field that is Galois its what's called its \emph{separable closure}, which is contained in the algebraic closure.  However, the algebraic closure is more intuitive\footnote{At least for me.}, and so it would be nice if Galois theory would work over the algebraic closure.  Unfortunately, that's not always the case.  In fact, a field is \emph{perfect} iff the separable closure and algebraic closure coincide.  Thus, in this sense, perfect fields are precisely the fields in which Galois theory ``works'' over the algebraic closure.
+
+Anyways, let's get started.
+\begin{dfn}{Separable polynomial}{SeparablePolynomial}
+	Let $\F$ be a field and let $p\in \F [x]$.  Then, $p$ is \term{separable}\index{Separable polynomial} iff the number of distinct roots of $p$ is equal to $\deg (p)$.
+	\begin{rmk}
+		Note that we need to work over a field here as we are implicitly making using of an algebraic closure---see \cref{AbsoluteRoot}.
+	\end{rmk}
+	\begin{rmk}
+		Intuitively, we think of all the roots of $p$ having ``multiplicity $1$''.  Sometimes people say that ``$p$ has distinct roots''.
+	\end{rmk}
+	\begin{rmk}
+		I'm not quite sure where the word ``separable'' comes from.  Perhaps it comes from the fact that, in an algebraic closure, you can `separate' $p$ into \emph{distinct} linear factor, though I think this is misleading as you can ``separate'' any polynomial into linear factors, they just won't necessarily be distinct.
+	\end{rmk}
+\end{dfn}
 \begin{dfn}{Perfect field}{PerfectField}
-	Let $\F$ be a field.  Then, $\F$ is \term{perfect}\index{Perfect field} iff every irreducible polynomial $p\in \F [x]$ has distinct roots.
+	Let $\F$ be a field.  Then, $\F$ is \term{perfect}\index{Perfect field} iff every irreducible polynomial $p\in \F [x]$ is separable.
 	
 	$\F$ is \term{imperfect}\index{Imperfect field} iff it is not perfect.
 	\begin{rmk}
@@ -2811,17 +3279,27 @@ Of course, not everything is algebraically-closed or even integrally-closed (for
 		
 		This definition of irreducible is one generalization of the concept of a prime integer to a general ring (there are others).
 	\end{rmk}
-	\begin{rmk}
-		$x_0\in \F$ is a root of $p$ iff $x-x_0$ divides $p$.  $p$ \term{has distinct roots}\index{Distinct roots} iff $(x-x_0)^2$ does \emph{not} divide $p$ for every root $x_0$.
-		
-		The intuition of course is that every root of $p$ has ``multiplicity'' $1$.
-	\end{rmk}
 \end{dfn}
+There are several conditions one may impose on a field that are equivalent to being perfect.
+\begin{thm}{}{thmC.4.2}
+	Let $\F$ be a field.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item $\F$ is perfect.
+		\item Either $\Char (\F )=0$, or $\Char (\F )\eqqc p$ and $\F \ni x\mapsto x^p\in \F$ is a ring automorphism.
+		\item Either $\Char (\F )=0$, or $\Char (\F )\eqqc p$ and $\F \ni x\mapsto x^p\in \F$ is surjective.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
 Most fields you have probably encountered are perfect.
-\begin{prp}{}{}
+\begin{prp}{}{prpC.4.3}
 	Let $\F$ be a field.  Then, $\F$ is perfect if any of the following are true.
 	\begin{enumerate}
-		\item $\F$ is algebraically-closed.
+		\item $\F$ is algebraically closed.
 		\item $\Char (\F )=0$.
 		\item $\F$ is finite.
 	\end{enumerate}
@@ -2833,7 +3311,7 @@ Most fields you have probably encountered are perfect.
 	\end{proof}
 \end{prp}
 Of course, there are examples of imperfect fields.
-\begin{exm}{An imperfect field}{}
+\begin{exm}{An imperfect field}{AnImperfectField}
 	Let $p\in \Z ^+$ be prime, write $\F _p\ceqq \Z /p\F$, and define $\F \ceqq \F _p(t)$.\footnote{For any cring $\K$, $\K (x)$\index[notation]{$\K (x)$} is the \emph{field of fractions} of $\K [x]$.  That is, $\K (x)$ is constructed from $\K [x]$ in the same way that $\Q$ is constructed from $\Z$.}
 	
 	We claim that $\F$ is imperfect.  To show this, we check that $x^p-t\in \F [x]$ is irreducible but does not have distinct roots.
@@ -2903,4 +3381,65 @@ We had a term (\cref{prp4.5.17}), \emph{complete-decomposability}, for a module 
 		Warning:  As previously mentioned in the definition of simple ring (\cref{SimpleRing}), there is a definition of ``semisimple ring'', but it is not analogous to ``semisimple module'' in the way that ``simple ring'' is analogous to ``simple module''.
 	\end{rmk}
 \end{dfn}
+\begin{thm}{Fundamental Theorem of Semisimple Modules}{FTSemisimple}
+	Let $V$ be a $\K$-module.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item \label{FTSemisimple(i)}$V$ is semisimple.
+		\item \label{FTSemisimple(ii)}$V$ is a sum of simple submodules.
+		\item \label{FTSemisimple(iii)}For every submodule $W\subseteq V$, there is a submodule $U\subseteq V$ such that $V=U\oplus W$.
+	\end{enumerate}
+	\begin{rmk}
+		In other words, \cref{FTSemisimple(iii)} says that $V$ is semisimple iff every submodule has a complement.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Again, the name of this result is nonstandard.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
 Our interest in semisemplicity arises from the fact that semisimple operators are in a certain sense a generalization of diagonalizable operators.
+\begin{thm}{Semisimple (linear operator)}{semisimple_linear_operator}
+	Let $\K$ be a field, let $\A$ be an algebraic closure of $\K$, let $V$ be a finite-dimensional vector space over $\K$, write $V_{\A}\ceqq \A \otimes _{\K}V$, and let $T\colon V\rightarrow V$ be a linear operator.  Then, the following are equivalent.
+	\begin{enumerate}
+		\item \label{semisimple_linear_operator.i}The minimal polynomial of $T$ is separable.
+		\item \label{semisimple_linear_operator.ii}$T\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable.
+		\item \label{semisimple_linear_operator.iii}The $\K [x]$-module $V_T$ defined by $T$ is semisimple.
+		\item \label{semisimple_linear_operator.iv}Every $T$-invariant subspace has a $T$-invariant complement.
+	\end{enumerate}
+	\begin{rmk}
+		If these conditions are satisfied, then we say that $T$ is \term{semisimple}\index{Semisimple (linear operator)}.
+	\end{rmk}
+	\begin{proof}
+		$(\cref{semisimple_linear_operator.i}\Rightarrow \cref{semisimple_linear_operator.ii})$ Suppose that the minimal polynomial of $T$ is separable.  Denote this minimal polynomial by $p$ and write $p(x)=(x-\lambda _1)\cdots (x-\lambda _m)$, with $\lambda _1,\ldots ,\lambda _m$ all distinct.  By the Jordan Canonical Form Theorem, we can pick a basis $\mcal{B}$ for $V_{\A}$ such that $[T]_{\mcal{B}}=D+N$ where $D$ is a matrix with $\lambda _1,\ldots ,\lambda _m$ along the diagonal (each listed a number of times equal to their algebraic multiplicity as roots of the characteristic polynomial), $N$ a matrix of all $0$s except for possibly some $1$s above the super-diagonal, and $DN=ND$, where $d\coloneqq \dim (V_{\A})$  Plugging $D+N$ into $p$, we see that if $N\neq 0$, then $p(D+N)\neq 0$:  a contradiction.  Therefore, $T\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable.
+		
+		\blankline
+		\noindent
+		$(\cref{semisimple_linear_operator.ii}\Rightarrow \cref{semisimple_linear_operator.i})$ Suppose that $T\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable.  Let $\lambda _1,\ldots ,\lambda _m$ denote the distinct eigenvalues of $T$.  Then, $(T-\lambda _1)\cdots (T-\lambda _m)=0$, and so the minimal polynomial of $T$ cannot have roots of multiplicity more than $1$, i.e.~is separable.
+		
+		\blankline
+		\noindent
+		$(\cref{semisimple_linear_operator.i}\Rightarrow \cref{semisimple_linear_operator.iii})$ Suppose that the minimal polynomial of $T$ is separable.  Let $\F$ be the splitting field of the minimal polynomial of $T$ over $\K$.  As the minimal polynomial of $T$ is separable, the extension $\K \hookrightarrow \F$ is Galois.  
+		
+		As $\F$ contains the roots of the minimal polynomial of $T$, $T\colon V_{\F}\rightarrow V_{\F}$ must have an eigenvalue $\lambda$.  Let $e\in V_{\K (\lambda )}\subseteq V_{\F}$ be a corresponding eigenvector.  The orbit of $\lambda$ under the Galois group consist of precisely the roots of the minimal polynomial of $\lambda$.  In particular, the number of elements in the orbit of $\lambda$ is exactly the degree $d$ of the minimal polynomial of $\lambda$ (recall that Galois groups transitively permute the roots of irreducible polynomials).  Thus, $W'\coloneqq \Span \left\{ \sigma (e):\sigma \in \Gal (\F /\K )\right\} \subseteq V_{\F}$ has dimension $d$.  So, let $\{ b_1,\ldots ,b_d\} \subseteq V$ be such that $e=b_1+\lambda b_2+\cdots +\lambda ^{d-1}b_d$,\footnote{As $e\in V_{\Q (\lambda )}$, for any basis $\{ b_1,\ldots ,b_D\}$ of $V$, we can write $e=\sum _{i=0}^{d-1}\sum _{k=1}^Dc_{ik}\lambda ^ib_k=b_0'+\lambda b_1'+\cdots +\lambda ^{d-1}b_{d-1}'$ for some $c_{ik}\in \K$, where we have defined $b_i'\coloneqq \sum _{k=1}^Dc_{ik}b_k\in V$.} and define $W\coloneqq \Span \{ b_1,\ldots ,b_d\} \subseteq V$, so that $W_{\F}=W$.  As $T(e)=\lambda e$, it follows that\footnote{Let $\{ e,\sigma _1(e),\ldots ,\sigma _{d-1}(e)\}$ be a basis for $W'$.  We have that $\sigma _k(e)=b_1+\sigma _k(\lambda )b_1+\sigma _k(\lambda ^{d-1})b_d$ for each $\sigma _k$ ($\sigma _0\coloneqq \id$).  These $d$ equations allow us to uniquely solve for each $b_j$ in terms of the $\sigma _k(e)$s (the matrix of coefficients has to be invertible in order for the $\sigma _k(e)$s to be linearly-independent).  Applying $T$ to this equation gives $d$ equations of the form $\sigma _k(\lambda )\sigma (e)=T(b_1)+\sigma _k(\lambda )T(b_2)+\cdots +\sigma _k(\lambda ^{d-1})T(b_d)$.  Thus, similarly, the $T(b_j)$s are uniquely determined by these $d$ equations, and so, if we can find some expression for each $T(b_j)$ that satisfies these equations, then it must be the correct one.  On the other hand, as all the $d$ equations are obtained from the first by applying $\sigma _k$s, if we can find expressions for each $T(b_j)$ that satisfies the equation $\lambda e=T(b_1)+\lambda T(b_2)+\cdots +\lambda ^{d-1}T(b_d)$, then they must be the correct ones!} $T(b_1)=-c_0b_d$, $T(b_2)=b_1-c_1b_d$, $T(b_3)=b_2-c_2b_d$,\textellipsis, $T(b_d)=b_{d-1}-c_{d-1}b_d$, where $m_{\lambda}(x)=x^d+c_{d-1}x^{d-1}+\cdots +c_0$ is the minimal polynomial of $\lambda$.  (These equations ensure that $T(e)=\lambda e$).  Thus, we have that
+		\begin{equation}
+		[T]_{\mcal{B}}=\begin{bmatrix}0 & 1 & 0 & \cdots & 0 \\ 0 & 0 & 1 & \cdots & 0 \\ \vdots & \vdots & \ddots & \ddots & \vdots \\ -c_0 & -c_1 & -c_2 & \cdots & -c_{d-1}\end{bmatrix},
+		\end{equation}
+		where $\mcal{B}\coloneqq \{ b_1,\ldots ,b_d\}$.  Thus, $W\coloneqq \Span \{ b_1,\ldots ,b_d\}$ is a simple submodule of $V$ (note that $c_0\neq 0$).  Doing this for each orbit of eigenvalues under the Galois group, as $V$ is finite-dimensional, we can decompose $V$ into a direct sum of such simple submodules, so that $V$ is semisimple.
+		
+		\blankline
+		\noindent
+		$(\cref{semisimple_linear_operator.iii}\Rightarrow \cref{semisimple_linear_operator.ii})$ Suppose that the representation $\rho \colon \K \rightarrow \gl (V)$ defined by $\rho (1)\coloneq T$ is semisimple.  By the Jordan Canonical Form Theorem, we can write $T=S+N$ for unique linear maps $S,N\colon V\rightarrow V$ that satisfy (i) $S\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable, (ii) $N$ is nilpotent, and (iii) $SN=NS$.  Thus, to prove the result, it suffices to show that $N=0$.  Write $V\coloneqq V_1\oplus \cdots \oplus V_m$, where each $V_k$ is a simple subrepresentation of $V$.  Thus, $T(V_k)\subseteq V_k$, and no nonzero proper subspace of $V_k$ has this property.  For each $k$, we can apply the Jordan Canonical Form Theorem again to obtain $\restr{T}{V_k}=S_k+N_k$.  From uniqueness, we must have that $S=S_1\oplus \cdots \oplus S_m$ and $N=S_1\oplus \cdots \oplus S_m$.  Thus, each $V_k$ is in fact invariant under both $S$ and $N$ as well.  Define $W_k\coloneqq N(V_k)\subseteq V_k$.  $W_k$ is of course invariant under $N$, and so $S$ and $N$ commute, it is also invariant under $S$, and hence invariant under $T$.  Therefore, either $W_k=V_k$ or $W_k=0$.  If $W_k\coloneqq N(V_k)=V_k$, then $N$ will not be nilpotent.  Therefore, we must have that $W_k\coloneqq N(V_k)=0$, whence it follows that $N=0$, as desired.
+		
+		\blankline
+		\noindent
+		$(\cref{semisimple_linear_operator.iii}\Rightarrow \cref{semisimple_linear_operator.iv})$ Suppose that the representation $\rho \colon\K \rightarrow \gl (V)$ defined by $\rho (1)\coloneqq T$ is semisimple.  Write $V=V_1\oplus \cdots \oplus V_m$ for simple subrepresentations $V_k\subseteq V$.  Let $W\subseteq V$ be a $T$-invariant subspace.  Then, reordering the $V_k$s if necessary, without loss of generality $W=V_1\oplus \cdots \oplus V_n$ for $n\leq m$.  Then, $V_{n+1}\oplus \cdots \oplus V_m$ is a $T$-invariant complement of $W$.
+		
+		\blankline
+		\noindent
+		$(\cref{semisimple_linear_operator.iv}\Rightarrow \cref{semisimple_linear_operator.iii})$ Suppose that every $T$-invariant subspace has a $T$-invariant complement.  We proceed by induction of $\dim (V)$.  If $\dim (V)=1$, then $V$ is in fact simple.  Now, suppose that the result is true for all representations of $\K$ defined by $1\mapsto T$ of dimension at most $d-1$, and let suppose that $\dim (V)=d$.  If $V$ itself is simple, we are done.  Otherwise, there is a proper nonzero $T$-invariant subspace $U\subset V$.  By hypothesis, $U$ has a $T$-invariant complement $W$, and so we have $V=U\oplus W$ as representations.  By the induction hypothesis, $U$ and $W$ are both semisimple, and so $V$ is likewise semisimple.
+	\end{proof}
+\end{thm}

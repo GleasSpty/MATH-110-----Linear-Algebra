@@ -40,7 +40,10 @@ It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)
 		\item \label{Eigen(ii)}$W$ is maximal with this property.
 	\end{enumerate}
 	\begin{rmk}
-		Such a $\lambda$ is referred to as an \term{eigenvalue}\index{Eigenvalue} of $T$.
+		Such a $\lambda$ is referred to as an \term{eigenvalue}\index{Eigenvalue} of $T$, and we write
+		\begin{equation}
+			\Eig (T)\ceqq \left\{ \lambda \in \K :\lambda \text{ is an eigenvalue of }T\text{.}\right\} .
+		\end{equation}\index[notation]{$\Eig (T)$}
 	\end{rmk}
 	\begin{rmk}
 		Nonzero elements of $W$ are \term{eigenvectors}\index{Eigenvector} of $T$ with eigenvalue $\lambda$.
@@ -103,11 +106,23 @@ Our first order of business is to establish the uniqueness of eigenspaces, which
 		and so $\restr{T}{U+W}=\lambda \id _{U+W}$.  As $U+W\supseteq U,W$, by maximality of eigenspaces, we have $U=U+W=W$.
 	\end{proof}
 \end{prp}
+According to the definition, in order to show that $\lambda$ is an eigenvalue, you have to find a nonzero subspace on which $T$ acts by $\lambda$, and furthermore, is maximal with respect to this property.  Having to check maximality by hand would be obnoxious.  Fortunately, we have the following result that gives a relatively simple sufficient condition for guaranteeing that $\lambda$ be an eigenvalue.
+\begin{prp}{Sufficient condition to be an eigenvalue}{}
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \K$.  Then, if there is some nonzero subspace $W\subseteq V$ such that $\restr{T}{W}=\lambda \id _W$, then $\lambda$ is an eigenvalue.
+	\begin{proof}
+		Suppose that there is some nonzero subspace $W\subseteq V$ such that $\restr{T}{W}=\lambda \id _W$.  Define
+		\begin{equation}
+			\collection{W}\ceqq \left\{ W\subseteq V:W\text{ a nonzero subspace such that }\restr{T}{W}=\lambda \id _W\text{.}\right\} .
+		\end{equation}
+		\begin{exr}[breakable=false]{}{}
+			Check that $\collection{W}$ is a partially-ordered set with respect to inclusion and satisfies the hypotheses of \nameref{ZornsLemma}.
+		\end{exr}
+		By \nameref{ZornsLemma}, $\collection{W}$ has a maximal element, and so $\lambda$ is an eigenvalue.
+	\end{proof}
+\end{prp}
+In fact, eigenspaces aren't just maximal subspaces on which $T$ acts by $\lambda$, but in fact they are \emph{maximum} with this property.
 \begin{prp}{Eigenspaces are maximum with their defining property}{}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a subspace, and let $\lambda \in \K$ be an eigenvalue of $V$.  Then, if $\restr{T}{W}=\lambda \id _W$, then $W\subseteq \Eig _{\lambda}$.
-	\begin{rmk}
-		A corollary of this is that, to show that $\lambda$ is an eigenvalue, it suffices to exhibit a single nonzero subspace $W$ such that $\restr{T}{W}=\lambda \id _W$.  For this result implies that $\Eig _{\lambda}\subseteq W$, so that if $W$ is nonzero, so is $\Eig _{\lambda}$, in which case $\lambda$ would be an eigenvalue.
-	\end{rmk}
 	\begin{proof}
 		Suppose that $\restr{T}{W}=\lambda \id _W$.  Define
 		\begin{equation}
@@ -349,7 +364,7 @@ In the previous example, the characteristic polynomial was $\lambda ^2+1$.  Thus
 \begin{displayquote}
 	If order to guarantee that all linear operators have an eigenvalue, we're going to want to require all polynomials to have at least one root.
 \end{displayquote}
-The property that all polynomials have a root is an important one called \emph{algebraically-closed}, and we will return to it later.  For now, however, we resume discussion of examples regarding diagonalizability.
+The property that all polynomials have a root is an important one called \emph{algebraically closed}, and we will return to it later.  For now, however, we resume discussion of examples regarding diagonalizability.
 \begin{exm}{A diagonalizable linear-transformation with fewer eigenvalues than the dimension}{exm4.3.4}
 	The identity $\R ^2\rightarrow \R ^2$ has a single eigenvalue ($1$), but yet it is diagonalizable (with respect to the standard basis).
 \end{exm}
@@ -371,7 +386,7 @@ The property that all polynomials have a root is an important one called \emph{a
 \subsection{Diagonalization of matrix linear-transformations}
 
 While the concept of diagonalization makes sense for any linear-transformation, there is an extra question one might ask if the linear-transformation happens to be defined by a matrix:  what is the relationship between the original matrix and its diagonalization?  The answer to this question is given by the following result.
-\begin{prp}{}{}
+\begin{prp}{}{prp4.3.16}
 	Let $A$ be an $m\times m$ diagonalizable matrix with entries in a division ring $\F$ and let $\basis{B}$ be a basis of eigenvectors of $A$.  Then,
 	\begin{equation}\label{eqn4.3.12}
 		\coordinates{A}{\basis{B}\leftarrow \basis{B}}=\coordinates{\id}{\basis{B}\leftarrow \basis{S}}\coordinates{A}{\basis{S}\leftarrow \basis{S}}\coordinates{\id}{\basis{S}\leftarrow \basis{B}},
@@ -401,7 +416,7 @@ While the concept of diagonalization makes sense for any linear-transformation, 
 
 \section{Jordan Canonical Form}
 
-Diagonalizable linear-transformations are great.  There's just one little itsy-bitsy problem:  not all linear-transformations are diagonalizable!  Not even in the context of finite-dimensional vector space over algebraically-closed\footnote{Whatever that means.} fields.  Fortunately, there is something that is almost as good, but \emph{always} exist (at least if the ground ring is sufficiently nice):  the \emph{Jordan canonical form} of a linear-transformation.
+Diagonalizable linear-transformations are great.  There's just one little itsy-bitsy problem:  not all linear-transformations are diagonalizable!  Not even in the context of finite-dimensional vector space over algebraically closed (\cref{AlgebraicallyClosed}) fields.  Fortunately, there is something that is almost as good, but \emph{always} exist (at least if the ground ring is sufficiently nice):  the \emph{Jordan canonical form} of a linear-transformation.
 
 Before we get there however, we must first take a detour to discuss \emph{direct-sums} and \emph{invariant-subspaces}.  Very roughly speaking, the idea is to decompose a vector space into smaller pieces that are easier to study.  For example, if $b\in V$ is an eigenvector of $T$, then $\Span (b)$ the behavior of $T$ on this subspace is particularly easy to understand.  While we can't quite have the subspaces be that simple in general, we will find that we can still decompose our space into pieces which are not that much more complicated.
 
@@ -792,7 +807,7 @@ As before, this is an isomorphism if the direct-sum decomposition is finite.
 		\left\{ \coord{v^W:W\in \collection{W}}:v^W=0\text{ for cofinitely many }W\in \collection{W}\text{.}\right\} .
 	\end{equation}
 	\begin{rmk}
-		In particular, if $\collection{W}\eqqc \{ W^1,\ldots ,W^m\}$ is finite, this map is surjective, and so this gives an isomorphism $V\rightarrow W^1\times \cdots \times W^m$.  In particular,
+		In particular, if $\collection{W}\eqqc \{ W^1,\ldots ,W^m\}$ is finite this gives an isomorphism $V\rightarrow W^1\times \cdots \times W^m$.  In particular,
 		\begin{equation}
 			W^1\oplus \cdots \oplus W^m\cong W^1\times \cdots \times W^m.
 		\end{equation}
@@ -993,7 +1008,7 @@ Before turning to the the definition of invariant subspace itself, we first inve
 		Check that this actually satisfies the axioms of a $\K [x]$-module.
 	\end{exr}
 	\begin{rmk}
-		If ever $V$ is a $\K$-module and $T$ is a $\K$-linear operator on $V$, if we say ``$V$ is a $\K [x]$-module'', it should be understood that the $\K [x]$-module structure we are referring to is the one defined in this example.
+		If ever $V$ is a $\K$-module and $T$ is a $\K$-linear operator on $V$, if we say ``$V$ is a $\K [x]$-module'', it should be understood that the $\K [x]$-module structure we are referring to is the one defined in this example.  While I don't want to make the notation `official',\footnote{Because the notation is not unique enough to make it effectively unambiguous.} if I want to regard $V$ as a $\K [x]$-module instead of a $\K$-module, I will instead write $V_T$.  Of course, the set of ``vectors'' itself hasn't change, but this notation indicates to you that I am thinking of the same set of vectors \emph{with different ``scalars''}.
 	\end{rmk}
 \end{exm}
 Regarding $V$ as a $\K [x]$-module in this way is just a fancy way of saying that we have defined what $p(T)$ means, $T\colon V\rightarrow V$ a $\K$-linear operator and $p$ a polynomial.  For example, if $p(x)\ceqq 3x^3-5x^2+2$, then $p(T)\colon V\rightarrow V$ is the $\K$-linear transformation
@@ -1126,14 +1141,14 @@ We now consider whether we can, and if so, how can we, decompose $V$ into indeco
 	\end{proof}
 \end{prp}
 \begin{exr}{}{exr4.5.17}
-	What is an example of an that is not completely-decomposable?  Can you find one that is an $\F [x]$-module?
+	What is an example of a $\K$-module that is not completely-decomposable?  Can you find one that is an $\F [x]$-module?
 \end{exr}
 
 Now seems an appropriate time to return to a counter-example we mentioned previously, namely, a subspace of a $\K$-module with no complement.
 \begin{exm}{A subspace of a $\K$-module with no complement}{exm4.5.15}
 	Define $\K \ceqq \C$, $V\ceqq \C ^2$, $U\ceqq \Span (\coord{1,0})$, and let $T_A\colon V\rightarrow V$ be the $\C$-linear-transformation defined by the matrix
 	\begin{equation}
-		A\ceqq \begin{bmatrix}0 & 1 \\ 0 & 1\end{bmatrix}.
+		A\ceqq \begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}.
 	\end{equation}
 	Note that $U\subseteq V$ is a $\C [x]$-submodule, that is, it is $T_A$-invariant.  We claim that it has no complement.
 	
@@ -1246,7 +1261,7 @@ To see what notion of ``small'' we might want, recall that we are going to try t
 		that is, $T$ composed with itself $m$ times.
 	\end{rmk}
 	\begin{rmk}
-		For $N\colon V\rightarrow V$ nilpotent and $v\in V$, we say that $v$ is \term{$N$-maximal}\index{$N$-maximal} iff $N^{\Rank (N)-1}(v)\neq 0$.  Of course, the definition of nilpotent always guarantees that there is some $N$-maximal element (except for the stupid case $N=0$).
+		For $N\colon V\rightarrow V$ nilpotent and $v\in V$, we say that $v$ is \term{$N$-maximal}\index{$N$-maximal} iff it is \emph{not} the case that $v=N(w)$ for some $w\in V$.\footnote{This is just the statement that $v\notin \Ima (N)$, though saying ``$v$ is $N$-maximal'' is more suggestive in this context for reasons that will hopefully become more apparent later on.}  Of course, the definition of nilpotent always guarantees that there is some $N$-maximal element (except for the stupid case $N=0$).
 		
 		Note that this is the notion of maximal that corresponds to the preorder $\preceq$ defined by $v\preceq w$ iff $v=N^k(m)$ for some $k\in \N$.
 	\end{rmk}
@@ -1307,7 +1322,7 @@ We thus know that nilpotent linear-transformations are essentially never diagona
 		\end{equation}
 	\end{enumerate}
 	\begin{rmk}
-		Intuitively, one can think of this as follows.  Starting with $v_0$, if you want something that is $N$-invariant, that something had better contain $N(v_0)$, $N^2(v_0)$, and so on.  This gives you $N^{\infty}(v_0)$.  If you then want that something to be a subspace, you had better taken the span to obtain $\Span (N^{\infty}(v_0))$.  In turns out that this is $N$-indecomposable, and furthermore, is maximal if $v_0$ is $N$-maximal.
+		Intuitively, one can think of this as follows.  Starting with $v_0$, if you want something that is $N$-invariant, that something had better contain $N(v_0)$, $N^2(v_0)$, and so on.  This gives you $N^{\infty}(v_0)$.  If you then want that something to be a subspace, you had better taken the span to obtain $\Span (N^{\infty}(v_0))$.  In turns out that this is $N$-indecomposable, is maximal if $v_0$ is $N$-maximal, and furthermore, the matrix of $N$ with respect to this basis is particularly simple---see \eqref{eqn4.6.17}.
 	\end{rmk}
 	\begin{rmk}
 		Note that (\cref{prp4.5.17}) we can always write $V$ as a direct-sum of finitely many $N$-indecomposable submodules, and so in the general case (when $V$ is not necessarily indecomposable), we can use this result to obtain a basis $\basis{B}$ of $V$ that has the property that $\coordinates{N}{\basis{B}\leftarrow \basis{B}}$ will be a direct-sum of matrices of the above form.
@@ -1449,7 +1464,7 @@ Having understood the behavior of $T$ on subspaces of the form $\Ker ([T-\lambda
 		\item $W$ is maximal with this property.
 	\end{enumerate}
 	\begin{rmk}
-		Such a $\lambda$ is referred to a \term{generalized-eigenvalue}\index{Generalized-eigenvalue} of $T$.
+		Such a $\lambda$ is referred to a \term{generalized-eigenvalue}\index{Generalized-eigenvalue} of $T$.\footnote{We will see (\cref{prp4.6.25}) that in fact generalized-eigenvalues are the same as the eigenvalues.  So in particular, we don't introduce a separate notation for the set of generalized-eigenvalues.}
 	\end{rmk}
 	\begin{rmk}
 		Nonzero elements of $W$ are \term{generalized-eigenvectors} of $T$ with eigenvalue $\lambda$.
@@ -1481,7 +1496,7 @@ As before, we start by establishing uniqueness of generalized-eigenspaces.
 	\end{proof}
 \end{prp}
 \begin{prp}{Generalized-eigenspaces are maximum with their defining property}{}
-	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a subspace, and let $\lambda \in \K$ be a generalized-eigenvalue of $V$.  Then, if $\restr{T}{W}=\lambda \id _W+N$ with $N\colon W\rightarrow W$ locally-nilpotent linear, then $W\subseteq \Eig _{\lambda}$.
+	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a subspace, and let $\lambda \in \K$ be a generalized-eigenvalue of $V$.  Then, if $\restr{T}{W}=\lambda \id _W+N$ with $N\colon W\rightarrow W$ locally-nilpotent linear, then $W\subseteq \Eig _{\lambda}^{\infty}$.
 	\begin{rmk}
 		A corollary of this is that, to show that $\lambda$ is a generalized-eigenvalue, it suffices to exhibit a single nonzero subspace $W$ on which $T-\lambda$ is locally-nilpotent linear.  For this result implies that $\Eig _{\lambda}^{\infty}\supseteq W$, so that if $W$ is nonzero, so is $\Eig _{\lambda}^{\infty}$, in which case $\lambda$ would be a generalized-eigenvalue.
 	\end{rmk}
@@ -1548,11 +1563,16 @@ We also have a result analogous to \cref{thm4.2.17} that is useful for actually 
 	\begin{equation}
 		\Eig _{\lambda ,T}^{\infty}=\Ker ([T-\lambda ]^{\dim (V)}).
 	\end{equation}
-	The analogous result for eigenvalues \cref{thm4.2.17} had two parts whereas this result only has one.  This is because the first part of \cref{thm4.2.17} gives an explicit characterization of eigenvalues, but as eigenvalue and generalized-eigenvalues are the same, there is no additional characterization here.
+	\begin{rmk}
+		The analogous result for eigenvalues \cref{thm4.2.17} had two parts whereas this result only has one.  This is because the first part of \cref{thm4.2.17} gives an explicit characterization of eigenvalues, but as eigenvalue and generalized-eigenvalues are the same, there is no additional characterization here.
+	\end{rmk}
 	\begin{proof}
 		Suppose that $\lambda$ is an eigenvalue of $T$.  Define
 		\begin{equation}
-			W\ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{ for some }m\in \N \text{.}\right\} =\bigcup _{m\in \N}\Ker ([T-\lambda ]^m).
+			\begin{split}
+				W & \ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{ for some }m\in \N \text{.}\right\} \\
+				& =\bigcup _{m\in \N}\Ker ([T-\lambda ]^m).
+			\end{split}
 		\end{equation}
 		\begin{exr}[breakable=false]{}{}
 			Check that $W$ is a subspace.
@@ -1606,6 +1626,27 @@ Related to the fact that we can write the generalized-eigenspace as a union in t
 		Note that $\Rank (v)\leq \dim (V)$ if $V$ is finite-dimensional by the previous result \cref{thm4.4.143}.
 	\end{rmk}
 \end{dfn}
+\begin{exm}{}{}
+	Define
+	\begin{equation}
+		A\ceqq \begin{bmatrix}0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0\end{bmatrix}.
+	\end{equation}
+	$A$ has a single eigenvalue, $0$.  $e_1\ceqq \coord{1,0,0}$ is a generalized-eigenvector of rank $1$ (so just an eigenvector), $e_2\ceqq \coord{0,1,0}$ is a generalized-eigenvector of rank $2$, and $e_3\ceqq \coord{0,0,1}$ is a generalize-eigenvector of rank $3$.  $e_1$ should be clear.  As for $e_2$, we can see that it has rank $2$ because
+	\begin{equation}
+		Ae_2\neq 0\text{ but }A^2e_2=0.
+	\end{equation}
+	Similarly, we see that $e_3$ has rank $3$ because
+	\begin{equation}
+		A^2e_3\neq 0\text{ but }A^3e_3=0.
+	\end{equation}
+	Thus, $\{ e_1,e_2,e_3\}$ is a basis of $\R ^3$ consisting of generalized-eigenvectors of $A$, whose elements have rank $1$, $2$, and $3$ respectively.
+	
+	Note that this matrix is \emph{not} diagonalizable, so there is \emph{not} a basis of (regular) eigenvectors.  Thus, generalizing to, well, generalized-eigenvectors has solved this problem.
+	
+	Additionally, note that $A$ is nilpotent and $e_3$ is $A$-maximal.  According to \cref{thm4.6.17}, $\{ e_3,Ae_3,A^2e_3\}$ will be linearly-independent and indecomposable.  Indeed, $Ae_3=e_2$, and $A^2e_3=e_1$, so this is certainly linearly-independent.
+	
+	When it comes to actually computing the Jordan canonical form of linear-transformations, you can't just use any basis of generalized-eigenvectors, but rather you have to pick your generalized-eigenvectors in a certain way.  In general, you want to find the ``maximal'' generalized-eigenvectors and `generate' a basis by applying the nilpotent operators as we have done here.  We'll explain this in more detail later, so don't worry if this doesn't all make sense now.
+\end{exm}
 \begin{exm}{}{}
 	Define $D\colon C^{\infty}(\R )\rightarrow C^{\infty}(\R )$.  From \cref{exm4.2.17}, we know that every $\lambda \in \C$ is an eigenvalue with eigenspace given by $\Eig _{\lambda}=\Span (\e ^{\lambda x})$.  Let us now investigate the generalized-eigenspaces.
 	
@@ -1674,7 +1715,7 @@ We are now essentially ready to put all the pieces together.
 
 \subsection{The Jordan Canonical Form Theorem}
 
-Okay, so that was a lie.  There is still one minor detail we need to address:  how do we know we have any eigenvalues at all!?  Indeed, we don't know that.  Because it's just not true.  We saw in \cref{exm4.3.7} an example of a linear-transformation that didn't have any eigenvalues.  Fortunately, there is a natural hypothesis would can impose on the ground division ring in order to guarantee we have eigenvalues, in which case (\cref{GeneralizedEigenspaceDecomposition}), not only do we have a single eigenvalue, but we have `enough' generalized-eigenvectors to generate the entire space.  The hypothesis we speak of is that of being \emph{algebraically-closed}, a discussion of which, to a void yet another large interruption before we reach our goal (among other reasons), has been placed in the appendix (\cref{AlgebraicallyClosed}).
+Okay, so that was a lie.  There is still one minor detail we need to address:  how do we know we have any eigenvalues at all!?  Indeed, we don't know that.  Because it's just not true.  We saw in \cref{exm4.3.7} an example of a linear-transformation that didn't have any eigenvalues.  Fortunately, there is a natural hypothesis would can impose on the ground division ring in order to guarantee we have eigenvalues, in which case (\cref{GeneralizedEigenspaceDecomposition}), not only do we have a single eigenvalue, but we have `enough' generalized-eigenvectors to generate the entire space.  The hypothesis we speak of is that of being \emph{algebraically closed}, a discussion of which, to a void yet another large interruption before we reach our goal (among other reasons), has been placed in the appendix (\cref{AlgebraicallyClosed}).
 
 \subsubsection{The theorem.  Finally.}
 
@@ -1700,9 +1741,27 @@ We're finally ready to state the Jordan Canonical Form Theorem, which, among oth
 		\Jord _{-2,3}\coloneqq \begin{bmatrix}-2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -1\end{bmatrix}\text{ and } \Jord _{1,1}\coloneqq \begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}.
 	\end{equation}
 \end{exm}
+\begin{exm}{Jordan blocks and ranks of generalized-eigenvectors}{JordanRank}
+	Consider for the sake of example the Jordan block
+	\begin{equation}
+		\Jord _{5,4}\ceqq \begin{bmatrix}5 & 1 & 0 & 0 \\ 0 & 5 & 1 & 0 \\ 0 & 0 & 5 & 1 \\ 0 & 0 & 0 & 5\end{bmatrix}.
+	\end{equation}
+	
+	Note that the standard basis for $\C ^4$ $\basis{S}\eqqc \{ e_1,e_2,e_3,e_4\}$ is a basis consisting of generalized-eigenvectors of $\Jord _{5,4}$.  Furthermore, $e_1$ has rank $1$, $e_2$ has rank $2$, $e_3$ has rank $3$, and $e_4$ has rank $4$.
+	\begin{exr}[breakable=false]{}{}
+		Check all this.
+	\end{exr}
+
+	Of course, none of this is specific to $\Jord _{5,4}$, and in general we have the following.
+	\begin{displayquote}
+		For a Jordan block of size $m$, the standard basis is a basis of generalized-eigenvectors.  The first has rank $1$, the second has rank $2$, and so on.
+		
+		In particular, \emph{Jordan blocks have a single eigenvector} (up scaling).
+	\end{displayquote}
+\end{exm}
 And now, what is arguably the most important theorem in the entirety of the notes.\footnote{After reading the statement, if things are still unclear, you might consider jumping to the end of the proof, after which comes some more explanation.}
 \begin{thm}{Jordan Canonical Form Theorem}{GeneralizedEigenspaceDecomposition}
-	Let $V$ be a finite-dimensional vector space over an algebraically-closed field $\F$, let $T\colon V\rightarrow V$ be linear, and denote the eigenvalues of $T$ by $\lambda _1,\ldots ,\lambda _m$.  Then,
+	Let $V$ be a finite-dimensional vector space over an algebraically closed field $\F$, let $T\colon V\rightarrow V$ be linear, and denote the eigenvalues of $T$ by $\lambda _1,\ldots ,\lambda _m$.  Then,
 	\begin{enumerate}
 		\item \label{GeneralizedEigenspaceDecomposition(i)}
 		\begin{equation}\label{eqn4.4.173}
@@ -1745,6 +1804,9 @@ And now, what is arguably the most important theorem in the entirety of the note
 		\cref{GeneralizedEigenspaceDecomposition(v)} says that the Jordan canonical form of $T$ is essentially unique in the sense that, if you write $T$ as a direct-sum of Jordan blocks, the Jordan blocks appearing in that decomposition must be exactly the same as the ones you found before.
 	\end{rmk}
 	\begin{rmk}
+		Note that it follows from this (and the comment made at the end of \cref{JordanRank}) that \emph{the dimension of the $\lambda$ eigenspace is equal to the number of Jordan blocks with eigenvalue $\lambda$ appearing in the Jordan canonical form}.
+	\end{rmk}
+	\begin{rmk}
 		Note that a direct-sum of Jordan blocks of size $1$ is a diagonal matrix, and so, by uniqueness, a matrix is diagonalizable iff all the the Jordan blocks appearing it its Jordan canonical form are of size $1$, in which case the diagonalization is the same as its Jordan canonical form.  Thus, Jordan canonical form is indeed a strict generalization of diagonalization.
 	\end{rmk}
 	\begin{rmk}
@@ -1764,7 +1826,7 @@ And now, what is arguably the most important theorem in the entirety of the note
 		
 		So, let $d\ceqq \dim (V)\in \Z ^+$ and suppose that the result is true whenever the dimension of the vector space is less than $d$.
 		\begin{lma}[break at=19cm/0pt]{}{}
-			Let $V$ be a finite-dimensional vector space over an algebraically-closed field and let $T\colon V\rightarrow V$ be linear.  Then, $T$ has an eigenvalue.
+			Let $V$ be a finite-dimensional vector space over an algebraically closed field and let $T\colon V\rightarrow V$ be linear.  Then, $T$ has an eigenvalue.
 			\begin{proof}
 				Let $v\in V$ be nonzero.
 				\begin{equation}
@@ -1778,7 +1840,7 @@ And now, what is arguably the most important theorem in the entirety of the note
 				\begin{equation}
 					p(x)\ceqq \alpha _0+\alpha _1x+\cdots +\alpha _dx^d\in \F [x]
 				\end{equation}
-				is a nonconstant polynomial.  As $\F$ is right algebraically-closed, there is a root $\lambda _1\in \F$ of $p$.  Hence, by \cref{prp4.4.174}, there is a polynomial $p_2\in \F [x]$ such that
+				is a nonconstant polynomial.  As $\F$ is right algebraically closed, there is a root $\lambda _1\in \F$ of $p$.  Hence, by \cref{prp4.4.174}, there is a polynomial $p_2\in \F [x]$ such that
 				\begin{equation}
 					p(x)=p_2(x)(x-\lambda _1).
 				\end{equation}
@@ -1863,12 +1925,12 @@ And now, what is arguably the most important theorem in the entirety of the note
 		\end{exr}
 		
 		\blni
-		\cref{GeneralizedEigenspaceDecomposition(v)} Let $\basis{C}$ is another basis of $V$ that has the property that $\coordinates{T}{\basis{C}\leftarrow \basis{C}}$ is a direct-sum of Jordan blocks.  The eigenvalues of such a direct-sum are the same as the eigenvalues of $T$, and so the eigenvalues appearing among the Jordan blocks are the same for both the bases $\basis{B}$ and $\basis{C}$.  So, fix $\lambda \in \F$ an eigenvalue of $T$, and for the moment consider only the restriction $S\ceqq \restr{T}{\Eig _{\lambda}^{\infty}}\colon \Eig _{\lambda}^{\infty}$.  As $$\coordinates{T}{\basis{C}\leftarrow \basis{C}}$$ is a direct-sum of Jordan blocks, the elements of $\basis{C}$ are all generalized-eigenvectors, and so $\basis{C}_{\lambda}\ceqq \basis{C}\cap \Eig _{\lambda}^{\infty}$ is a basis for $\Eig _{\lambda}^{\infty}$.  Similarly for $\basis{B}_{\lambda}\ceqq \basis{B}\cap \Eig _{\lambda}^{\infty}$.  Thus, $\coordinates{S}{\basis{B}}$ and $\coordinates{S}{\basis{C}}$ are both direct-sums of Jordan blocks and we would like to prove that the size of the Jordan blocks appearing in this decomposition are the same (the eigenvalues are of course all equal to $\lambda$).  Let $m\in \Z ^+$ be the smallest positive integer such that $[S-\lambda ]^m=0$ (there is some such $m$ as we know $S-\lambda$ is nilpotent).  It follows that $m$ is the smallest positive integer such that $\coordinates{[S-\lambda ]}{\basis{B}}^m=0$ and also the smallest positive integer such that $\coordinates{[S-\lambda ]}{\basis{C}}^m=0$.  It follows that the largest Jordan block appearing in both of these matrices is size $m$.  Now, replace $S$ with $S-\Jord _{\lambda ,m}$ and apply the same logic again.  We find again that the largest Jordan blocks appearing in these decompositions have the same size.  Proceeding inductively, we see that they have the same Jordan blocks.
+		\cref{GeneralizedEigenspaceDecomposition(v)} Let $\basis{C}$ is another basis of $V$ that has the property that $\coordinates{T}{\basis{C}\leftarrow \basis{C}}$ is a direct-sum of Jordan blocks.  The eigenvalues of such a direct-sum are the same as the eigenvalues of $T$, and so the eigenvalues appearing among the Jordan blocks are the same for both the bases $\basis{B}$ and $\basis{C}$.  So, fix $\lambda \in \F$ an eigenvalue of $T$, and for the moment consider only the restriction $S\ceqq \restr{T}{\Eig _{\lambda}^{\infty}}\colon \Eig _{\lambda}^{\infty}$.  As $\coordinates{T}{\basis{C}\leftarrow \basis{C}}$ is a direct-sum of Jordan blocks, the elements of $\basis{C}$ are all generalized-eigenvectors, and so $\basis{C}_{\lambda}\ceqq \basis{C}\cap \Eig _{\lambda}^{\infty}$ is a basis for $\Eig _{\lambda}^{\infty}$.  Similarly for $\basis{B}_{\lambda}\ceqq \basis{B}\cap \Eig _{\lambda}^{\infty}$.  Thus, $\coordinates{S}{\basis{B}}$ and $\coordinates{S}{\basis{C}}$ are both direct-sums of Jordan blocks and we would like to prove that the size of the Jordan blocks appearing in this decomposition are the same (the eigenvalues are of course all equal to $\lambda$).  Let $m\in \Z ^+$ be the smallest positive integer such that $[S-\lambda ]^m=0$ (there is some such $m$ as we know $S-\lambda$ is nilpotent).  It follows that $m$ is the smallest positive integer such that $\coordinates{[S-\lambda ]}{\basis{B}}^m=0$ and also the smallest positive integer such that $\coordinates{[S-\lambda ]}{\basis{C}}^m=0$.  It follows that the largest Jordan block appearing in both of these matrices is size $m$.  Now, replace $S$ with $S-\Jord _{\lambda ,m}$ and apply the same logic again.  We find again that the largest Jordan blocks appearing in these decompositions have the same size.  Proceeding inductively, we see that they have the same Jordan blocks.
 	\end{proof}
 \end{thm}
 This theorem says a lot, all of which is important and useful, but the short and sweet version can be summed up as saying
 \begin{displayquote}
-	Every linear operator on a finite-dimensional vector space over an algebraically-closed field has a basis in which the associated matrix is a direct-sum of Jordan blocks.
+	Every linear operator on a finite-dimensional vector space over an algebraically closed field has a basis in which the associated matrix is a direct-sum of Jordan blocks.
 \end{displayquote}
 
 How this works can be understood in three key steps.  First, $V$ is a direct-sum of the generalized-eigenspaces:
@@ -1876,7 +1938,7 @@ How this works can be understood in three key steps.  First, $V$ is a direct-sum
 	V=\Eig _{\lambda _1}^{\infty}\oplus \cdots \oplus \Eig _{\lambda _m}^{\infty}.
 \end{equation}
 Second, we break up each generalized-eigenspace into indecomposable summands (\cref{thm4.6.17}).  Finally, as $T-\lambda _k$ is nilpotent on the corresponding generalized-eigenspace, \cref{prp4.5.17}, whose statement (or part of it) we reproduce below for convenience, explains how $T-\lambda _k$ behaves on these indecomposable components.
-\begin{thm}{}{}
+\begin{thm}{}{thm4.4.221}
 	Let $V$ be a finite-dimensional vector space and let $N\colon V\rightarrow V$ be nilpotent linear.  Then, if $V$ is $N$-indecomposable,
 	\begin{equation}
 		\basis{B}\ceqq \{ v_0,N(v_0),\ldots ,N^{\dim (V)-1}(v_0)\}
@@ -1889,11 +1951,12 @@ Second, we break up each generalized-eigenspace into indecomposable summands (\c
 		This is a part of the conclusion of \cref{thm4.6.17}.
 	\end{proof}
 \end{thm}
+Of course, there is still the issue of how to actually \emph{calculate} the damn thing, but we postpone that until the next section until after having discussed the \emph{minimal polynomial}.
 
 To give you an idea of what this means (don't worry---it's not hard), let's take a look at a couple examples of matrices in Jordan canonical form.
 \begin{exm}{}{}
 	\begin{equation}
-		\Jord _{3,2}\oplus \Jord _{4,1}\oplus \Jord _{-2,2}=\begin{bmatrix}3 & 1 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 & 0 \\ 0 & 0 & 4 & 0 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}
+		\Jord _{3,2}\oplus \Jord _{4,1}\oplus \Jord _{-2,2}\ceqq \begin{bmatrix}3 & 1 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 & 0 \\ 0 & 0 & 4 & 0 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}
 	\end{equation}
 	is in Jordan canonical form.
 	
@@ -1902,6 +1965,15 @@ To give you an idea of what this means (don't worry---it's not hard), let's take
 		\Jord _{5,3}\oplus \Jord _{-3,2}=\begin{bmatrix}5 & 1 & 0 & 0 & 0 \\ 0 & 5 & 1 & 0 & 0 \\ 0 & 0 & 5 & 0 & 0 \\ 0 & 0 & 0 & -3 & 1 \\ 0 & 0 & 0 & 0 & -3\end{bmatrix}
 	\end{equation}
 	is in Jordan canonical form.
+	
+	Finally,
+	\begin{equation}
+		\Jord _{4,2}\oplus \Jord _{4,2}\oplus \Jord _{4,1}\ceqq \begin{bmatrix}4 & 1 & 0 & 0 & 0 \\ 0 & 4 & 0 & 0 & 0 \\ 0 & 0 & 4 & 1 & 0 \\ 0 & 0 & 0 & 4 & 0 \\ 0 & 0 & 0 & 0 & 4\end{bmatrix}.
+	\end{equation}
+	is also in Jordan canonical form.
+	\begin{rmk}
+		Note in particular that you have have \emph{multiple Jordan blocks} corresponding to the \emph{same eigenvalue}.
+	\end{rmk}
 \end{exm}
 \begin{exm}{}{}
 	Suppose I give you a linear operator $T$ on $\C ^4$ and I tell you that $T$ has a single eigenvalue $3$.  This theorem tells us that the Jordan canonical form of $T$ is going to be a direct-sum of Jordan blocks with eigenvalue $3$, and furthermore, the size of these Jordan blocks must sum to $4$.  Thus, this theorem tells you that the possible Jordan canonical forms of $T$ are as follows.
@@ -1915,9 +1987,40 @@ To give you an idea of what this means (don't worry---it's not hard), let's take
 	With just a bit of extra information, you can determine which of these five possibilities it is.  For example, if $T-3=0$, then of course it must the last choice.  If $T-3\neq 0$ but $(T-3)^2=0$, then it must be the third or fourth choice, and you can distinguish between those two by looking at $\dim (\Eig _3)$.\footnote{While the dimension of the generalized-eigenspace is of course always $4$, we have $\dim (\Eig _3)=2$ for the third matrix and $\dim (\Eig _3)=3$ for the third matrix.}  If $(T-3)^2\neq 0$ but $(T-3)^3=0$, then it must be the second choice.  Finally, if $(T-3)^3\neq 0$, then it must be the first choice.
 \end{exm}
 
+\subsubsection{Jordan canonical form of matrix linear-transformations}
+
+When studying diagonalization, it wasn't just of interest to know what the diagonalization itself was, but also what the relationship was between the original linear-transformation and its diagonalization.  In general, this relationship is just ``The diagonalization is the matrix with respect to a basis of eigenvectors.'', but if the linear-transformation is defined by a matrix, we can be a bit more explicit.  This was done in \cref{prp4.3.16}, and we now present the analogous result for Jordan canonical form.  Conceptually, it is essentially identical in nature, and if understand the previous result, you understand this one.
+\begin{prp}{}{MatrixJordan}
+	Let $A$ be an $m\times m$ matrix with entries in an algebraically-closed field $\F$ and let $\basis{B}$ be a Jordan basis of $A$.  Then,
+	\begin{equation}
+		\coordinates{A}{\basis{B}\leftarrow \basis{B}}=\coordinates{\id}{\basis{B}\leftarrow \basis{S}}\coordinates{A}{\basis{S}\leftarrow \basis{S}}\coordinates{\id}{\basis{S}\leftarrow \basis{B}},
+	\end{equation}
+	where $\basis{S}$ is the standard basis of $\F ^m$.
+	\begin{rmk}
+		Note that $\coordinates{A}{\basis{S}\leftarrow \basis{S}}=A$ by \cref{prp3.2.100}.\footnote{I wrote \eqref{eqn4.3.12} using $\coordinates{A}{\basis{S}\leftarrow \basis{S}}$ instead of $A$ because I feel as if writing it this way makes it more `obviously' true.}
+		
+		Furthermore, $\coordinates{A}{\basis{B}\leftarrow \basis{B}}$ is the Jordan canonical form of $A$ (by the definition of ``Jordan basis'') and $\coordinates{\id}{\basis{B}\leftarrow \basis{S}}=\coordinates{\id}{\basis{S}\leftarrow \basis{B}}^{-1}$.  Thus, writing $J\ceqq \coordinates{A}{\basis{B}\leftarrow \basis{B}}$ and $P\ceqq \coordinates{\id}{\basis{S}\leftarrow \basis{B}}$, this equation is sometimes written more concisely (but perhaps less transparently) as
+		\begin{equation}
+			J=P^{-1}AP.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		Note that, by \cref{CoordinatesLinearTransformation}, the columns of $\coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ are given by $\coordinates{b_k}{\basis{S}}$ for $b_k\in \basis{B}$.  However, by \cref{prp3.1.17},\footnote{This is the result that says the coordinates of a column vector with respect to the standard basis is just that original column vector.} this is just $b_k$ itself.  Thus,
+		\begin{displayquote}
+			\emph{$P\ceqq \coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ is the matrix whose columns form a Jordan basis for $A$.}
+		\end{displayquote}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result yourself.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
 \subsubsection{Similarity of linear operators}
 
-While we shall not really make use of the concept ourselves, as you continue in mathematics you will want to be able to determine when two linear operators are \emph{conjugate} or \emph{similar} to one another.  Jordan canonical form gives a characterization of when this is the same.
+While we shall not really make use of the concept ourselves, as you continue in mathematics you will want to be able to determine when two linear operators are \emph{conjugate} or \emph{similar} to one another.\footnote{For example, if you want to determine the conjugacy classes in certain matrix groups.}  Jordan canonical form gives a characterization of when this is the case.
 \begin{dfn}{Similar (linear operators)}{Similar}
 	Let $V$ be a $\K$-module and let $S,T\colon V\rightarrow V$ be linear operators.  Then, $S$ and $T$ are \term{similar}\index{Simlar (linear operators)} iff the two $\K [x]$-module structures defined by $S$ and $T$ respectively are isomorphic.
 \end{dfn}
@@ -1981,7 +2084,7 @@ Another characterization of similarity that makes it more apparent what this con
 \end{prp}
 As mentioned before, Jordan canonical form gives a complete characterization of when linear operators are similar.
 \begin{thm}{}{}
-	Let $V$ be a finite-dimensional vector space over an algebraically-closed field and let $S,T\colon V\rightarrow V$ be linear-operators.  Then, $S$ and $T$ are similar iff they have the same Jordan canonical form.
+	Let $V$ be a finite-dimensional vector space over an algebraically closed field and let $S,T\colon V\rightarrow V$ be linear-operators.  Then, $S$ and $T$ are similar iff they have the same Jordan canonical form.
 	\begin{proof}
 		$(\Rightarrow )$ Suppose that $S$ and $T$ are similar.  Then, there is an invertible linear operator $P\colon V\rightarrow V$ such that $T=P\circ S\circ P^{-1}$.  Let $\basis{B}$ be a basis for which $\coordinates{S}{\basis{B}}$ is in Jordan canonical form.  Define $\basis{C}\ceqq \{ P(b):b\in \basis{B}\}$.  Then,
 		\begin{equation}
@@ -1994,6 +2097,292 @@ As mentioned before, Jordan canonical form gives a complete characterization of 
 	\end{proof}
 \end{thm}
 
+\subsection{Summary}
+
+We've already summarized the key elements of this section, so we shall not reproduce them here.  (I thought it might still be helpful to have a ``Summary'' subsection that was easy to find.)  If it's an actual summary you're looking for, check the paragraphs immediately preceding and immediately after \cref{thm4.4.221}.
+
+\section{The minimal polynomial}
+
+We've finally concluded that there is a basis for any linear-transformation on a finite-dimensional vector space over an algebraically closed field for which the corresponding matrix is ``nice'', that is, a direct-sum of Jordan blocks.  That's great to know, but what we would like to be able to do is actually compute these things, that is, compute bases of the generalized-eigenspaces so that we may compute the corresponding matrix.
+
+The first step in this process is to compute the eigenvalues, which we still have not really addressed how to do systematically yet.  One (rather poor) answer to this is the \emph{minimal polynomial} of a linear operator.  The minimal polynomial of a linear operator is a polynomial that, among other things, has the property that its roots are precisely the eigenvalues of $T$.  Thus, if you can compute the minimal polynomial, you can compute its roots,\footnote{Numerically anyways.  I'm sure you've heard of the fact that you can't solve degree $5$ polynomial equations or higher in general.} and hence the eigenvalues.  This isn't really where the minimal polynomial shines in its use, however.  In addition to the the eigenvalues themselves, the minimal polynomial also gives you information about the Jordan canonical form.
+
+We begin with the theorem that allows us to define the minimal polynomial.
+\begin{thm}{Minimal polynomial}{MinimalPolynomial}
+	Let $V$ be a finite-dimensional vector space over a field $\F$ and let $T\colon V\rightarrow V$ be linear.  Then, there is a unique monic polynomial $p_{\min ,T}$\index[notation]{$p_{\min ,T}$}, the \term{minimal polynomial}\index{Minimal polynomial} of $T$, such that
+	\begin{enumerate}
+		\item \label{MinimalPolynomial(i)}$p_{\min ,T}(T)=0$; and
+		\item \label{MinimalPolynomial(ii)}if $p(T)=0$ for $p\in \F [x]$ nonzero, then $\deg (p_{\min ,T})\leq \deg (p)$.
+	\end{enumerate}
+	Furthermore, for $p\in \F [x]$, $p(T)=0$ iff there is some $q\in \F [x]$ such that
+	\begin{equation}\label{eqn4.6.2}
+		p=qp_{\min ,T}.
+	\end{equation}
+	\begin{rmk}
+		Recall that (\cref{PolynomialAlgebra}) a monic polynomial is a polynomial whose leading coefficient is $1$.
+	\end{rmk}
+	\begin{rmk}
+		The proof makes use of the dimension of $\End _{\Vect _{\F}}(V)$, and in order for that to be a vector space, we require $\F$ to be a field---see \cref{sss1.1.2,prp3.2.144}.
+	\end{rmk}
+	\begin{rmk}
+		For the minority that care, I believe this can be generalized to $\F$ a centrally-finite division ring.  In this case, the result would be true verbatim, except that in \eqref{eqn4.6.2} the left and right quotients might be distinct.
+	\end{rmk}
+	\begin{proof}
+		\Step{Establish existence}
+		Regard $V$ as a $\K [x]$-module as in \cref{exm1.1.34}.  By \cref{prpD.1.3}, this is equivalent to the specification of a ring homomorphism $\rho \colon \K [x]\rightarrow \End _{\Grp}(V)$, precisely,
+		\begin{equation}
+			\rho (p)\ceqq p(T),
+		\end{equation}
+		that is, $\rho (p)$ is the linear operator $p(T)\colon V\rightarrow V$.  By \cref{prpC.1.2},
+		\begin{equation}\label{eqn4.6.3}
+			\Ker (\rho )\ceqq \left\{ p\in \F [x]:p(T)=0\right\}
+		\end{equation}
+		is an ideal in $\F [x]$.  In other words, $\Ker (\rho )$ is exactly the set of polynomials which satisfy our desired property \cref{MinimalPolynomial(i)}.
+		
+		We first check that $\Ker (\rho )$ is nonzero.  To see this, it suffices to prove that there is some polynomial $p$ such that $p(T)=0$.  However, consider the following set in $\End _{\Vect _{\F}}(V)$.
+		\begin{equation}
+			\left\{ 1,T,\ldots ,T^{\dim (V)^2-1},T^{\dim (V)^2}\right\}
+		\end{equation}
+		This is a set of $\dim (V)^2+1$ elements in $\End _{\Vect _{\F}}(V)$.  However, by \cref{prp3.2.144}, we know that $\dim (\End _{\Vect _{\F}}(V))=\dim (V)^2$, and so we must have a linear-dependence relation:
+		\begin{equation}
+			\alpha _0\cdot 1+\alpha _1\cdot T+\cdots +\alpha _{\dim (V)^2-1}\cdot T^{\dim (V)^2-1}+\alpha _{\dim (V)^2}\cdot T^{\dim (V)^2}=0.
+		\end{equation}
+		This of course gives us a polynomial $p$ such that $p(T)=0$.
+		
+		Now, by \cref{PolynomialsArePIDs}, $\F [x]$ is both a left and right PIR, and so as $\Ker (\rho )\neq 0$, there is some $p_0\in \F [x]$ such that
+		\begin{equation}
+			\Ker (\rho )=\F [x]p_0.
+		\end{equation}
+		Scaling $p_0$ if necessary, we may without loss of generality assume that it is monic---call the resulting polynomial $p_{\min ,T}$, so that $p_{\min ,T}$ is monic and
+		\begin{equation}
+			\Ker (\rho )=\F [x]p_{\min ,T}.
+		\end{equation}
+		
+		Let $p\in \F [x]$ be another nonzero polynomial such that $p(T)=0$.  Then, by \eqref{eqn4.6.3}, $p\in \Ker (\rho )=\F [x]p_{\min ,T}$.  That is, there is some $q\in \F [x]$ such that $p=qp_{\min ,T}$, which implies that $\deg (p)=\deg (q)+\deg (p_{\min ,T})\geq \deg (p_{\min ,T})$ (as $q\geq 0$).  This establishes \cref{MinimalPolynomial(ii)}.
+		
+		\Step{Establish uniqueness}
+		To see uniqueness, let $q\in \F [x]$ be another monic polynomial of minimum degree such that $q(T)=0$.  Then, $p_{\min ,T}-q$ is a polynomial of degree strictly less than $\deg (p_{\min ,T})=\deg (q)$\footnote{The leading terms cancel as their coefficients are both $1$.} and $[p_{\min ,T}-q](T)\ceqq p_{\min ,T}(T)-q(T)=0$.  According to \cref{MinimalPolynomial(ii)}, the only way this can happen is if $p_{\min ,T}-q=0$, that is $q=p_{\min ,T}$.
+		
+		\Step{Establish ``Furthermore\textellipsis ''}
+		The existence of $q_L$ above follows from the fact that $\Ker (\rho )=\F [x]p_{\min ,T}$.  To obtain this, we used the fact that $\F [x]$ is a \emph{left} PIR, but we haven't yet used the fact that it is a \emph{right} PIR.  Using this, we see that there is some $p_0\in \Ker (\rho )$ such that $\Ker (\rho )=p_0\F [x]$.  Again, by scaling if necessary, we may without loss of generality assume that $p_0$ is monic.  Then, preceding as before, we verify that $p_0$ satisfies \cref{MinimalPolynomial(i),MinimalPolynomial(ii)}.  Thus, by uniqueness, we have $p_0=p_{\min ,T}$, and hence that $\Ker (\rho )=p_{\min ,T}\F [x]$, establishing the existence of $q_R$.
+	\end{proof}
+\end{thm}
+Our first goal is to actually prove that the eigenvalues are precisely the roots of $p_{\min ,T}$.
+\begin{thm}{Root of $p_{\min ,T}$ are the eigenvalues}{}
+	Let $V$ be a a finite-dimensional vector space over a field $\F$, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \F$.  Then, $\lambda$ is an eigenvalue of $T$ iff $p_{\min ,T}(\lambda )=0$.
+	\begin{rmk}
+		Warning:  Keep in mind the ground field.  For example, suppose that the ground field is $\F$ and that $p_{\min ,T}(x)=x^2+1$.  Don't think ``Oh, $\im$ and $-\im$ are roots of $x^2+1$, and therefore they are eigenvalues of $T$.''.  Nooooooo.  Over the \emph{reals} they are neither roots of $x^2+1$ nor eigenvalues.
+	\end{rmk}
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $\lambda$ is an eigenvalue of $T$.  Then (\cref{crl4.2.36}) $p(\lambda )=0$ for every $p\in \F [x]$ such that $p(T)=0$.  As the minimal polynomial certainly satisfies this property, we have that $p_{\min ,T}(\lambda )=0$.
+		
+		\blni
+		$(\Leftarrow )$ Suppose that $p_{\min ,T}(\lambda )=0$.  It follows that (\cref{prp4.4.174}) $p_{\min ,T}(x)=(x-\lambda )q(x)$ for some $q\in \F [x]$.  Plugging in $T$, we find
+		\begin{equation}
+			0=p_{\min ,T}(T)=[T-\lambda ]\circ q(T).
+		\end{equation}
+		Note that $\deg (q)=\deg (p_{\min ,T})-1$, and so by the definition of the minimal polynomial, it \emph{cannot} be the case that $q(T)=0$.  Thus, there is some $v\in V$ such that $[q(T)](v)\neq 0$, in which case we have
+		\begin{equation}
+			0=[T-\lambda ]([q(T)](v)),
+		\end{equation}
+		that is, $[q(T)](v)$ is an eigenvector of $T$ with eigenvalue $\lambda$.  In particular, $\lambda$ is an eigenvalue of $T$.
+	\end{proof}
+\end{thm}
+
+Awesome, right?  Just compute $p_{\min ,T}$ and find its roots.  Done.
+
+Uhm, sure.  In principle, yes, in practice no.  To see why this is pretty impractical (at least for computation), let's actually see how one might compute $p_{\min ,T}$.  The basic idea is as follows
+
+Compute $T$.\footnote{By which I mean, do literally nothing.}  Is there a linear-dependence relation between $1$ and $T$?  If so, great!  That linear-dependence relation (upon scaling so that it's monic) gives you your minimal polynomial.  If not, compute $T^2$.  Is there a linear-dependence relation between $1$, $T$, and $T^2$?  If so, great!  That gives you the polynomial.  Now compute $T^3$.  And so on.
+
+Even as I describe this, it probably doesn't sound all that efficient.  In any case, let's see this in action for real.
+\begin{exm}{}{exm4.5.17}
+	Define
+	\begin{equation}
+		A\ceqq \begin{bmatrix}1 & 2 \\ 3 & 4\end{bmatrix}.
+	\end{equation}
+	Hopefully it should be clear that there is no linear-dependence relation between this an the identity.  Computation shows
+	\begin{equation}
+		A^2=\begin{bmatrix}7 & 10 \\ 15 & 22\end{bmatrix}.
+	\end{equation}
+	We how check for a linear-dependence relation among $1,A,A^2$:
+	\begin{equation}
+		0=\alpha _1+\alpha _2A+\alpha _3A^2=\begin{bmatrix}\alpha _1+\alpha _2+7\alpha _3 & 2\alpha _2+10\alpha _3 \\ 3\alpha _2+15\alpha _3 & \alpha _1+4\alpha _2+22\alpha _3\end{bmatrix}.
+	\end{equation}
+	This gives us $4$ equations in $\alpha _1,\alpha _2,\alpha _3$.  If it has a solution, we have our linear-dependence relation.  Otherwise, onto $A^3$.\footnote{Pro-tip:  You'll only ever need to go as high as $\dim (V)$, so without doing anything, I know there's going to be a solution.  We'll learn this when we cover the Cayley-Hamilton Theorem.}
+	
+	Setting up the equations and using our ninja-level row-reduction skills\footnote{Or Mathematica.}, we find that
+	\begin{equation}
+		\begin{bmatrix}\alpha _1 \\ \alpha _2 \\ \alpha _3\end{bmatrix}=\alpha _3\begin{bmatrix}-2 \\ -5 \\ 1\end{bmatrix}.
+	\end{equation}
+	Any $\alpha _3$ will give us a linear-dependence relation, but as we want the polynomial to be monic, we take $\alpha _3=1$.  Thus,
+	\begin{equation}
+		p_{\min ,T}(x)=x^2-5x-2.
+	\end{equation}
+	
+	Using the quadratic formula, you can now compute the eigenvalues of $T$.\footnote{Though they involve icky radicals so I won't reproduce them here.  I trust you can solve quadratic equations on your own, yeah?}
+	
+	\horizontalrule
+	
+	Let's compare this with how one would compute the eigenvalues straight from the definition.  $\lambda \in \C$ is going to be an eigenvalue iff $\Null (A-\lambda )\neq 0$.  To calculate the null space of $A-\lambda$, we row-reduce.  A calculation shows that this matrix is row-equivalent to
+	\begin{equation}
+		\begin{bmatrix}3 & 4-\lambda \\ 0 & \tfrac{1}{3}(2+5\lambda -\lambda ^2)\end{bmatrix}.
+	\end{equation}
+	This null space is nonzero iff it has a free variable, which we see in this case is true iff $2+5\lambda -\lambda ^2=0$.
+	
+	Of the two methods, I think the direct row-reduction method is by far the better option.  The strength of the minimal polynomial I think is more theoretical.  For example, its mere existence tells us that in principle calculating eigenvalues is going to come down to solving a polynomial equation, even if in practice it's not usually the best idea to use the minimal polynomial to calculate them.
+\end{exm}
+
+So, yes, certainly, one can compute $p_{\min ,T}$ for the purpose of computing the eigenvalues, but if that's all it could do, it wouldn't be of much use.  Of course, it has some theoretical uses,\footnote{See, for example, \cref{semisimple_linear_operator}.} but at the moment I would like to pay particular attention to what information the minimal polynomial gives you about the Jordan canonical form.  To best understand this, I think it's helpful to first see what the minimal polynomial of matrices in Jordan canonical form are.
+\begin{prp}{The minimal polynomial of a matrix in Jordan canonical form}{MinimalJordan}
+	Define
+	\begin{equation}
+		A\ceqq \bigoplus _{\lambda \in \Eig (A)}\left[ \Jord _{\lambda ,n_{\lambda ,1}}\oplus \cdots \oplus \Jord _{\lambda ,n_{\lambda ,m_{\lambda}}}\right ]
+	\end{equation}
+	and for each $\lambda \in \Eig (A)$ write
+	\begin{equation}
+		n_{\lambda}\ceqq \max \{ n_{\lambda ,1},\ldots ,n_{\lambda ,m_{\lambda}}\} .
+	\end{equation}
+	Then,
+	\begin{equation}
+		p_{\min ,A}(x)=\prod _{\lambda \in \Eig (T)}(x-\lambda )^{n_{\lambda}}.
+	\end{equation}
+	\begin{rmk}
+		In words, the minimal polynomial of $A$ has a factor $x-\lambda$ for each eigenvalue $\lambda$ of $A$, and the power of the factor is the size of the largest Jordan block with that eigenvalue.
+	\end{rmk}
+	\begin{rmk}
+		In particular, this tells us what the minimal polynomial of single Jordan blocks are.
+		\begin{equation}
+			p_{\min ,\Jord _{\lambda ,m}}(x)=(x-\lambda )^m.
+		\end{equation}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exm}{}{}
+	The minimal polynomial of
+	\begin{equation}
+		A\ceqq \Jord _{3,2}\oplus \Jord _{4,1}\oplus \Jord _{-2,2}=\begin{bmatrix}3 & 1 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 & 0 \\ 0 & 0 & 4 & 0 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}
+	\end{equation}
+	is
+	\begin{equation}
+		p_{\min ,A}(x)=(x-3)^2(x-4)(x+2)^2.
+	\end{equation}
+	
+	Similarly, the minimal polynomial of
+	\begin{equation}
+		B\ceqq \Jord _{5,3}\oplus \Jord _{-3,2}=\begin{bmatrix}5 & 1 & 0 & 0 & 0 \\ 0 & 5 & 1 & 0 & 0 \\ 0 & 0 & 5 & 0 & 0 \\ 0 & 0 & 0 & -3 & 1 \\ 0 & 0 & 0 & 0 & -3\end{bmatrix}
+	\end{equation}
+	is
+	\begin{equation}
+		p_{\min ,B}(x)=(x-5)^3(x+3)^2.
+	\end{equation}
+	
+	Finally, the minimal polynomial of
+	\begin{equation}
+		C\ceqq \Jord _{4,2}\oplus \Jord _{4,2}\oplus \Jord _{4,1}\ceqq \begin{bmatrix}4 & 1 & 0 & 0 & 0 \\ 0 & 4 & 0 & 0 & 0 \\ 0 & 0 & 4 & 1 & 0 \\ 0 & 0 & 0 & 4 & 0 \\ 0 & 0 & 0 & 0 & 4\end{bmatrix}.
+	\end{equation}
+	is
+	\begin{equation}
+		p_{\min ,C}(x)=(x-4)^2.
+	\end{equation}
+	\begin{rmk}
+		Note how you only have a power of $2$ here.  This power of $2$ corresponds to the size of the largest Jordan block and nothing else.  You can have a $124398217958732987$ dimensional matrix, all with one eigenvalue $\lambda$, but if all those Jordan blocks are just size $1$, the minimal polynomial is still going to be just $x-\lambda$.
+	\end{rmk}
+\end{exm}
+Having examined the minimal polynomial for matrices in Jordan canonical form, let's turn things around and see what information the minimal polynomial can tell us about a linear operator's as of yet unknown Jordan canonical form.  In fact, let's just discuss how one might compute the Jordan canonical form (and the corresponding Jordan basis) in general.
+
+Of course, we're going to start by computing the eigenvalues.\footnote{When we learn about the characteristic equation later one, we'll see that every eigenvalue has an \emph{algebraic multiplicity}, and that the the dimension of the generalized-eigenspace coincides with that multiplicity.  Thus, the algebraic multiplicity tells you exactly how many linearly-independent generalized-eigenvectors you need to find before you know you're `done'.}  For a fixed eigenvalue $\lambda$, find a basis for $\Ker (T-\lambda )$.  If you have `enough',\footnote{By ``enough'' I mean the number of elements in this basis is already equal to the algebraic multiplicity.} stop.  Otherwise, compute a basis for $\Ker ([T-\lambda ^2])$ by \emph{extending} your basis of $\Ker (T-\lambda )$---don't pick an entirely new basis.  Again, if you have ``enough'', stop.  Otherwise, extend your basis of $\Ker ([T-\lambda ]^2)$ to a basis of $\Ker ([T-\lambda ]^3)$, and so on.  When you finally \emph{do} stop, pick one of the `newest' vectors that you just added to your basis at the last step.  Call that guy $v_0$.  $v_0$ is \emph{$[T-\lambda ]$-maximal}.  So, apply $T-\lambda$ to $v_0$ over and over until you get $0$:  $[T-\lambda ]^m(v_0),\ldots ,[T-\lambda ](v_0),v_0$.  These vectors will form part of your final basis.  Continue finding $[T-\lambda ]$-maximal vectors in this way (for every eigenvalue) until you have a number of vectors equal to the dimension of your vector space.  The matrix of $T$ with respect to this basis will be in Jordan Canonical Form.\footnote{Perhaps its worth mentioning that the matrix in any basis of generalized-eigenvectors will be relatively simple, but if you want the matrix to be exactly in Jordan Canonical Form, you can't just use any basis of generalized-eigenvectors---you have to do what was just explained previously.}
+\begin{exm}{A computation of the Jordan Canonical form}{}
+	Define
+	\begin{equation}
+	A\ceqq \begin{bmatrix}5 & 4 & 2 & 1 \\ 0 & 1 & -1 & -1 \\ -1 & -1 & 3 & 0 \\ 1 & 1 & -1 & 2\end{bmatrix}.
+	\end{equation}
+	Proceeding as in the previous example \cref{exm4.5.17}, we find that the minimal polynomial is
+	\begin{equation}\label{eqn4.5.20}
+		p_{\min ,A}(x)=x^4-11x^3+42x^2-64x+32=(x-1)(x-2)(x-4)^2.\footnote{Yes, this computation is exceptionally tedious to do by hand.}
+	\end{equation}
+	
+	Thus, we see that the eigenvalues are $\lambda _1\ceqq 1$, $\lambda _2\ceqq 2$, and $\lambda _3\ceqq 4$.  Furthermore, by virtue of \cref{MinimalJordan}, we know that the largest $\lambda =1$ Jordan block has size $1$, the largest $\lambda =2$ Jordan block has size $1$, and the largest $\lambda =4$ Jordan block has size $2$.  For a $4\times 4$ matrix, there is only one way for this to happen:
+	\begin{equation}\label{eqn4.5.21}
+		\Jord _{4,2}\oplus \Jord _{2,1}\oplus \Jord _{1,1}\ceqq \begin{bmatrix}4 & 1 & 0 & 0 \\ 0 & 4 & 0 & 0 \\ 0 & 0 & 2 & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}.
+	\end{equation}
+	Thus, from the minimal polynomial alone, we know this \emph{must} be the Jordan canonical form.
+	
+	Sometimes this will be enough, but often we will not only want to know the Jordan canonical form itself, but also it's relationship to the original linear-transformation.  According to \cref{MatrixJordan}, this means we need to compute a Jordan basis for $A$.  We start by looking at the generalized-eigenspaces.
+	
+	Row-reducing $A-1$, we obtain the matrix
+	\begin{equation}
+		\begin{bmatrix}1 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0\end{bmatrix}.
+	\end{equation}
+	Therefore,
+	\begin{equation}
+		\Null (A-1)=\Span \left( \begin{bmatrix} -1 \\ 1 \\ 0 \\ 0\end{bmatrix}\right) .
+	\end{equation}
+	We already know from \eqref{eqn4.5.21} that $\dim (\Eig _1^{\infty})=1$, and so we're done for the $\lambda =1$ generalized-eigenspace.
+	
+	As for $\lambda =2$, row-reducing $A-2$ yields
+	\begin{equation}
+		\begin{bmatrix}1 & 0 & 0 & -1 \\ 0 & 1 & 0 & 1 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0\end{bmatrix},
+	\end{equation}
+	and hence
+	\begin{equation}
+		\Null (A-2)=\Span \left( \begin{bmatrix}1 \\ -1 \\ 0 \\ 1\end{bmatrix}\right) .
+	\end{equation}
+	As for $\lambda =1$, \eqref{eqn4.5.21} tells us that we're done for $\lambda =2$.
+	
+	Finally, row-reducing $A-4$ yields
+	\begin{equation}
+		\begin{bmatrix}1 & 0 & 0 & -1 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 0\end{bmatrix},
+	\end{equation}
+	and hence
+	\begin{equation}\label{eqn4.5.27}
+		\Null (A-4)=\Span \left( \begin{bmatrix}1 \\ 0 \\ -1 \\ 1\end{bmatrix}\right) .
+	\end{equation}
+	We're still not done however, as \eqref{eqn4.5.21} tells us that we need to have at least one generalized-eigenvector of rank $2$.\footnote{In fact, it's \emph{important to note} that one could deduce this from the minimal polynomial itself---the existence of the power of $2$ in $(x-4)^2$ tells us that the maximum size Jordan block is size $2$, and in particular, there must be at least one Jordan block of size $2$.}  Thus, in fact we need to compute $\Null ([A-4]^2)$.  Row-reducing $(A-4)^2$ yields
+	\begin{equation}
+		\begin{bmatrix}0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 1 \\ 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0\end{bmatrix},
+	\end{equation}
+	so that
+	\begin{equation}\label{eqn4.5.29}
+		\Null ([A-4]^2)=\Span \left( \begin{bmatrix}1 \\ 0 \\ 0 \\ 0\end{bmatrix},\begin{bmatrix}0 \\ 0 \\ -1 \\ 1\end{bmatrix}\right) .
+	\end{equation}
+	Okay, now, \emph{pay attention}!
+	
+	We might be tempted to take
+	\begin{equation}
+		\basis{B}\ceqq \left\{ \begin{bmatrix}-1 \\ 1 \\ 0 \\ 0\end{bmatrix},\begin{bmatrix}1 \\ -1 \\ 0 \\ 1\end{bmatrix},\begin{bmatrix}1 \\ 0 \\ 0 \\ 0\end{bmatrix},\begin{bmatrix}0 \\ 0 \\ -1 \\ 1\end{bmatrix}\right\} ,
+	\end{equation}
+	but this is \emph{wrong}.  If $P$ is the matrix whose columns are these vectors, then we find that\footnote{Recall that (\cref{MatrixJordan}) the resulting matrix should be the Jordan canonical form of $A$, but, of course, it's not.}
+	\begin{equation}
+		P^{-1}AP=\begin{bmatrix}1 & 0 & 0 \\ 0 & 2 & 0 & 0 \\ 0 & 0 & 5 & -1 \\ 0 & 0 & 1 & 3\end{bmatrix}.
+	\end{equation}
+	Oopsies.  Something went wrong.
+	
+	Note, however, that the $\lambda =1$ and $\lambda =2$ parts \emph{did} come out as they should have.  Remember that we can just use any old basis of generalized-eigenvectors.  For the $\lambda =4$ generalized-eigenspace, instead what we want to do is find a rank $2$ generalized-eigenvector $v_0$, in which case $[A-4](v_0)$ will be the other $\lambda =4$ generalized-eigenvector going into our basis.  \eqref{eqn4.5.29} describe the space of generalized-eigenvectors of rank \emph{at most $2$} and we want one with rank \emph{exactly $2$}, so we have to be a bit careful.  Basically, compare the rank $1$ generalized-eigenspace \eqref{eqn4.5.27} and the rank $2$ generalized-eigenspace \eqref{eqn4.5.29} and pick something that is in the latter but not the former.  Inspection reveals that
+	\begin{equation}
+		\begin{bmatrix}1 \\ 0 \\ 0 \\ 0\end{bmatrix}
+	\end{equation}
+	works, in which case the other element we want to use for the $\lambda =4$ generalized-eigenspace is
+	\begin{equation}
+		[A-4](\coord{1,0,0,0})=\begin{bmatrix}1 \\ 0 \\ -1 \\ 1\end{bmatrix}.
+	\end{equation}
+	
+	Now, let's try this again and use the basis\footnote{Note the order of $\coord{1,0,0,0}$ and $[A-4](\coord{1,0,0,0})$.  For practical reasons, when doing the computation, it is important that you place them \emph{in this order} (from lowest rank to highest).}
+	\begin{equation}
+		\basis{B}\ceqq \left\{ \begin{bmatrix}-1 \\ 1 \\ 0 \\ 0\end{bmatrix},\begin{bmatrix}1 \\ -1 \\ 0 \\ 1\end{bmatrix},\begin{bmatrix}1 \\ 0 \\ -1 \\ 1\end{bmatrix},\begin{bmatrix}1 \\ 0 \\ 0 \\ 0\end{bmatrix}\right\} .
+	\end{equation}
+	Again, let $P$ be the matrix whose columns are these basis elements.  This time, we find
+	\begin{equation}
+		P^{-1}AP=\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & 2 & 0 & 0 \\ 0 & 0 & 4 & 1 \\ 0 & 0 & 0 & 4\end{bmatrix},
+	\end{equation}
+	as desired.
+\end{exm}
+
 \section{The Jordan-Chevalley Decomposition}
 
 The Jordan-Chevalley Decomposition is what I would consider a variant of the Jordan Canonical Form decomposition.  Essentially it says that we can write any linear operator $T$ as a sum
@@ -2004,7 +2393,17 @@ where $D$ is ``diagonalizable''\footnote{In quotes because this may not literall
 \begin{equation}
 	\Jord _{4,3}\ceqq \begin{bmatrix}4 & 1 & 0 \\ 0 & 4 & 1 \\ 0 & 0 & 4\end{bmatrix}=\begin{bmatrix}4 & 0 & 0 \\ 0 & 4 & 0 \\ 0 & 0 & 4\end{bmatrix}+\begin{bmatrix}0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0\end{bmatrix}
 \end{equation}
-is the Jordan-Chevalley decomposition of $\Jord _{4,3}$.  They underlying intuition is that, because, in a suitable basis, any linear operator $T$ is a direct-sum of Jordan blocks, we can adapt the trick we just used for $\Jord _{4,3}$ to write $T$ itself as a sum of a ``diagonalizable'' linear operator and a nilpotent one.
+is the Jordan-Chevalley decomposition of $\Jord _{4,3}$.  Similarly,
+\begin{equation}
+	\begin{split}
+		\MoveEqLeft
+		\Jord _{5,2}\oplus \Jord _{-3,3}\ceqq \begin{bmatrix}5 & 1 & 0 & 0 & 0 \\ 0 & 5 & 0 & 0 & 0 \\ 0 & 0 & -2 & 1 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix} \\
+		& =\begin{bmatrix}5 & 0 & 0 & 0 & 0 \\ 0 & 5 & 0 & 0 & 0 \\ 0 & 0 & -2 & 0 & 0 \\ 0 & 0 & 0 & -2 & 0 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}+\begin{bmatrix}0 & 1 & 0 & 0 & 0\\ 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 & 0\end{bmatrix}
+	\end{split}
+\end{equation}
+is the Jordan-Chevalley decomposition of $\Jord _{5,2}\oplus \Jord _{-3,3}$.  The underlying intuition is that, because, in a suitable basis, any linear operator $T$ is a direct-sum of Jordan blocks, we can use this trick to write $T$ itself as a sum of a ``diagonalizable'' linear operator and a nilpotent one.
+
+The Jordan-Chevalley Decomposition can perhaps be thought of as an alternative solution to the ``Not every linear operator is diagonalizable problem.''.  It says that every linear operator is the sum of a ``diagonalizable'' operator and a ``small'' (i.e.~nilpotent one).  We briefly mentioned this before, and because it's so closely related to Jordan canonical form, I think it's probably more accurate to say the Jordan-Chevalley Decomposition is another way of looking at the same solution to the diagonalization problem.
 
 The Jordan-Chevalley Decomposition has at least two advantages over the Jordan Canonical Form Theorem.  The first is that it requires weaker hypotheses.  For example, the Jordan-Chevalley Decomposition will work over $\R$ where the Jordan Canonical Form Theorem did not.  Secondly, the statement of the result is a bit `cleaner'.  In particular, you can state the result with no mention of bases or matrices.  The downside is that it's not quite as strong as the Jordan Canonical Form Theorem---all it tells you is that $N$ is nilpotent, whereas the Jordan Canonical Form Theorem says that you can choose a basis in which $N$ takes a particularly nice form.  Despite this, quite often one doesn't need this extra strength, and the Jordan-Chevalley Decomposition proves to be more convenient.
 
@@ -2017,7 +2416,20 @@ Anyways, let's get to the result.
 		\item $N$ is nilpotent; and
 		\item $DN=ND$
 	\end{enumerate}
-	Furthermore, $D$ and $N$ are expressible as polynomial in $T$.
+	Furthermore, $D$ and $N$ are expressible as polynomials in $T$.
+	\begin{rmk}
+		Unless you have a particularly remarkable background for someone taking a linear algebra course, I would not expect you to have much intuition for the definition of a perfect field (\cref{PerfectField}).  But that's okay.  For us, what's important is that ``perfect'' is a sufficiently weak hypothesis that this theorem will apply in all cases of interest (see, for example, \cref{prpC.4.3}).  Essentially, don't worry about it---if you know enough math to be working with fields that are not perfect then you know enough math to know when you might have to worry.
+	\end{rmk}
+	\begin{rmk}
+		In terms of intuition, you should think of ``semisimple'' as meaning ``diagonalizable''.  Indeed, \cref{semisimple_linear_operator} says in particular that being semisimple is equivalent to being diagonalizable when you `enlarge' your field to an algebraic closure, and in particular, semisimple is actually equivalent to being diagonalizable when working over an algebraically closed field.  The only reason it isn't literally the case that semisimple is the same as diagonalizable is simply because you may not have all your eigenvalues in the ground field you're working with.  For example,
+		\begin{equation}
+			\begin{bmatrix}0 & -1 \\ 1 & 0\end{bmatrix}
+		\end{equation}
+		is semisimple over $\R$ even though it is not diagonalizable over $\R$.  Indeed, \cref{semisimple_linear_operator} says that this is semisimple \emph{because} it is diagonalizable over $\C$ (an algebraic closure of $\R$).
+	\end{rmk}
+	\begin{rmk}
+		Note that $T$ is ``diagonalizable'' iff $N=0$.  In this sense, you can view the nilpotent part of $T$ as an ``obstruction'' to being diagonalizable.  It is in this sense that nilpotency is the only reason linear-transformations can fail to be diagonalizable.
+	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
 		\begin{exr}[breakable=false]{}{}
@@ -2025,3 +2437,36 @@ Anyways, let's get to the result.
 		\end{exr}
 	\end{proof}
 \end{thm}
+\begin{exm}{A counter-example of the Jordan-Chevalley Decomposition over an imperfect field}{}
+	Let $p\in \Z ^+$ be prime, write $\F _p\ceqq \Z /p\Z$, and define $\F \ceqq \F _p(t)$.  Note that $\F$ is imperfect by \cref{AnImperfectField}.  As $\F$ is imperfect (\cref{thmC.4.2}), there is some $a\in \F$ that is not of the form $a=b^p$.  Define $V\ceqq \F [x]/(x^p-a)$ and $T\colon V\rightarrow V$ by
+	\begin{equation}
+		T(f+(x^p-a))\ceqq xf(x)+(x^p-a).
+	\end{equation}
+	\begin{exr}[breakable=false]{}{}
+		Show that $T$ fails the conclusion of the Jordan-Chevalley decomposition.
+		\begin{rmk}
+			Hint:  See \href{https://www.wikiwand.com/en/Jordan\%E2\%80\%93Chevalley_decomposition#/Counterexample}{Wikipedia}.
+		\end{rmk}
+	\end{exr}
+\end{exm}
+
+\section{Summary}
+
+Okay, so that was a long chapter.  Fortunately, the key ideas you really need to take note of are less in number than the length of the chapter alone might suggest.
+
+Linear algebra is the study of vector spaces and linear-transformations.  In the previous chapter, we learned that, after chooses bases, we can associate column-vectors to vectors and matrices to linear-transformations.  The objective of this chapter was then ``How do I pick a basis that makes the matrix as simple as possible?''.  The final answer to that is you pick a Jordan basis, in which the associated matrix will be a direct-sum of Jordan blocks.  And that's really it---if you learn nothing else from this course, remember the following.
+\begin{displayquote}
+	If $T\colon V\rightarrow V$ is a linear operator on a finite-dimensional vector space over an algebraically-closed field, then there is a basis $\basis{B}$ of $V$ such that $\coordinates{T}{\basis{B}}$ is a direct-sum of Jordan blocks.
+\end{displayquote}
+
+Essentially everything else in this chapter was either a build-up to this or very closely related to it.  Eigenspaces were introduced in an attempt to diagonalize matrices, which were later generalized to generalized-eigenspaces when we realized that didn't always work.  Direct-sums, coordinates with respect to direct-sum decompositions, invariant subspaces, indecomposable subspaces, and nilpotent operators were all part of the background necessary to either prove or state the \namerefpcref{GeneralizedEigenspaceDecomposition}.  The Jordan Canonical Form Theorem gave a characterization when two linear-transformations were similar.  The minimal polynomial was used as a tool to give information about the Jordan canonical form.  And finally The Jordan-Chevalley Decomposition was presented as what is essentially a variant of the Jordan Canonical Form Idea.
+
+\subsection{What now?}
+
+I regard the Jordan Canonical Form Theorem as the most important theorem in elementary linear algebra, and in some sense, everything we have done has been built up for the purpose of proving and stating it.  Now that we've accomplished that primary goal, what to do?
+
+The next big topic will be that of multilinear algebra.  I'll leave for the next chapter the motivation for this, though for the moment let me mention that this content will included a discussion of the determinant, something that has thus far been noticeably absent.
+
+Finally, we'll conclude with a study of inner-product spaces, which themselves are vector spaces equipped with additional structure.  As such, I think it makes sense to cover pretty much everything there is about vector spaces themselves before introducing extra structure.
+
+Anyways, let's get started\textellipsis

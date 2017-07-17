@@ -675,6 +675,28 @@ One of the most important facts about matrices is that they define linear-transf
 		But now we have no way of pulling the $\alpha$ out front (if the ring is not commutative) to write this as $\alpha \cdot Ax$!.
 	\end{rmk}
 \end{prp}
+\begin{dfn}{Null space and column space}{}
+	Let $A$ be a matrix and $T_A$ the associative linear-transformation.  The \term{null space}\index{Null space} of $A$, $\Null (A)$\index[notation]{$\Null (A)$}, is defined by
+	\begin{equation}
+		\Null (A)\ceqq \Ker (T_A).
+	\end{equation}
+	The \term{column space}\index{Column space} of $A$, $\Col (A)$\index[notation]{$\Col (A)$}, is defined by
+	\begin{equation}
+		\Col (A)\ceqq \Ima (T_A).
+	\end{equation}
+	\begin{rmk}
+		The term ``column space'' comes from the fact that $\Col (A)$ is the span of the columns of $A$---see the following result.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{}{}
+	Let $A$ be a matrix.  Then, $\Col (A)$ is the span of the columns of $A$.
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
 Matrix linear-transformations play quite an important role in the theory.  For one, they are pedagogically useful as they provide an abundance of examples that tend not to scare students.  But more fundamentally, in a sense to be described (\cref{CoordinatesLinearTransformation}), every linear-transformation between finite-dimensional vector spaces is given by a matrix linear-transformation.  As they do play such an important role, it is important to know (i) when such linear-transformations are injective, surjective, and bijective; and (ii) how to calculate their kernel and image.
 
 We begin with the first.
@@ -774,6 +796,9 @@ Having take a (longer than necessary) diversion investigating matrices, let us r
 	\end{rmk}
 	\begin{rmk}
 		You can't really generalize this to infinite bases because the matrix product in \eqref{eqn1.2.115} will not make sense in general.
+	\end{rmk}
+	\begin{rmk}
+		We may sometimes instead speak of the \term{matrix} of $T$ with respect to a basis instead of the ``coordinates'' of $T$, though it means the same thing.
 	\end{rmk}
 	\begin{proof}
 		\Step{Define $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$}
@@ -975,6 +1000,21 @@ We saw in \cref{prp3.1.17} that the coordinates of a column vector (with respect
 		\end{enumerate}
 	\end{exr}
 \end{exm}
+\begin{exm}{}{}
+	As in \cref{AlgebraicNumberField2}, define $\F \ceqq \Q$, $V\ceqq \Q (\sqrt{2})$, fix $a,b\in \Q$, and define $T\colon V\rightarrow V$ by
+	\begin{equation}
+		T(x)\ceqq (a+b\sqrt{2})x.
+	\end{equation}
+	
+	Define $\basis{B}\ceqq \{ 1,\sqrt{2}\}$.
+	\begin{exr}[breakable=false]{}{}
+		Check that $\basis{B}$ is a basis for $V$.
+	\end{exr}
+	Let us compute $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$.  First of all, of course $T(1)=a+b\sqrt{2}$.  On the other hand, $T(\sqrt{2})=2b+a\sqrt{2}$.  Hence,
+	\begin{equation}
+		\coordinates{T}{\basis{B}\leftarrow \basis{B}}=\begin{bmatrix}a & 2b \\ b & a\end{bmatrix}.
+	\end{equation}
+\end{exm}
 
 There is an important special case of the coordinates of a linear transformation:  \emph{change-of-basis matrices}.
 \begin{dfn}{Change of basis matrix}{ChangeOfBasisMatrix}
@@ -992,6 +1032,26 @@ There is an important special case of the coordinates of a linear transformation
 		\coordinates{\id}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{\e ^{\im x}}{\basis{C}} & \coordinates{\e ^{-\im x}}{\basis{B}}\end{bmatrix}=\begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}.
 	\end{equation}
 \end{exm}
+
+Finally, coordinates of linear-transformations make it easy to compute the dimension of the vector-space of linear-transformations.
+\begin{prp}{}{prp3.2.144}
+	Let $V$ and $W$ be a vector spaces over a field $\F$.  Then,
+	\begin{equation}
+		\dim (\Mor _{\Vect _{\F}}(V,W))=\dim (V)\dim (W).
+	\end{equation}
+	\begin{rmk}
+		Recall that (\cref{sss1.1.2}) morphism sets need not be modules over the ground ring if that ground ring is not commutative.  Thus, we need to take the ground division ring to be a field for this result.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+			\begin{rmk}
+				Hint:  Use coordinates of linear-transformations to observe that $\dim (\Mor _{\Vect _{\F}}(V,W))$ is the same as the dimension of some vector space of matrices.  Then, compute the dimension of the vector space of matrices by exhibiting an explicit basis.
+			\end{rmk}
+		\end{exr}
+	\end{proof}
+\end{prp}
 
 \section{Summary}
 
