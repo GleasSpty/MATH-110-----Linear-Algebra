@@ -908,7 +908,7 @@ We now turn to defining the coordinates of a linear-transformation with respect 
 		You should draw an analogy between the property stated in \cref{thm4.4.14(i)} and the corresponding property for \emph{Cartesian products} of sets, namely, that you can define a function $Z\rightarrow X\times Y$ by specifying its ``components'' $Z\rightarrow X$ and $Z\rightarrow Y$.  You will learn when you study category theory in more depth that these both serve examples of \emph{limits}, in fact a special type of limit called a \emph{product} (one in the category of $\K$-modules and the other in the category of sets).
 	\end{rmk}
 	\begin{rmk}
-		Dually, you should raw an analogy between the property stated in \cref{thm4.4.14(ii)} and the corresponding property for \emph{disjoint-unions} of sets, namely, that you can define a function $X\coprod Y\rightarrow Z$ by specifying its ``restrictions'' $X\rightarrow Z$ and $Y\rightarrow Z$.  You will learn when you study category theory in more depth that these both serve examples of \emph{colimits}, in fact a special type of colimit called a \emph{coproduct} (one in the category of $\K$-modules and the other in the category of sets).
+		Dually, you should draw an analogy between the property stated in \cref{thm4.4.14(ii)} and the corresponding property for \emph{disjoint-unions} of sets, namely, that you can define a function $X\coprod Y\rightarrow Z$ by specifying its ``restrictions'' $X\rightarrow Z$ and $Y\rightarrow Z$.  You will learn when you study category theory in more depth that these both serve examples of \emph{colimits}, in fact a special type of colimit called a \emph{coproduct} (one in the category of $\K$-modules and the other in the category of sets).
 	\end{rmk}
 	\begin{rmk}
 		The term \emph{biproduct} comes from the fact that $W_1\oplus \cdots \oplus W_m$ is both a product and a coproduct (though the definition is not quite that simple).
@@ -1107,7 +1107,7 @@ Of course, $V=V$ is itself a direct-sum decomposition, and one that generally wo
 \begin{dfn}{Indecomposable}{Indecomposable}
 	Let $V$ be a $R$-module.  Then, $V$ is \term{indecomposable}\index{Indecomposable module} iff whenever $V=U\oplus W$, it follows that either $U=0$ or $W=0$.
 	\begin{rmk}
-		If $V$ is a $\K$-module and $T\colon V\rightarrow V$ is a linear operator, we say that $V$ is \term{$T$-indecomposable} iff $V$ is indecomposable when regarded as a $\K [x]$-module.
+		If $V$ is a $\K$-module and $T\colon V\rightarrow V$ is a linear operator, we say that $V$ is \term{$T$-indecomposable} iff $V$ is indecomposable when regarded as a $\K [x]$-module (\cref{exm1.1.34}).
 	\end{rmk}
 	\begin{rmk}
 		If we say that a subspace $W\subseteq V$ is $T$-indecomposable, it is implicit that it is also $T$-invariant (otherwise it wouldn't actually possess the structure of a $\K [x]$-module, and so the definition given in the previous remark wouldn't make sense).
@@ -1175,7 +1175,7 @@ Our first hint at how we might do all this is given by the following result \cre
 		
 		If $\Ker (T^m)=\Ker (T^{m+1})$, then in fact $\Ker (T^m)=\Ker (T^n)$ for all $n\geq m$.  To see this, write $n=m+k$ for $k\in \N$ and let $v\in \Ker (T^{m+k})$, so that $T^{m+1}(T^{k-1}(v))=T^{m+k}(v)=0$.  Then, $T^{k-1}(v)\in \Ker (T^{m+1})=\Ker (T^m)$, and so in fact $T^m(T^{k-1}(v))=T^{m+k-1}(v)=0$.  Proceeding inductively, we eventually find that $T^m(v)=0$.
 		
-		Thus, if there is some $m\leq \dim (V)$ such that $\Ker (T^m)=\Ker (T^{m+1})$, we are done.  Otherwise, $0$ is properly contained in $\Ker (T)$, which is properly contained in $\Ker (T^2)$, etc..  This means that $\dim (T^k)\geq \dim (T^{k-1})+1$ for $1\leq k\leq \dim (V)$, and hence $\dim (T^{\dim (V)})\geq \dim (V)$, in which case we must have $\Ker (T^{\dim (V)})=\Ker (T^m)$ for all $m\geq \Ker (T)$, as desired.
+		Thus, if there is some $m\leq \dim (V)$ such that $\Ker (T^m)=\Ker (T^{m+1})$, we are done.  Otherwise, $0$ is properly contained in $\Ker (T)$, which is properly contained in $\Ker (T^2)$, etc..  This means that $\dim (\Ker (T^k))\geq \dim (\Ker (T^{k-1}))+1$ for $1\leq k\leq \dim (V)$, and hence $\dim (\Ker (T^{\dim (V)}))\geq \dim (V)$,\footnote{As you go from $0$, to $\Ker (T)$, to $\Ker (T^2)$, etc., you must increase the dimension by $1$ at each step, and so by the time you get to $\Ker (T^{\dim (V)})$, the dimension must be at least $\dim (V)$.} in which case we must have $\Ker (T^{\dim (V)})=\Ker (T^m)$ for all $m\geq \Ker (T)$, as desired.
 	\end{proof}
 \end{prp}
 \begin{prp}{}{prp4.6.1}
@@ -1701,7 +1701,7 @@ Recall (\cref{prp4.2.22}) that eigenvectors with distinct eigenvalues are linear
 		\begin{equation}
 			0=\alpha _1\cdot w_1+\cdots +\alpha _m\cdot w_m,
 		\end{equation}
-		where we have defined $w_k\ceqq [T-\lambda _1]^n(v_k)$.  Note that, as generalized-eigenspaces are $T$-invariant subspaces and $\lambda _1\in \F$ is central, $w_k\ceqq [T-\lambda _1]^n(v_k)\in \Eig _{\lambda _k}^{\infty}$ is still in the $\lambda _k$-generalized-eigenspace.  Hence, for each $2\leq k\leq m$, there is some $n_k\in \Z ^+$ such that $[T-\lambda _k]^{n_k}(w_k)=0$.  Applying $[T-\lambda _2]^{n_2}\cdots [T-\lambda _m]^{n_m}$ to this equation, we thus find
+		where we have defined $w_k\ceqq [T-\lambda _1]^n(v_k)$.\footnote{The basic strategy for doing this is to hopefully reduce the argument to a similar one we used for the analogous result for eigenvectors (note of course that $w_1\ceqq [T-\lambda _1]^n(v)_1$ is an eigenvectors of $T$ with eigenvalue $\lambda _1$ by construction).}  Note that, as generalized-eigenspaces are $T$-invariant subspaces and $\lambda _1\in \F$ is central, $w_k\ceqq [T-\lambda _1]^n(v_k)\in \Eig _{\lambda _k}^{\infty}$ is still in the $\lambda _k$-generalized-eigenspace.  Hence, for each $2\leq k\leq m$, there is some $n_k\in \Z ^+$ such that $[T-\lambda _k]^{n_k}(w_k)=0$.  Applying $[T-\lambda _2]^{n_2}\cdots [T-\lambda _m]^{n_m}$ to this equation, we thus find
 		\begin{equation}
 			0=\alpha _1(\lambda _1-\lambda _2)^{n_2}\cdots (\lambda _1-\lambda _m)^{n_m}.
 		\end{equation}
@@ -2237,9 +2237,9 @@ So, yes, certainly, one can compute $p_{\min ,T}$ for the purpose of computing t
 \begin{prp}{The minimal polynomial of a matrix in Jordan canonical form}{MinimalJordan}
 	Define
 	\begin{equation}
-		A\ceqq \bigoplus _{\lambda \in \Eig (A)}\left[ \Jord _{\lambda ,n_{\lambda ,1}}\oplus \cdots \oplus \Jord _{\lambda ,n_{\lambda ,m_{\lambda}}}\right ]
+		A\ceqq \bigoplus _{\lambda \in \Eig (A)}\left[ \Jord _{\lambda ,n_{\lambda ,1}}\oplus \cdots \oplus \Jord _{\lambda ,n_{\lambda ,m_{\lambda}}}\right] ,
 	\end{equation}
-	and for each $\lambda \in \Eig (A)$ write
+	entries taken to be in an algebraically closed field, and for each $\lambda \in \Eig (A)$ write
 	\begin{equation}
 		n_{\lambda}\ceqq \max \{ n_{\lambda ,1},\ldots ,n_{\lambda ,m_{\lambda}}\} .
 	\end{equation}

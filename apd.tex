@@ -1083,7 +1083,7 @@ $R^{\times}$ is a group with respect to the ring multiplication and is known as 
 I believe it is more common to refer to rigs as \emph{semirings}.  I dislike this terminology because it suggests an analogy with semigroups, of which there is none.  The term rig is also arguably more descriptive---even if you didn't know what the term meant, you might have a good chance of guessing, especially if you had seen the term rng before.
 \end{rmk}
 \end{dfn}
-\begin{dfn}{Characteristic}{}
+\begin{dfn}{Characteristic}{Characteristic}
 Let $\coord{X,+,0,\cdot ,1}$ be a rig.  Then, either (i)~there is some $m\in \Z ^+$ such that $m\cdot 1=0\in X$ or (ii)~there is no such $m$.  In the former case, the smallest positive integer such that $\underbrace{1+\dots +1}_m=0\in X$ is the \term{characteristic}\index{Characteristic (of a rig)}, and in the latter case the \term{characteristic} is $0$.  We denote the characteristic by $\Char (X)$.
 \begin{rmk}
 For example, the characteristic of $\Z /m\Z$ is $m$, whereas the characteristic of $\Z$ is $0$.
@@ -3311,6 +3311,16 @@ Most fields you have probably encountered are perfect.
 	\end{proof}
 \end{prp}
 Of course, there are examples of imperfect fields.
+\begin{exr}{The Freshman's Dream}{}
+	Let $\F$ be a field with $p\ceqq \Char (\F )\neq 0$.  Show that
+	\begin{equation}
+		(x+y)^p=x^p+y^p
+	\end{equation}
+	for all $x,y\in \F$.
+	\begin{rmk}
+		Hint:  Use the Binomial Theorem and argue that the binomial coefficients must vanish (except of course for the first and last ones, both of which are just $1$).
+	\end{rmk}
+\end{exr}
 \begin{exm}{An imperfect field}{AnImperfectField}
 	Let $p\in \Z ^+$ be prime, write $\F _p\ceqq \Z /p\F$, and define $\F \ceqq \F _p(t)$.\footnote{For any cring $\K$, $\K (x)$\index[notation]{$\K (x)$} is the \emph{field of fractions} of $\K [x]$.  That is, $\K (x)$ is constructed from $\K [x]$ in the same way that $\Q$ is constructed from $\Z$.}
 	
