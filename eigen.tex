@@ -656,6 +656,21 @@ There are also more practical criterion specific to the finite-dimensional case.
 	\end{exr}
 \end{exm}
 
+One important fact about direct-sums that will be of use to us is, to find a basis for the entire space, it suffices to find a basis for each of the direct-summands.
+\begin{prp}{}{prp4.4.45}
+	Let $V$ be a $\K$-module, let $\collection{W}$ be a collection of subspaces of $V$ such that $V=\bigoplus _{W\in \collection{W}}W$, and for each $W\in \collection{W}$ let $\basis{B}_W$ be a basis of $W$.  Then,
+	\begin{equation}
+		\bigcup _{W\in \collection{W}}\basis{B}_W
+	\end{equation}
+	is a basis of $V$.
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			
+		\end{exr}
+	\end{proof}
+\end{prp}
+
 In a way roughly analogous to how we can extend linearly-independent subsets to bases, we can `extend' subspaces into direct-sum decompositions, at least for vector spaces
 \begin{prp}{Subspaces of vector spaces have complements}{prp4.4.24}
 	Let $V$ be a vector space and let $U\subseteq V$ be a subspace.  Then, there is a subspace $W\subseteq V$ such that $V=U\oplus W$.
@@ -734,7 +749,7 @@ On the other hand, we know from \cref{prp3.1.7} that the map that sends an ``abs
 \end{equation}
 These two facts together suggest that in the general case $V=W_1\oplus \cdots \oplus W_d$, $W_1\times \cdots \times W_d$ should play the role that $\F ^d$ did with coordinates before.  That is, the map that sends an ``abstract'' vector to its coordinates should be a map $V\rightarrow W_1\times \cdots \times W_d$ (and with any luck, it will be an isomorphism).  This is exactly how we're doing to define things.  But first, we want to give $W_1\times \cdots \times W_d$ the structure of a vector space.
 \begin{prp}{Product of modules}{}
-	Let $\collection{V}$ be an indexed collection of $\K$-modules, and define $\prod _{V\in \collection{V}}\times \prod _{V\in \collection{V}}\rightarrow \prod _{V\in \collection{V}}$ and $\K \times \prod _{V\in \collection{V}}V\rightarrow \prod _{V\in \collection{V}}V$ respectively by
+	Let $\collection{V}$ be an indexed collection of $\K$-modules, and define $\prod _{V\in \collection{V}}V\times \prod _{V\in \collection{V}}V\rightarrow \prod _{V\in \collection{V}}V$ and $\K \times \prod _{V\in \collection{V}}V\rightarrow \prod _{V\in \collection{V}}V$ respectively by
 	\begin{subequations}
 		\begin{align}
 			[v_1+v_2]^V & \ceqq v_1^V+v_2^V \\
@@ -750,12 +765,13 @@ These two facts together suggest that in the general case $V=W_1\oplus \cdots \o
 	\end{rmk}
 	\begin{rmk}
 		In the finite case $\collection{V}\eqqc \{ V_1,\ldots ,V_m\}$, these definitions (in more suggestive notation) look like
-		\begin{subequations}
-			\begin{align}
-				\coord{v_1,\ldots ,v_m}+\coord{w_1,\ldots ,w_m} & \ceqq \coord{v_1+w_1,\ldots ,v_m+w_m} \\
-				\alpha \cdot \coord{v_1,\ldots ,v_m} & \ceqq \coord{\alpha \cdot v_1,\ldots ,\alpha \cdot v_m}.
-			\end{align}
-		\end{subequations}
+		\begin{equation}
+			\coord{v_1,\ldots ,v_m}+\coord{w_1,\ldots ,w_m}\ceqq \coord{v_1+w_1,\ldots ,v_m+w_m}
+		\end{equation}
+		and
+		\begin{equation}
+			\alpha \cdot \coord{v_1,\ldots ,v_m}\ceqq \coord{\alpha \cdot v_1,\ldots ,\alpha \cdot v_m}.
+		\end{equation}
 	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
@@ -797,7 +813,7 @@ We are now ready define coordinates with respect to a direct-sum decomposition.
 	\end{rmk}
 \end{dfn}
 As before, this is an isomorphism if the direct-sum decomposition is finite.
-\begin{prp}{$\coordinates{\blankdot}{\collection{W}}$ is linear and injective (and surjective in finite dimensions)}{}
+\begin{prp}{$\coordinates{\blankdot}{\collection{W}}$ is linear and injective (and surjective in finite dimensions)}{prp4.4.67}
 	Let $V$ be a $\K$-module, and let $V=\bigoplus _{W\in \collection{W}}W$ be a direct-sum decomposition of $V$.  Then,
 	\begin{equation}
 		V\ni v\mapsto \coordinates{v}{\collection{W}}\in \prod _{W\in \collection{W}}W
@@ -988,6 +1004,66 @@ As before, this yields an isomorphism from the space of linear-transformations t
 		\end{exr}
 	\end{proof}
 \end{prp}
+
+\subsubsection{The (external) direct-sum}
+
+Looking back at \cref{thm4.4.14}, we see that if a module $V=V_1\oplus \cdots \oplus V_m$ is a finite direct-sum, then to define maps \emph{into}, it suffices to define the components of the map into each $V_k$.  Dually, to define a map \emph{out of} $V$, it suffices to define the map on each $V_k$.  What happens if the direct-sum is infinite?
+
+The answer is that there are spaces which have these properties, but they may no longer coincide.  For example, we have the following result about \emph{products} of modules.
+\begin{prp}{}{}
+	Let $V$ be a $\K$-module, let $\collection{W}$ be an indexed collection of $\K$-modules, and for each $W\in \collection{W}$ let $T_W\colon V\rightarrow W$ be a linear-transformation.  Then, there is a unique linear-transformation $T\colon V\rightarrow \prod _{W\in \collection{W}}W$ such that $T_W=\proj _W\circ T$ for all $W\in \collection{W}$.
+	\begin{rmk}
+		You should compare this with \cref{thm4.4.14}\cref{thm4.4.14(i)}.  You should find that it says almost the same exact thing, except with the change of some letters and we now allow $\collection{W}$ to be arbitrary (instead of just finite).
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+This leaves us to address the question of the ``out of'' case.  The answer is that it is essentially the direct-sum that has this property, but so far we only know ``Give a module, is this module a direct-sum of blah blah blah subspaces?''.  We don't yet know how to create \emph{new} spaces out of old ones by taking direct-sums.  The following definition does just that.
+\begin{dfn}{External direct-sum of modules}{}
+	Let $\collection{V}$ be an indexed collection of $\K$-modules.  Then, the \term{external direct-sum}\index{External direct-sum} of $\collection{V}$, $\bigoplus _{V\in \collection{V}}V$\index[notation]{$\bigoplus _{V\in \collection{V}}V$} is defined by
+	\begin{equation}
+		\bigoplus _{V\in \collection{V}}V\ceqq \left\{ \coord{v^V:V\in \collection{V}}:\text{cofinitely many }v^V=0\text{.}\right\} .
+	\end{equation}
+	\begin{rmk}
+		That is, it is the subspace of the Cartesian product consisting of those elements with only finitely many nonzero coordinates.  For example, this is exactly analogous to the difference between $\C ^{\infty}$ and $\C ^{\N}$.  Indeed, these are respectively the external direct-sum and Cartesian product of countably-infinitely many copies of $\C$. 
+	\end{rmk}
+\end{dfn}
+We had first better check that it makes sense to refer to this as the ``external \emph{direct-sum}''.
+\begin{prp}{}{}
+	Let $\collection{V}$ be an indexed collection of $\K$-modules.  Then, the external direct-sum $\bigoplus _{V\in \collection{V}}V$ is the direct-sum of the elements of $\collection{V}$.
+	\begin{rmk}
+		To be clear, we regard each $V_0\in \collection{V}$ as a subspace of $\bigoplus _{V\in \collection{V}}$.  For example, if $\collection{V}=\{ V_1,V_2,V_3\}$, then we identity $V_2$ with
+		\begin{equation}
+			\left\{ \coord{0,v_2,0}\in V_1\oplus V_2\oplus V_3:v_2\in V_2\right\} .
+		\end{equation}
+		After making this identification, we can then ask the question ``Is this $\K$-module the direct-sum (in the old sense) of the subspaces $\collection{V}$.''.  This result says the answer is ``Yes.'', which justifies using essentially the same term to refer to both concepts (the old definition in \cref{DirectSum} and the definition of the external direct-sum).
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+Finally, we check that the external direct-sum has the desired ``out of'' property described at the beginning of this subsubsection.
+\begin{prp}{}{}
+	Let $\collection{V}$ be an indexed collection of $\K$-modules, let $W$ be a $\K$-module, and for each $V\in \collection{V}$ let $T_V\colon V\rightarrow W$ be a linear-transformation.  Then, there is a unique linear-transformation $T\colon \bigoplus _{V\in \collection{V}}\rightarrow W$ such that $\restr{T}{V}=T_V$ for all $V\in \collection{V}$.
+	\begin{rmk}
+		You should compare this with \cref{thm4.4.14}\cref{thm4.4.14(ii)}.  You should find that it says almost the same exact thing, except with the change of some letters and we now allow $\collection{V}$ to be arbitrary (instead of just finite).
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+Thus, the \emph{Cartesian product} of modules satisfies the ``into'' property described above and the \emph{(external) direct-sum} satisfies the ``out of'' property described above.  However, according to \cref{prp4.4.67}, the direct-sum and Cartesian product are canonically isomorphic if there are only finitely many modules, which is why in \cref{thm4.4.14} we say that a finite direct-sum satisfies both of these properties.\footnote{For what it's worth, this property means that the Cartesian product is the \emph{product} in the category of $\K$-modules and the other property means that the direct-sum is the \emph{coproduct} in the category of $\K$-modules.  For finitely-many modules, the product and coproduct agree, but in general they do not.}
 
 \subsection{Invariant subspaces}
 

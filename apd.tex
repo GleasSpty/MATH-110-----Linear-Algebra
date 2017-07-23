@@ -412,7 +412,22 @@ A \term{function}\index{Function} from a set $X$ to a set $Y$ is a relation $\si
 \begin{rmk}
 The motivation for this notation is that, if $X$ and $Y$ are finite sets, then the cardinality of the set of all functions from $X$ to $Y$ is $\abs{Y}^{\abs{X}}$.
 \end{rmk}
+\begin{rmk}
+The arrow ``$\mapsto$''\index[notation]{$\mapsto$} can be used to define a function with necessarily giving it a name.  For example, one can write
+\begin{equation}
+\R \ni x\mapsto 3x^2-5\in \R
+\end{equation}
+as notation for the function $f\colon \R \rightarrow \R$ defined by $f(x)\ceqq 3x^2-5$.  Of course, this is convenient if it is unnecessary to give a specific name.
+\end{rmk}
+\begin{rmk}
+The ``$x$'' in ``$f(x)$'' is sometimes referred to as the \term{argument}\index{Argument} of the function.
+\end{rmk}
 \end{dfn}
+\begin{ntn}{Placeholders for arguments}{}
+Let $f$ be a function.  A lot of the time, if we want to refer to $f$, we just say, well, ``$f$''.  Besides this, however, we also frequently write ``$f(x)$''.  Strictly speaking, this is incorrect---the function itself is $x\mapsto f(x)$, whereas $f(x)$ is the value of the function $f$ at $x$ in the domain.  In practice, however, it is very common to write ``$f(x)$'' to denote the function itself, and not just a particular value.
+
+We may also use the symbols ``$\blankdot$'' or ``$\blank$'' to indicate the argument of a function.  For example, we might denote a function using the notation $\braket{\blankdot ,\blankdot}\colon V\times V\rightarrow \K$\index[notation]{$f(\blankdot )$} or $\braket{\blank ,\blank}\colon V\times V\rightarrow \K$\index[notation]{$f(\blank )$}.  This notation means that ``$\braket{\blankdot ,\blankdot}$'' is the name of a function, and furthermore, we denote its value at the element $\coord{v_1,v_2}\in V\times V$ as ``$\braket{v_1,v_2}$''.  Thus, the dots tell you where to `plug in' the variables.  Similarly for ``$\blank$''.
+\end{ntn}
 \begin{exm}{Identity function}{IdentityFunction}
 For every set $X$, there is a function, $\id _X:X\rightarrow X$\index[notation]{$\id _X$}, the \term{identity function}\index{Identity function}, defined by
 \begin{equation}
@@ -1669,6 +1684,9 @@ for the collection of all morphisms in $\cat{C}$.
 \end{rmk}
 \begin{rmk}
 The term \term{map}\index{Map} is often used synonymously with the term ``morphism'', though perhaps in a more casual manner.  For example, it is not uncommon to see people say ``linear map'' instead of ``map of vector spaces'' or ``map in the category of vector spaces''.
+\end{rmk}
+\begin{rmk}
+If the category $\cat{C}$ is clear from context, we may simply write $\Mor (A,B)$\index[notation]{$\Mor (A,B)$}.
 \end{rmk}
 \begin{rmk}
 We mentioned above that the morphisms relevant to vector spaces are the linear functions.  Of course, nothing about the definition of a category \emph{requires} this be the case---you could just as well consider the category whose objects are vector spaces and whose morphisms are \emph{all} functions---it just turns out that these weird examples aren't particularly useful.
