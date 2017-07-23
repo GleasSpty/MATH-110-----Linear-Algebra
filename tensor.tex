@@ -1,0 +1,1931 @@
+\chapter{Multilinear algebra and tensors}
+
+Multilinear algebra is, well, it's the study of multilinear maps.  I realize that's not terribly enlightening, and for that to actually be a meaningful description at all, I had better first tell you what ``multilinear map'' actually means.  Before I do so, however, I think it's best to start with some motivation.
+
+\section{Motivation}
+
+\subsection{The derivative}
+
+You'll recall from multivariable calculus\footnote{You have taken multivariable calculus, right?  In case you haven't, the TL;DR version is:  it's calculus, but when the functions have multiple variables.} the notion of the \emph{gradient}, which really should be thought of as the derivative in higher dimensions.  Give a smooth\footnote{Recall that ``smooth'' means infinitely-differentiable with continuous derivatives.  I assume this so that $\nabla f$ actually exists.} function $f\colon \R ^d\rightarrow \R$, you were probably taught something like ``The gradient of a $f$ is the vector (field) whose coordinates are given by the partial derivatives.''.  LIES!
+
+The gradient is \emph{not} a vector field---it is a \emph{co}vector field.  The derivative $\nabla _af(x)$ is a function which takes in a tangent vector\footnote{You don't need to know the precise definition of tangent vector or tangent space, only that $v^a$ is supposed to indicate (at an intuitive level) a ``direction''.} $v^a\in \tangent{\R ^d}[x]$ and spits out a number, the \emph{directional derivative} of $f$ at the point $x$ in the direction $v$:  $v^a\nabla _af(x)$.\footnote{Don't worry about the indices fo now.  They will be explained later---see \cref{sct5.4}.}  Thus, the derivative is not itself a vector, but rather, it's something that \emph{takes in} vectors and \emph{spits out} numbers.  Such things are called \emph{covectors} (or linear functionals), and this will motivate us to introduce the \emph{dual-space}.
+
+So what about the second derivative then?  Well, the second derivative is something that takes in \emph{two} vectors and spits out a number, this number itself being the directional derivative in the direction of the first vector of the directional derivative in the direction of the second vector.  The third derivative is a thing that takes in \emph{three} vectors and spits out a number, and so on.  The dual-space will give us things that takes in single vectors and spits out numbers, but to obtain objects that take in multiple vectors and spit out numbers, we'll need to discuss (higher rank) \emph{tensors} and hence the \emph{tensor product}.
+
+\subsection{Unification}
+
+If that's not satisfying to you, another motivation for the introduction of tensors is that they can be viewed as a unifying concept for all of linear algebra in the sense that nearly every concept one encounters can be thought of as a tensor.  For example, scalars, vectors, covectors, linear-transformations, inner-products, pairings (in a dual-pair), etc.\textellipsis all of these are tensors.
+
+\subsection{Multilinear-transformations}
+
+Okay, cool, so tensors are a thing we should care about.  But what does that have to do with multilinear-transformations?  I suppose the answer is that we ultimately need them to define tensors, and in particular, the tensor product---see \cref{TensorProduct}.  For example, this was already hinted at when we noted that the second derivative (which is supposed to be (and in fact will be) a tensor) takes in two vectors and spits out a number---as it does so in such a way that it is linear in each of the vectors, this is one example of how a tensor is really just a type of multilinear map.
+
+While we won't begin study of multilinear maps proper for a couple of sections, we introduce the definition here, as we shall occasionally make use of the terminology.
+\begin{dfn}{Multilinear-transformation}{MultilinearTransformation}
+	Let $V_1,\ldots ,V_m$ be respectively $\K _k$-$\K _{k+1}$-bimodules, let $V$ be a $\K _1$-$\K _{m+1}$-bimodule, and let $T\colon V_1\times \cdots \times V_m\rightarrow V$ be a function.  Then, $T$ is \term{multilinear}\index{Multilinear-transformation} iff
+	\begin{enumerate}
+		\item
+		\begin{equation}
+			V_k\in v\mapsto T(v_1,\ldots ,v_{k-1},v,v_{k+1},\ldots ,v_m)\in V
+		\end{equation}
+		is a group homomorphism for all $1\leq k\leq m$;
+		\item
+		\begin{equation}
+			T(\alpha \cdot v_1,v_2,\ldots ,v_{m-1},v_m\cdot \beta )=\alpha \cdot T(v_1,v_2\ldots ,v_{m-1},v_m)\cdot \beta
+		\end{equation}
+		for $\alpha \in \K _1$ and $\beta \in \K _{m+1}$; and
+		\item
+		\begin{equation}
+			\begin{multlined}
+				T(v_1,\ldots ,v_k\cdot \alpha ,v_{k+1},\ldots ,v_m) \\ =T(v_1,\ldots ,v_k,\alpha \cdot v_{k+1},\ldots ,v_m)
+			\end{multlined}
+		\end{equation}
+		for $\alpha \in \K _k$.
+	\end{enumerate}
+	\begin{rmk}
+		If $m=2$, the term \term{bilinear}\index{Bilinear-transformation} is more commonly used instead of ``multilinear-transformation''.  While I can't say I've heard the term before, it would stand to reason that \term{trilinear}\index{Trilinear-transformation} would be used for the $m=3$ case, etc..
+	\end{rmk}
+	\begin{rmk}
+		In essence, this means that (i) each argument preserves addition and (ii) you can move scalars around as you please just so long as you don't move scalars past vectors.
+		
+		If you find this confusing, I wouldn't worry.  Our interest is primarily in the commutative case, in which case these conditions simplify to something more understandable---see \cref{prp5.1.1}.
+	\end{rmk}
+	\begin{rmk}
+		At this level of generality, you might hear this concept being referred to as \term{balanced}\index{Balanced linear-transformation}, in which case ``multilinear-linear transformation'' would only be used in the commutative case where the condition simplifies---see \cref{prp5.1.1}.
+	\end{rmk}
+\end{dfn}
+Recall that (\cref{exm1.1.55}) if $\K$ is commutative, then a left $\K$-module obtains a canonical right module structure and vice-versa, and does so in such a way so as to `commute' with the vectors:  $\alpha \cdot v=v\cdot \alpha$.  Thus, in this case, the above condition simplifies to the following.
+\begin{prp}{}{prp5.1.1}
+	Let $V_1,\ldots ,V_m$ be respectively $\K _k$-$\K _{k+1}$-bimodules, let $V$ be a $\K _1$-$\K _{m+1}$-bimodule, and let $T\colon V_1\times \cdots \times V_m\rightarrow V$ be a function.  Then, if $\K _1,\ldots ,\K _{m+1}$ are commutative, then $T$ is multilinear iff
+	\begin{equation}
+	V_k\ni v\mapsto T(v_1,\ldots ,v_{k-1},v,v_{k+1},\ldots ,v_m)\in V
+	\end{equation}
+	is linear for all $1\leq k\leq m$.
+	\begin{rmk}
+		In other words, in this common case of interest, multilinear is equivalent to being linear in every argument.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\section{Dual-pairs and dual-spaces}
+
+We've already stated why we should care about covectors and the dual-space.  After having defined the dual-space $V^{\T}$ of a vector space $V$ (over a ground ring $\F$), we will obtain a \emph{bilinear} map $V^{\T}\times V\rightarrow \F$, yielding our first example of a \emph{dual-pair}.  In fact, it is essentially the only example of a dual-pair that we'll be interested in, but using this language will make the theory less `clunky'.  For example, working with dual-spaces themselves, our definitions would have to be written in such a way that, for example, $[T^{\T}]^{\T}$ is map from $[V^{\T}]^{\T}$ to $[W^{\T}]^{\T}$, whereas using the language of dual-pairs, it is instead a map from $V$ to $W$.
+
+We start with dual-spaces.
+
+\subsection{Dual-spaces}
+
+Finally we get to what yields the canonical example of a dual-pair:  the \emph{dual-space}.
+\begin{dfn}{Dual-space}{DualSpace}
+	Let $V$ be a $\K$-module.  Then, the \term{dual-space}\index{Dual-space} of $V$ is the commutative group
+	\begin{equation}
+	V^{\T}\ceqq \Mor _{\Mod{\K}}(V,\K ).
+	\end{equation}\index[notation]{$V^{\T}$}
+	\begin{rmk}
+		Elements of $V^{\T}$ are \term{covectors}\index{Covectors} or \term{linear-functionals}\index{Linear-functional}.  The terms are synonymous, though ``covector'' is more commonly used in the context of tensors while ``linear-functional'' tends to be used elsewhere.
+	\end{rmk}
+	\begin{rmk}
+		In other words, the elements of $V^{\T}$ take in elements of $V$ and spit out scalars.  Recall that the motivating example of this was the derivative:  this takes in a vector (the direction in which to differentiate) and spits out a number (the directional derivative in that direction).
+	\end{rmk}
+	\begin{rmk}
+		If $\K$ is commutative, we regard $V^{\T}$ as a $\K$-module as well---see \cref{sss1.1.2}.
+	\end{rmk}
+	\begin{rmk}
+		The ``$\T$'' is for ``transpose''---we'll see why later.  This is uncommon notation.  More common notation includes $V^*$ and $V'$.  The former I choose not to use as I reserve this notation for the \emph{conjugate}-dual, and the latter, well, $V'$ just looks weird to me.
+	\end{rmk}
+	\begin{rmk}
+		If $V$ comes with a topology, you're only going to want to look at the \emph{continuous} linear functionals.  Of course, you can look at all of them (including the discontinuous ones), but this is probably not going to be as useful.
+	\end{rmk}
+\end{dfn}
+You should note that we need to require $\K$ to be commutative in order to guarantee that $V^{\T}$ itself has the structure of a $\K$-module.\footnote{Recall from \cref{sss1.1.2} that morphism sets are in general not themselves $\K$-modules unless $\K$ is commutative.}  As we're going to be wanting to be considering $V$ and $V^{\T}$ on more or less equal footings, it is awkward if $V$ is a $\K$-module but $V^{\T}$ is just a commutative group.  Therefore, you should keep in mind that we will be requiring $\K$ to be commutative more often than usual, and that this is the reason why.
+
+\begin{exm}{Row-vectors}{RowVectors}
+	Let $\K$ be a ring, let $d\in \N$, and define $V\ceqq \K ^d$.  Recall that we can think of elements of $V$ has $d\times 1$ matrices.  Therefore, for every $1\times d$ matrix $\phi \in \Matrix _{1\times d}(\K )$, we have a linear map $V\rightarrow \K$ defined by
+	\begin{equation}
+	V\ni v\mapsto \phi v,
+	\end{equation}
+	where $\phi v$ is just matrix multiplication (and we are implicitly identifying $1\times 1$ matrices with $\K$ itself).
+	
+	This defines a map from $\Matrix _{1\times d}(\K )$ to $V^{\T}$, which is an isomorphism.
+	\begin{exr}[breakable=false]{}{}
+		Check that this is indeed an isomorphism.
+	\end{exr}
+	
+	We thus hereafter identity $V^{\T}\cong \Matrix _{1,d}(\K )$, in which case elements of $V^{\T}\ceqq [\K ^d]^{\T}$ are referred to as \term{row-vectors}\index{Row-vector}.
+	
+	For example, $\begin{bmatrix}1 & 2 & 3\end{bmatrix}\in [\R ^3]^{\T}$ defines a linear-functional on $\R ^3$ via
+	\begin{equation}
+	\R ^3\ni \begin{bmatrix}x \\ y \\ z\end{bmatrix}\mapsto \begin{bmatrix}1 & 2 & 3\end{bmatrix}\begin{bmatrix}x \\ y \\ z\end{bmatrix}\ceqq x+2y+3z.
+	\end{equation}
+	\begin{rmk}
+		Thus, row-vectors should be thought not of as vectors but as \emph{co}vectors.
+	\end{rmk}
+\end{exm}
+\begin{exm}{$[\K ^{\infty}]^{\T}=\K ^{\N}$}{exm5.2.16}
+	Let $\K$ be a cring.  Given $a\in \K ^{\N}$, we obtain a linear-functional $\phi _a\colon \K ^{\infty}\rightarrow \K$ defined by
+	\begin{equation}
+	\phi _a(b)\ceqq \sum _{k\in \N}a_kb_k.
+	\end{equation}
+	Note that this sum is finite as $b\in \K ^{\infty}$.
+	\begin{exr}[breakable=false]{}{}
+		Show that
+		\begin{equation}
+		\K ^{\N}\ni a\mapsto \phi _a\in [\K ^{\infty}]^{\T}
+		\end{equation}
+		is an isomorphism of $\K$-modules.
+	\end{exr}
+\end{exm}
+
+One reason the term ``dual'' is used is because, while on one hand, we can obviously view elements of $V^{\T}$ as linear-functionals on $V$, we can ``dually'' view elements of $V$ as linear-functionals on $V^{\T}$.
+\begin{thm}{Duality of the dual}{DualityOfTheDual}
+	Let $V$ be a $\K$-module, $\K$ a cring.\footnote{We really only need $\K$ to be commutative so that $V^{\T}$ is itself a $\K$-module.  This is the case for most of the results involving dual-spaces, and so we shall not mention this explicitly again.}  Then, the map $V\rightarrow [V^{\T}]^{\T}$ defined by
+	\begin{equation}
+		v\mapsto (\phi \mapsto \phi (v))
+	\end{equation}
+	is linear and natural.
+	
+	Furthermore,
+	\begin{enumerate}
+		\item \label{DualityOfTheDual(i)}if $V$ is a vector space, this map is injective; and
+		\item \label{DualityOfTheDual(ii)}if $V$ is a finite-dimensional vector space, this map is an isomorphism.
+	\end{enumerate}
+	\begin{rmk}
+		See \cref{sbsB.2.2} for a discussion of what is meant here by the term ``natural''.  You should note, however, that it's not particularly important and could require a relatively large effort to fully understand, especially if you've never seen anything like this before.  Thus, you might consider just pretending the word ``natural'' didn't appear anywhere in the statement above---you won't be missing out on all \emph{that} much.
+	\end{rmk}
+	\begin{rmk}
+		For $v\in V$ and $\phi \in V^{\T}$, we write
+		\begin{equation}
+		\pinnerprod{\phi |v}\ceqq \phi (v).
+		\end{equation}\index[notation]{$\pinnerprod{\phi |v}$}
+		Using this notation, the map $V\rightarrow [V^{\T}]^{\T}$ can be written as
+		\begin{equation}
+		v\mapsto \pinnerprod{\blankdot |v},
+		\end{equation}
+		where $\pinnerprod{\blankdot |v}$ is the linear-functional on $V^{\T}$ that sends $\phi \in V^{\T}$ to $\pinnerprod{\phi |v}\ceqq \phi (v)\in \K$.
+		
+		This notation is used suggestively when we want to think of $V$ and $V^{\T}$ as `on the same footing'---on one hand, we can view elements of $V^{\T}$ as linear-functionals on $V$ (e.g.~for $\phi \in V^{\T}$, $\pinnerprod{\phi |\blankdot}$ is a linear-functional on $V$), but on the other hand we can also view elements of $V$ as linear-functional on $V^{\T}$ (e.g.~for $v\in V$, $\pinnerprod{\blankdot |v}$ is a linear-functional on $V^{\T}$).  Thinking of things in terms of this ``duality'' is particularly appropriate when $V$ is a finite-dimensional vector space, so that, up to natural isomorphism, $V$ is `the same as' $[V^{\T}]^{\T}$.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  \cref{DualityOfTheDual(i)} need not hold if $V$ is not a vector space and \cref{DualityOfTheDual(ii)} need not hold if $V$ is a vector space but not finite-dimensional---see \cref{exm5.2.16x,exm5.2.17} respectively.
+	\end{rmk}
+	\begin{proof}
+		We first check that it is linear.  Let $v,w\in V$ and let $\alpha ,\beta \in \K$.  We wish to show that
+		\begin{equation}
+			\pinnerprod{|\alpha v+\beta w}=\alpha \pinnerprod{|v}+\beta \pinnerprod{|w}.
+		\end{equation}
+		However, this will be the case iff for all $\phi \in V^{\dagger}$ we have
+		\begin{equation}
+			\pinnerprod{\phi|\alpha v+\beta w}=\alpha \pinnerprod{\phi |v}+\beta \pinnerprod{\phi |w}.
+		\end{equation}
+		However, by definition of the notation $\pinnerprod$, this equation is the same as
+		\begin{equation}
+			\phi (\alpha v+\beta w)=\alpha \phi (v)+\beta \phi (w),
+		\end{equation}
+		which is of course true as $\phi$ is linear.
+
+		We now check that it is natural.\footnote{This part of the proof makes uses of things we have not yet encountered.  You can verify it is not circular as these new things don't make use of this result.  (It doesn't make sense to move this result so drastically just to avoid this small worry about potential circularity).  It makes use of the \namerefpcref{Transpose}, as well as the concept of a \emph{commutative diagram}, which is explained in a remark of \cref{TensorProduct}.}  Let $T\colon V\rightarrow W$ be a linear-transformation between $\K$-modules.  By definition (\cref{NaturalTransformation}), $V\mapsto [V^{\T}]^{\T}$ is natural iff the following diagram commutes.
+		\begin{equation}
+			\begin{tikzcd}
+				V \ar[r] \ar[d,"T"'] & \left[ V^{\T}\right] ^{\T} \ar[d,"{[T^{\T}]^{\T}}"] \\
+				W \ar[r] & \left[ W^{\T}\right] ^{\T}
+			\end{tikzcd}
+		\end{equation}
+		By definition, this means that we want to show that
+		\begin{equation}
+			\pinnerprod{\psi |[[T^{\T}]^{\T}](\pinnerprod{|v})}=\pinnerprod{\psi|T(v)}
+		\end{equation}
+		for al $v\in V$ and $\psi \in W^{\T}$.  However, by definition of the transpose and $\pinnerprod{|v}$,
+		\begin{equation}
+			\begin{split}
+				\pinnerprod{\psi |[[T^{\T}]^{\T}](\pinnerprod{|v})} & \ceqq \pinnerprod{[T^{\T}](\psi )|\pinnerprod{|v}}\ceqq \pinnerprod{[T^{\T}](\psi )|v} \\
+				& \ceqq \pinnerprod{\psi |T(v)},
+			\end{split}
+		\end{equation}
+		as desired.
+		
+		\blni
+		\cref{DualityOfTheDual(i)} Suppose that $V$ is a vector space.  To show that it is injective, we check that the kernel is $0$.  So, let $v\in V$ suppose that $\pinnerprod{\phi |v}=0$ for all $\phi \in V^{\T}$.  If $\K =0$, then $V=0$, and so we are immediately done.  Otherwise, if $v\neq 0$, then there is a linear-functional $\phi \colon V\rightarrow \K$ that sends $v$ to $1$, in which case $\pinnerprod{\phi |v}=1\neq 0$, a contradiction.  Thus, it must be the case that $v=0$.
+		
+		\blni
+		\cref{DualityOfTheDual(ii)} Suppose that $V$ is a finite-dimensional vector space.  We know from the defining result of the dual basis (\cref{TheDualBasis}) that $\dim (V)=\dim (V^{\T})=\dim ([V^{\T}]^{\T})$.  Thus, we have a injective linear map $V\rightarrow [V^{\T}]^{\T}$ between two finite-dimensional vector spaces of the same dimension, and hence it must in fact be an isomorphism (\cref{crl2.2.74}).
+	\end{proof}
+\end{thm}
+Thus, in this sense, if $V$ is a finite-dimensional vector space over a field, then $V$ is ``the same'' as $[V^{\T}]^{\T}$, in which case $V$ and $V^{\T}$ are ``on the same footing'' in the sense that the dual of $V$ is $V^{\T}$ and the dual of $V^{\T}$ `is' $V$.
+
+Be careful however---this doesn't hold in infinite-dimensions.
+\begin{exm}{A module $V$ for which $V\rightarrow [V^{\T}]^{\T}$ is not injective}{exm5.2.16x}
+	Define $\K \ceqq \Z$ and $V\ceqq \Z /2\Z$.
+	\begin{exr}[breakable=false]{}{}
+		Show that there is no $\Z$-linear map $\Z /2\Z \rightarrow \Z$.
+		\begin{rmk}
+			A ``$\Z$-linear map'' is the same as a group homomorphism---see \cref{exm1.1.22}.
+		\end{rmk}
+	\end{exr}
+	Thus, $V^{\T}=0$, and so certainly $[V^{\T}]^{\T}=0$, and hence the map $V\rightarrow [V^{\T}]^{\T}$ cannot be injective.
+\end{exm}
+\begin{exm}{A vector space $V$ for which $V\rightarrow [V^{\T}]^{\T}$ is not an isomorphism}{exm5.2.17}
+	Define $\K \ceqq \C$ and $V\ceqq \C ^{\infty}$.  By \cref{exm5.2.16}, we know that $[\C ^{\infty}]^{\T}\cong \C ^{\N}$ via the map $\C ^{\N}\in a\mapsto \pinnerprod{a|}\in [\C ^{\infty}]^{\T}$.  Hence, $[[\C ^{\infty}]^{\T}]^{\T}=[\C ^{\N}]^{\T}$ and the map $\C ^{\infty}\rightarrow [\C ^{\N}]^{\T}$ is given by $\C ^{\infty}\ni b\mapsto \pinnerprod{|b}\in [\C ^{\N}]^{\T}$.  We thus wish to find $\phi \in [\C ^{\N}]^{\T}$ such that $\phi \neq \pinnerprod{|b}$ for any $b\in \C ^{\infty}$.
+	
+	Let $e_k\in \C ^{\infty}$ denote the sequence that is identically $0$ except for a $1$ at index $k$.  Then, $\pinnerprod{e_k|b}=b_k$, and so in particular, for every $b\in C^{\infty}$, there is some $e_{k_b}$ such that $\pinnerprod{e_{k_b}|b}=0$ (recall that \cref{exm1.1.18} the elements of $\C ^{\infty}$ are those sequences which are eventually $0$).
+	
+	Using \cref{prp1.2.68}, let $\phi \colon \C ^{\N}\rightarrow \C$ be a linear-functional such that $\phi (e_k)=1$ for all $k\in \N$.  We then cannot have that $\phi =\pinnerprod{|b}$ for any $b\in \C ^{\infty}$ as $\phi (e_k)\neq 0$ for all $k$, and so $V\rightarrow [V^{\T}]^{\T}$ is not surjective.
+\end{exm}
+
+On the off chance this talk of dual-spaces has you thinking ``Okay, but if $\Mor _{\Mod{\K}}(V,\K )$ is so damn interesting, why don't we care about $\Mor _{\Mod{\K}}(\K ,V)$.''.  The answer is that ``We do care.'', but there's no need to have a separate discussion---this `is' just $V$ itself.
+\begin{prp}{$\Mor _{\Mod{\K}}(\K ,V)\cong V$}{prp5.2.24}
+	Let $V$ be a $\K$-module.  Then, the map
+	\begin{equation}
+		\Mor _{\Mod{\K}}(\K ,V)\ni \phi \mapsto \phi (1)\in V
+	\end{equation}
+	is a natural isomorphism.
+	\begin{proof}
+		It follows from the definition that it is linear.  To check naturality, let $T\colon U\rightarrow V$ be linear.  Then, this map is natural (\cref{NaturalTransformation}) iff the following diagram commutes.
+		\begin{equation}
+			\begin{tikzcd}
+				\Mor (\K ,U) & U \\
+				\Mor (\K ,V) & V
+			\end{tikzcd}
+		\end{equation}
+		Writing out the definitions of these maps, we see that this commutes for tautological reasons.
+		
+		To show that it is an isomorphism, we construct an inverse.  For every $v\in V$, there is a unique linear map $\phi _v\colon \K \rightarrow V$ such that $\phi _v(1)=v$.  By construction, $V\ni V\mapsto \phi _v\in \Mor (\K ,V)$ is an inverse to $\phi \mapsto \phi (1)$.
+	\end{proof}
+\end{prp}
+
+Before moving on, we end this subsection with some more examples of dual-spaces and linear-functions.
+\begin{exm}{Evaluation maps}{}
+	Let $x_0\in \R$.  Then, $\ev _{x_0}\colon \Mor _{\Top}(\R ,\C )\rightarrow \C$\index[notation]{$\ev _{x_0}$}, the \term{evaluation map}\index{Evaluation map} at $x_0$ defined by
+	\begin{equation}
+	\ev _{x_0}(f)\ceqq f(x_0),
+	\end{equation}
+	is a linear-functional.
+	
+	Of course, it restricts to $\C [x]\subseteq C^{\infty}(\R )\subseteq \Mor _{\Top}(\R ,\C )$ to give linear-functionals on $\C [x]$ and $C^{\infty}(\R )$ as well.
+	\begin{rmk}
+		$\Mor _{\Top}(\R ,\C )$ is the category-theoretic notation for the set of all \emph{continuous} functions from $\R$ to $\C$.  (``$\Top$'' is the category of topological spaces,\footnote{Without giving the precise definition, the ``point'' of topological spaces is that they are one of the most general contexts in which the notion of continuity makes sense.} and the morphisms in this category are by definition continuous functions.)
+	\end{rmk}
+\end{exm}
+\begin{exm}{The trace}{}
+	Let $V$ be a finite-dimensional vector space over an algebraically-closed field $\F$.  Then,
+	\begin{equation}
+	\End _{\Vect _{\F}}(V)\ni T\mapsto \sum _{\lambda \in \Eig (T)}\lambda \in \C
+	\end{equation}
+	is a linear-functional on $\End _{\Vect _{\F}}(V)$.
+\end{exm}
+\begin{exr}{}{}
+	Let $\K$ be a cring.  By \cref{exm5.2.16}, $[\K ^{\infty}]^{\T}=\K ^{\N}$.  By the previous result, $\K ^{\infty}$ embeds into $[\K ^{\N}]^{\T}$.  Show that $\K ^{\infty}\rightarrow [\K ^{\N}]^{\T}$ is not surjective.
+\end{exr}
+
+\subsection{Dual-pairs}
+
+\subsubsection{The definition and basic facts}
+
+While it won't be true in general, in our case of interest, $V$ and $V^{\T}$ will be `on the same footing'.  A priori, that just doesn't look like the case at all---you start with $V$ and then $V^{\T}$ is a collection of functions with domain $V$.  However, if we shift our perspective, it becomes clearer how this might work.
+
+Consider instead the map $V^{\T}\times V\ni \coord{\phi ,v}\mapsto \phi (v)\in \K$.  In fact, we will suggestively write $\pinnerprod{\phi |v}=\phi (v)$ to stress that we want to think of $V^{\T}$ ``on the same footing'' as $V$.  Now the situation is more symmetric.  This motivates us to define the notion of a \emph{dual-pair}.\footnote{You should also take note that (\cref{DualityOfTheDual}), at least for finite-dimensional vector spaces over fields, $[V^{\T}]^{\T}$ `is' $V$.  Thus, if you take the dual of $V$ you get $V^{\T}$ (duh), but furthermore taking the dual of $V^{\T}$ gives you $[V^{\T}]^{\T}=V$ back as well.  In brief, $V$ and $V^{\T}$ are the duals of each other, which is perhaps a stronger argument that we should be thinking of $V$ and $V^{\T}$ as ``on the same footing''.  Be warned, however, this is very much special to the finite-dimensional case.}
+\begin{dfn}{Dual-pair}{DualPair}	
+	A \term{dual-pair}\index{Dual-pair} is
+	\begin{data}
+		\item two $\K$-$\K$-bimodules $V$ and $W$; together with
+		\item a bilinear map $\pinnerprod{\blankdot |\blankdot} \colon W\times V\rightarrow \K$\index[notation]{$\pinnerprod{\blankdot |\blankdot}$}.
+	\end{data}
+	\begin{rmk}
+		$\pinnerprod{\blankdot |\blankdot}$ is the \term{pairing}\index{Pairing (of a dual-pair)} of $V$ and $W$.  As this in principle contains all the data of a dual-pair itself ($V$ and $W$ are `encoded' in the domain of $\pinnerprod{\blankdot |\blankdot}$'', we may refer to ``$\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$'' itself as the ``dual-pair''.
+	\end{rmk}
+	\begin{rmk}
+		This notation is useful because it allows us to treat $V$ and $W$ ``on the same footing'' when they otherwise might not be.  For example, if you look at the definition of orthogonal complement (\cref{OrthogonalComplement}), if we had tried to define this using just $V$ and $V^{\T}$ (so without using the language of ``dual-pair''), then the orthogonal complement of $S\subseteq V^{\T}$ would be a subset $S^{\perp}\subseteq [V^{\T}]^{\T}$ of the double dual, whereas we want $S^{\perp}\subseteq V$.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  Some authors require $\pinnerprod{\blankdot |\blankdot}$ to be \emph{nondegenerate} (\cref{NonsingularAndNondegenerate}), whereas we do not.  If we want to consider a nondegenerate (or nonsingular) pairing, we will say so explicitly.
+	\end{rmk}
+\end{dfn}
+Note that, given a dual pair $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$, we have maps $V\rightarrow W^{\T}$ and $W\rightarrow V^{\T}$, defined by $v\mapsto \pinnerprod{\blankdot |v}$ and $w\mapsto \pinnerprod{w|\blankdot}$ respectively.
+\begin{dfn}{Nonsingular and nondegenerate\hfill}{NonsingularAndNondegenerate}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ be a dual-pair.
+	\begin{enumerate}
+		\item $\pinnerprod{\blankdot |\blankdot}$ is \term{nonsingular}\index{Nonsingular (dual-pair)} iff the maps $V\rightarrow W^{\T}$ and $W\rightarrow V^{\T}$ are both isomorphisms.
+		\item $\pinnerprod{\blankdot |\blankdot}$ is \term{nondegenerate}\index{Nondegenerate (dual-pair)} iff the maps $V\rightarrow W^{\T}$ and $W\rightarrow V^{\T}$ are both injective.
+	\end{enumerate}
+	\begin{rmk}
+		Given $v\in V$, the linear-functional $\pinnerprod{\blankdot |v}\in W^{\T}$ is the \term{dual-vector} of $v$ with respect to $\pinnerprod{\blankdot |\blankdot}$.  Similarly, given $w\in W$, the linear-functional $\pinnerprod{w|\blankdot}\in V^{\T}$ is the \term{dual-vector} of $w$ with respect to $\pinnerprod{\blankdot |\blankdot}$.\index{Dual-vector}
+		
+		Using this language, nondegeneracy says that the dual-vector $\pinnerprod{\blankdot |v}$ is uniquely determined by $v$ (and dually for $w\in W$).  Similarly, nonsingularity says that every element of $W^{\T}$ is of this form (and dually for $V^{\T}$).
+	\end{rmk}
+\end{dfn}
+The condition of nondegeneracy is usually stated in the following equivalent form.
+\begin{prp}{}{}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ be a dual-pair.  Then, $\pinnerprod{\blankdot |\blankdot}$ is nondegenerate iff $\pinnerprod{w|v}=0$ for all $w\in W$ implies $v=0$ and $\pinnerprod{w|v}=0$ for all $v\in V$ implies $w=0$.
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{prp5.2.16}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ be a dual pair.
+	\begin{enumerate}
+		\item \label{prp5.2.16(i)}If $\pinnerprod{\blankdot |\blankdot}$ is nonsingular, then it is nondegenerate.
+		\item \label{prp5.2.16(ii)}Suppose that $V$ and $W$ are finite-dimensional vectors spaces.  Then, $\pinnerprod{\blankdot |\blankdot}$ is nonsingular iff it is nondegenerate.
+	\end{enumerate}
+	\begin{proof}
+		\cref{prp5.2.16(i)} Immediate from the definitions.
+		
+		\blni
+		\cref{prp5.2.16(ii)} $(\Rightarrow )$ This is \cref{prp5.2.16(i)}.
+		
+		$(\Leftarrow )$ Suppose that $\pinnerprod{\blankdot |\blankdot}$ is nondegenerate.  Then, it is nonsingular as injective is equivalent to bijective for finite-dimensional vector spaces (\cref{crl2.2.74}).
+	\end{proof}
+\end{prp}
+\begin{prp}{}{}
+	Let $V$ be a $\K$-module, $\K$ a cring.  Then, $\pinnerprod{\blankdot |\blankdot}\colon V^{\T}\times V\rightarrow \K$ is a dual-pair.
+	
+	Furthermore, it is nondegenerate if $V$ is a vector space and nonsingular if $V$ is a finite-dimensional vector space.
+	\begin{rmk}
+		A corollary of this is that $\dim (V)=\dim (V^{\T})$ if $V$ is a finite-dimensional vector space:  The pairing is nonsingular, and so $\basis{B}^{\T}$ is a basis of $V^{\T}$ by \cref{TheDualBasis}.  As $\abs{\basis{B}}=\abs{\basis{B}^{\T}}$, it follows that $\dim (V)=\dim (V^{\T})$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\subsubsection{The transpose}
+
+We now have a notion of ``dual'' for vector spaces, and so, as you might expect, we also get a notion of ``dual'' for linear-transformations.
+\begin{dfn}{Transpose}{Transpose}
+	Let $V_1$ and $V_2$ be $\K$-modules, $\K$ a cring, and let $T\colon V_1\rightarrow V_2$.  Then, the \term{transpose}\index{Transpose} of $T$, $T^{\T}\colon V_2^{\T}\rightarrow V_1^{\T}$\index[notation]{$T^{\T}$}, is defined by
+	\begin{equation}
+		\pinnerprod{T^{\T}(w_2)|v_1}\ceqq \pinnerprod{w_2|T(v_1)}
+	\end{equation}
+	for $w_2\in V_2^{\T}$ and $v_1\in V_1$.
+	\begin{rmk}
+		Note that this definition doesn't actually require the existence of any dual-pairs.  That said, we are going to be primarily interested in the case when there are pairings involved.\footnote{This is why we used ``$w_2$'' above instead of something like ``$\phi _2$''.}
+		
+		Let $\pinnerprod{\blankdot |\blankdot}\colon W_1\times V_1\rightarrow \K$ and $\pinnerprod{\blankdot |\blankdot}\colon W_2\times V_2\rightarrow \K$ be \emph{nonsingular} dual-pairs.  Nonsingularity implies in particular that $W_2\cong V_2^{\T}$ and $W_1\cong V_1^{\T}$,\footnote{Note that this does not quite use the full strength of singularity---it is also the case that $W_2^{\T}\cong V_2$ and $W_1^{\T}\cong V_1$.  However, if we want to take the transpose twice to get back a map $V_1\rightarrow V_2$ (which it turns out agrees with the original map---see \cref{prp5.2.36}), we will need the full strength of nonsingularity.} in which case we will readily make these identifications.  We can then view $T^{\T}$ as a map $T^{\T}\colon W_2\rightarrow W_1$.  If we do have nonsingular dual-pairs like this, we will always make this identification.
+	\end{rmk}
+\end{dfn}
+\begin{prp}{Properties of the transpose}{prp5.2.36}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W_0\times V_0\rightarrow$, $\pinnerprod{\blankdot |\blankdot}\colon W_1\times V_1\rightarrow \K$, and $\pinnerprod{\blankdot |\blankdot}\colon W_2\times V_2\rightarrow \K$ be nonsingular dual-pairs.
+	\begin{enumerate}
+		\item $\Mor _{\Mod{\K}[\K]}(V_1,V_2)\ni T\mapsto T^{\T}\in \Mor _{\Mod{\K}[\K]}(W_2,W_2)$ is linear.
+		\item $[T\circ S]^{\T}=S^{\T}\circ T^{\T}$ for $S\colon V_0\rightarrow V_1$ and $T\colon V_1\rightarrow V_2$ linear.
+		\item $[T^{\T}]^{\T}=T$.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+In case you were wondering, yes, this is the same ``transpose'' you have probably heard of before in the context of matrices, though we'll have to wait until we've discussed dual-bases to see exactly why---see \cref{prpTranspose}.
+
+\subsubsection{The orthogonal complement}
+
+The intuition behind the following concept will likely be easier to understand when we begin our study of inner-product spaces, though one can see it's usefulness easily enough:  it allows us to related the kernel and image of $T^{\T}$ to that of $T$---see \cref{prp5.2.21}.
+\begin{dfn}{Orthogonal complement}{OrthogonalComplement}\index{Orthogonal complement}\index[notation]{$S^{\perp}$}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ be a dual-pair.
+	\begin{enumerate}
+		\item For $S\subseteq V$, the \term{orthogonal complement} of $S$, $S^{\perp}$, is defined by
+		\begin{equation}
+		S^{\perp}\ceqq \left\{ w\in W:\pinnerprod{w|v}=0\text{ for all }v\in S\text{.}\right\} .
+		\end{equation}
+		\item For $S\subseteq V^{\T}$, the \term{orthogonal complement} of $S$, $S^{\perp}$, is defined by
+		\begin{equation}
+		S^{\perp}\ceqq \left\{ v\in V:\pinnerprod{w|v}=0\text{ for all }w\in S\text{.}\right\} .
+		\end{equation}
+	\end{enumerate}
+	\begin{rmk}
+		Let $v\in \K ^d$ and $\phi \in [\K ^d]^{\T}$.  Then,
+		\begin{equation}
+		\pinnerprod{\phi |v}=\phi v\ceqq \sum _{k=1}^d\phi _kv_k,
+		\end{equation}
+		where ``$\phi v$'' here denotes matrix multiplication (recall that (\cref{RowVectors}) $\phi$ is a row-vector, so a $1\times d$ matrix, just as $v$ is a $d\times 1$ matrix).  This expression should remind you of the dot product.  Of course, this won't literally be the case in general, but nevertheless, much of the intuition about the ``pairing'' $\pinnerprod{w|v}$ in general comes from your intuition about the dot product.
+		
+		For example, in this case, you'll recall that, by definition, two vectors are \emph{orthogonal} iff their dot product vanishes, whence the term ``orthogonal complement'':  $S^{\perp}$ is the set of vectors orthogonal to the set of `covectors'\footnote{In quotes because unless $W=V^{\T}$, it need not literally be the case that the elements of $S$ are linear-functionals on $V$.} $S$ (or dually if $S\subseteq V$).
+	\end{rmk}
+	\begin{rmk}
+		The symbol ``$\perp$'' in English is read (at least by me) as ``perp'' (as in ``\emph{perp}endicular'').  We'll see later when we study inner-product spaces that, in a sense, ``orthogonal'' is essentially equivalent to ``perpendicular'', hence ``perp''.
+	\end{rmk}
+	\begin{rmk}
+		I have also seen the notation $S^0$ used.  I've also seen this referred to as the \emph{annihilator} of $S$, 
+	\end{rmk}
+\end{dfn}
+\begin{prp}{Properties of the orthogonal complement}{prp5.2.18}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ be a dual pair and let $S$ and $T$ either both be subsets of $V$ or both be subsets of $W$.
+	\begin{enumerate}
+		\item \label{prp5.2.18(i)}$S^{\perp}$ is a subspace.
+		\item \label{prp5.2.18(iix)}If $S\subseteq T$, then $T^{\perp}\subseteq S^{\perp}$.
+		\item \label{prp5.2.18(ii)}if $\pinnerprod{\blankdot |\blankdot}$ is a nonsingular pairing of vector spaces, then $[S^{\perp}]^{\perp}=\Span (S)$.
+		\item \label{prp5.2.18(iiix)}$0^{\perp}=V$ and $0^{\perp}=W$.
+		\item \label{prp5.2.18(iiixx)}If the pairing is nondegenerate, then $V^{\perp}=0$ and $W^{\perp}=0$.
+		\item \label{prp5.2.18(iii)}If $V$ and $W$ are finite-dimensional vector spaces, then
+		\begin{equation}
+			\dim (V)=\dim (U)+\dim (U)^{\perp}
+		\end{equation}
+		if $U\subseteq V$ is a subspace; and
+		\begin{equation}
+			\dim (W)=\dim (U)+\dim (U^{\perp})
+		\end{equation}
+		if $U\subseteq W$ is a subspace.
+	\end{enumerate}
+	\begin{rmk}
+		Note that this doesn't require $S$ or $T$ to be a subspaces themselves.
+	\end{rmk}
+	\begin{rmk}
+		As in \namerefpcref{RankNullityTheorem}, \cref{prp5.2.18(iii)} generalizes to the statements that $U^{\perp}\rightarrow (V/U)^{\T}$ and $U^{\perp}\rightarrow (W/U)^{\T}$ are isomorphisms (at least for nonsingular pairings).\footnote{Every $w\in U^{\perp}$ can be regarded as a linear map $V\rightarrow \K$ that vanishes on $U$, and hence descends to a well-defined linear map $V/U\rightarrow \K$.  Dually for the case $U\subseteq W$.}
+	\end{rmk}
+	\begin{rmk}
+		If you care, I suspect that \cref{prp5.2.18(ii)} holds if $W$ and $V$ are semisimple (\cref{SemisimpleModule}) (this is automatic if $\K$ is a division ring by \cref{prp4.4.24}).
+	\end{rmk}
+	\begin{proof}
+		\cref{prp5.2.18(i)} We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this part.
+		\end{exr}
+		
+		\blni
+		\cref{prp5.2.18(iix)} We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this part.
+		\end{exr}
+		
+		\blni
+		\cref{prp5.2.18(ii)} Without loss of generality, take $S\subseteq V$.  Let $v\in S$.  Then, by definition, $\pinnerprod{w|v}=0$ for all $w\in S^{\perp}$, and hence $v\in [S^{\perp}]^{\perp}$.  Thus, $S\subseteq [S^{\perp}]^{\perp}$, and hence, as $[S^{\perp}]^{\perp}$ is a subspace, $\Span (S)\subseteq [S^{\perp}]^{\perp}$.
+		
+		For the other inclusion, we first prove it in the case $S\subseteq V$ itself is a subspace, so that $\Span (S)=S$.  Write $V=S\oplus T$ for some subspace $T\subseteq V$.  We first check that $W=S^{\perp}\oplus T^{\perp}$.  If $w\in S^{\perp}\cap T^{\perp}$, then $\pinnerprod{w|s+t}=0$ for all $s\in S$ and $t\in T$, and hence $w=0$ by nondegeneracy.  To show spanning, let $w\in W$.  As $V=S\oplus T$, there is a unique linear-functional $w_s\colon V\rightarrow \K$ such $\restr{w_s}{S}=\restr{\pinnerprod{w|\blankdot}}{S}$ and $\restr{w_s}{T}=0$.  Similarly there is a unique linear-functional $w_t\colon V\rightarrow \K$ such that $\restr{w_t}{S}=0$ and $\restr{w_t}{T}=\restr{\pinnerprod{w|\blankdot}}{T}$.  By nonsingularity, every element of $V^{\T}$ is of the form $\pinnerprod{u|\blankdot}$ for a unique $u\in W$.  By abuse of notation, let $w_s,w_t\in W$ be the unique elements such that $\pinnerprod{w_s|s}=\pinnerprod{w|s}$ for $s\in S$ and $\pinnerprod{w_s|t}=0$ for $t\in T$, and $\pinnerprod{w_t|s}=0$ for $s\in S$ and $\pinnerprod{w_t|t}=\pinnerprod{w|t}$ for $t\in T$.  It follows immediately from this that $w_s\in T^{\perp}$ and $w_t\in S^{\perp}$.  We claim that $w=w_s+w_t$.  So, let $v\in V$ and write $v=s+t$ for unique $s\in S$ and $t\in T$.  Then,
+		\begin{equation}
+			\begin{split}
+				\pinnerprod{w|v} & =\pinnerprod{w|s+t}=\pinnerprod{w|s}+\pinnerprod{w|t}=\pinnerprod{w_s|s}+\pinnerprod{w_t|t} \\
+				& =\pinnerprod{w_s|s+t}+\pinnerprod{w_t|s+t}=\pinnerprod{w_s|v}+\pinnerprod{w_t|v} \\
+				& =\pinnerprod{w_s+w_t|v}.
+			\end{split}
+		\end{equation}
+		By nondegeneracy, we have that $w=w_s+w_t$, as desired.  Hence, $W=S^{\perp}\oplus T^{\perp}$.
+		
+		We return to checking that $[S^{\perp}]^{\perp}\subseteq S$ if $S\subseteq V$ is a subspace.  So, let $v\in [S^{\perp}]^{\perp}$ and write $v=s+t$ for unique $s\in S$ and $t\in T$.  We wish to show that $t=0$.  To show this, by nondegeneracy, it suffices to show that $\pinnerprod{w|t}=0$ for all $w\in W$.  So, let $w\in W$.  We now know that we can write $w=w_s+w_t$ for unique $w_s\in T^{\perp}$ and $w_t\in S^{\perp}$.  We then have
+		\begin{equation}
+		\pinnerprod{w|t}=\pinnerprod{w_t|t}=\pinnerprod{w_t|s+t}=\pinnerprod{w_t|v}=0,
+		\end{equation}
+		and so $t=0$, as desired.
+		
+		Finally, we prove that $[S^{\perp}]^{\perp}\subseteq \Span (S)$ for an arbitrary subset $S\subseteq V$.  We have that $S\subseteq \Span (S)$, and so $\Span (S)^{\perp}\subseteq S^{\perp}$, and so
+		\begin{equation}
+		[S^{\perp}]^{\perp}\subseteq [\Span (S)^{\perp}]^{\perp}=\Span (S),
+		\end{equation}
+		as desired.
+		
+		\blni
+		\cref{prp5.2.18(iiix)} We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this part.
+		\end{exr}
+		
+		\blni
+		\cref{prp5.2.18(iiixx)} We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove this part.
+		\end{exr}
+		
+		\blni
+		\cref{prp5.2.18(iii)} We prove the case $U\subseteq V$.  The other case is essentially identical.  Let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ be a basis for $V$ with $\{ b_1,\ldots ,b_e\}$ a basis of $U$, so that $\basis{B}^{\T}\ceqq \{ [b^1]^{\T},\ldots ,[b^d]^{\T}\}$ is a basis for $V^{\T}$.\footnote{This is the dual-basis which we will meet shortly---see \cref{TheDualBasis}.}  As $\pinnerprod{[b^k]^{\T}|b_l}=\delta \indices{^k_l}$,\footnote{} $[b^k]^{\T}\in U^{\perp}$ iff $e+1\leq m$.  Furthermore, for $\phi \in U^{\perp}$, if we write $\phi =\phi _1\cdot [b^1]^{\T}+\cdots +\phi _d\cdot [b^d]^{\T}$, plugging in $b_k$ for $1\leq k\leq e$ shows that we must have $\phi _k=0$.  Thus, $\phi \in \Span ([b^{e+1}]^{\T},\ldots ,[b^d]^{\T})$, and hence $\{ [b^{e+1}]^{\T},\ldots ,[b^d]^{\T})$ forms a basis for $U^{\perp}$.  Hence,
+		\begin{equation}
+			\dim (U)+\dim (U)^{\perp}=e+(d-e)=d=\dim (V).
+		\end{equation}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{prp5.2.21}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W_1\times V_1\rightarrow \K$ and $\pinnerprod{\blankdot |\blankdot}\colon W_2\times V_2\rightarrow \K$ be nonsingular dual-pairs, and let $T\colon V_1\rightarrow V_2$ be linear.  Then,
+	\begin{align}
+	\Ker (T^{\T}) & =\Ima (T)^{\perp}\label{eqn5.2.22} \\
+	\Ima (T^{\T}) & =\Ker (T)^{\perp}\label{eqn5.2.23}
+	\end{align}
+	\begin{rmk}
+		I think this should be relatively easy to remember.  $^{\T}$ comes outside of $\Ker $ and $\Ima$, `flips upside-down', and $\Ker$ gets replaced with $\Ima$ and vice versa.
+	\end{rmk}
+	\begin{rmk}
+		In particular, this (together with \cref{prp5.2.18}) implies (for vector spaces anyways) that $T$ is injective iff $T^{\T}$ is surjective and that $T$ is surjective iff $T^{\T}$ is injective.
+	\end{rmk}
+	\begin{rmk}
+		Do take note of this.  It is quite important.
+		
+		Also, don't overlook the fact that \emph{nonsingularity} is a hypothesis.
+	\end{rmk}
+	\begin{proof}
+		\eqref{eqn5.2.22} $w_2 \in \Ker (T^{\T})$ iff $T^{\T}(w_2)=0$ iff $0=\pinnerprod{T^{\T}(w_2)|v_1}=\pinnerprod{w_2|T(v_1)}$ for all $v_1\in V_1$ iff $w_2\in \Ima (T)^{\perp}$.
+		
+		\blni
+		\eqref{eqn5.2.23} Replacing $T$ with $T^{\T}$ in \eqref{eqn5.2.22}, we obtain
+		\begin{equation}
+		\Ker (T)=\Ker ([T^{\T}]^{\T})=\Ima (T^{\T})^{\perp}.
+		\end{equation}
+		Taking the perp of this equation, we obtain
+		\begin{equation}
+		\Ker (T)^{\perp}=\Span (\Ima (T^{\T}))=\Ima (T^{\T}),
+		\end{equation}
+		as desired.
+	\end{proof}
+\end{prp}
+Among other things, this can be used to figure out the ``row-space'' of matrices as is often asked in elementary linear algebra courses.
+\begin{exm}{Row-space}{}
+	Let $A$ be an $m\times n$ matrix.  The \term{row-space}\index{Row-space} of $A$, $\Row (A)$\index[notation]{$\Row (A)$}, is the span of the rows of $A$.  The first thing is to note that $\Row (A)=\Col (A^{\T})$.  Hence,
+	\begin{equation}
+	\Row (A)=\Col (A^{\T})=\Null (A)^{\perp}.
+	\end{equation}
+	As you already know how to compute null spaces, this gives you an alternative description of $\Row (A)$.  In particular, from \cref{prp5.2.18}\cref{prp5.2.18(iii)},
+	\begin{equation}
+	\begin{split}
+	\dim (\Row (A)) & =\dim (\Null (A)^{\perp})=\dim (\K ^n)-\dim (\Null (A)) \\
+	& =\footnote{By the \namerefpcref{RankNullityTheorem}.}\dim (\Col (A)).
+	\end{split}
+	\end{equation}
+	
+	\horizontalrule
+	
+	Similarly, if you had been asked to calculate $\Null (A^{\T})$ for whatever reason, you could use the fact that $\Null (A^{\T})=\Ima (A)^{\perp}$.
+\end{exm}
+
+\subsubsection{The dual basis}
+
+Given a dual-pair $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ and a basis $\basis{B}\subseteq V$, there will be a corresponding subset $\basis{B}^{\T}\subseteq W$ which is always linearly-independent and, in good cases, a basis of $W$, the \emph{dual basis}.
+\begin{prp}{The dual basis}{TheDualBasis}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$, let $\basis{B}$ be a basis of $V$, and for $b\in \basis{B}$ let $b^{\T}\colon V\rightarrow \K$ be the unique linear map such that
+	Let $V$ be a $\K$-module, let $\basis{B}$ be a basis of $V$, for $b\in \basis{B}$ let $b^{\T}\colon V\rightarrow \K$ be the unique linear map such that
+	\begin{equation}
+	b^{\T}(c)=\begin{cases}1 & \text{if }c=b \\ 0 & \text{otherwise,}\end{cases}
+	\end{equation}
+	and define $\basis{B}^{\T}\ceqq \{ b^{\T}:b\in \basis{B}\}$.
+	\begin{enumerate}
+		\item If the pairing is nondegenerate, then $\basis{B}^{\T}\subseteq V$ is linearly-independent.
+		\item If the pairing is nonsingular, then $\basis{B}^{\T}\subseteq V$ is a basis.
+	\end{enumerate}
+	\begin{rmk}
+		If $\basis{B}^{\T}$ is actually a basis of $W$, then it is referred to as the \term{dual basis}\index{Dual basis} of $\basis{B}$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exr}{}{}
+	Find an example of a dual-pair with basis $\basis{B}\subseteq V$ such that $\basis{B}^{\T}$ does \emph{not} span $W$.
+\end{exr}
+
+It's now time to return to the issue of how this notion of transpose corresponds with the classical one you might already be familiar with. 
+\begin{prp}{}{prpTranspose}
+	Let $\pinnerprod{\blankdot |\blankdot}\colon W_1\times V_1\rightarrow \K$ and $\pinnerprod{\blankdot |\blankdot}\colon W_2\times V_2\rightarrow \K$ be nonsingular dual-pairs, let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ and $\basis{C}\eqqc \{ c_1,\ldots ,c_e\}$ be bases for $V_1$ and $V_2$ respectively, and let $T\colon V_1\rightarrow V_2$ be linear.  Then,
+	\begin{equation}
+		\coordinates{T^{\T}}{\basis{B}^{\T}\leftarrow \basis{C}^{\T}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}^{\T},
+	\end{equation}
+	where we have defined
+	\begin{equation}\label{eqn5.2.72}
+		[A^{\T}]\indices{^i_j}\ceqq A\indices{_j^i}
+	\end{equation}
+	for $A$ an $e\times d$ matrix.
+	\begin{rmk}
+		$A^{\T}$ is the \term{transpose}\index{Transpose (of a matrix)} of $A$.  Intuitively, it is the matrix formed by `flipping' $A$ about its diagonal.  For example,
+		\begin{equation}
+		\begin{bmatrix}1 & 2 & 3 \\ 4 & 5 & 6 \\ 7 & 8 & 9\end{bmatrix}^{\T}=\begin{bmatrix}1 & 4 & 7 \\ 2 & 5 & 8 \\ 3 & 6 & 9\end{bmatrix}.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		In words, for any choice of bases, the matrix of the transpose is the transpose of the matrix.  It is in this sense that the ``transpose'' of a linear-transformation and the ``transpose'' of a matrix coincide.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\section{The tensor product}
+
+We said before that multilinear algebra is the study of multilinear maps.  From the definition \cref{MultilinearTransformation}, it is clear that (ordinary) linear algebra will be relevant to a study of linear-maps, but what would be really awesome is if we could reduce the entire study of multilinear maps to just linear maps so that we can apply everything we've learned thus far.  It is the \emph{tensor product} that allows us to do this.
+
+\subsection{The definition}
+
+\begin{thm}{Tensor product}{TensorProduct}
+	Let $V$ be an $R$-$S$-bimodule and let $W$ be an $S$-$T$-bimodule.  Then, there is a unique bilinear map $\blank \otimes \blank \colon V\times W\rightarrow V\otimes _SW$ into the $R$-$T$-bimodule $V\otimes _SW$\index[notation]{$V\otimes _SW$}, the \term{tensor product}\index{Tensor product} of $V$ and $W$ over $S$, such that if $V\times W\rightarrow U$ is any other bilinear map into an $R$-$T$-bimodule $U$, then there is a unique map of bimodules $V\otimes _SW\rightarrow U$ such that the following diagram commutes.
+	\begin{equation}\label{eqn5.3.2}
+		\begin{tikzcd}
+			V\times W \ar[r,"\blank \otimes \blank "] \ar[rd] & V\otimes _SW \ar[d,dashed] \\
+			& U
+		\end{tikzcd}
+	\end{equation}
+	\begin{rmk}
+		For $v\in V$ and $w\in W$, the image under the bilinear map $V\times W\rightarrow V\otimes _SW$ is written $v\otimes w\in V\otimes _SW$\index[notation]{$v\otimes w$} and is the \term{tensor product}\index{Tensor product (of vectors)} of $v$ and $w$.
+	\end{rmk}
+	\begin{rmk}
+		There is an analogous result for not just bilinear maps, but all types of multilinear maps.  Specifically, if $V_k$ is a $\K _k$-$\K _{k+1}$-bimodules, then we have a multilinear map $V_1\times \cdots \times V_m\rightarrow V_1\otimes _{\K _1}\cdots \otimes _{\K _{m-1}}V_m$ into a $\K _1$-$\K _m$-bimodule that is ``universal'' in a sense exactly analogous to \eqref{eqn5.3.2}.
+	\end{rmk}
+	\begin{rmk}
+		A common question I've gotten from students is ``But what actually \emph{is} $v\otimes w$?''.  I'm afraid there's not a terribly good answer for that.  It is what it is:  the image of $\coord{v,w}\in V\times W$ under the canonical bilinear map $V\times W\rightarrow V\otimes _SW$.  As that's probably not very satisfying, I ask you to consider the following.
+		
+		What if I asked you ``But what actually \emph{is} $\sqrt{2}\cdot \uppi$?''.  The answer is that it is what it is:  it's the product of $\sqrt{2}$ and $\uppi$.  You can't really reduce it to something simpler without going so far out of your way so as to not be worth it.  For example, what are you going to do?  Try to argue that the number $\sqrt{2}\cdot \uppi$ is $\uppi$ added to itself $\sqrt{2}$ times?  Good luck with that.
+		
+		Anyways, I'm sure you probably don't feel very uncomfortable talking about ``$\sqrt{2}\cdot \uppi$'', and my claim is that if you feel comfortable working with this, then you should feel comfortable working with $v\otimes w$.
+	\end{rmk}
+	\begin{rmk}
+		If $S$ is clear from context, it may be omitted:  $V\otimes W\ceqq V\otimes _SW$\index[notation]{$V\otimes W$}.
+	\end{rmk}
+	\begin{rmk}
+		To clarify, there are tensor products of \emph{bimodules}, and then there are tensor products of \emph{vectors themselves}.  The tensor product of two vectors `lives in' the tensor product of the corresponding bimodules.  And in fact, \emph{everything} in $V\otimes _SW$, while \emph{not} of the form $v\otimes w$ itself necessarily, can be written as a finite sum of elements of this form---see \cref{prp5.3.15}.  (Elements of the form $v\otimes w$ are sometimes called \term{pure}\index{Pure tensor} or \term{simple}\index{Simple tensor}, as opposed to, e.g.~, $v_1\otimes w_1+v_2\otimes w_2$).
+	\end{rmk}
+	\begin{rmk}
+		Thus you can take the tensor product of an $R$-$S$-bimodule and an $S$-$T$-bimodule, the result being an $R$-$T$-bimodule.  To remember this, you might note that this is exactly analogous to matrix multiplication:  the `inner' things have to be the same in which case the result has the structure coming from the `outer' things.
+		
+		This was one motivation for working with bimodules.\footnote{The other big motivation is that you will need to learn tensor products in this level of generality at some point in your mathematical life, so may as well learn it now.}  If I were working just with vector spaces, then you could take the tensor product of any two things you like, but in this context, you can only take the tensor product of an $R\times S$-bimodule and an $S$-$T$-bimodule with the result being an $R$-$T$-bimodule---this makes it clearer what roles everything is playing. 
+	\end{rmk}
+	\begin{rmk}
+		As in \cref{PolynomialAlgebraMultiple} (the defining result for polynomial algebras), we are being sloppy with our use of the word ``unique''.  It is not literally unique, but rather, ``unique up to unique isomorphism''.  In this case, this means that if $V\times W\rightarrow U$ is another bilinear map into a $R$-$T$-bimodule satisfying the same property as $V\otimes _SW$, then there is a unique isomorphism of bimodules $V\otimes _SW\rightarrow U$ such that the following diagram commutes.
+		\begin{equation}
+			\begin{tikzcd}
+				V\times W \ar[r] \ar[rd] & V\otimes _SW \ar[d,dashed] \\
+				& U
+			\end{tikzcd}
+		\end{equation}
+		Note that while people say ``unique up to \emph{unique} isomorphism'', the isomorphism is itself not unique---it would be more accurate to say ``unique up to unique isomorphisms which commute with blah blah blah diagram''.  That is to say, while there might be many isomorphisms between $V\otimes _SW$ and $U$, there is only one which makes the above diagram commute.  Given that the latter option, while more accurate, is incredibly verbose, people just stick to ``unique up to unique isomorphism''.
+	\end{rmk}
+	\begin{rmk}
+		\emph{This is important---do not ignore.}  Essentially what this result says is that, instead of working with \emph{bilinear} maps $V\times W\rightarrow U$, instead, we can work with \emph{linear} maps $V\otimes _SW\rightarrow U$.  You'll find in time that this `trade-off' is worth it.
+		
+		In practice, this is often used in the following way.  Suppose you want to define a function $T\colon V\otimes _SW\rightarrow U$.  The definition of the tensor product says that \emph{you only need to say where elements of the form $v\otimes w$ map to}.  In practice, you will say something like ``Let $T(v\otimes w)\ceqq \text{blah blah blah}$\textellipsis'', and while superficially it doesn't look like you're defining $T$ on all of $V\otimes _SW$ (because you're not), this is enough.  As long as your ``$\text{blah blah blah}$'' is bilinear in $\coord{v,w}\in V\times W$, the definition of the tensor product says that this corresponds to a unique linear map $V\otimes _SW\rightarrow U$.  This idea is similar to that \cref{prp1.2.68}, where you can define linear-transformations by only defining what it does to a basis.  Similarly here, you can define a linear-transformation on all of $V\otimes _SW$ by only specifying what happens to elements of the form $v\otimes w$.
+		
+		TL;DR:
+		\begin{displayquote}
+			To define linear maps $V\otimes _SW\rightarrow U$, it suffices to say where elements of the form $v\otimes w\in V\otimes _SW$ get mapped to.  As long as what you write down is bilinear in $\coord{v,w}$, the definition of the tensor product says that this serves to define a unique linear map on all of $V\otimes _SW$.
+		\end{displayquote}
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+This result says that if I every have a bilinear map $V\times W\rightarrow U$, I can `replace' it with a linear map $V\otimes _SW\rightarrow U$.  In this sense, the tensor product reduces the study of multilinear maps to linear maps.
+
+There are a couple ways to think about $V\otimes _SW$ itself more intuitively.  First of all, note that $\blank \otimes \blank \colon V\times W\rightarrow V\otimes _SW$ satisfying the following properties.
+\begin{subequations}
+	\begin{align}
+		v\otimes (w_1+w_2) & =v\otimes w_1+v\otimes w_2 \\
+		(v_1+v_2)\otimes w & =v_1\otimes w+v_2\otimes w \\
+		(\alpha \cdot v)\otimes w & =\alpha \cdot (v\otimes w) \\
+		v\otimes (w\cdot \alpha ) & =(v\otimes w)\cdot \alpha \\
+		(v\cdot \alpha )\otimes w & =v\otimes (\alpha \cdot w)\label{eqn5.3.5e}
+	\end{align}
+\end{subequations}
+Furthermore, $V\otimes _SW$ is the ``freest'' $R$-$T$-bimodule that satisfies these identities, that is, $\blank \otimes \blank$ satisfies only the above identities and those they imply.  Thus, it is safe to think of $V\otimes _SW$ as the $R$-$T$-bimodule spanned by elements of the form $v\otimes w$, $v\in V$ and $w\in W$, with the only rules for `simplification' given above.  Note in particular, however, that there will most certainly be other elements in $V\otimes _SW$ besides just elements of the form $v\otimes w$.  For example, $v_1\oplus w_1+v_2\oplus w_2$ in general cannot be written as $v\otimes w$.
+
+Another way of thinking about $V\otimes W$ that might help your intuition is in terms of bases.  Though this is only true for vector spaces,\footnote{Duh.  We don't have bases for general modules.} it essentially says the following:  if you have a bunch of $b_k$s that are a basis for $V$ and a bunch of $c_l$s that are a basis for $W$, then the collection of all $b_k\otimes c_l$s forms a basis for $V\otimes W$.  Thus, the elements of $V\otimes W$ are precisely those things that can be written (uniquely) as a linear combinations of $b_k\otimes c_l$s.
+\begin{prp}{Basis for $V\otimes W$}{}
+	Let $V$ and $W$ be vector spaces over a field $\F$, and let $\basis{B}$ and $\basis{C}$ be bases for $V$ and $W$ respectively.  Then,
+	\begin{equation}
+	\left\{ b\otimes c:b\in \basis{B},c\in \basis{C}\right\}
+	\end{equation}
+	is a basis for $V\otimes W$.
+	\begin{rmk}
+		In particular, $\dim (V\otimes W)=\dim (V)\dim (W)$.
+	\end{rmk}
+	\begin{rmk}
+		We see immediately from working in the level of generality that we did that the ground division ring need be commutative, that is, a field.  If it weren't, then $V$ would be just an $\F$-$\Z$-bimodule and $W$ would be a $\F$-$\Z$-bimodule, in which case we could not take their tensor product!
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{crl}{}{crl5.3.59}
+	Let $V$ and $W$ be vector spaces over a field, and let $v\in V$ and $w\in W$.  Then, if $v\otimes w=0$, then $v=0$ or $w=0$.
+	\begin{rmk}
+		Warning:  This may fail for general $\K$-modules---see \cref{exm5.3.59}.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{crl}
+Not only can this corollary fail in general for modules, but something quite bit worse can happen.
+\begin{exm}{$V\otimes W=0$ with $V,W\neq 0$}{exm5.3.59}
+	Define $\K \ceqq \Z$, $V\ceqq \Q$, and $W\ceqq \Z /2\Z$.  Then, for $v\otimes w\in V\otimes _{\Z}W$, we have
+	\begin{equation}
+	v\otimes w=\left( v\tfrac{1}{2}\right) \otimes (2w)=\left( v\tfrac{1}{2}\right) \otimes 0=0,
+	\end{equation}
+	and hence $V\otimes _{\Z}W=0$.
+\end{exm}
+
+\subsection{Basic properties}
+
+We continue with an enumeration of some basic properties of the tensor product.
+\begin{prp}{}{prp5.3.15}
+	Let $R$, $S$, and $T$ be rings, let $V$ be an $R$-$S$-bimodule and let $W$ be an $S$-$T$-bimodule.  Then,
+	\begin{equation}
+	V\otimes _SW=\Span \left\{ v\otimes w:v\in V,w\in W\right\} .
+	\end{equation}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{prp5.3.16}
+	\begin{enumerate}
+		\item \label{prp5.3.16(i)}Let $Q$, $R$, $S$, and $T$ be rings, let $U$ be a $Q$-$R$-bimodule, let $V$ be an $R$-$S$-bimodule, and let $W$ be an $S$-$T$-bimodule.  Then,
+		\begin{equation}
+		(U\otimes _RV)\otimes _SW\cong U\otimes _RV\otimes _SW\cong U\otimes _R(V\otimes _SW)
+		\end{equation}
+		via the unique maps that has the property $(u\otimes v)\otimes w\mapsto u\otimes v\otimes w$ and $u\otimes v\otimes w\mapsfrom u\otimes (v\otimes w)$ respectively.
+		\item \label{prp5.3.16(ii)}Let $\K$ is a cring, and let $V$ and $W$ be $\K$-modules.  Then,
+		\begin{equation}
+		V\otimes _{\K}W\cong W\otimes _{\K}V
+		\end{equation}
+		via the unique map that has the property $v\otimes w\mapsto w\otimes v$.
+		\item \label{prp5.3.16(iii)}Let $R$, $S$, and $T$ be rings, and let $V$ be an $R$-$S$-bimodule and let $W$ be an $S$-$T$-module.  Then,
+		\begin{enumerate}
+			\item if $W=\bigoplus _{U\in \collection{U}}U$, then
+			\begin{equation}
+			V\otimes _S\bigg( \bigoplus _{U\in \collection{U}}U\bigg) \cong \bigoplus _{U\in \collection{U}}(V\otimes _SU)
+			\end{equation}
+			via the unique map that has the property $v\otimes w\mapsto \sum _{U\in \collection{U}}v\otimes \proj _U(w)$; and
+			\item if $V=\bigoplus _{U\in \collection{U}}U$, then
+			\begin{equation}
+			\bigg( \bigoplus _{U\in \collection{U}}U\bigg) \otimes _SW\cong \bigoplus _{U\in \collection{U}}(U\otimes _SW)
+			\end{equation}
+			via the unique map that has the property $v\otimes w\mapsto \sum _{U\in \collection{U}}\proj _U(v)\otimes w$.
+		\end{enumerate}
+	\end{enumerate}
+	\begin{rmk}
+		That is, \cref{prp5.3.16(i)} the tensor product is associative, \cref{prp5.3.16(ii)} commutative over commutative rings, and \cref{prp5.3.16(iii)} distributes over a direct sums.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{}
+	Let $R$, $S$, and $T$ be rings, let $V$ be an $R$-$S$-bimodule and let $W$ be an $S$-$T$-bimodule.
+	\begin{enumerate}
+		\item $V\cong V\otimes _SS$ naturally via the map $v\mapsto v\otimes 1$.
+		\item $W\cong S\otimes _SW$ naturally via the map $w\mapsto 1\otimes w$.
+		\item $V\otimes _S0\cong 0\cong 0\otimes _SW$.
+		\item $0\otimes w=0=v\otimes 0\in V\otimes _SW$ for all $v\in V$ and $w\in W$.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\begin{exr}{}{}
+	Let $R$, $S$, and $T$ be rings, let $U$ be a $R$-$S$-bimodule, let $V$ be an $S$-$T$-bimodule, let $W$ be an $R$-$T$-bimodule, and let $f\colon U\otimes _SV\rightarrow W$ be linear.
+	
+	Suppose that $f(u\otimes v)=0$ implies that $u\otimes v=0$ for all $u\in U$ and $v\in V$.  Need $f$ be injective?  Does the answer change if the rings are commutative or division rings?  What if everything is a finite-dimensional vector space?
+\end{exr}
+
+\subsection{Natural-isomorphisms}
+
+What follows is one of the most important properties of the tensor product.
+\begin{thm}{Tensor-Hom Adjunction}{TensorHomAdjunction}
+	Let $R$, $S$, and $T$ be rings, and let $U$ be an $R$-$S$ bimodule, $V$ and $S$-$T$ bimodule, and $W$ an $R$-$T$ bimodule.
+	\begin{enumerate}
+		\item \label{TensorHomAdjunction(i)}The map
+		\begin{equation}\label{eqn5.3.7}
+			\begin{multlined}
+				\Mor _{\Mod{R}[T]}(U\otimes _SV,W)\leftarrow \\ \Mor _{\Mod{S}[T]}(V,\Mor _{\Mod{R}}(U,W))
+			\end{multlined}
+		\end{equation}
+		defined by
+		\begin{equation}\label{eqn5.3.8}
+			(u\otimes v\mapsto [\phi (v)](u))\mapsfrom \phi
+		\end{equation}
+		is an isomorphism of commutative groups.
+		\item \label{TensorHomAdjunction(ii)}The map
+		\begin{equation}\label{eqn5.3.9}
+			\begin{multlined}
+				\Mor _{\Mod{R}[T]}(U\otimes _SV,W)\leftarrow \\ \Mor _{\Mod{R}[S]}(U,\Mor _{\Mod*{T}}(V,W))
+			\end{multlined}
+		\end{equation}
+		defined by
+		\begin{equation}
+			(u\otimes v\mapsto [\phi (u)](v))\mapsfrom \phi
+		\end{equation}
+		is an isomorphism of commutative groups.
+	\end{enumerate}
+	\begin{rmk}
+		The $R$, $S$, and $T$s everywhere clutter things up.  Dropping all of the notational baggage, these become the more readable
+		\begin{align}
+			\Mor (U\otimes V,W) & \cong \Mor (V,\Mor (U,W)) \\
+			\Mor (U\otimes V,W) & \cong \Mor (U,\Mor (V,W)).
+		\end{align}
+	\end{rmk}
+	\begin{rmk}
+		To understand this, it might first help to understand an analogous result in a different category:  the map defined analogously as above yields an isomorphism
+		\begin{equation}
+			\Mor _{\Set}(X\times Y,Z)\rightarrow \Mor _{\Set}(X,\Mor _{\Set}(Y,Z)).
+		\end{equation}
+		In other words, functions from $X\times Y$ into $Z$ are `the same as' functions from $X$ into $\Mor _{\Set}(Y,Z)$; given a function of two variables, we can instead think of it as a function-valued function $f\mapsto (x\mapsto (y\mapsto f(x,y)))$.  In computer science, this concept is called \emph{currying}.  Thus, you could say that this result is just the linear algebraic analogue of currying.
+	\end{rmk}
+	\begin{rmk}
+		The ``Hom'' in ``Tensor-Hom Adjunction'' comes from the fact that ``$\Mor$'' is often written as ``$\Hom$''.
+	\end{rmk}
+	\begin{rmk}
+		Though you (probably) don't know what the term means yet, it turns out that this (by which I mean \cref{TensorHomAdjunction(i)}) actually yields what is called an adjunction\footnote{This means that not only is \eqref{eqn5.3.8} an isomorphism, but it defines an isomorphism that is natural (\cref{NaturalTransformation}) in both $V$ and $W$.} between the functors $U\otimes _S\blank \colon \Mod{S}[T]\rightarrow \Mod{R}[T]$ and $\Mor _{\Mod{R}}(U,\blank )\colon \Mod{R}[T]\rightarrow \Mod{S}[T]$, hence ``Tensor-Hom Adjunction''.  In this case, we say that $U\otimes _S\blank$ is \emph{left adjoint} to $\Mor _{\Mod{R}}(U,\blank )$, and the other way around, that $\Mor _{\Mod{R}}(U,\blank )$ is \emph{right adjoint} to $U\otimes _S\blank$.  Thus, as the tensor product is the \emph{left} adjoint and the ``Hom'' is the \emph{right} adjoint, I recommend you say ``tensor-hom adjunction'' and \emph{not} ``hom-tensor adjunction''.
+		
+		Dually, \cref{TensorHomAdjunction(ii)} yields an adjunction between the functors $\blank \otimes _SV$ and $\Mor _{\Mod*{T}}(V,\blank )$.
+	\end{rmk}
+	\begin{proof}
+		We prove \cref{TensorHomAdjunction(i)}.  The proof of \cref{TensorHomAdjunction(ii)} is essentially identical.
+		
+		Given $f\colon U\otimes _SV\rightarrow W$ a map of $R$-$T$-bimodules, define $g_f\colon V\rightarrow \Mor _{\Mod{R}}(U,W)$ by
+		\begin{equation}
+			[g_f(v)](u)\ceqq f(u\otimes v).
+		\end{equation}
+		First of all, note that $g_f(v)\in \Mor _{\Mod{R}}(U,W)$ as $f$ is linear and the tensor product is bilinear.
+		
+		To show that $g_f\colon V\rightarrow \Mor _{\Mod{R}}(U,W)$ is a map of $S$-$T$-bimodules, we must show that
+		\begin{equation}
+			[g_f(s\cdot v\cdot t)](u)=[s\cdot [g_f(v)]\cdot t](u)
+		\end{equation}
+		for all $u\in U$.  However, recall from \cref{exm1.1.72} that the $S$-$T$-bimodule action on $\Mor _{\Mod{R}}(U,W)$ is given by
+		\begin{equation}
+			[s\cdot T\cdot t](u)\ceqq T(u\cdot s)\cdot t,
+		\end{equation}
+		and hence what we would actually like to show is that
+		\begin{equation}
+			[g_f(s\cdot v\cdot t)](u)=[g_f(v)](u\cdot s)\cdot t.
+		\end{equation}
+		From the definition of $g_f$, this means we would like to show that
+		\begin{equation}
+			f\left( u\otimes (s\cdot v\cdot t)\right) =f\left( (u\cdot s)\otimes v\right) \cdot t.
+		\end{equation}
+		This is of course true because $f$ is linear and because of properties of the tensor product (\eqref{eqn5.3.5e}).
+		
+		Finally, to check that $f\mapsto g_f$ is a group homomorphism
+		\begin{equation}
+			\Mor _{\Mod{R}[T]}(U\otimes _SV,W)\rightarrow \Mor _{\Mod{S}[T]}(V,\Mor _{\Mod{R}}(U,W)),
+		\end{equation}
+		we must show that $g_{f_1+f_2}=g_{f_1}+g_{f_2}$.  In other words, we must show that
+		\begin{equation}
+			\begin{split}
+				[f_1+f_2](u\otimes v) & =[g_{f_1+f_2}(v)](u)=[[g_{f_1}+g_{f_2}](v)](u)\\
+				& =f_1(u\otimes v)+f_2(u\otimes v)
+			\end{split}
+		\end{equation}
+		for all $u\in U$ and $v\in U$.  This is of course true because of the definition of addition of functions.
+		
+		To show that $f\mapsto g_f$ is an isomorphism, we construct an inverse $g\mapsto f_g$ from $\Mor _{\Mod{S}[T]}(V,\Mor _{\Mod{R}}(U,W))$ to $\Mor _{\Mod{R}[T]}(U\otimes _SV,W)$.  So, let $g\colon V\rightarrow \Mor _{\Mod{R}}(U,W)$ be a map of $S$-$T$-bimodules and define $f_g\colon \Mor _{\Mod{R}[T]}(U\otimes _SV,W)$ by
+		\begin{equation}
+			f_g(u\otimes v)\ceqq [g(v)](u).
+		\end{equation}
+		As this is bilinear in $u$ and $v$, this serves to define a map of $S$-$T$-bimodules $U\otimes _SV\rightarrow W$---see the last remark in the definition of the tensor product (\cref{TensorProduct}).  As the check that $g\mapsto f_g$ is a group homomorphism is similar to before, we omit it (it comes down to the definition of addition of functions).
+		
+		It remains to check that $f\mapsto g_f$ and $g\mapsto f_g$ are inverse to each other.  To do that, we must show that $g_{f_g}=g$ and $f_{g_f}=f$.  For the first one, note that
+		\begin{equation}
+			[[g_{f_g}](v)](u)\ceqq f_g(u\otimes v)\ceqq [g(v)](u).
+		\end{equation}
+		As this holds for all $u\in U$ and $v\in V$, we have $g_{f_g}=g$.  For the other one, note that
+		\begin{equation}
+			[f_{g_f}](u\otimes v)\ceqq [g_f(v)](u)\ceqq f(u\otimes v),
+		\end{equation}
+		and again we have that $f_{g_f}=f$, as desired.
+	\end{proof}
+\end{thm}
+What follows are a couple of results similar in flavor to the tensor-hom adjunction.  While the tensor-hom adjunction is probably more important in mathematics in general, for us, the following three results will be more important, and you should take note of them, especially the case of finite-dimensional vector spaces.
+\begin{thm}{$\Mor (V_1,W_1)\otimes \Mor (V_2,W_2)\cong \Mor (V_1\otimes V_2,W_1\otimes W_2)$}{TensorProductLinearTransformation}
+	Let $V_1$, $W_1$, $V_2$, and $W_2$ be $\K$-modules, $\K$ a cring.  Then, the map
+	\begin{equation}
+		\Mor (V_1,W_1)\otimes \Mor (V_2,W_2)\rightarrow \Mor (V_1\otimes V_2,W_1\otimes W_2)
+	\end{equation}
+	defined by
+	\begin{equation}
+		S\otimes T\mapsto (v_1\otimes v_2\mapsto S(v_1)\otimes T(v_2))
+	\end{equation}
+	is linear and natural.
+	
+	Furthermore,
+	\begin{enumerate}
+		\item \label{TensorProductLinearTransformation(i)}if $V_1$, $W_1$, $V_2$, and $W_2$ are vector spaces, then this map is injective; and
+		\item \label{TensorProductLinearTransformation(ii)}if $V_1$, $W_1$, $V_2$, and $W_2$ are finite-dimensional vector spaces, then this map is an isomorphism.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  This need not be an isomorphism even for vector spaces if they are not finite-dimensional---see \cref{exm5.3.27}.
+	\end{rmk}
+	\begin{proof}
+		As this is bilinear in $S$ and $T$, it defines a linear-transformation on the tensor product.
+		
+		To show naturality, let $f\colon U_1\rightarrow V_1$ be a linear-transformation.  By definition (\cref{NaturalTransformation}), this will be natural in the first space iff the following diagram commutes.
+		\begin{equation}
+			\begin{tikzcd}[column sep=scriptsize]
+				\Mor (V_1,W_1)\otimes \Mor (V_2,W_2) \ar[r] \ar[d] & \Mor  (V_1\otimes V_2,W_1\otimes W_2) \ar[d] \\
+				\Mor (U_1,W_1)\otimes \Mor (V_2,W_2) \ar[r] & \Mor (U_1\otimes V_2,W_1\otimes W_2)
+			\end{tikzcd}
+		\end{equation}
+		By definition, this commutes iff
+		\begin{equation}
+			S(f(u_1))\otimes T(v_2)=S(f(u_1))\otimes T(v_2),
+		\end{equation}
+		which if tautologically true.\footnote{Going right then down essentially gives $S(v_1)\otimes T(v_2)$ and then replaces $v_1$ with $f(u_1)$.  Going down then right replaces $v_1$ with $f(u_1)$ and then takes $S(f(u_1))\otimes T(u_1)$.}  By $V_1\leftrightarrow V_2$ symmetry, it is natural in $V_2$ as well.  A similar check shows that it is natural in $W_1$, and hence $W_2$ as well.
+		
+		\blni
+		\cref{TensorProductLinearTransformation(i)} Suppose that $V_1$, $W_1$, $V_2$, and $W_2$ are vector spaces.  Let $\sum _{k=1}^m\sum _{l=1}^nS_k\otimes T_l$ be an arbitrary nonzero element of $\Mor (V_1,W_1)\otimes \Mor (V_2,W_2)$.  Without loss of generality, let $m,n\in \Z ^+$ be the smallest such positive integers.  \footnote{So, for example, if you can simplify $S_1\otimes T_1+S_2\otimes T_2$ to something of the form $S\otimes T$, do that, and take $m=1=n$ instead of $m=2=n2$.}
+		
+		Now suppose that this element of $\Mor (V_1,W_1)\otimes \Mor (V_2,W_2)$ is sent to $0$.  In other words,
+		\begin{equation}
+			\sum _{k=1}^m\sum _{l=1}^nS_k(v_1)\otimes T_l(v_2)=0
+		\end{equation}
+		for all $v_1\in V_1$ and $v_2\in V_2$.  Writing this as
+		\begin{equation}
+			\bigg( \sum _{k=1}^mS_k(v_1)\bigg) \bigg( \sum _{l=1}^nT_l(v_2)\bigg) =0,
+		\end{equation}
+		using \cref{crl5.3.59}, we deduce that either $\sum _{k=1}^mS_k(v_1)=0$ or $\sum _{l=1}^nT_l=0$.  In the the former case, we can replace $S_m$ in $\sum _{k=1}^m\sum _{l=1}^nS_k\otimes T_l$ with $-\sum _{k=1}^{n-1}S_k$, thereby writing this element with only $n-1$ $w_l$s:  a contradiction.  The latter case is identical.  Thus, it cannot be the case that a nonzero element of $\Mor (V_1,W_1)\otimes \Mor (V_2,W_2)$ is sent to $0$, and this map is injective.
+		
+		\blni
+		\cref{TensorProductLinearTransformation(ii)} Suppose that $V_1$, $W_1$, $V_2$, and $W_2$ are finite-dimensional vector spaces.  $\Mor (V_1,W_1)\otimes \Mor (V_2,W_2)$ and $\Mor (V_1\otimes V_2,W_1\otimes W_2)$ have the same dimension, namely $\dim (V_1)\dim (W_1)\dim (V_2)\dim (W_2)$, and hence the injective map $\Mor (V_1,W_1)\otimes \Mor (V_2,W_2)\rightarrow \Mor (V_1\otimes V_2,W_1\otimes W_2)$ must in fact be an isomorphism (\cref{crl2.2.74}).
+	\end{proof}
+\end{thm}
+\begin{crl}{$V^{\T}\otimes W\cong \Mor (V,W)$}{prp5.4.9}
+	Let $V$ and $W$ be $\K$-modules, $\K$ a cring.  Then, the map
+	\begin{equation}
+		V^{\dagger}\otimes _{\K}W\ni \phi \otimes w\mapsto (v\mapsto \phi (v)w)\in \Mor _{\Mod{\K}}(V,W)
+	\end{equation}
+	is linear and natural.
+	
+	Furthermore,
+	\begin{enumerate}
+		\item if $V$ and $W$ are vector spaces, this map is injective; and
+		\item if $V$ and $W$ are finite-dimensional vector spaces, this map is an isomorphism.
+	\end{enumerate}
+	\begin{rmk}
+		In particular, for finite-dimensional vector spaces, using language that we will learn shortly (\cref{Tensor}), $\coord{1,1}$ tensors are `the same as' linear-transformations.\footnote{We technically don't define ``tensor'' unless $W=V$, but that doesn't really affect what's going on here---this is just a matter of language.}
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This need not be an isomorphism even for vector spaces if they are not finite-dimensional---see \cref{exm5.3.27}.
+	\end{rmk}
+	\begin{proof}
+		Take $W_1=\K$, $V_2=\K$, $V_1=V$, and $W_2=W$ in the previous result (\cref{TensorProductLinearTransformation}).  Using the fact that $W\cong \Mor _{\Mod{\K}}(\K ,W)$ (\cref{prp5.2.24}), $V\cong V\otimes _{\K}\K$, and $W\cong \K \otimes _{\K}W$ naturally, \cref{TensorProductLinearTransformation} reduces to exactly the statement of this corollary.
+	\end{proof}
+\end{crl}
+\begin{crl}{$V^{\T}\otimes W^{\T}\cong (W\otimes W)^{\T}$}{crl5.4.12}
+	Let $V$ and $W$ be $\K$-modules, $\K$ a cring.  Then, the map
+	\begin{equation}
+	V^{\dagger}\otimes W^{\dagger}\ni \phi \otimes \chi \mapsto (v\otimes w\mapsto \phi (v)\chi (w))\in (V\otimes W)^{\dagger}
+	\end{equation}
+	is linear and natural.
+	
+	Furthermore,
+	\begin{enumerate}
+		\item if $V$ and $W$ are vector spaces, this map is injective; and
+		\item if $V$ and $W$ are finite-dimensional vector spaces, this map is an isomorphism.
+	\end{enumerate}
+	\begin{rmk}
+		Warning:  This need not be an isomorphism even for vector spaces if they are not finite-dimensional---see \cref{exr5.3.30}.
+	\end{rmk}
+	\begin{proof}
+		Take $W=W^{\T}$ in \cref{prp5.4.9}.  We thus obtain a natural linear map
+		\begin{equation}
+			V^{\T}\otimes _{\K}W^{\T}\rightarrow \Mor _{\Mod{\K}}(V,W^{\T}).
+		\end{equation}
+		However, by the \namerefpcref{TensorHomAdjunction}, we have a natural isomorphism
+		\begin{equation}
+			\begin{split}
+				\Mor _{\Mod{\K}}(V,W^{\T}) & \ceqq \Mor _{\Mod{\K}}(V,\Mor _{\Mod{\K}}(W,\K )) \\
+				& \cong \Mor _{\Mod _{\K}}(V\otimes _{\K}W,\K )\eqqc [V\otimes _{\K}W]^{\T}.
+			\end{split}
+		\end{equation}
+		Putting these together, we obtain a natural linear map $V^{\T}\otimes _{\K}W^{\T}\rightarrow [V\otimes _{\K}W]^{\T}$, which is injective if $W$ and $W$ are vector spaces and an isomorphism if $V$ and $W$ are finite-dimensional vector spaces (by \cref{prp5.4.9} again).
+	\end{proof}
+\end{crl}
+\begin{exr}{}{}
+	Can you find $\K$-modules $V$ and $W$, $\K$ a cring, for which $V^{\T}\otimes W\rightarrow \Mor (V,W)$ is not injective.
+\end{exr}
+\begin{exm}{Vector space $V$ such that $V^{\T}\otimes V\rightarrow \Mor _{\Vect}(V,V)$ is not an isomorphism}{exm5.3.27}
+	Define $V\ceqq \C ^{\infty}$.  As $\{ e_k:k\in \N \}$ is a basis for $V$, every element in $V^{\T}\otimes V$ can be written as a finite linear combination of elements in the set
+	\begin{equation}
+		\{ \phi \otimes e_k:\phi \in V^{\T},k\in \N \}.
+	\end{equation}
+	The linear-transformation that $\sum _{k=1}^m\alpha \phi _ke_k$ defines sends $v\in V$ to
+	\begin{equation}
+		\sum _{k=0}^m\alpha \phi _k(v)e_k\in \Span (\{ e_k:0\leq k\leq m \} )
+	\end{equation}
+	In particular, the image of any such element is finite-dimensional.  On the other hand, the identity $V\rightarrow V$ has infinite-dimensional image, and so can't possibly be of this form.  Thus, the map $V^{\T}\otimes V\rightarrow \Mor _{\Vect}(V,V)$ is not surjective.
+\end{exm}
+\begin{exr}{}{}
+	Can you find $\K$-modules $V$ and $W$, $\K$ a cring, for which $V^{\T}\otimes W\rightarrow [V\otimes W]^{\T}$ is not injective.
+\end{exr}
+\begin{exr}{}{exr5.3.30}
+	Find a vector space $V$ for which the canonical map $V^{\T}\otimes V^{\T}\rightarrow [V\otimes V]^{\T}$ is not an isomorphism.
+\end{exr}
+
+\section{Tensors and index notation}\label{sct5.4}
+
+Roughly speaking, a tensor rank $\coord{k,l}$ is going to be something that takes in $l$ vectors and spits out $k$ vectors\footnote{More accurately, a element of $V^{\otimes k}$.} in a multilinear manner.  For example, linear-transformations are $\coord{1,1}$ tensors, covectors are $\coord{0,1}$ tensors, vectors are $\coord{1,0}$ tensors, and scalars are $\coord{0,0}$ tensors:  linear-transformations take in $1$ vector and spit out $1$ vector, covectors take in $1$ vector and spits out a scalar\footnote{Which, for our purposes, is to be regarded as `zero vectors'.}, vectors take in $0$ vectors and spit out $1$ vector, and scalars take in $0$ vectors and spit out $0$ vectors.  Similarly, a pairing on a dual-pair will be a tensor of type $\coord{0,2}$:  it takes in two vectors and spits out a scalar.
+
+\subsection{The tensor algebra}
+
+We make this precise as follows.
+\begin{dfn}{Tensor}{Tensor}
+	Let $V$ be a $\K$-module, $\K$ a cring.  Then, a \term{tensor}\index{Tensor of rank $\coord{k,l}$} of \term{rank}\index{Rank (of a tensor)} $\coord{k,l}$ over $V$ is an element of
+	\begin{equation}\label{eqn5.4.2}
+		\tensoralg _l^kV\ceqq \Mor _{\Mod{\K}}(\underbrace{V\otimes \cdots \otimes V}_l,\underbrace{V\otimes \cdots \otimes V}_k).
+	\end{equation}\index[notation]{$\bigotimes _l^kV$}
+	\begin{rmk}
+		Thus, by the definition of the tensor product (\cref{Tensor}), a tensor of rank $\coord{k,l}$ is `the same as' a multilinear map from $\underbrace{V\times \cdots \times V}_l$ to $\underbrace{V\otimes \cdots \otimes V}_k$.  Thus, a tensor of rank $\coord{k,l}$ is a thing that takes in $l$ vectors and `spits out' `$k$ vectors'\footnote{More accurately, a contravariant tensor of rank $k$.} in a multilinear manner.
+	\end{rmk}
+	\begin{rmk}
+		$k$ is the \term{contravariant rank}\index{Contravariant rank} and $l$ is the \term{covariant rank}\index{Covariant rank}.  If $l=0$, then the tensor is \term{contravariant}\index{Contravariant tensor}, and if $k=0$, then the tensor is \term{covariant}\index{Covariant tensor}.
+	\end{rmk}
+	\begin{rmk}
+		Instead of saying ``$T$ is a tensor of rank $\coord{k.l}$'', we may use the less verbose ``$T$ is a $\coord{k,l}$ tensor''.
+	\end{rmk}
+	\begin{rmk}
+		If $V$ is a finite-dimensional vector space, by virtue of \cref{prp5.4.9}, we have natural isomorphisms like, for example,
+		\begin{equation}
+			\begin{multlined}
+				\Mor _{\Mod{\K}}(V\otimes V^{\T}\otimes V^{\T},V\otimes V^{\T})\cong \\ \Mor _{\Mod{\K}}(V\otimes V,V\otimes V\otimes V).
+			\end{multlined}
+		\end{equation}
+		Thus, it suffices to only look at elements of \eqref{eqn5.4.2}---if a dual were to appear in that morphism set, we could always `move it over' to the other side to get rid of the dual.
+		
+		\emph{However}, this does rely on the hypothesis that $V$ is finite-dimensional, and in general one will need to look at maps, for example, $V\otimes V^{\T}\rightarrow V^{\T}$.  I suppose we technically should have included this above in the `official' definition, but this would really obfuscate what's going on.  Just be aware that we may need to make this distinction if $V$ is not a finite-dimensional vector space.  For example, we work in this general case when introducing index notation (\cref{IndexNotation}).
+	\end{rmk}
+	\begin{rmk}
+		Note that the notation $\tensoralg _l^kV$ is nonstandard (though based on the standard notation $\Lambda ^lV$ for something new which we will become acquainted with later on).
+	\end{rmk}
+\end{dfn}
+\begin{thm}{}{thm5.4.6}
+	Let $V$ be a finite-dimensional vector space.  Then, the canonical map
+	\begin{equation}
+		\begin{multlined}
+			\underbrace{V\otimes \cdots \otimes V}_k\otimes \underbrace{V^{\T}\otimes \cdots \otimes V^{\T}}_l\rightarrow \\ \Mor _{\Vect}(\underbrace{V\otimes \cdots \otimes V}_l,\underbrace{V\otimes \cdots \otimes V}_k)
+		\end{multlined}
+	\end{equation}
+	is a natural isomorphism.
+	\begin{rmk}
+		We write
+		\begin{equation}
+			\begin{split}
+				V^{k\otimes ,l\otimes \T} & \ceqq V^{k\otimes}\otimes [V^{\T}]^{l\otimes} \\
+				& \ceqq \underbrace{V\otimes \cdots \otimes V}_k\otimes \underbrace{V^{\dagger}\otimes \cdots \otimes V^{\dagger}}_l.
+			\end{split}
+		\end{equation}\index[notation]{$V^{k\otimes ,l\otimes \T}$}\index[notation]{$V^{k\otimes}$}
+		Thus, in brief, we could say that $\bigotimes _l^kV$ and $V^{k\otimes ,l\otimes \T}$ are naturally isomorphic (for $V$ and $W$ finite-dimensional vector spaces).
+	\end{rmk}
+	\begin{rmk}
+		Thus, in finite-dimensional vector spaces, \emph{$\coord{k,l}$ tensors are the same as elements in the tensor product of $V$ with itself $k$ times and the tensor product of $V^{\T}$ with itself $l$ times}.
+		
+		Thus, in this context, we will not make a distinction between these two spaces, and both of them will be referred to as the ``space of tensors of rank $\coord{k,l}$''.
+	\end{rmk}
+	\begin{proof}
+		This follows from combining \cref{prp5.4.9} and \cref{crl5.4.12}.\footnote{These respectively say in particular that $V^{\T}\otimes V\cong \Mor _{\Vect}(V,V)$ and that $V^{\T}\otimes V^{\T}\cong [V\otimes V]^{\T}$.}
+	\end{proof}
+\end{thm}
+\begin{thm}{The tensor algebra}{TensorAlgebra}
+	Let $V$ be a $\K$-module, $\K$ a cring, and define
+	\begin{equation}
+		\tensoralg _{\bullet}^{\bullet}V\ceqq \bigoplus _{k,l\in \N}\tensoralg _l^kV.
+	\end{equation}\index[notation]{$\tensoralg _{\bullet}^{\bullet}$}\index[notation]{$V^{\otimes ,\otimes \T}$} 
+	Then, $\tensoralg _{\bullet}^{\bullet}V$ is a $\K$-algebra with multiplication given by the tensor product.
+	\begin{rmk}
+		Elements of $\tensoralg _{\bullet}^{\bullet}V$ are \term{tensors}\index{Tensor}.
+		
+		Thus, for example, if $S$ is a tensor of rank $\coord{2,3}$ and $T$ is a tensor of rank $\coord{4,1}$, then $S+T$ now makes sense\footnote{Before introducing $\tensoralg _{\bullet}^{\bullet}V$ this notation would have been nonsense as you can't add things if they don't `live in' the same module!} and is considered a tensor (though it doesn't have a definite rank).
+	\end{rmk}
+	\begin{rmk}
+		$\tensoralg _{\bullet}^{\bullet}$ is the \term{tensor algebra}\index{Tensor algebra} over $V$.
+	\end{rmk}
+	\begin{rmk}	
+		If we ever have the need, then we shall write
+		\begin{equation}
+			\tensoralg ^{\bullet}V\ceqq \bigoplus _{k\in \N}\tensoralg ^kV
+		\end{equation}\index[notation]{$\tensoralg ^{\bullet}V$}
+		and
+		\begin{equation}
+			\tensoralg _{\bullet}V\ceqq \bigoplus _{l\in \N}\tensoralg _lV.
+		\end{equation}\index[notation]{$\tensoralg _{\bullet}V$}
+		respectively for the subalgebras of contravariant and covariant tensors.
+	\end{rmk}
+	\begin{rmk}
+		If $V$ is a finite-dimensional vector space, so that we have $V^{k\otimes ,l\otimes \T}\cong \tensoralg _l^kV$, we may also write
+		\begin{equation}
+			V^{\otimes ,\otimes \T}\ceqq \bigoplus _{k,l\in \N}V^{k\otimes ,l\otimes \T}\cong \tensoralg _{\bullet}^{\bullet}V.
+		\end{equation}\index[notation]{$V^{\otimes ,\otimes \T}$}
+		
+		Similarly, in this case, we may also write
+		\begin{equation}
+			V^{\otimes}\ceqq \bigoplus _{k\in \N}V^{k\otimes}\cong \tensoralg ^{\bullet}V
+		\end{equation}\index[notation]{$V^{\otimes}$}
+		and
+		\begin{equation}
+			V^{\otimes \T}\ceqq \bigoplus _{l\in \N}V^{l\otimes \T}\cong \tensoralg _{\bullet}V.
+		\end{equation}\index[notation]{$V^{\otimes \T}$}
+	\end{rmk}
+	\begin{rmk}
+		Warning:  This notation is nonstandard.  Usually people only look at the contravariant tensors, in which case the notation $T(V)$ is often used for the space of all contravariant tensors.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+\begin{prp}{Basis for $\tensoralg _{\bullet}^{\bullet}$}{BasisForTensorAlgebra}
+	Let $V$ be a finite-dimensional vector space over a field, let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ be a basis of $V$, denote the dual-basis by $\basis{B}^{\T}\eqqc \{ b^1,\ldots ,b^d\}$, and let $k,l\in \N$.  Then,
+	\begin{equation}
+		\begin{multlined}
+			\left\{ b_{i_1}\otimes \cdots \otimes b_{i_k}\otimes b^{j_1}\otimes \cdots \otimes b^{j_l}:\right. \\ \left. 1\leq i_1,\ldots ,i_k,j_1,\ldots ,j_n\leq d\right\}
+		\end{multlined}
+	\end{equation}
+	is a basis for $\tensoralg _l^kV$.
+	\begin{rmk}
+		This says that all possible tensor products of $k$ elements from $\basis{B}$ with all possible tensor products of $l$ elements from $\basis{B}^{\T}$ is a basis for $\tensoralg _l^kV$.  Putting these all together for all $k,l\in \N$ then gives a basis for $\tensoralg _{\bullet}^{\bullet}V$.
+	\end{rmk}
+	\begin{rmk}
+		We require that $V$ be a finite-dimensional vector space over a field here so that the ``dual basis'' is actually a basis---see \cref{TheDualBasis}.
+	\end{rmk}
+	\begin{rmk}
+		Note how the indices of the vectors in this case are written as \emph{subscripts}.  This is customary:  if the \emph{name} of a vector involves an index, then that index is written as a subscript; if the \emph{name} of a covector involves an index, then that index is written as a superscript.
+		
+		The reason for this is simply so that indices that are part of the name of the vector don't risk `colliding' with indices used in the sense of index notation.  For example, while we have not used index notation in this statement, we would have written
+		\begin{equation}
+			[b_i]^a\text{ and }[b^i]_a
+		\end{equation}
+		respectively for elements in the basis and elements in the dual basis.
+		
+		Another reason for doing this is to make equations like\footnote{This is the defining equation for the coordinates of $v$ with respect to the basis $\basis{B}$.}
+		\begin{equation}
+			v=\sum _{k=1}^dv^k\cdot b_k
+		\end{equation}
+		to adhere to the convention that identical pairs of indices, one upstairs and one downstairs, are to be summed over.
+	\end{rmk}
+	\begin{rmk}
+		Of course, it follows that the union of all these sets over $k,l\in \N$ then yields a basis for all of $\symalg _{\bullet}^{\bullet}V$ (by \cref{prp4.4.45}).
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\subsection{Index notation}
+
+\subsubsection{The definition}
+
+Index notation is notation commonly used\footnote{At least by physicists.} when working with tensors.  The basic idea is to ``decorate'' the name of the tensor with subscripts and superscripts that tell you the rank of the tensor.  This is analogous to how one may write ``$f(x,y,z)$'' instead of just ``$f$'' to indicate that $f$ is a function of three variables.
+\begin{ntn}{Index notation}{IndexNotation}
+	Let $V$ be a $\K$-module, $\K$ a cring, and let
+	\begin{equation}\label{eqn5.4.15}
+		\begin{multlined}
+			T\in \Mor \big( \underbrace{V\otimes \cdots \otimes V}_{k_1}\otimes \underbrace{V^{\T}\otimes \cdots \otimes V^{\T}}_{k_2}, \\ \underbrace{V\otimes \cdots \otimes V}_{l_1}\otimes \underbrace{V^{\T}\otimes \cdots \otimes V^{\T}}_{l_2}\big)
+		\end{multlined}
+	\end{equation}
+	be a tensor of rank $\coord{\coord{k_1,k_2},\coord{l_1,l_2}}$.  To indicate the rank of $T$, we shall write
+	\begin{equation}
+		\indices{^{a_1\cdots a_{l_1}}_{b_1\cdots b_{l_2}}}\! T\indices{^{c_1\cdots c_{k_2}}_{d_1\cdots d_{k_1}}}.
+	\end{equation}
+	\begin{rmk}
+		\emph{Important}:  If $V$ is a finite-dimensional vector space, then as explained in a remark of the definition of tensors (\cref{Tensor}), we may essentially move all copies of the dual space appearing in \eqref{eqn5.4.15} to the ``other side''.  This results in $k_1\rightarrow k_1+l_2$, $k_2\rightarrow 0$, $l_1\rightarrow l_1+k_2$, and $l_2\rightarrow 0$.  In this case, it is customary to write all the indices to the right of $T$:
+		\begin{equation}
+			T\indices{^{a_1\cdots a_k}_{b_1\cdots b_l}}
+		\end{equation}\index[notation]{$T\indices{^{a_1\cdots a_k}_{b_1\cdots b_l}}$}
+		That said, even in this case, we may still sometimes write indices to the left of $T$ if we feel that makes the intended meaning clearer.
+		
+		The importance of this remark is a result of the fact that the vast majority of the time we will \emph{not} be writing indices on the left.
+	\end{rmk}
+	\begin{rmk}
+		If we are dealing with tensors over two distinct vector spaces, we will tend to use distinct scripts for the different vector spaces.  For example, we will probably write something like $T\indices{^a_{\alpha}}$ for an element of $V\otimes W^{\T}$ instead of $T\indices{^a_b}$.  We might also write capitals for one space, or perhaps start at different place in the same alphabet (e.g.~$\alpha$, $\beta$, $\gamma$, etc.~for $V$ vs.~$\mu$, $\nu$, $\rho$, etc.~for $W$).
+	\end{rmk}
+	\begin{rmk}
+		This is called \term{abstract index notation}\index{Abstract index notation}, \term{Penrose index notation}\index{Penrose index notation}, or just \term{index notation}\index{Index notation}.  This is similar in form, but conceptually distinct, from \emph{Einstein index notation}.  In Einstein index notation, one has chosen a basis, and then the indices indicate the coordinates with respect to that basis.  Note, however, that abstract index notation was designed so that one could do computations as if one was using Einstein index notation without actually picking a basis.  Roughly speaking, abstract index notation is to Einstein index notation as linear-transformations are to matrices, though the distinction matters even less because the notation is designed to work so similarly.  For this reason, the distinction is one that matters much more in theory than it does in practice.
+	\end{rmk}
+	\begin{rmk}
+		\emph{Do not be sloppy by not staggering your indices!}  If you do, you will eventually make a mistake.  For example, later we will be raising and lowering indices.  Suppose I start with $T^{ab}$, I lower to obtain $T_b^a$, and then I raise again to obtain $T^{ba}$---I should obtain the same thing, but in general $T^{ab}\neq T^{ba}$, and so I have made an error.  It may seem obvious to the point of being silly when I point it out like this, but this is a mistake that is easy to make if there is a big long computation in between the raising and lowering (especially if it's more than just $a$ and $b$ floating around).  And of course, you will never have this problem if you stagger:  $T^{ab}$ goes to $T\indices{^a_b}$ goes back to $T^{ab}$.
+	\end{rmk}
+	\begin{rmk}
+		We emphasize that this is all ``coordinate-free''---no need to pick bases---despite what the notation might superficially suggest.
+	\end{rmk}
+\end{ntn}
+
+Index notation tends to be confusing for students at first, but I claim that it is quite easy.  First of all, a lot of the definitions that follow look exceedingly complicated because of all the indices and ellipses.  Don't be intimidated---in practice, they're not difficult.
+
+As for some more concrete advice for understanding, as mentioned before, consider the notation $f(x)$ so often used for functions as roughly analogous to index notation for tensors.  The function itself is technically just $f$, but people write ``$f(x,y,z)$'' all the time to denote the function.  Similarly, while the tensor itself is just $T$, it is helpful to use indices to indicate the ``variables'' that $T$ can take in, for example, $T\indices{^a_{bc}}$.\footnote{Just a random example.  Using a general tensor here would obfuscate the simplicity of what's going on, and in any case would be more directly analogous to something like $f(x_1,\ldots ,x_m)$ than it would just $f(x,y,z)$.}   The notation ``$f(x,y,z)$'' tells you that it takes in $3$ ``variables'', whereas the notation ``$f$'' tells you nothing about this.  Of course, this can be useful information which is often more convenient to indicate in this way than saying separately ``$f$ is a function of three variables''.  Similarly for $T\indices{^a_{bc}}$.
+
+There will be more more to say about the relationship between index notation and this analogous notation for functions, but we postpone this discussion until having actually defined the relevant concepts.
+
+\subsubsection{Constructions in index notation}
+
+There are four key constructions involving tensors that we will need, the \emph{transpose}, the \emph{tensor product}, \emph{contraction}, and the \emph{dual-vector}.\footnote{We briefly met the definition ``dual-vector'' back in \cref{NonsingularAndNondegenerate}, but when the pairing in question is a metric (\cref{MetricVectorSpace}), this concept takes on added importance.}
+
+The transpose we have already done in \cref{Transpose}, and so we simply explain how to write the transpose in index notation.
+\begin{ntn}{Transpose in index notation}{}
+	Let $V$ be a $\K$-module, $\K$ a cring, and let $T\colon V\rightarrow V$ be linear.  Then, the \emph{transpose} of $T\indices{^a_b}$ is denoted
+	\begin{equation}
+		^a[T^{\T}]_b\eqqc _b\! T^a.
+	\end{equation}\index[notation]{$_bT^a$}
+	\begin{rmk}
+		In case $V$ is a finite-dimensional vector space, we also make use of a similar notation for higher rank tensors:  If $T\indices{^{a_1\cdots a_k}_{b_1\cdots b_l}}$ is a tensor of rank $\coord{k,l}$, then its transpose is similarly denoted
+		\begin{equation}
+			[T^{\T}]\indices{^{a_1\cdots a_k}_{b_1\cdots b_l}}\eqqc T\indices{_{b_1\cdots b_l}^{a_1\cdots a_k}}.\footnote{As $V$ is a finite-dimensional vector space, we can get away with writing all the indices on the left---see the remark in \cref{IndexNotation}.}
+		\end{equation}
+		We only use this notation for finite-dimensional vector spaces because otherwise the transpose would be, for example, a map
+		\begin{equation}
+			\Mor ((W_1\otimes W_2)^{\T})\rightarrow \Mor ((V_1\otimes V_2)^{\T}),
+		\end{equation}
+		whereas the index notation would imply that it is in fact a map
+		\begin{equation}
+			\Mor (W_1^{\T}\otimes W_2^{\T})\rightarrow \Mor (V_1^{\T}\otimes V_2^{\T}).
+		\end{equation}
+		These are of course the same if $V$ is a finite-dimensional vector space by \cref{crl5.4.12}.
+	\end{rmk}
+	\begin{rmk}
+		See \eqref{eqn5.2.72}---this equation lists the coordinates of $T^{\T}$, and its relationship with the coordinates of $T$ is superficially exactly as we have defined here.
+	\end{rmk}
+\end{ntn}
+The tensor product we have already done in \cref{TensorProduct}, and so we simply explain the how to write the tensor product in index notation.
+\begin{ntn}{Tensor product in index notation}{ntn5.4.4}
+	Let $V$ be a $\K$-module, $\K$ a cring, and let $T_1$ and $T_2$ respectively be tensors over $V$ of rank $\coord{k_1,l_1}$ and $\coord{k_2,l_2}$.  The \emph{tensor product} of $[T_1]\indices{^{a_1\ldots a_{k_1}}_{b_1\ldots b_{l_1}}}\in V^{k_1\otimes ,l_1\otimes \T}$ and $[T_2]\indices{^{a_1\ldots a_{k_2}}_{b_1\ldots b_{l_2}}}\in V^{k_2\otimes ,l_2\otimes \T}$ is denoted
+	\begin{equation}
+		\begin{multlined}
+			[T_1\otimes T_2]\indices{^{a_1\cdots a_{k_1}c_1\cdots c_{k_2}}_{b_1\cdots b_{l_1}d_1\cdots d_{l_2}}}\eqqc \\ [T_1]\indices{^{a_1\ldots a_{k_1}}_{b_1\ldots b_{l_1}}}[T_2]\indices{^{c_1\ldots c_{k_2}}_{d_1\ldots d_{l_2}}}.
+		\end{multlined}
+	\end{equation}
+	\begin{rmk}
+		To avoid obfuscating things even further, we omit the definition in case there are indices are the left, but it works exactly as one would expect---that is, as here, you literally just juxtapose them.
+	\end{rmk}
+	\begin{rmk}
+		In particular, if you ever see ``$\otimes$'' used explicitly, this should be taken as an indication that we are \emph{not} using index notation (and so subscripts and superscripts should not be interpreted as such).
+	\end{rmk}
+	\begin{rmk}
+		Note that \emph{everything commutes with everything} in index notation.\footnote{Assuming the ring you're working over is commutative of course.  For example, it is common to use index notation in super-symmetry (and related subjects), in which case you have to be very careful about commuting things as you might have gotten use to.  I once spent 8 hours looking for a minus sign to make everything in 40ish term expression cancel, and it turned out that I had accidentally commuted things without inserting a proper minus sign.  Pro-tip:  Don't do that.}  For example,
+		\begin{equation}
+			T\indices{^a_b}v^c=v^cT\indices{^a_b}.
+		\end{equation}
+		The letters keep track of what goes where---you don't need to use the order in which the symbols are written to do the same job.
+	\end{rmk}
+\end{ntn}
+\begin{ntn}{The identity in index notation}{}
+	Let $V$ be a $\K$-module.  Then, we write
+	\begin{equation}
+		\tensor[^a]{[\id _V]}{_b}\eqqc \tensor[^a]{\delta}{_b}.
+	\end{equation}\index[notation]{$\tensor[^a]{\delta}{_b}$}
+	\begin{rmk}
+		The reason we use this notation is because of the \emph{Kronecker delta symbol}.  Strictly speaking, the \term{Kronecker delta symbol}\index{Kronecker delta symbol} is just the identity matrix, but it is given a separate name because of the notation used to denote it in practice:
+		\begin{equation}
+			^i\delta \_j\ceqq \begin{cases}1 & \text{if }i=j \\ 0 & \text{if }i\neq j.\end{cases}
+		\end{equation}\index[notation]{$^i\delta _j$}
+		($^a\delta _b$ is in abstract index notation, whereas $^i\delta _j$ as written here is in Einstein index notation.  This is a good example of how the distinction doesn't matter that much in practice.)
+	\end{rmk}
+\end{ntn}
+We now turn to \emph{contraction}.
+\begin{dfn}{Contraction}{Contraction}
+	Let $V$ be a finite-dimensional vector space over a field.  Then, for $k,l\in \N$, and $1\leq i\leq k$ and $1\leq j\leq l$, the $\coord{i,j}$ \term{contraction}\index{Contradction} of $\coord{k,l}$ tensors is the unique map $V^{k\otimes ,l\otimes \T}\rightarrow V^{(k-1)\otimes ,(l-1)\otimes \T}$ such that
+	\begin{equation}
+		\bigotimes _mv_m\otimes \bigotimes _{n}\phi _n\mapsto \pinnerprod{\phi _j|v_i}\bigotimes _{m\neq i}v_m\otimes \bigotimes _{n\neq j}\phi _n.
+	\end{equation}
+	\begin{rmk}
+		If this doesn't yet make sense, don't worry until you've read the upcoming \cref{ntnContraction} and the remarks contained therein.
+	\end{rmk}
+	\begin{rmk}
+		This fundamentally requires $V$ to be a finite-dimensional vector space---it is not just a matter of convenience.  For example, we will see later that $\tensor[^a]{T}{_a}$ is the sum over the eigenvalues of $T$, which will be an infinite sum (and so will not make sense in general) if $\dim (V)=\infty$.
+	\end{rmk}
+\end{dfn}
+\begin{ntn}{Contraction in index notation}{ntnContraction}
+	Let $V$ be a finite-dimensional vector space over a field, let $k,l\in \N$, and $1\leq i\leq k$ and $1\leq j\leq l$.  Then, the $\coord{i,j}$ \emph{contradiction} of the tensor $T\indices{^{a_1\ldots a_k}_{b_1\ldots b_l}}\in V^{k\otimes ,l\otimes \T}$ is denoted
+	\begin{equation}
+		T\indices{^{a_1\ldots a_{i-1}ca_{i+1}\ldots a_k}_{b_1\ldots b_{j-1}cb_{j+1}\ldots b_l}}
+	\end{equation}
+	\begin{rmk}
+		All these indices might make this seem unapproachable, but it's actually quite simple.  Covectors take in vectors and spit out numbers, and so the contraction of a tensor product in its $a_i$ and $b_j$ index is formed by plugging in the $i^{\text{th}}$ vector into the $j^{\text{th}}$ covector, which is denoted by using the same letter for both the $i^{\text{th}}$ index upstairs and the $j^{\text{th}}$ index downstairs.
+	\end{rmk}
+	\begin{rmk}
+		Keep in mind that you can \emph{only} contract upper-indices (contravariant) with lower (covariant) ones.
+	\end{rmk}	
+	\begin{rmk}
+		Note that the letter you use for contraction doesn't matter---it just needs to be the same upstairs as it is downstairs and not conflict with other indices.  This is analogous to the fact that
+		\begin{equation}
+			\int \dif x\, f(x)=\int \dif t\, f(t):
+		\end{equation}
+		it doesn't matter whether you use $x$ or $t$, only that the letter in ``$\dif \blank$'' agree with the letter in ``$f(\blank )$''.
+	\end{rmk}
+	\begin{rmk}
+		Note that contraction of indices reduces both the contravariant and covariant rank by $1$.  For this reason, contracted indices are usually ignored when it comes to determine the type of the tensor.  For example, people will say things like ``The left-hand side of the following equation has only an $a$ index upstairs.
+		\begin{equation}
+			T\indices{^{ab}_b}=v^a\text{''.}
+		\end{equation}
+		This is analogous to how $\int \dif x\, f(x,y)$ is only a function of one variable.
+	\end{rmk}
+\end{ntn}
+We mentioned some of the following examples before, but let's now do them `officially'.
+\begin{exm}{}{}
+	\begin{enumerate}
+		\item Vectors (written $^av$) themselves are tensors of type $\coord{1,0}$.
+		\item Covectors (or linear functionals) (written $\omega _a$) are of type $\coord{0,1}$.  For $\omega$ a linear functional and $v$ a vector, $\omega (v)$ is written as $\omega _a\tensor[^a]{v}{}$.
+		\item The dot product (written temporarily as $g_{ab}$) is an example of a tensor of type $\coord{0,2}$---it takes in two vectors and spits out a number, written $v\cdot w=g_{ab}\tensor[^a]{v}{}\tensor[^b]{w}{}$.
+		\item Linear-transformations (written $\tensor[^a]{T}{_b}$) are tensors of type $\coord{1,1}$---it takes in a single vector and spits out another vector (written $\tensor[^a]{v}{}\mapsto \tensor[^a]{T}{_b}\tensor[^b]{v}{}$).  Note that it is $T\indices{^a_b}$ and not $T\indices{_b^a}$---your convention could go either way, but in the convention we choose the indices that are contracted during composition are closer together.
+	\end{enumerate}
+\end{exm}
+\begin{exm}{Linear-functionals in index notation}{}
+	Let $V$ be a $\K$-module, $\K$ a cring, let $v^a\in V$, and let $\phi _a\in V^{\T}$.
+	
+	We can take their tensor product $v^a\phi _b$, which is a tensor of rank $\coord{1,1}$.
+	
+	There is only one possible contraction of this tensor:   $v^a\phi _a$, which is by definition equal to $\pinnerprod{\phi |v}\ceqq \phi (v)$.    Compare what this would look like in coordinates:  $\phi (v)=\sum _{k=1}^dv^k\phi _k$.
+\end{exm}
+\begin{exm}{Linear-transformations in index notation}{}
+	Let $V$ and $W$ be $\K$-modules, $\K$ a cring, let $T\indices{^{\alpha}_a}\in \Mor _{\Mod{\K}}(V,W)$, and let $v^a\in V$.
+	
+	We can take their tensor product $T\indices{^{\alpha}_a}v^b$, which is a tensor of rank $\coord{2,1}$.\footnote{Again, we technically haven't defined tensors that `live in' more than module, but it should be clear what is meant.}  There is only one possible contraction of this tensor:\footnote{We cannot contract $\alpha$ and $a$ as they are for different modules (hence the different alphabets).  Of course, if it so happens that $W=V$, then we could contract, and one finds that $T\indices{^b_b}v^a=\tr (T)v$.}  $T\indices{^{\alpha}_a}v^a$, which is index notation for $T(v)$---compare \eqref{eqn3.2.30}.\footnote{This equation gives a formula for $Av$, $A$ a matrix and $v$ a column vector:  $[Av]^i=\sum _{j=1}^nA\indices{^i_j}v^j$.}
+\end{exm}
+\begin{exm}{Composition in index notation}{}
+	Let $U$, $V$, and $W$ be $\K$-modules, $\K$ a cring, and let $S\indices{^A_a}\in \Mor _{\Mod{\K}}(U,V)$ and $T\indices{^{\alpha}_A}\in \Mor _{\Mod{\K}}(V,W)$.
+	
+	We can take their tensor product $T\indices{^{\alpha}_A}S\indices{^B_a}$, which is a tensor of rank $\coord{2,2}$.  There is only one possible contradiction of this  tensor:  $T\indices{^{\alpha}_A}S\indices{^A_a}$, which is index notation for $T\circ S$---compare \eqref{eqn1.1.47}.\footnote{This equation gives a formula for $AB$, $A$ and $B$ matrices:  $[AB]\indices{^i_k}=\sum _{j=1}^nA\indices{^i_j}B\indices{^j_k}$.  In fact, this similarity is exactly the reason we wrote the indices on the matrix the way we did (instead of the perhaps more common $[A]_{ij}$).}
+\end{exm}
+These examples suggest an important point that is quite helpful for intuition.
+\begin{displayquote}
+	It can help intuition to think of contracted indices being summed over.
+\end{displayquote}
+Indeed, it's true generally that, upon picking a basis, contracted indices are summed over when computing with the coordinates of the tensors with respect to that basis.\footnote{We're not going to define coordinates for arbitrary tensors because we don't really have any need.  The idea is no different than it was with linear-transformations and writing it out in detail is not very enlightening with all the ellipses and such.}
+
+For this reason, I tend to think of index contraction as being a sort of dot product.  The justification for this intuition of course comes from the fact that contracted indices are summed over in coordinates.  In particular, I think of $v^a\nabla _af(x)$ as the dot product of $v^a$ with $\nabla _af(x)$, which of course is just the directional derivative.\footnote{This is yet another strength of index notation---it allows one to write more transparent expressions in some cases.  The notation $v^a\nabla _af(x)$ here has the advantage that it looks exceedingly similar to how I would have written this in multivariable calculus ($\vec{v}\cdot \vec{\nabla}f(x)$).  Without index notation, this might be written instead as $\dif f(x)(v)$, which, at least for me, is relatively unintuitive and awkward.}
+
+Let's now take a look at a concrete example of the use of index notation.
+\begin{exm}{Associativity in index notation}{}
+	Let $\K$ be a cring and let $A$ be a $\K$-algebra (\cref{KAlgebra}).  From the definition, multiplication $A\times A\rightarrow A$ is bilinear, and so is given by a tensor $m\indices{^a_{bc}}$ of rank $\coord{1,2}$:
+	\begin{equation}
+		[X\cdot Y]^a=m\indices{^a_{bc}}X^bY^c.
+	\end{equation}
+	
+	For the sake of practice, let's try to determine what the condition of associativity looks like in index notation.\footnote{To be honest, this is a case where using index notation is probably not very helpful (I think I've used this like once), but it is good practice.}  Associativity is `normal' notation is the statement that
+	\begin{equation}
+		(X\cdot Y)\cdot Z=X\cdot (Y\cdot Z).
+	\end{equation}
+	In index notation, this becomes
+	\begin{equation}
+		m\indices{^a_{bc}}[X\cdot Y]^bZ^c=m\indices{^a_{bc}}X^b[Y\cdot Z]^c,
+	\end{equation}
+	which in turn becomes
+	\begin{equation}
+		m\indices{^a_{bc}}m\indices{^b_{de}}X^dY^eZ^c=m\indices{^a_{bc}}X^bm\indices{^c_{de}}Y^dZ^e.
+	\end{equation}
+	Rearranging this and changing names of contracted indices,\footnote{It will be easier to read off the condition on $m\indices{^a_{bc}}$ if the indices on $X$, $Y$, and $Z$ are the same on both sides of the equation.} this becomes
+	\begin{equation}
+		m\indices{^a_{bc}}m\indices{^b_{de}}X^dY^eZ^c=m\indices{^a_{bd}}m\indices{^b_{ec}}X^dY^eZ^c.
+	\end{equation}
+	From this, we read off
+	\begin{equation}
+		m\indices{^a_{bc}}m\indices{^b_{de}}=m\indices{^a_{bd}}m\indices{^b_{ec}},
+	\end{equation}
+	which is the condition of associativity in index notation.
+\end{exm}
+
+\subsection{Metrics}
+
+We need one more ingredient for the purposes of manipulating tensors, namely that of a \emph{metric}.
+\begin{dfn}{Metric (on a vector space)}{MetricVectorSpace}
+	Let $V$ be a $\K$-$\K$-bimodule.  Then, a \term{metric}\index{Metric (on a vector space)} on $V$ is a symmetric nonsingular pairing $\pinnerprod{\blankdot |\blankdot}\colon V\times V\rightarrow \K$.
+	\begin{rmk}
+		By definition, $\pinnerprod{\blankdot |\blankdot}$ is \term{symmetric}\index{Symmetric pairing} iff
+		\begin{equation}
+			\pinnerprod{v_1|v_2}=\pinnerprod{v_2|v_1}
+		\end{equation}
+		for all $v_1,v_2\in V$.
+	\end{rmk}
+	\begin{rmk}
+		By definition (\cref{DualPair}), a pairing $\pinnerprod{\blankdot |\blankdot}\colon V\times V\rightarrow \K$ is bilinear, and hence by the defining property of the tensor product (\cref{TensorProduct}), is `the same' as a linear map $V\otimes _{\K}V\rightarrow V$
+		
+		Then by \cref{crl5.4.12}, if $V$ is additionally a finite-dimensional vector space over a field, this is `the same' as an element of $V^{\T}\otimes V^{\T}$, that is, a covariant tensor of rank $2$.  In this case, it is common to denote a metric using the letter ``g'':\footnote{The ``g'' is for ``gravity'' (in general relativity, gravity is modeled as a metric (field) on space-time).}  $g_{ab}\in V^{\T}\otimes V^{\T}$.
+		
+		In terms of the original pairing, we have
+		\begin{equation}
+			\pinnerprod{v|w}=v^aw^bg_{ab}.
+		\end{equation}
+		(This is the definition of index contraction.)
+	\end{rmk}
+	\begin{rmk}
+		Using this notation, the statement that $g_{ab}$ is symmetric is equivalent to the equality
+		\begin{equation}
+			g_{ab}=g_{ba}.
+		\end{equation}
+		This highlights one of the strengths of index notation:  it provides a convenient way to express equality of tensors without having to `plug in' values for everything (as in $\pinnerprod{v_1|v_2}=\pinnerprod{v_2|v_1}$).
+	\end{rmk}
+	\begin{rmk}
+		Recall that given any dual-pair $V\times W\rightarrow \K$, we obtain maps $V\rightarrow W^{\T}$ and $W\rightarrow V^{\T}$.  In the case of a metric $g_{ab}$ on $V$, \emph{by symmetry}, we have just one map $V\rightarrow V^{\T}$, which, in index notation, looks like
+		\begin{equation}
+			V\ni v^b\mapsto g_{ab}v^b=g_{ba}v^b\in V^{\T}.
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		The idea of a notion of a metric on a vector space and a metric on a set (in the context of uniform space theory) have little to nothing to do with each other.\footnote{If you haven't heard of this before, great!  You won't be confused by the potential conflict of terminology.}  It is merely a coincidence of terminology that is so ingrained that I dare not go against it.
+		
+		The term ``metric'' in this sense of the word should really not be thought of as a sort of distance, but rather as a sort of dot product.  Indeed, you can verify that the dot product is a metric, and furthermore, in a sense that we don't bother to make precise, every positive-definite metric (on a vector space) is equivalent to the usual euclidean dot product.  There is \emph{some} connection with the other notion of metric, however---positive-definite metrics give us norms (the square-root $\pinnerprod{v|v}$), which in turn gives us a metric (in the other sense).
+	\end{rmk}
+	\begin{rmk}
+		Nonsingularity is usually replaced with nondegeneracy.  In finite dimensions, this is equivalent to nonsingularity (\cref{prp5.2.16}).  In infinite dimensions, however, they are not equivalent, and it is nonsingularity that we want (so that we can raise and lower indices---see \cref{ntnMetricVectorSpace}).
+	\end{rmk}
+\end{dfn}
+Let $V$ be a finite-dimensional vector space over a field $\F$ and let $\pinnerprod{\blankdot |\blankdot}\colon V\times V\rightarrow \F$ be a metric on $V$  By definition (\cref{DualPair}), a pairing $\pinnerprod{\blankdot |\blankdot}\colon V\times V\rightarrow \K$ is bilinear, and hence by the defining property of the tensor product (\cref{TensorProduct}), is `the same' as a linear map $V\otimes _{\F}V\rightarrow V$.  Then by \cref{crl5.4.12}, as $V$ is additionally a finite-dimensional vector space over a field, this is `the same' as an element of $V^{\T}\otimes V^{\T}$, that is, a covariant tensor of rank $2$.  This rank $2$ covariant tensor associated to a metric is most commonly denoted using the letter ``g'',\footnote{The ``g'' is for ``gravity'' (in general relativity, gravity is modeled as a metric (field) on space-time).} though of course any letter could be used in principle:  $g_{ab}\in V^{\T}\otimes V^{\T}$.  By abuse of terminology, we refer to $g_{ab}$ itself as the metric, 
+\begin{ntn}{Metric in index notation}{ntnMetricVectorSpace}
+	Let $V$ be a finite-dimensional vector space over a field, let $\pinnerprod{\blankdot |\blankdot}\colon V\times V\rightarrow \F$ be a metric on $V$, and denote the corresponding rank $2$ covariant tensor by $g_{ab}\in V^{\T}\otimes V^{\T}$\index[notation]{$g_{ab}$}.
+	
+	\begin{enumerate}
+		\item \label{ntnMetricVectorSpace(i)}In terms of the original pairing, we have
+		\begin{equation}
+			\pinnerprod{v|w}=v^aw^bg_{ab}.
+		\end{equation}
+		\item \label{ntnMetricVectorSpace(ii)}The statement that $g_{ab}$ is symmetric is equivalent to the equality
+		\begin{equation}
+			g_{ab}=g_{ba}.\footnote{This highlights one of the strengths of index notation:  it provides a convenient way to express equality of tensors without having to `plug in' values for everything (as in $\pinnerprod{v_1|v_2}=\pinnerprod{v_2|v_1}$).}
+		\end{equation}
+		\item \label{ntnMetricVectorSpace(iii)}The rank $2$ contravariant tensor corresponding to the inverse map $V^{\T}\rightarrow V$ is denoted by $g^{ab}$\index[notation]{$g^{ab}$}.  From the definition, we have that
+		\begin{equation}\label{eqnMetricInverse}
+			g_{ab}g^{bc}=\delta \indices{^c_a}=g^{cb}g_{ba}.
+		\end{equation}
+		\item \label{ntnMetricVectorSpace(iv)}The \emph{dual-vector} of $v^b\in V$ is defined by
+		\begin{equation}
+			v_a\ceqq g_{ab}v^b
+		\end{equation}\index[notation]{$v_a$}
+		\item \label{ntnMetricVectorSpace(v)}The \emph{dual-vector} of $\phi _b\in V^{\T}$ with respect to $g_{ab}$ is defined by
+		\begin{equation}
+			\phi ^a\ceqq g^{ab}\omega _b
+		\end{equation}\index[notation]{$\phi ^a$}
+	\end{enumerate}
+	\begin{rmk}
+		Recall that given any dual-pair $V\times W\rightarrow \K$, we obtain maps $V\rightarrow W^{\T}$ and $W\rightarrow V^{\T}$.  In the case of a metric $g_{ab}$ on $V$, by \emph{symmetry}, we have just one map $V\rightarrow V^{\T}$, which, in index notation, looks like
+		\begin{equation}
+			V\ni v^b\mapsto g_{ab}v^b=g_{ba}v^b\in V^{\T}.
+		\end{equation}
+		Nonsingularity says that this map has an inverse $V^{\T}\rightarrow V$, which is `the same' (by \cref{prp5.4.9}) as an element of $V\otimes V$---this element is our $g^{ab}$ in \cref{ntnMetricVectorSpace(iii)}.
+	\end{rmk}
+	\begin{rmk}
+		Thus, using \cref{ntnMetricVectorSpace(iv),ntnMetricVectorSpace(v)}, we may \emph{raise and lower indices}.\footnote{Though we do need a metric to do so.}  Lowering an index corresponds to applying the isomorphism $V\rightarrow V^{\T}$ and raising an index corresponds to applying its inverse $V^{\T}\rightarrow V$.
+	\end{rmk}
+	\begin{rmk}
+		In view of \eqref{eqnMetricInverse}, note that
+		\begin{equation}
+			g\indices{^a_b}=\delta \indices{^a_b}=g\indices{_b^a}.
+		\end{equation}
+	\end{rmk}
+\end{ntn}
+It's worth noting that, everything \emph{except} raising and lowering indices we can do without a metric.  To raise and lower indices, we do need that \emph{extra} structure.  In particular, if you pick a different metric, then your meaning of $v_a$ will change even though the metric does not appear explicitly in this notation.
+
+\subsubsection{The physicists' definition}
+
+If you've studied physics before, there is a good chance that you encountered a definition of ``tensor'' that doesn't look much at all like the one we've just given.\footnote{If you've never studied physics, then there is no possibility for confusion, and you should feel free to skip this subsubsection.}  Let us try to explain the sense in which these two different definitions are related.
+
+First of all, the ``physicists definition'' I have in mind sounds something like the following.
+\begin{displayquote}
+	A \emph{tensor} is a multidimensional array of numbers that transforms in a certain way under a certain group action.
+\end{displayquote}
+Of course, this is not precise, and so the exact definition you find will not be exactly this.  For example, the definition from \cite[pg.~659]{Taylor} reads verbatim:
+\begin{displayquote}
+	A four-tensor (strictly speaking a four-tensor of rank $2$) is defined as a set of sixteen numbers $T_{\mu \nu}$ (defined for every inertial frame $\mscr{S}$), where the indices $\mu$ and $\nu$ run from $1$ to $4$, which, when formed into a $4\times 4$ matrix $T$, satisfy
+	\begin{equation*}
+		T'=\Lambda T\tilde{\Lambda}\tag{15.137}
+	\end{equation*}
+	---a property that exactly parallels Equation (15.132) for three-tensors.
+\end{displayquote}
+First of all, let's be clear:  \emph{this concept of ``tensor'' is \emph{not} the same as ours}---they are only related.\footnote{Incidentally, don't have your indices run from $1$ to $4$.  I don't know what he was thinking, but in relativity they should really be running from $0$ to $3$.}
+
+In brief, a \emph{representation} of a group $G$ on a vector space $V$ is a group action of $G$ on $V$ by linear operators.  Using this language, a mathematician would say that the physicist's definition is the statement that $T$ lies in a certain representation of the group (in the example from \cite{Taylor}, the Lorentz group).
+
+The relationship between these two definitions then stems from the fact that \emph{the vector space of tensors $V^{k\otimes ,l\otimes \T}$ carries a canonical representation of $\Aut _{\Vect}(V)$}.  From this point of view, the difference between the mathematician's point of view and the physicists is a matter of working in different categories:  for mathematicians, tensors are elements of the \emph{vector space} $V^{k\otimes ,l\otimes \T}$, whereas for physicists tensors are elements of the \emph{representation} (of $\Aut _{\Vect}(V)$) on $V^{k\otimes ,l\otimes \T}$.
+
+One should really keep these concepts distinct in one's mind, however.  For example, one often wants to think of tensors are being in a representation of, say, the group of isometries of $V$ if $V$ comes with a metric.  If in your definition of tensor it is implicit that it already `lives' in a representation of $\Aut _{\Vect}(V)$, it's not clear how one changes the group.  To be honest, most physicists probably don't think about the mathematical formalism enough to realize that this is not clear.  In any case, I would imagine most would not have a problem with it anyways---being absolutely mathematically precise about what sort of object a tensor is (element of vector space or representation) won't affect numerical predictions, so why bother worrying?
+
+\subsection{Summary}
+
+In summary:
+\begin{enumerate}
+	\item A tensor of rank $\coord{k,l}$ is a linear map from $\underbrace{V\otimes \cdots \otimes V}_k$ to $\underbrace{V\otimes \cdots \otimes V}_k$ (\cref{Tensor}).
+	\item A general tensor is an element of the tensor algebra $\tensoralg _{\bullet}^{\bullet}V\ceqq \bigoplus _{k,l\in \N}\tensoralg _l^kV$ (\cref{TensorAlgebra}).
+	\item In finite-dimensional, a tensor of rank $\coord{k,l}$ is the same as an element of $\underbrace{V\otimes \cdots \otimes V}_k\otimes \underbrace{V^{\T}\otimes \cdots \otimes V^{\T}}_l$ (\cref{thm5.4.6}).
+	\item The tensor product of two tensors is denoted simply by juxtaposition (\cref{ntn5.4.4}).
+	\item We can contract indices (\cref{ntnContraction}).  This corresponds to `plugging in' a specified vector into  specified covector (\cref{Contraction}).
+	\item If we have a metric, we can also raise and lower indices (\cref{ntnMetricVectorSpace}).  This corresponds to applying the isomorphism defined by the metric $V\rightarrow V^{\T}$ and its inverse.
+\end{enumerate}
+
+\section{(Anti)symmetric tensors}
+
+We've already encountered the concept of a metric tensor $g_{ab}$, which by definition is symmetric:  $g_{ab}=g_{ba}$.  The subject of this section is to study tensors that have a similar sort of symmetry (or antisymmetry).
+
+Intuitively, a tensor is \emph{symmetric} iff permuting the indices doesn't change the tensor (\emph{antisymmetric} will mean it changes by a sign).  To discuss this permuting, we need to introduce the \emph{symmetric group}.
+
+\subsection{The symmetric group}
+
+\begin{dfn}{Symmetric group}{SymmetricGroup}
+	Let $S$ be a set.  Then, the \term{symmetric group}\index{Symmetric group} of $S$ is $\Aut _{\Set}(S)$.
+	\begin{rmk}
+		In this context, elements of $\Aut _{\Set}(S)$ tend to be referred to as \term{permutations}\index{Permutation} of $S$.
+	\end{rmk}
+	\begin{rmk}
+		$\Aut _{\Set}(S)$ is our fancy-schmancy category-theoretic notation for the set of all bijections $S\rightarrow S$.
+	\end{rmk}
+\end{dfn}
+\begin{dfn}{Cycle notation}{CycleNotation}
+	Let $S=\{ 1,\ldots ,m\}$ be a finite set and let $x_1,\ldots ,x_n\in S$ be distinct.  Then, $(x_1\ldots \, x_n)\in \Aut _{\Set}(S)$\index[notation]{$(x_1\ldots \, x_n)$} is the unique bijection that sends $x_k$ to $x_{k+1}$ for $1\leq k\leq n-1$, sends $x_n$ to $x_1$, and fixes everything else.
+	\begin{rmk}
+		Permutations of the form $(x_1\ldots \, x_n)$ are \term{cycles}\index{Cycle}.
+	\end{rmk}
+	\begin{rmk}
+		The \term{length}\index{Length (of a cycle)} of $(x_1\ldots x_n)$ is $n$.
+	\end{rmk}
+	\begin{rmk}
+		A \term{transposition}\index{Transposition} is a cycle of length $2$.
+	\end{rmk}
+	\begin{rmk}
+		For example, $(325)\in \Aut _{\Set}(\{ 1,2,3,4,5\} )$ is short-hand for the function $\{ 1,2,3,4,5\} \rightarrow \{ 1,2,3,4,5\}$
+		\begin{subequations}
+			\begin{align}
+				1 & \mapsto 1 \\
+				2 & \mapsto 5 \\
+				3 & \mapsto 2 \\
+				4 & \mapsto 4 \\
+				5 & \mapsto 3.
+			\end{align}
+		\end{subequations}
+	\end{rmk}
+\end{dfn}
+To discuss antisymmetry, we're going to need to discuss the \emph{sign} of a permutation.
+\begin{thm}{Sign of a permutation}{}
+	Let $S$ be a finite set and let $\sigma \in \Aut _{\Set}(S)$.
+	\begin{enumerate}
+		\item If $s_1\cdots s_m=\sigma =t_1\cdots t_n$ with each $s_k$ and $t_k$ a transposition, then $m$ and $n$ have the same parity $\sgn (\sigma )\in \{ 1,-1\}$\index[notation]{$\sgn (\sigma )$}, the \term{sign}\index{Sign (of a permutation)} $\sigma$.\footnote{That is, $m$ is even/odd iff $n$ is even/odd.}
+		\item $\sgn \colon \Aut _{\Set}(S)\rightarrow \{ 1,-1\} \cong \Z /2\Z$ is a group homomorphism.
+	\end{enumerate}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+
+\subsection{Basic definitions}
+
+We are now able to begin discussing (anti)symmetric tensors themselves.
+\begin{dfn}{(Anti)symmetric}{Antisymmetric}
+	Let $V$ be a $\K$-module, $\K$ a cring, and let $T^{a_1\cdots a_k}\in \bigotimes ^kV$.
+	\begin{enumerate}
+		\item $T^{a_1\cdots a_k}$ is \term{symmetric}\index{Symmetric (tensor)} iff $T^{a_1\cdots a_k}=T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}$ for all $\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\} )$.
+		\item $T^{a_1\cdots a_k}$ is \term{antisymmetric}\index{Antiymmetric (tensor)} iff $T^{a_1\cdots a_k}=\sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}$ for all $\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\} )$.
+	\end{enumerate}
+	\begin{rmk}
+		The condition of being \term{(anti)symmetric} is defined for covariant tensors in an essentially identical manner.  A general tensor is then \term{(anti)symmetric} iff it is (anti)symmetric in both its contravariant and covariant indices.
+	\end{rmk}
+	\begin{rmk}
+		The set of symmetric tensors of rank $\coord{k,l}$ is a subspace of $\tensoralg _l^k$ which is denoted
+		\begin{equation}
+			\symalg _l^kV.
+		\end{equation}\index[notation]{$\symalg _l^kV$}
+		
+		The set of antisymmetric tensors of rank $\coord{k,l}$ is a subspace of $\tensoralg _l^k$ which is denoted
+		\begin{equation}
+		\antialg _l^kV.
+		\end{equation}\index[notation]{$\antialg _l^kV$}
+	\end{rmk}
+	\begin{rmk}
+		This is nonstandard notation.  First of all, usually people only work with covariant tensors in this context, in which case they denote these respectively by $\operatorname{Sym}^l(V)$\index[notation]{$\operatorname{Sym}^l(V)$} and $\Lambda ^l(V)$\index[notation]{$\Lambda ^l(V)$}.
+	\end{rmk}
+	\begin{rmk}
+		Sometimes people will say \term{totally symmetric}\index{Totally symmetric (tensor)} and \term{totally antisymmetric}\index{Totally antisymmetric (tensor)} for these concepts respectively, presumably to emphasize that one is discussing \emph{all} the indices.
+	\end{rmk}
+\end{dfn}
+Given an arbitrary tensor, there is a canonical way of `turning it into' an (anti)symmetric one.
+\begin{dfn}{(Anti)symmetrization}{Antisymmetrization}
+	Let $V$ be a $\K$-module, $\K$ a cring with $\Char (\K )=0$, and let $T^{a_1\cdots a_k}\in \bigotimes ^kV$.
+	\begin{enumerate}
+		\item The \term{symmetrization}\index{Symmetrization} $T^{(a_1\cdots a_k)}$\index[notation]{$T^{(a_1\cdots a_k)}$} of $T^{a_1\cdots a_k}$ is defined by
+		\begin{equation}
+			T^{(a_1\cdots a_k)}\ceqq \frac{1}{k!}\sum _{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\})}T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}.
+		\end{equation}
+		The \term{antisymmetrization}\index{Antisymmetrization} $T^{[a_1\cdots a_k]}$\index[notation]{$T^{[a_1\cdots a_k]}$} of $T^{a_1\cdots a_k}$ is defined by
+		\begin{equation}
+			T^{[a_1\cdots a_k]}\ceqq \frac{1}{k!}\sum _{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\})}\sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}.
+		\end{equation}
+	\end{enumerate}
+	\begin{rmk}
+		The (anti)symmetrization of covariant tensors is defined in an essentially identical manner.  You can take the (anti)symmetrization of a tensor with both contravariant and covariant parts, but you do the contravariant and covariant indices separately (so that you might more accurately use the terms ``contravariant (anti)symmetrization'' and ``covariant (anti)symmetrization'').  For example, the expression $T\indices{^{ab}_{(cde)}}$ is perfectly valid, as is $T\indices{^{[abc]}_{(cd)}}$.
+	\end{rmk}
+	\begin{rmk}
+		One can also adapt this to (anti)symmetrization in only some of the indices.  For example, given the above, it should be clear what one means by $T\indices{^{[ab]c}_{(cd)[ef]}}$.\footnote{Here we see another strength of index notation.  To be honest, I'm not sure how one would write this without indices unless you essentially just define it from scratch all over again.  With index notation, however, it's quite simple.}
+	\end{rmk}
+	\begin{rmk}
+		For example,
+		\begin{equation}
+			T_{(ab)}=\frac{1}{2}(T_{ab}+T_{ba})
+		\end{equation}
+		and
+		\begin{equation}
+			T_{[ab]}=\frac{1}{2}(T_{ab}-T_{ba}).
+		\end{equation}
+	\end{rmk}
+	\begin{rmk}
+		The factor of $\frac{1}{k!}$ is so that we have $T^{(a_1\cdots a_k)}=T^{a_1\cdots a_k}$ iff $T$ is symmetric (and similarly for antisymmetric)---see the following definition.
+	\end{rmk}
+	\begin{rmk}
+		Recall that (\cref{Characteristic}) the characteristic of a ring is the smallest positive integer $m$ such that $m\cdot 1=0$, unless no such $m$ exists, in which case the characteristic is taken to be $0$.  We require $\K$ to be characteristic $0$ here so that we're not dividing by $0$ with our factors of $\frac{1}{k!}$.
+	\end{rmk}
+\end{dfn}
+We may now characterize the (anti)symmetric tensors using the concept of (anti)symmetrization.
+\begin{prp}{}{}
+	Let $V$ be a $\K$-module, $\K$ a cring with $\Char (\K )=0$, and let $T^{a_1\cdots a_k}\in \bigotimes ^kV$.
+	\begin{enumerate}
+		\item $T^{a_1\cdots a_k}$ is symmetric iff
+		\begin{equation}
+			T^{a_1\cdots a_k}=T^{(a_1\cdots a_k)}.
+		\end{equation}
+		\item $T^{a_1\cdots a_k}$ is antisymmetric iff
+		\begin{equation}
+			T^{a_1\cdots a_k}=T^{[a_1\cdots a_k]}.
+		\end{equation}
+	\end{enumerate}
+	\begin{rmk}
+		The ``$\Char (\K )=0$'' condition is imposed here only so that the (anti)symmetrizations make sense.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+
+\subsection{The (anti)symmetric algebras}
+
+We will make it `official' later, but let us tentatively write $\symalg _{\bullet}^{\bullet}V$ and $\antialg _{\bullet}^{\bullet}V$ respectively for the algebra of symmetric and antisymmetric tensors.  We saw in \cref{TensorAlgebra} that all tensors form an algebra $\tensoralg _{\bullet}^{\bullet}V$ with multiplication given by the tensor product.  And while $\symalg _{\bullet}^{\bullet}V$ and $\antialg _{\bullet}^{\bullet}V$ form subspaces of $\tensoralg _{\bullet}^{\bullet}V$, they don't form subalgebras---the tensor product of (anti)symmetric tensors need not be (anti)symmetric.  The following products are solutions to this problem.\footnote{Though note the remark with the ``Warning''!}
+\begin{dfn}{(Anti)symmetric product}{AntisymmetricProduct}
+	Let $V$ be a $\K$-module, $\K$ a cring, and let $S^{a_1\cdots a_k}\in \tensoralg ^kV$ and $T^{a_1\cdots a_l}\in \tensoralg ^lV$.
+	\begin{enumerate}
+		\item The \term{symmetric product}\index{Symmetric product} $[S\vee T]^{a_1\cdots a_{k+l}}$\index[notation]{$S\vee T$} of $S$ and $T$ is defined by
+		\begin{equation}
+			\begin{multlined}
+				[S\vee T]^{a_1\cdots a_{k+l}}\ceqq \\ \sum _{\substack{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k+l\}) \\ \sigma \text{ is a }\coord{k,l}\text{ shuffle.}}}S^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (k+l)}}.
+			\end{multlined}
+		\end{equation}
+		\item The \term{antisymmetric product}\index{Antisymmetric product} $[S\wedge T]^{a_1\cdots a_{k+l}}$\index[notation]{$S\wedge T$} of $S$ and $T$ is defined by
+		\begin{equation}
+			\begin{multlined}
+				[S\wedge T]^{a_1\cdots a_{k+l}}\ceqq \\ \sum _{\substack{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k+l\}) \\ \sigma \text{ is a }\coord{k,l}\text{ shuffle.}}}\sgn (\sigma )S^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (k+l)}}.
+			\end{multlined}
+		\end{equation}
+	\end{enumerate}
+	\begin{rmk}
+		$\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k+l\} )$ is a \term{$\coord{k,l}$ shuffle} iff
+		\begin{equation}
+			\sigma (1)<\cdots <\sigma (k)\text{ and }\sigma (k+1)<\cdots <\sigma (k+l).
+		\end{equation}
+		The term comes from the fact that if you break up a deck of $k+l$ cards into two piles, one with $k$ cards and one with $l$ cards, and you ``shuffle'' them, then the cards will be `mixed up' in such a way so that the first pile of $k$ cards is still `in order' compared to other cards from that pile, and similarly for the second pile of $l$ cards.
+		
+		Note that the subset of shuffles is \emph{not} a subgroup of the symmetric group---the composition of two shuffles need not be a shuffle.\footnote{And in fact, it had better not be if we're going to shuffle our cards like this!}
+	\end{rmk}
+	\begin{rmk}
+		As with everything else we've done so far, this can be extended to general tensors of mixed rank.
+	\end{rmk}
+	\begin{rmk}
+		The antisymmetric product is more commonly referred to as the \term{wedge product}\index{Wedge product}, simply because that is the symbol used to denote it.
+	\end{rmk}
+	\begin{rmk}
+		While our notation for the antisymmetric product is standard, our notation for the symmetric product is not.  The symmetric product is more commonly denoted by $S\odot T$\index[notation]{$S\odot T$}.
+	\end{rmk}
+	\begin{rmk}
+		Warning:  We'll see in a bit that these do make $\symalg _{\bullet}^{\bullet}V$ and $\antialg _{\bullet}^{\bullet}V$ respectively into algebras, however they are \emph{not} subalgebras of $\tensoralg _{\bullet}^{\bullet}V$.  The reason is simply because the multiplications are not the same.
+	\end{rmk}
+\end{dfn}
+In case $\Char (\K )=0$, this definition can be written in another, arguably simpler, form.
+\begin{prp}{}{}
+	Let $V$ be a $\K$-module, $\K$ a cring with $\Char (\K )=0$, and let $S^{a_1\cdots a_k}\in \tensoralg ^kV$ and $T^{a_1\cdots a_l}\in \tensoralg ^lV$.
+	\begin{enumerate}
+		\item 
+		\begin{equation}
+			[S\vee T]^{a_1\cdots a_{k+l}}=\frac{(k+l)!}{k!l!}S^{(a_1\cdots a_k}T^{a_{k+1}\cdots a_{k+l})}.
+		\end{equation}
+		\item
+		\begin{equation}
+			[S\wedge T]^{a_1\cdots a_{k+l}}=\frac{(k+l)!}{k!l!}S^{[a_1\cdots a_k}T^{a_{k+1}\cdots a_{k+l}]}.
+		\end{equation}
+	\end{enumerate}
+	\begin{rmk}
+		$\Char (\K )=0$ is only needed so that we don't risk dividing by $0$.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+A trivial but quite important corollary of the definition is that the antisymmetric product of two vectors vanishes.
+\begin{prp}{$\wedge$ is super-commutative}{}
+	Let $V$ be $\K$-module, $\K$ a cring, and let $S\in \antialg ^pV$ and $T\in \antialg ^qV$.  Then,
+	\begin{equation}
+		S\wedge T=(-1)^{pq}T\wedge S.
+	\end{equation}
+	\begin{rmk}
+		In particular, if the rank of $T$ is odd, $T\wedge T=-T\wedge T$, and hence $T\wedge T=0$.\footnote{Actually, if $\Char (\K )=2$, it is still true, but not so immediate (because this rearranges to $2T\wedge T=0$, but in characteristic $2$ we cannot divide by $2$ to obtain $T\wedge T=0$)---see the following result.}
+	\end{rmk}
+	\begin{rmk}
+		Warning:  It is \emph{not} the case that $T\wedge T=0$ all the time (even when $2\in \K$ is a unit).  For this to be the case, the rank of $T$ should be odd.
+	\end{rmk}
+	\begin{rmk}
+		\emph{Commutative} would mean of course that $ST=TS$.  \emph{Anticommutative} would mean that $ST=-TS$.  \term{Super-commutativity}\index{Super-commutativity} on the other hand refers to the fact that two tensors of definite rank\footnote{For example, the sum of a tensor of rank $2$ with a tensor of rank $3$ is still a tensor, but not one of definite rank.} commute or anticommute depending on their ranks.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{}{}
+	Let $V$ be $\K$-module, $\K$ a cring, and let $T\in \antialg ^kV$.  Then, if $k$ is odd, then $T\wedge T=0$.
+	\begin{proof}
+		Suppose that $k$ is odd.  Let $\sigma \in \Aut _{\Set}(\{ 1,\ldots ,2k\} )$ and denote by $\breve{\sigma}\in \Aut _{\Set}(\{ 1,\ldots ,2k\} )$ the permutation defined by
+		\begin{equation}
+			\breve{\sigma}(i)\ceqq (1(k+1))(2(k+2))\cdots ((k-1)(2k-1))(k(2k))\sigma .\footnote{That is, $\breve{\sigma}$ is the product of $\sigma$ by the $k$ transpositions $(i(k+i))$ as $i$ runs from $1$ to $k$.  Intuitively, $\breve{\sigma}$ does to $\{ 1,\ldots ,k\}$ what $\sigma$ did to $\{ k+1,\ldots ,2k\}$ and vice versa.}
+		\end{equation}
+		Note that $\breve{\breve{\sigma}}=\sigma$ and that $\breve{\sigma}$ is a $\coord{k,k}$ shuffle iff $\sigma$ is.  Furthermore, because $k$ is odd, we have that $\sgn (\breve{\sigma})=-\sgn (\sigma )$.
+		
+		We now have that
+		\begin{equation}
+			\begin{split}
+				[T\wedge T]^{a_1\cdots a_{2k}} & \ceqq \sum _{\substack{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,2k\} ) \\ \sigma \text{ is a }\coord{k,k}\text{ shuffle.}}}\sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (2k)}} \\
+				& =\sum _{\substack{\sigma \colon \{ 1,\ldots ,k\} \rightarrow \{ 1,\ldots ,2k\} \\ \text{injective.}}}\left[ \sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (2k)}}+\right. \\ & \qquad \left. \sgn (\breve{\sigma})T^{a_{\breve{\sigma}(1)}\cdots a_{\breve{\sigma}(k)}}T^{a_{\breve{\sigma}(k+1)}\cdots a_{\breve{\sigma}(2k)}}\right] \\
+				& =\sum _{\substack{\sigma \colon \{ 1,\ldots ,k\} \rightarrow \{ 1,\ldots ,2k\} \\ \text{injective.}}}\left[ \sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (2k)}}+\right. \\ & \qquad \left.-\sgn (\sigma )T^{a_{\sigma (k+1)}\cdots a_{\sigma (2k)}}T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}\right] \\
+				& =0.
+			\end{split}
+		\end{equation}
+	\end{proof}
+	\begin{rmk}
+		The basic idea of the proof is that the terms in this sum come in pairs, one for $\sigma$ and one for $\breve{\sigma}$, which by definition of $\breve{\sigma}$, are the same except for possibly $\sgn (\breve{\sigma})$.  As for $k$ odd, $\sgn (\breve{\sigma})=-\sgn (\sigma )$, everything cancels to yield $0$.
+	\end{rmk}
+\end{prp}
+\begin{thm}{The symmetric algebra}{SymmetricAlgebra}
+	Let $V$ be a $\K$-module, $\K$ a cring, and define
+	\begin{equation}
+		\symalg _{\bullet}^{\bullet}V\ceqq \bigoplus _{k,l\in \N}\symalg _l^kV.
+	\end{equation}\index[notation]{$\symalg _{\bullet}^{\bullet}V$} 
+	Then, $\symalg _{\bullet}^{\bullet}V$ is a $\K$-algebra with multiplication given by the symmetric product.
+	\begin{rmk}
+		$\symalg _{\bullet}^{\bullet}V$ is the \term{symmetric algebra}\index{Symmetric algebra} over $V$.
+	\end{rmk}
+	\begin{rmk}
+		If we ever have the need, then we shall write
+		\begin{equation}
+			\symalg ^{\bullet}V\ceqq \bigoplus _{k\in \N}\symalg ^kV
+		\end{equation}\index[notation]{$\symalg ^{\bullet}V$}
+		and
+		\begin{equation}
+			\symalg _{\bullet}V\ceqq \bigoplus _{l\in \N}\symalg _lV
+		\end{equation}\index[notation]{$\symalg _{\bullet}V$}
+		respectively for the subalgebras of contravariant and covariant symmetric tensors.
+	\end{rmk}
+	\begin{rmk}
+		This notation is nonstandard.  Usually people only look at the contravariant tensors, in which case the notation $S(V)$ is often used for the space of all contravariant tensors.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+\begin{thm}{The antisymmetric algebra}{AntiymmetricAlgebra}
+	Let $V$ be a $\K$-module, $\K$ a cring, and define
+	\begin{equation}
+		\antialg _{\bullet}^{\bullet}V\ceqq \bigoplus _{k,l\in \N}\antialg _l^kV
+	\end{equation}\index[notation]{$\antialg _{\bullet}^{\bullet}V$} 
+	Then, $\antialg _{\bullet}^{\bullet}V$ is a $\K$-algebra with multiplication given by the antisymmetric product.
+	\begin{rmk}
+		$\antialg _{\bullet}^{\bullet}V$ is the \term{antisymmetric algebra}\index{Antisymmetric algebra} over $V$, though it is more commonly referred to as the \term{exterior algebra}\index{Exterior algebra}.\footnote{It is called this because of its relationship with the \emph{exterior derivative}.  The ``exterior derivative'' is in turn referred to as ``exterior'' to contrast it with the notion of \emph{interior derivative}.}
+	\end{rmk}
+	\begin{rmk}
+		If we ever have the need, then we shall write
+		\begin{equation}
+			\antialg ^{\bullet}V\ceqq \bigoplus _{k\in \N}\antialg ^kV
+		\end{equation}\index[notation]{$\antialg ^{\bullet}V$}
+		and
+		\begin{equation}
+		\antialg _{\bullet}V\ceqq \bigoplus _{l\in \N}\antialg _lV
+		\end{equation}\index[notation]{$\antialg _{\bullet}V$}
+		respectively for the subalgebras of contravariant and covariant antisymmetric tensors.
+	\end{rmk}
+	\begin{rmk}
+		This notation is nonstandard.  Usually people only look at the contravariant tensors, in which case the notation $\Lambda (V)$ is often used for the space of all contravariant tensors.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{thm}
+We saw above in \cref{BasisForTensorAlgebra} an explicit description of a basis for $\tensoralg _{\bullet}^{\bullet}$ give a basis for $V$.  We now present the analogous results for $\symalg _{\bullet}^{\bullet}$ and $\antialg _{\bullet}^{\bullet}V$.
+\begin{prp}{Basis for $\symalg _{\bullet}^{\bullet}V$}{}
+	Let $V$ be a finite-dimensional vector space over a field, let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ be a basis of $V$, denote the dual-basis by $\basis{B}^{\T}\eqqc \{ b^1,\ldots ,b^d\}$, and let $k,l\in \N$.  Then,
+	\begin{equation}
+		\begin{multlined}
+			\left\{ b_{i_1}\vee \cdots \vee b_{i_k}\vee b^{j_1}\vee \cdots \vee b^{j_l}:\right. \\ \left. 1\leq i_1\leq \cdots \leq i_k\leq d; \right. \\ \left. 1\leq j_1\leq \cdots \leq j_n\leq d\right\}
+		\end{multlined}
+	\end{equation}
+	is a basis for $\symalg _l^kV$.
+	\begin{rmk}
+		This says that all possible symmetric products of $k$ elements from $\basis{B}$ with nondecreasing indices with all possible symmetric products of $l$ elements from $\basis{B}^{\T}$ with nondecreasing indices is a basis for $\symalg _l^kV$.  Putting these all together for all $k,l\in \N$ then gives a basis for $\symalg _{\bullet}^{\bullet}V$.
+		
+		The reason we require the indices to be nondecreasing is because, for example, $b_3\vee b_2\vee b_4=b_2\vee b_3\vee b_4$.  Thus, we may always rearrange the elements so that this is the case.
+	\end{rmk}
+	\begin{rmk}
+		Of course, it follows that the union of all these sets over $k,l\in \N$ then yields a basis for all of $\symalg _{\bullet}^{\bullet}V$ (by \cref{prp4.4.45}).
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{prp}{Basis for $\antialg _{\bullet}^{\bullet}V$}{}
+	Let $V$ be a finite-dimensional vector space over a field, let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ be a basis of $V$, denote the dual-basis by $\basis{B}^{\T}\eqqc \{ b^1,\ldots ,b^d\}$, and let $k,l\in \N$.  Then,
+	\begin{equation}
+		\begin{multlined}
+			\left\{ b_{i_1}\wedge \cdots \wedge b_{i_k}\wedge b^{j_1}\wedge \cdots \wedge b^{j_l}:\right. \\ \left. 1\leq i_1<\cdots <i_k\leq d; \right. \\ \left. 1\leq j_1<\cdots <j_n\leq d\right\}
+		\end{multlined}
+	\end{equation}
+	is a basis for $\antialg _l^kV$.
+	\begin{rmk}
+		This says that all possible antisymmetric products of $k$ elements from $\basis{B}$ with (strictly) increasing indices with all possible antisymmetric products of $l$ elements from $\basis{B}^{\T}$ with (strictly) increasing indices is a basis for $\antialg _l^kV$.  Putting these all together for all $k,l\in \N$ then gives a basis for $\antialg _l^kV$.
+		
+		Note how this is exactly as it was in the symmetric case except now the indices are \emph{strictly} increasing instead of just nondecreasing.  This essentially follows from the fact that $b_i\wedge b_i=0$, and so all the elements in the above wedge products must be distinct.
+	\end{rmk}
+	\begin{rmk}
+		Of course, it follows that the union of all these sets over $k,l\in \N$ then yields a basis for all of $\antialg _{\bullet}^{\bullet}V$ (by \cref{prp4.4.45}).
+	\end{rmk}
+	\begin{rmk}
+		It follows that
+		\begin{equation}
+			\dim \left( \antialg _l^kV\right) =\binom{\dim (V)}{k}\binom{\dim (V)}{l},
+		\end{equation}
+		and in particular that
+		\begin{equation}
+			\antialg _l^kV=0\text{ if }k>\dim (V)\text{ or }l>\dim (V)\text{.}
+		\end{equation}
+		Hence,
+		\begin{equation}
+			\begin{split}
+				\dim \left( \antialg _{\bullet}^{\bullet}V\right) & =\sum _{k,l=0}^{\dim (V)}\binom{\dim (V)}{k}\binom{\dim (V)}{l}=2^{\dim (V)}\cdot 2^{\dim (V)} \\
+				& =2^{2\dim (V)}.
+			\end{split}
+		\end{equation}
+		Similar results hold for the purely contravariant and covariant cases.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+Note that $\tensoralg _{\bullet}^{\bullet}V$ and $\symalg _{\bullet}^{\bullet}V$ are both infinite-dimensional (unless $V=0$).  For example, if $v\in V$ is nonzero, then
+\begin{equation}
+	\{ \underbrace{v\vee \cdots \vee}_k:k\in \Z ^+\}
+\end{equation}
+is linearly-independent (and similarly for $\otimes$).  This is one place where the antisymmetric differs from the symmetric case, and this difference is one reason why the antisymmetric algebra is more frequently encountered than the symmetric one.
+
+Essentially this difference stems from the fact that $v\wedge v=0$, and so $b_{i_1}\wedge \cdots \wedge b_{i_k}=0$ if any of the $b_{i_j}$s coincide.  This forces all the $b_{i_j}$s to be distinct, and so if the basis is finite with $d$ elements, there are most $\binom{d}{k}$ nonzero elements of that form (and accordingly to the above, these nonzero elements constitute a basis for $\antialg ^{\bullet}V$). 
+
+\section{The determinant and characteristic polynomial}
+
+Let $V$ be a $\K$-module, $\K$ a cring, and let $T\colon V\rightarrow V$ be linear.  We may then take the tensor product of $T$ with itself:  $T\otimes T\in \End _{\Mod{\K}}(V)\otimes _{\K}\End _{\Mod{\K}}(V)\cong \End _{\Mod{\K}}(V\otimes _{\K}V,V\otimes _{\K}V)$, where we have used the natural isomorphism of \cref{TensorProductLinearTransformation}.  In index notation, this is written $T\indices{^a_b}T\indices{^c_d}$ and is defined in the obvious way:  $v^bw^d\in V\otimes _{\K}V\mapsto T\indices{^a_b}T\indices{^c_d}v^bv^d\in V\otimes _{\K}V$.
+
+\begin{equation}
+	\pinnerprod{T^{\T}(v)|w}=\pinnerprod{v|T(w)}.
+\end{equation}
+\begin{equation}
+	g_{ab}[T^{\T}]\indices{^a_c}v^cw^b=g_{ab}v^aT\indices{^b_c}w^c
+\end{equation}
+\begin{equation}
+	[T^{\T}]\indices{_b^c}g_{cd}v^dw^b=
+\end{equation}
