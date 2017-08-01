@@ -1,10 +1,10 @@
-\chapter{Linear-independence, spanning, bases, and dimension}
+\chapter{Linear-independen\-ce, spanning, bases, and dimension}\label{chpBases}
 
 \section{Spanning and linear-independence}
 
 If you've studied linear algebra before, you'll almost certainly recall that the concepts of linear-independence, spanning, and basis are of fundamental importance.  We next turn to the study of these concepts.  Before we discuss any of these, however, we must first discuss some preliminaries.
 
-\subsection{Linear-combinations and cofiniteness}
+\subsection{Linear-combinations and cofiniteness}\label{sbs2.1.1}
 
 Let $V$ be a $\K$-module, let $\mcal{I}$ be an indexing set, and for every $i\in \mcal{I}$ let $v_i\in V$.  In the course of these notes, you will eventually see us write something like the following.
 \begin{equation}\label{eqn2.1.8}
@@ -18,9 +18,12 @@ However, if $\mcal{I}$ is infinite, the corresponding sum is infinite, and it a 
 \begin{dfn}{Cofinite}{Cofinite}
 	Let $X$ be a set and let $S\subseteq X$.  Then, $S$ is \term{cofinite}\index{Cofinite} in $X$ iff $X\setminus S$ is finite.
 \end{dfn}
-\begin{displayquote}
-	Whenever a sum that is not necessarily finite appears, it should be assumed that all but cofinitely many terms are $0$.
-\end{displayquote}
+\begin{cnv}{}{cnv2.1.1.4}
+	Whenever a sum that is not necessarily finite appears, it should be assumed that cofinitely many terms are $0$.
+	\begin{rmk}
+		We will see later (\cref{prp6.4.1}) that this is just the statement that, unless otherwise stated, we assume the sum converges in the discrete topology.  In fact, when it becomes relevant, this convention will be superseded by the more general \cref{cnvTopologicalSum}.
+	\end{rmk}
+\end{cnv}
 Thus, if ever we write down a sum as in \eqref{eqn2.1.8}, you should pretend that the sum comes suffixed with the clause ``\textellipsis where cofinitely many $v_i$s are $0$.''.  This essentially had to be the case in order for the sum to make sense, and not having to explicitly say this every time will cut down on the verbosity.
 
 Our first experience with this convention appears in the following fundamental definition.
@@ -55,7 +58,7 @@ If we have a collection of vectors, then we can generate a bunch of other vector
 			\begin{split}
 				\MoveEqLeft
 				\Span (v_1,\ldots ,v_m)\ceqq \Span (S) \\
-				& =\left\{ \alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m:\alpha _k\in \K \right\} .
+				& =\left\{ \alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m:\right. \\ & \qquad \left. \alpha _k\in \K \right\} .
 			\end{split}
 		\end{equation}\index[notation]{$\Span (v_1,\ldots ,v_m)$}
 	\end{rmk}
@@ -99,8 +102,9 @@ Given a collection of vectors, we can take the set of all linear-combinations to
 	\begin{rmk}
 		If $S=\{ v_1,\ldots ,v_m\}$ is finite, this definition is equivalent to the statement that $S$ is linearly-independent iff
 		\begin{equation}
-			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m\text{ implies }\alpha _1=0,\ldots ,\alpha _m=0.
+			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m
 		\end{equation}
+		implies that $\alpha _1=0,\ldots ,\alpha _m=0$.
 		
 		Furthermore, even if $S$ is not necessarily finite, you may prefer to use the equivalent definition:  ``$S$ is linearly-independent iff for every $m\in \N$ and $v_1,\ldots ,v_m\in S$
 		\begin{equation}
@@ -290,7 +294,7 @@ What follows is arguably a more intuitive way to think about linear (in)dependen
 
 We have now defined two properties that a collection of vectors may or may not have, \emph{spanning} and \emph{linear-independence}.  If a collection of vectors satisfies both such properties, it is called a \emph{basis}.
 \begin{dfn}{Basis}{Basis}
-	Let $V$ be a $\K$-module, and let $\basis{B}\subseteq V$.  Then, $\basis{B}$ is a \term{basis} of $V$ iff for every $v\in V$ there are unique $v^b\in \basis{B}$ such that
+	Let $V$ be a $\K$-module, and let $\basis{B}\subseteq V$.  Then, $\basis{B}$ is a \term{basis} of $V$ iff for every $v\in V$ there are unique $v^b\in \K$ such that
 	\begin{equation}
 		v=\sum _{b\in \basis{B}}v^b\cdot b.
 	\end{equation}

@@ -1,4 +1,4 @@
-\documentclass{text}
+\documentclass[print,title,oneside]{text}
 
 \title{Linear Algebra}
 \author{Jonathan Gleason}
@@ -40,12 +40,14 @@ Trigger warning:  Row-reduction contained herein.
 
 \include{tensor}
 
+\include{ips}
+
 \appendix % Cannot go in apd.
 \part*{Appendices} % Will throw errors when used in combination with \includeonly
 
 \include{apd}
 
-\stopcontents % To remove bibliography and indices not appear in Appendices ToC
+\stopcontents % So bibliography and indices not appear in Appendices ToC
 
 \nocite{*} % So that entries display in bibliography even if not directly cited
 \printbibliography

@@ -1,4 +1,4 @@
-\chapter{\texorpdfstring{$\K$}{K}-modules and \texorpdfstring{\hfill \\}{} linear-transformations}
+\chapter{\texorpdfstring{$\K$}{K}-modules and \texorpdfstring{\hfill \\}{} linear-transformations}\label{chpVectorSpaces}
 
 \section{Basic definitions}
 
@@ -55,7 +55,6 @@ To specify the scaling operation, however, we first need to say what the \emph{s
 		It is more common to use ``$R$'' instead of ``$\K$'', in which case these would of course be called ``$R$-modules''.  The reason we use ``$\K$'' instead of ``$R$'' is because we are primarily interested in vector spaces and ``$\K$'' is more suggestive that the ring we are working over is a division ring, or at the very least, commutative.  That said, we will on occasion use ``$R$'' instead of ``$\K$'' when it feels more natural to do so.
 	\end{rmk}
 \end{dfn}
-
 Our first order of business is to give another equivalent definition of a $\K$-module (\cref{prpD.1.3}).  You should note, however, that while this is the most logical place to put this material, it's not of a particularly high priority, and so if this is your first time through the subject you should feel free to skip to the definition of a vector space (\cref{VectorSpace}).  Before getting to this equivalent definition itself, however, we must prove some basic facts about $\K$-modules that follow immediately from the axioms (as well as \cref{prpD.1.2}).
 \begin{exr}{}{exrD.1.2}
 	Let $V$ be a $\K$-module.
@@ -127,13 +126,17 @@ Our first order of business is to give another equivalent definition of a $\K$-m
 		As $\rho _1=\id _V$ (as it is a ring homomorphism, it must ``preserve'' the multiplicative identity), we have that $1\cdot v\ceqq \rho _1(v)=\id _V(v)=v$. As for the first distributive axiom, we have
 		\begin{equation}
 		\begin{split}
-		(\alpha_1+\alpha _2)\cdot v & \ceqq \rho _{\alpha _1+\alpha _2}(v)=\footnote{As $\rho$ is a ring homomrphism, it ``preserves'' addtion.}[\rho _{\alpha _1}+\rho _{\alpha _2}](v)\ceqq \rho _{\alpha _1}(v)+\rho _{\alpha _2}(v) \\
+		(\alpha_1+\alpha _2)\cdot v & \ceqq \rho _{\alpha _1+\alpha _2}(v)=\footnote{As $\rho$ is a ring homomrphism, it ``preserves'' addtion.}[\rho _{\alpha _1}+\rho _{\alpha _2}](v) \\
+		& \ceqq \rho _{\alpha _1}(v)+\rho _{\alpha _2}(v) \\
 		& \eqqc \alpha _1\cdot v+\alpha _2\cdot v.
 		\end{split}
 		\end{equation}
 		Finally, for the second distributive axiom, we have
 		\begin{equation}
-		\alpha \cdot (v_1+v_2)\ceqq \rho _{\alpha}(v_1+v_2)=\footnote{Becasue $\rho _{\alpha}$ itself is a group homomorphism.}\rho _{\alpha}(v_1)+\rho _{\alpha}(v_2)\eqqc \alpha \cdot v_1+\alpha \cdot v_2.
+			\begin{split}
+				\alpha \cdot (v_1+v_2) & \ceqq \rho _{\alpha}(v_1+v_2)=\footnote{Becasue $\rho _{\alpha}$ itself is a group homomorphism.}\rho _{\alpha}(v_1)+\rho _{\alpha}(v_2) \\
+				& \eqqc \alpha \cdot v_1+\alpha \cdot v_2.
+			\end{split}
 		\end{equation}
 		
 		\blankline
@@ -141,8 +144,8 @@ Our first order of business is to give another equivalent definition of a $\K$-m
 		\cref{prpD.1.3.ii} For the sake of brevity, we shall simply write $\rho \ceqq \rho _{\cdot}$.  First of all, note that each $\rho _{\alpha}$ is in fact a group homomorphism because $\alpha \cdot (v_1+v_2)=\alpha \cdot v_1+\alpha \cdot v_2$ for all $v_1,v_2\in V$.  We first check that $\rho$ preserve addition.
 		\begin{equation}
 		\begin{split}
-		\rho _{\alpha _1+\alpha _2}(v) & \ceqq (\alpha _1+\alpha _2)\cdot v=\alpha _1\cdot v+\alpha _2\cdot v\eqqc \rho _{\alpha _1}(v)+\rho _{\alpha _2}(v) \\
-		& \eqqc [\rho _{\alpha _1}+\rho _{\alpha _2}](v),
+		\rho _{\alpha _1+\alpha _2}(v) & \ceqq (\alpha _1+\alpha _2)\cdot v=\alpha _1\cdot v+\alpha _2\cdot v \\
+		& \eqqc \rho _{\alpha _1}(v)+\rho _{\alpha _2}(v)\eqqc [\rho _{\alpha _1}+\rho _{\alpha _2}](v),
 		\end{split}
 		\end{equation}
 		and so $\rho _{\alpha _1+\alpha _2}=\rho _{\alpha _1}+\rho _{\alpha _2}$.  Similarly, $\rho$ preserves the additive identity and additive inverses by \cref{exrD.1.2}.  Likewise, $\rho$ preserves multiplication as $(\alpha _1\alpha _2)\cdot v=\alpha _1\cdot (\alpha _2\cdot v)$.  Finally, $\rho$ preserves the multiplicative identity as $1\cdot v=v$.
@@ -204,7 +207,7 @@ Now that we've seen two equivalent definitions of $\K$-module, it's time we pres
 	
 	$\K ^{\infty}$ is a $\K$-module with componentwise addition and scaling (just as $\K ^{\N}$ is).
 \end{exm}
-\begin{exm}{Commutative groups are $\Z$-modules}{exm1.1.22}
+\begin{exm}{Commutative groups are $\Z$-mod\-ules}{exm1.1.22}
 	Let $\coord{V,+,0,-}$ be a commutative group, and for $n\in \Z$, define
 	\begin{equation}
 		n\cdot v\ceqq \sgn (n) (\underbrace{v+\cdots +v}_{\abs{n}}).
@@ -262,23 +265,23 @@ And finally, the definition of a vector space.
 	Define $V\ceqq \C ^2$.  Addition is done componentwise, as usual.  Now take $\F \ceqq \C$, $\F \ceqq \R$, or $\F \ceqq \Q$.  Either way, scaling $\F \times V\rightarrow V$ is done componentwise as usual, however, \emph{these are all different scaling operations} because the \emph{domains are different}.  We thus have \emph{three different vector spaces}.  While we haven't defined dimension yet, hopefully your intuition suggests that $V$ should be $2$ dimensional over $\C$, $4$ dimensional over $\R$, and infinite dimensional over $\Q$.
 	
 	The point:
-	\begin{displayquote}
+	\begin{important}
 		\emph{The same set of vectors over different division rings are considered to be different vector spaces.}
-	\end{displayquote}
+	\end{important}
 	\begin{rmk}
 		Thus, we technically always need to specify the ring we are working over.  However, most of the time, it will be clear from context, and we will not state this explicitly.  For example, even for $V\ceqq \C ^2$, it should be assumed that we are working over $\C$ unless otherwise stated.
 	\end{rmk}
 \end{exm}
 
 I mentioned before that the term ``vector'' for elements in an ``abstract'' vector space can potentially be confusing for n00bs.  The reason this is potentially confusing is because \emph{the elements of $V$ are not necessarily `actual vectors'}.  For example, the set of real-valued functions on a set can be made into a vector space, and certainly functions themselves are not traditionally thought of as ``vectors''.  Thus, to avoid any possible confusion or ambiguity, I will be careful to make the following distinction.
-\begin{displayquote}
+\begin{important}
 	Elements of a general vector space will simply be referred to as \emph{vectors}.  Elements of the specific vector space $\R ^d$ will be referred to as \emph{column vectors}.\footnote{More precisely, we will use this terminology when regarding $\R ^d$ as an object in $\Vect _{\R}$, the category of vector spaces over $\R$---see \cref{TheCategoryOfVectorSpaces}.}
-\end{displayquote}
+\end{important}
 
 Of fundamental importance in linear algebra is the relationship between the abstract and the concrete.  Of course, the set of all column vectors (with a fixed number of components) forms a vector space, and matrices define linear-transformations.  In the other direction, given a vector space $V$,\footnote{Over $\R$, for the moment.} for every choice of a basis $\basis{B}$ of $V$, there is a unique isomorphism $V\rightarrow \R ^d$ that satisfies such and such properties.  Thus, having fixed a basis, one can associate \emph{column vectors to vectors} and \emph{matrices to linear-transformations}.  I mention this now only to help solidify the distinction between vectors (in a general vector space) and column vectors (and also to foreshadow one of the more important results in elementary linear algebra)---you are not supposed to know what any of this precisely means just yet.  In brief:
-\begin{displayquote}
+\begin{important}
 	Vectors are to column vectors as linear-transformations are to matrices.
-\end{displayquote}
+\end{important}
 
 Having defined a type of mathematical object, we are now morally obligated to specify what the relevant notion of morphism is.
 \begin{dfn}{Linear-transformation}{LinearTransformation}
@@ -483,6 +486,10 @@ The following example of a bimodule is one of the most important, and it would l
 		\alpha \cdot (v\cdot T)\ceqq \alpha \cdot T(v)=T(\alpha \cdot v)\eqqc (\alpha \cdot v)\cdot T.
 	\end{equation}
 \end{exm}
+Another important fact to note is that every ring can be thought of as a bimodule over itself.
+\begin{exm}{The $R$-$R$-bimodule $R$}{RingBimodule}
+	Let $R$ be a ring.  Writing $V\ceqq R$ to keep conceptually straight which $R$s are being thought of as rings and which ones are being thought of as bimodules, the left scaling $R\times V\rightarrow V$ is defined by $\coord{r,v}\mapsto r\cdot v$ and the right scaling $V\times R\rightarrow V$ is defined by $\coord{v,r}\mapsto v\cdot r$.  That is, left (right) scaling is just given by multiplication on the left (right).
+\end{exm}
 We mentioned before briefly that one needn't introduce the complication of bimodules if the ground ring is commutative.  One can see this from the following example.
 \begin{exm}{$\K$-modules over crings}{exm1.1.55}
 	Let $\K$ be a cring and let $V$ be a $\K$-module.  Then in fact we can view $V$ as a $\K$-$\K$-bimodule by defining
@@ -540,7 +547,7 @@ We now turn to the issue of equipping morphism sets of \emph{bimodules} with ano
 		Check that $s\cdot T\cdot t$ is still left linear.
 	\end{exr}
 	\begin{exr}[breakable=false]{}{}
-		Check that this makes $\Mor _{\Mod{R}}(V,W)$ into an $S$-$T$-bimodule.
+		Check that $\Mor _{\Mod{R}}(V,W)$ is an $S$-$T$-bimodule.
 	\end{exr}
 \end{exm}
 \begin{exm}{$\Mor _{\Mod*{S}}(V,W)$ is a $T$-$R$-bimodule}{exm1.1.75}
@@ -552,7 +559,7 @@ We now turn to the issue of equipping morphism sets of \emph{bimodules} with ano
 		Check that $t\cdot T\cdot t$ is still right linear.
 	\end{exr}
 	\begin{exr}[breakable=false]{}{}
-		Check that this makes $\Mor _{\Mod{}[S]}(V,W)$ into a $T$-$R$-bimodule.
+		Check that $\Mor _{\Mod*{S}}(V,W)$ is an $T$-$R$-bimodule.
 	\end{exr}
 \end{exm}
 While this might seem complicated, there is actually a relatively simple mnemonic to keep this straight.  You can remember these respectively as
@@ -591,7 +598,7 @@ If you've studied linear algebra before, you're almost certainly familiar with t
 \end{dfn}
 A priori, to show that $\coord{W,\cdot}$ is a subspace, there are quite a few axioms one would have to check.  Fortunately, in practice, it is relatively easy to check whether or not something is a subspace.
 \begin{prp}{}{prp1.2.2}
-	Let $V$ be a $\K$-module, and let $W\subseteq V$.  Then, $W$ is a subspace iff
+	Let $V$ be a $\K$-module and let $W\subseteq V$.  Then, $W$ is a subspace iff
 	\begin{enumerate}
 		\item $0\in W$;
 		\item $v_1,v_2\in W$ implies $v_1+v_2\in W$; and
@@ -666,7 +673,11 @@ Quotient objects are actually relatively difficult the first time one encounters
 \begin{dfn}{Quotient space}{QuotientModules}
 	Let $\coord{V,\cdot}$ be a $\K$-module, let $W\subseteq \coord{V,0,+,-}$ be a subgroup, and let $v,v_1,v_2\in V$ and $\alpha \in \K$.  Define
 	\begin{equation}
-	(v_1+W)+(v_2+W)\coloneqq (v_1+v_2)+W\text{ and }\alpha \cdot (v+W)\ceqq \alpha \cdot v+W.
+		(v_1+W)+(v_2+W)\coloneqq (v_1+v_2)+W
+	\end{equation}
+	and
+	\begin{equation}
+		\alpha \cdot (v+W)\ceqq \alpha \cdot v+W.
 	\end{equation}
 	$W$ is an \term{ideal}\index{Ideal (in a $\K$-module)} iff both of these operations are well-defined.  In this case, $V/W$ is the \term{quotient space}\index{Quotient space} of $V$ modulo $W$.
 	\begin{rmk}

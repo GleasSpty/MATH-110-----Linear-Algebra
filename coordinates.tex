@@ -14,7 +14,7 @@ We now turn to the second important use of bases:  coordinates.
 		\coordinates{v}{\basis{B}}\ceqq \coord{v^b:b\in \basis{B}}\in \K ^{\basis{B}}.
 	\end{equation}
 	\begin{rmk}
-		Recall (\cref{CartesianProductCollection,exrA.3.41}) that this is suggestive notation for what is technically a function $\basis{B}\ni b\mapsto v^b\in \K$.  Thinking of things like this, however, is often not helpful---for example, we usually don't think of sequences as being functions on $\N$, even though that's exactly what they are.  In this case, I like to think of $\langle v^b:b\in \basis{B}\}$ as a list of scalars indexed by elements in the basis.  If $\basis{B}$ is finite, this list is often written as a \emph{column vector}---see the following remark.
+		Recall that (\cref{CartesianProductCollection,exrA.3.41}) this is suggestive notation for what is technically a function $\basis{B}\ni b\mapsto v^b\in \K$.  Thinking of things like this, however, is often not helpful---for example, we usually don't think of sequences as being functions on $\N$, even though that's exactly what they are.  In this case, I like to think of $\langle v^b:b\in \basis{B}\}$ as a list of scalars indexed by elements in the basis.  If $\basis{B}$ is finite, this list is often written as a \emph{column vector}---see the following remark.
 	\end{rmk}
 	\begin{rmk}
 		In this level of generality, it is a bit difficult to understand, so let us consider the important special case in which $\basis{B}$ is \emph{finite}.  Write $\basis{B}=\{ b_1,\ldots ,b_d\}$.  As $\basis{B}$ is a basis, there are unique $v^1,\ldots ,v^d\in \K$ such that
@@ -767,7 +767,7 @@ We now turn to the issue of ``computing'' the kernel and image of a matrix linea
 \subsection{Coordinates of linear-transformations}\label{sbs3.2.2}
 
 Having take a (longer than necessary) diversion investigating matrices, let us return to the original objective:  \emph{coordinates of linear-transformations}.
-\begin{thm}{Coordinates (of a linear-transformation)}{CoordinatesLinearTransformation}
+\begin{thm}{Coordinates (of a linear-transform\-ation)}{CoordinatesLinearTransformation}
 	Let $V$ and $W$ be $\K$-modules, let $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$ and $\basis{C}\eqqc \{ c_1,\ldots ,c_e\}$ be bases for $V$ and $W$ respectively, and let $T\colon V\rightarrow W$ be a linear-transformation.  Then, there is a unique $e\times d$ matrix, $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$\index[notation]{$\coordinates{T}{\basis{C}\leftarrow \basis{B}}$}, the \term{coordinates}\index{Coordinates (of a linear-transformation)} of $T$ with respect to the bases $\basis{B}$ and $\basis{C}$, such that
 	\begin{equation}\label{eqn1.2.115}
 		\coordinates{T(v)}{\basis{C}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}
@@ -775,7 +775,7 @@ Having take a (longer than necessary) diversion investigating matrices, let us r
 	for all $v\in V$.
 	
 	Furthermore, explicitly
-	\begin{equation}
+	\begin{equation}\label{eqnCoordinatesLinearTransformation}
 		\coordinates{T}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{T(b_1)}{\basis{C}} & \cdots & \coordinates{T(b_d)}{\basis{C}}\end{bmatrix}.
 	\end{equation}
 	\begin{rmk}
@@ -798,7 +798,7 @@ Having take a (longer than necessary) diversion investigating matrices, let us r
 		You can't really generalize this to infinite bases because the matrix product in \eqref{eqn1.2.115} will not make sense in general.
 	\end{rmk}
 	\begin{rmk}
-		We may sometimes instead speak of the \term{matrix} of $T$ with respect to a basis instead of the ``coordinates'' of $T$, though it means the same thing.
+		We may sometimes instead speak of the \term{matrix}\index{Matrix (of a linear-transformation with respect to a basis)} of $T$ with respect to a basis instead of the ``coordinates'' of $T$, though it means the same thing.
 	\end{rmk}
 	\begin{proof}
 		\Step{Define $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$}
@@ -863,7 +863,7 @@ We mentioned before when defining matrix multiplication that its seemingly awkwa
 	\end{proof}
 \end{prp}
 Similarly, as $V\ni v\mapsto \coordinates{v}{\basis{B}}\in \K ^d$ was an isomorphism, so to is $\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\basis{C}\leftarrow \basis{B}}\in \Matrix _{m\times n}(\K )$.  However, in this case, we need $\K$ to be commutative.\footnote{Otherwise $\Mor _{\Mod{\K}}(V,W)$ won't have the structure of a $\K$-module---see \cref{sss1.1.2}.  That said, they would still be isomorphic as commutative groups (with respect to addition).}
-\begin{prp}{$\coordinates{\blankdot}{\basis{C}\leftarrow \basis{B}}$ is an isomorphism}{}
+\begin{prp}{$\coordinates{\blankdot}{\basis{C}\leftarrow \basis{B}}$ is an isomorphism}{prp3.2.117}
 	Let $\K$ be a cring, let $V$ and $W$ be $\K$-modules, and let $\basis{B}$ and $\basis{C}$ be bases for $V$ and $W$ respectively with respective finite cardinalities $d$ and $e$.  Then,
 	\begin{equation}
 	\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\basis{C}\leftarrow \basis{B}}\in \Matrix _{e\times d}(\K )
@@ -1023,6 +1023,13 @@ There is an important special case of the coordinates of a linear transformation
 		\coordinates{\id}{\basis{B}_2\leftarrow \basis{B}_1}.
 	\end{equation}
 	\begin{rmk}
+		If you look at the defining equation \eqref{eqnCoordinatesLinearTransformation}, the change-of-basis matrix from $\basis{B}_1$ to $\basis{B}_2$ is the unique matrix such that
+		\begin{equation}
+			\coordinates{v}{\basis{B}_2}=\coordinates{\id}{\basis{B}_2\leftarrow \basis{B}_1}\coordinates{v}{\basis{B}_1}
+		\end{equation}
+		for all $v\in V$.  Hopefully it is clear from this why this is called a ``change-of-basis'' matrix.
+	\end{rmk}
+	\begin{rmk}
 		In other words, the change-of-basis matrix is just the coordinates of the identity linear-transformation with respect to the two bases.
 	\end{rmk}
 \end{dfn}
@@ -1047,7 +1054,7 @@ Finally, coordinates of linear-transformations make it easy to compute the dimen
 		\begin{exr}[breakable=false]{}{}
 			Prove the result.
 			\begin{rmk}
-				Hint:  Use coordinates of linear-transformations to observe that $\dim (\Mor _{\Vect _{\F}}(V,W))$ is the same as the dimension of some vector space of matrices.  Then, compute the dimension of the vector space of matrices by exhibiting an explicit basis.
+				Hint:  Use coordinates of linear-transformations to observe that the dimension of $\Mor _{\Vect _{\F}}(V,W)$ is the same as the dimension of some vector space of matrices.  Then, compute the dimension of the vector space of matrices by exhibiting an explicit basis.
 			\end{rmk}
 		\end{exr}
 	\end{proof}

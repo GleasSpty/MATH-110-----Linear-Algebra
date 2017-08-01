@@ -25,15 +25,15 @@ Now, for a matrix to be diagonal, by definition, everything in the $k^{\text{th}
 	T(b_k)=T\indices{^k_k}b_k.
 \end{equation}
 We have found the following.
-\begin{displayquote}
+\begin{important}
 	If $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is to be a diagonal matrix, it had better be the case that $T(b_k)$ is a scalar multiple of $b_k$ for all $b_k\in \basis{B}$.
-\end{displayquote}
+\end{important}
 
 It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)$ is a scalar multiple of $b$.  Such vectors have a name:  they are \emph{eigenvectors} of $T$.\footnote{By the way, in case it's not obvious, ``eigenstuff'' is a catch-all term I'm using as short-hand for ``eigenvalues, eigenvectors, and eigenspaces''.}
 
 \section{Basic definitions}
-
-\begin{dfn}{Eigenspaces, eigenvalues, and eigenvectors}{Eigen}
+\ 
+\begin{dfn}{Eigenspaces, eigenvalues, and eig\-envectors}{Eigen}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a nonzero subspace, and let $\lambda \in \K$.  Then, $W$ is a \term{$\lambda$-eigenspace}\index{Eigenspace} iff
 	\begin{enumerate}
 		\item \label{Eigen(i)}$\restr{T}{W}=\lambda \id _W$; and
@@ -42,7 +42,9 @@ It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)
 	\begin{rmk}
 		Such a $\lambda$ is referred to as an \term{eigenvalue}\index{Eigenvalue} of $T$, and we write
 		\begin{equation}
-			\Eig (T)\ceqq \left\{ \lambda \in \K :\lambda \text{ is an eigenvalue of }T\text{.}\right\} .
+			\begin{multlined}
+				\Eig (T)\ceqq \left\{ \lambda \in \K :\right. \\ \left. \lambda \text{ is an eigenvalue of }T\text{.}\right\} .
+			\end{multlined}
 		\end{equation}\index[notation]{$\Eig (T)$}
 	\end{rmk}
 	\begin{rmk}
@@ -57,7 +59,7 @@ It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)
 		Eigenvectors on the other hand are essentially never unique:  any scalar multiple of an eigenvector is another eigenvector with the same eigenvalue (because eigenspaces are in particular subspaces).
 	\end{rmk}
 	\begin{rmk}
-		To clarify, \cref{Eigen(ii)} means the following.  If $U\subseteq V$ is a nonzero subspace with $U\supseteq W$ and for which there is some $\mu \in \K$ such that $\restr{T}{U}=\mu \id _U$, then $U=W$.
+		To clarify, \cref{Eigen(ii)} means the following.  If $U\subseteq V$ is a nonzero subspace with $U\supseteq W$ and such that $\restr{T}{U}=\lambda \id _U$, then $U=W$.
 	\end{rmk}
 	\begin{rmk}
 		Recall that (\cref{exm1.1.36}) scaling by elements of $\K$ need not actually define a linear-transformation.  Thus, it is implicit in this condition that $\lambda \id _W\colon W\rightarrow W$ is actually a linear-transformation.  If $V$ is a vector space, this will actually force $\lambda$ to commute with everything in $\K$ (in which case scaling by $\lambda$ defines a linear-transformation on all of $V$)---see \cref{thm4.2.17}.
@@ -77,11 +79,11 @@ It is thus of interest to find a basis consisting of vectors $b$ such that $T(b)
 	\end{rmk}
 \end{dfn}
 Before moving on, there is a common mistake that students make that we should clear up.
-\begin{displayquote}
+\begin{important}
 	Eigen\emph{vectors} cannot be $0$.  On the other hand, eigen\emph{values} can be.
 	
 	This is of course true just by definition.  The reason we exclude the zero vector from being an eigenvector however is because we would always have $T(0)=\lambda \cdot 0$ for all $\lambda \in \K$, not a particularly interesting condition.
-\end{displayquote}
+\end{important}
 
 Our first order of business is to establish the uniqueness of eigenspaces, which will allow us in particular to utilize unambiguous notation to denote them.
 \begin{prp}{Eigenspaces are unique}{prp4.2.3}
@@ -98,6 +100,9 @@ Our first order of business is to establish the uniqueness of eigenspaces, which
 	\begin{rmk}
 		Of course, $\lambda$-eigenspaces need not exist---this only says that, \emph{if} they do exist, they must be unique.
 	\end{rmk}
+	\begin{rmk}
+		If $\K$ is a division ring (so that we can talk about dimension, then the \term{geometric multiplicity}\index{Geometric multiplicity} of $\lambda \in \Eig (T)$ is $\dim (\Eig _{\lambda})$.\footnote{Do \emph{not} just say ``multiplicity''.  This means something else---see \cref{GeneralizedEigenspacesUnique}.}
+	\end{rmk}
 	\begin{proof}
 		$U+W$ is a subspace of $V$.  Furthermore, for $u+w\in U+W$, with $u\in U$ and $w\in W$, we have
 		\begin{equation}
@@ -112,7 +117,9 @@ According to the definition, in order to show that $\lambda$ is an eigenvalue, y
 	\begin{proof}
 		Suppose that there is some nonzero subspace $W\subseteq V$ such that $\restr{T}{W}=\lambda \id _W$.  Define
 		\begin{equation}
-			\collection{W}\ceqq \left\{ W\subseteq V:W\text{ a nonzero subspace such that }\restr{T}{W}=\lambda \id _W\text{.}\right\} .
+			\begin{multlined}
+				\collection{W}\ceqq \left\{ W\subseteq V:W\text{ a nonzero subspace such that}\right. \\ \left. \restr{T}{W}=\lambda \id _W\text{.}\right\} .
+			\end{multlined}
 		\end{equation}
 		\begin{exr}[breakable=false]{}{}
 			Check that $\collection{W}$ is a partially-ordered set with respect to inclusion and satisfies the hypotheses of \nameref{ZornsLemma}.
@@ -218,6 +225,27 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 		Check this.
 	\end{exr}
 \end{exm}
+\begin{exm}{}{exm4.2.26}
+	Let $\F$ be a division ring and let $L,R\colon \F ^{\N}\rightarrow \F ^{\N}$ be the left and right shift operators respectively (\cref{ShiftOperator}).  Then, $\Eig (L)=\F$ but $\Eig (R)=\emptyset$.  We now check this.
+	
+	Let $\lambda \in \F$ be an eigenvalue of $R$.  Then, there is some nonzero sequence $\coord{a_0,a_1,\ldots }\in \F ^{\N}$ such that
+	\begin{equation}
+		\coord{0,a_0,a_1,\ldots }\eqqc R(a_0,a_1,a_2,\ldots )=\lambda (a_0,a_1,a_2,\ldots ),
+	\end{equation}
+	whence it follows that $\lambda a_0=0$ and $a_k=\lambda a_{k+1}$ for $k\geq 0$.  If $\lambda =0$, the latter implies that $a_k=0$ for all $k\in \N$.  On the other hand, if $\lambda \neq 0$, then former implies that $a_0=0$, in which case the latter gives $a_1=\lambda \cdot 0=0$, $a_2=\lambda \cdot a_1$, and so on.  In either case, the sequence is $0$, in which case $\lambda$ cannot be an eigenvalue.  Thus, the set of eigenvalues of $R$ is the empty-set.
+	
+	Now suppose that $\lambda \in \F$ is an eigenvalue of $L$.  Then, there is some nonzero sequence $\coord{a_0,a_1,\ldots}\in \F ^{\N}$ such that
+	\begin{equation}
+		\begin{split}
+			\coord{a_1,a_2,a_3,\ldots} & \eqqc L(a_0,,a_1,a_2,\ldots) \\
+			& =\lambda \coord{a_0,a_1,a_2,\ldots},
+		\end{split}
+	\end{equation}
+	whence it follows that $a_{k+1}=\lambda a_k$ for all $k\in \N$.  Inductively, we find that $a_k=\lambda ^ka_0$.  Hence, every $\lambda \in \F$ is an eigenvalue with
+	\begin{equation}\label{eqn5.2}
+		\Eig _{\lambda}=\Span \left( \coord{1,\lambda ,\lambda ^2,\ldots}\right) .
+	\end{equation}
+\end{exm}
 
 \begin{prp}{Eigenvectors with distinct eigenvalues are linearly-independent}{prp4.2.22}
 	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, let $\lambda _1,\ldots ,\lambda _m$ be distinct eigenvalues of $T$, and let $v_k\in \Eig _{\lambda _k}$ be nonzero $1\leq k\leq m$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
@@ -289,7 +317,10 @@ Let $V$ be a vector space over a division ring $\F$ and let $T\colon V\rightarro
 \begin{exm}{}{}
 	For example, suppose that $3\in \C$ is an eigenvalue of $T$ with eigenvector $v\in V$, so that $T(v)=3v$.  If $p(x)\ceqq -5x^2+2x+1$, then we would have
 	\begin{equation}
-		[-5T^2+2T+\id ](v)\eqqc [p(T)](v)=p(3)v=[-5\cdot 9+2\cdot 3+1]v=-38v.
+		\begin{split}
+			[-5T^2+2T+\id ](v) & \eqqc [p(T)](v)=p(3)v \\
+			& =[-5\cdot 9+2\cdot 3+1]v=-38v.
+		\end{split}
 	\end{equation}
 \end{exm}
 
@@ -297,28 +328,63 @@ Let $V$ be a vector space over a division ring $\F$ and let $T\colon V\rightarro
 
 We started this chapter with the objective of finding a basis for which the coordinates of a given linear-transformation was a diagonal matrix.  We now have the tools to discuss this.
 \begin{dfn}{Diagonalizable}{Diagonalizable}
-	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, $T$ is \term{diagonalizable}\index{Diagonalizable} iff there is a basis $\basis{B}$ of $T$ such that $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is a diagonal matrix.
+	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, $T$ is \term{diagonalizable}\index{Diagonalizable} iff there is a basis $\basis{B}$ of $V$ such that $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is a diagonal matrix.
 	\begin{rmk}
 		In this case, $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is the \term{diagonalization}\index{Diagonalization} of $T$.
 	\end{rmk}
 	\begin{rmk}
 		If $A$ is a matrix, we say that $A$ is \term{diagonalizable} iff the associated linear-transformation is diagonalizable.
 	\end{rmk}
+	\begin{rmk}
+		For some odd reason, many students seem to think there is a relationship between being diagonalizable and being invertible.  So, let me make this perfectly clear.
+		\begin{important}
+			\emph{THERE IS NO RELATIONSHIP BETWEEN DIAGONALIZABILITY AND INVERTIBILITY!}
+		\end{important}
+		Sometimes when students get something wrong, even though it's wrong, it makes sense how they might have thought that wrong thing.  This is not one of these cases.  I have absolutely zero idea what makes students think this, but I think every time I've taught linear algebra, at least one (usually more) student has made this mistake.
+		
+		So, to that end, see the following example.
+	\end{rmk}
 \end{dfn}
+\begin{exm}{}{}
+	The $1\times 1$ $0$ matrix is diagonal (so obviously diagonalizable) but not invertible.
+	
+	The $1\times 1$ identity matrix is both diagonal and invertible.
+	
+	The $2\times 2$ matrix
+	\begin{equation}
+		\begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}
+	\end{equation}
+	is not diagonalizable\footnote{Though this will not be obvious to use until after having studied Jordan canonical form.} but invertible.
+	
+	The $2\times 2$ matrix
+	\begin{equation}
+		\begin{bmatrix}0 & 1 \\ 0 & 0\end{bmatrix}
+	\end{equation}
+	is neither diagonalizable nor invertible.
+\end{exm}
 The whole point of discussing the ``eigenstuff'' was, as we saw in \crefnameref{sct4.1}, that the existence of eigenvalues was related to the diagonalizability of the linear-transformation.  We now make this precise.
 \begin{thm}{Fundamental Theorem of Diagonalizability}{FundamentalTheoremOfDiagonalizability}
 	Let $V$ be a finite-dimensional vector space, let $T\colon V\rightarrow V$ be linear, and let $\lambda _1,\ldots ,\lambda _m$ denote the eigenvalues of $T$.\footnote{Note that there are finitely many eigenvalues by \cref{crl4.2.28}.}  Then, the following are equivalent.
 	\begin{enumerate}
-		\item $T$ is diagonalizable.
-		\item There is a basis of $V$ consisting of eigenvectors of $T$.
-		\item
+		\item \label{FundamentalTheoremOfDiagonalizability(i)}$T$ is diagonalizable.
+		\item \label{FundamentalTheoremOfDiagonalizability(ii)}There is a basis of $V$ consisting of eigenvectors of $T$.
+		\item \label{FundamentalTheoremOfDiagonalizability(iii)}
 		\begin{equation}
 			\dim (V)=\dim (\Eig _{\lambda _1})+\cdots +\dim (\Eig _{\lambda _m}).
 		\end{equation}
+		\item \label{FundamentalTheoremOfDiagonalizability(iv)}
+		\begin{equation}
+			V=\Eig _{\lambda _1}\oplus \cdots \oplus \Eig _{\lambda _m}.
+		\end{equation}
+		\item \label{FundamentalTheoremOfDiagonalizability(v)}The geometric multiplicity of $\lambda _k$ is the same as the algebraic multiplicity of $\lambda _k$ for all $1\leq k\leq m$.
 	\end{enumerate}
 	In this case, if $\basis{B}$ is a basis of eigenvectors of $V$ consisting of eigenvectors of $T$, then $\coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is a diagonal matrix.
 	\begin{rmk}
-		There is another important condition equivalent to these three which we can't quite state yet as we don't know what direct-sums are.  In brief, it says that a linear operator is diagonalizable iff $V$ is the direct-sum of its eigenspaces---see the remark in \cref{prp4.4.13}.
+		We actually haven't yet met all the material required to understand \cref{FundamentalTheoremOfDiagonalizability(iv),FundamentalTheoremOfDiagonalizability(v)} yet.
+		
+		The ``$\oplus$'' in \cref{FundamentalTheoremOfDiagonalizability(iv)} is called the \emph{direct-sum} and is defined in \cref{DirectSum}.\footnote{Also see the remark in \cref{prp4.4.13}.}
+		
+		The \emph{algebraic multiplicity} is defined to be the dimension of the corresponding generalized eigenspaces---see \cref{FundamentalTheoremOfDiagonalizability}.  Thus, one always knows that the geometric multiplicity is at most the algebraic multiplicity.  In practice, one uses this condition by computing the characteristic polynomial (\cref{CharacteristicPolynomial}) together with the fact that the power of $(x-\lambda )$ in the characteristic polynomial is the algebraic multiplicity (\cref{CharacteristicPolynomialEigenvalue}).  This then tells you how many linearly-independent eigenvectors you need to find for each eigenvalue in order for the linear-transformation to be diagonalizable.
 	\end{rmk}
 	\begin{rmk}
 		In particular, as eigenspaces are of course at least one-dimensional, if $T$ has $\dim (V)$ distinct eigenvalues, then $T$ must be diagonalizable.  That said, the converse is not true---see \cref{exm4.3.4}.
@@ -357,15 +423,15 @@ Diagonalizability is yet another context where the ground division ring matters.
 	Thus, if the ground field is $\R$, there are no eigenvalues.  On the other hand, if the ground field in $\C$, then there are two distinct eigenvalues, $\pm 1$.  Thus, according to \namerefpcref{FundamentalTheoremOfDiagonalizability}, this linear-transformation is diagonalizable over $\C$ but not over $\R$.
 \end{exm}
 The phenomenon we observed in the previous example is quite general, so it's worth it to take the time to point out its significance.
-\begin{displayquote}
+\begin{important}
 	As we will see later, it turns out that to every linear operator, there is an associated polynomial, the \emph{characteristic polynomial}, that has the property that a scalar is an eigenvalue iff it is a root of that polynomial. 
-\end{displayquote}
+\end{important}
 In the previous example, the characteristic polynomial was $\lambda ^2+1$.  Thus, if the characteristic polynomial doesn't have any roots, the linear operator doesn't have any eigenvalues.  Thus, we observe the following.
-\begin{displayquote}
+\begin{important}
 	If order to guarantee that all linear operators have an eigenvalue, we're going to want to require all polynomials to have at least one root.
-\end{displayquote}
+\end{important}
 The property that all polynomials have a root is an important one called \emph{algebraically closed}, and we will return to it later.  For now, however, we resume discussion of examples regarding diagonalizability.
-\begin{exm}{A diagonalizable linear-transformation with fewer eigenvalues than the dimension}{exm4.3.4}
+\begin{exm}{A diagonalizable linear-transform\-ation with fewer eigenvalues than the dimension}{exm4.3.4}
 	The identity $\R ^2\rightarrow \R ^2$ has a single eigenvalue ($1$), but yet it is diagonalizable (with respect to the standard basis).
 \end{exm}
 \begin{exm}{A matrix over $\C$ that is not diagonalizable}{}
@@ -396,15 +462,15 @@ While the concept of diagonalization makes sense for any linear-transformation, 
 		Note that $\coordinates{A}{\basis{S}\leftarrow \basis{S}}=A$ by \cref{prp3.2.100}.\footnote{I wrote \eqref{eqn4.3.12} using $\coordinates{A}{\basis{S}\leftarrow \basis{S}}$ instead of $A$ because I feel as if writing it this way makes it more `obviously' true.}
 		
 		Furthermore, $\coordinates{A}{\basis{B}\leftarrow \basis{B}}$ is the diagonalization of $A$ (by definition) and $\coordinates{\id}{\basis{B}\leftarrow \basis{S}}=\coordinates{\id}{\basis{S}\leftarrow \basis{B}}^{-1}$.  Thus, writing $D\ceqq \coordinates{A}{\basis{B}\leftarrow \basis{B}}$ and $P\ceqq \coordinates{\id}{\basis{S}\leftarrow \basis{B}}$, this equation is sometimes written more concisely (but perhaps less transparently) as
-		\begin{equation}
+		\begin{equation}\label{eqn4.3.22}
 			D=P^{-1}AP.
 		\end{equation}
 	\end{rmk}
 	\begin{rmk}
 		Note that, by \cref{CoordinatesLinearTransformation}, the columns of $\coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ are given by $\coordinates{b_k}{\basis{S}}$ for $b_k\in \basis{B}$.  However, by \cref{prp3.1.17},\footnote{This is the result that says the coordinates of a column vector with respect to the standard basis is just that original column vector.} this is just $b_k$ itself.  Thus,
-		\begin{displayquote}
+		\begin{important}
 				\emph{$P\ceqq \coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ is the matrix whose columns are the eigenvectors of $A$.}
-		\end{displayquote}
+		\end{important}
 	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
@@ -491,7 +557,7 @@ We will see that a given direct-sum decomposition is in many ways similar to the
 		Synonymously, we also say that $\collection{W}$ \term{spans}\index{Spans (of subspaces)} $V$.
 	\end{rmk}
 \end{dfn}
-\begin{dfn}{Linear-independence (of subspaces)}{}
+\begin{dfn}{Linear-independence (of subspa\-ces)}{}
 	Let $V$ be a $\K$-module and let $\collection{W}$  be a collection of subspaces of $V$.  Then, $\collection{W}$ is \term{linearly-independent}\index{Linearly-independent (subspaces)} iff for all $m\in \Z ^+$, $W_1,\ldots ,W_m\in \collection{W}$, $w_k\in W_k$,
 	\begin{equation}
 		w_1+\cdots +w_m=0\text{ implies }w_1=0,\ldots ,w_m=0.
@@ -666,13 +732,13 @@ One important fact about direct-sums that will be of use to us is, to find a bas
 	\begin{proof}
 		We leave this as an exercise.
 		\begin{exr}[breakable=false]{}{}
-			
+			Prove the result.
 		\end{exr}
 	\end{proof}
 \end{prp}
 
 In a way roughly analogous to how we can extend linearly-independent subsets to bases, we can `extend' subspaces into direct-sum decompositions, at least for vector spaces
-\begin{prp}{Subspaces of vector spaces have complements}{prp4.4.24}
+\begin{prp}{Subspaces of vector spaces \\ have complements}{prp4.4.24}
 	Let $V$ be a vector space and let $U\subseteq V$ be a subspace.  Then, there is a subspace $W\subseteq V$ such that $V=U\oplus W$.
 	\begin{rmk}
 		If $V$ is a $\K$-module and $U\subseteq V$ is a subspace, then a subspace $W\subseteq V$ such that $V=U\oplus W$ is a \term{complement}\index{Complement} of $U$.
@@ -896,7 +962,9 @@ is not.  Similarly, we may speak of direct-sums of matrices and so on.
 \begin{exm}{Direct-sum of matrices}{}
 	For example,
 	\begin{equation}
-		\begin{bmatrix}1 & 2 & 3 \\ 4 & 5 & 6\end{bmatrix}\oplus \begin{bmatrix}-1 & 1 & -2 & 2 \\ -3 & 3 & -4 & 4 \\ 1 & 2 & -5 & -6\end{bmatrix}\coloneqq \begin{bmatrix}1 & 2 & 3 & 0 & 0 & 0 & 0 \\ 4 & 5 & 6 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & -1 & 1 & -2 & 2 \\ 0 & 0 & 0 & -3 & 3 & -4 & 4 \\ 0 & 0 & 0 & 1 & 2 & -5 & -6\end{bmatrix}
+		\begin{multlined}
+			\begin{bmatrix}1 & 2 & 3 \\ 4 & 5 & 6\end{bmatrix}\oplus \begin{bmatrix}-1 & 1 & -2 & 2 \\ -3 & 3 & -4 & 4 \\ 1 & 2 & -5 & -6\end{bmatrix}\coloneqq \\ \begin{bmatrix}1 & 2 & 3 & 0 & 0 & 0 & 0 \\ 4 & 5 & 6 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & -1 & 1 & -2 & 2 \\ 0 & 0 & 0 & -3 & 3 & -4 & 4 \\ 0 & 0 & 0 & 1 & 2 & -5 & -6\end{bmatrix}
+		\end{multlined}
 	\end{equation}
 \end{exm}
 
@@ -940,7 +1008,7 @@ We now turn to defining the coordinates of a linear-transformation with respect 
 	\end{proof}
 \end{thm}
 Combining these two properties, with both the domain and the codomain as a direct-sum, we obtain the following.
-\begin{thm}{Coordinates of a linear-transformation (with respect to a decomposition)}{}
+\begin{thm}{Coordinates of a linear-transform\-ation (with respect to a decomposition)}{}
 	Let $V$ and $W$ be $\K$-modules, let $\collection{V}\eqqc \{V_1,\ldots ,V_n\}$ and $\collection{W}\eqqc \{ W_1,\ldots ,W_m\}$ be collections of subspaces of $V$ and $W$ respectively such that $V=V_1\oplus \cdots \oplus V_n$ and $W=W_1\oplus \cdots \oplus W_m$, and let $T\colon V\rightarrow W$ be a linear-transformation.  Then, there is a unique $m\times n$ matrix, $\coordinates{T}{\collection{W}\leftarrow \collection{V}}$, the \term{coordinates}\index{Coordinates (of a linear-transformation with respect to a decomposition)} with respect to the decompositions $\collection{V}$ and $\collection{W}$, such that
 	\begin{equation}
 		\coordinates{T(v)}{\collection{W}}=\coordinates{T}{\collection{W}\leftarrow \collection{V}}\coordinates{v}{\collection{V}}
@@ -1149,7 +1217,7 @@ We know now that we can't always find a basis in which the matrix of a linear op
 		In this case, $\coordinates{T}{\collection{V}\leftarrow \collection{V}}$ is the \term{block-diagonalization}\index{Block-diagonalization} of $T$.
 	\end{rmk}
 \end{dfn}
-\begin{thm}{Fundamental Theorem of Block-diagonaliz\-ability}{thm4.5.2}
+\begin{thm}{Fundamental Theorem of Block\-diagonalizability}{thm4.5.2}
 	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then, the following are equivalent.
 	\begin{enumerate}
 		\item $T$ is block-diagonalizable.
@@ -1431,9 +1499,9 @@ We thus know that nilpotent linear-transformations are essentially never diagona
 		
 		\Step{Start the proof of spanning with induction}
 		The statement we prove by induction (on $\Rank (N)$) is as follows.
-		\begin{displayquote}
+		\begin{important}
 			If $N$ is a nilpotent linear operator on a finite-dimensional vector space $V$ and $v_0\in V$ is $N$-maximal, then $\{ N^{\Rank (N)-1}(v_0),\ldots ,v_0\}$ spans $V$.
-		\end{displayquote}
+		\end{important}
 		First take $\Rank (N)\eqqc r=1$, so that $N=0$.  In this case, every subspace is $N$-invariant, and so indecomposability forces $\dim (V)=1$, so that indeed $V=\Span (v_0)$.
 		
 		Now suppose the result is true for $r-1$.  If $r$ is the smallest positive integer such that $N^m=0$ on $V$, then $r-1$ is the smallest positive integer such that $N^{r-1}=0$ on $\Ima (N)$.  Furthermore, $N(v_0)\in \Ima (N)$ is such that $N^{(r-1)-1}(N(v_0))=N^{r-1}(v_0)\neq 0$.  Thus, if we can show that $\Ima (N)$ is indecomposable still, then the induction hypothesis will gives us that $\Ima (N)=\Span (N^{r-1}(v_0),\ldots ,N(v_0))$.
@@ -1553,13 +1621,16 @@ Having understood the behavior of $T$ on subspaces of the form $\Ker ([T-\lambda
 	\end{rmk}
 \end{dfn}
 As before, we start by establishing uniqueness of generalized-eigenspaces.
-\begin{prp}{Generalized-eigenspaces are unique}{}
+\begin{prp}{Generalized-eigenspaces are u\-nique}{GeneralizedEigenspacesUnique}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $\lambda \in \K$, and let $U,W\subseteq V$ be $\lambda$-generalized-eigenspaces of $T$.  Then, $U=W$.
 	\begin{rmk}
 		We denote the unique $\lambda$-generalized-eigenspace of $V$ by $\Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda ,T}^{\infty}$} (for reasons that we will understand shortly).\footnote{See \cref{RankOfGeneralizedEigenvectors} to see why the use of ``$\infty$'' is appropriate here.}  If $T$ is clear from context, we may simply write $\Eig _{\lambda}^{\infty}\ceqq \Eig _{\lambda ,T}^{\infty}$\index[notation]{$\Eig _{\lambda}^{\infty}$}.
 	\end{rmk}
 	\begin{rmk}
-		If ever we write ``$\Eig _{\lambda ,T}$'' without having explicitly said so, it should be assumed that $\lambda$ is an eigenvalue of $T$.
+		If ever we write ``$\Eig _{\lambda ,T}^{\infty}$'' without having explicitly said so, it should be assumed that $\lambda$ is an eigenvalue of $T$.
+	\end{rmk}
+	\begin{rmk}
+		If $\K$ is a division ring (so that we can talk about dimension, then the \term{multiplicity}\index{Multiplicity} of $\lambda \in \Eig (T)$ is $\dim (\Eig _{\lambda}^{\infty})$.  This may also be referred to as \term{algebraic multiplicity}\index{Algebraic multiplicity} if we wish to distinguish it from the geometric multiplicity.\footnote{The justification for the term ``algebraic'' here is that this coincides with the power of the factor $(x-\lambda )$ is the characteristic polynomial of $T$---see \cref{CharacteristicPolynomialEigenvalue}.}
 	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
@@ -1571,7 +1642,7 @@ As before, we start by establishing uniqueness of generalized-eigenspaces.
 		\end{exr}
 	\end{proof}
 \end{prp}
-\begin{prp}{Generalized-eigenspaces are maximum with their defining property}{}
+\begin{prp}{Generalized-eigenspaces are \\ maximum with their defining property}{}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $W\subseteq V$ be a subspace, and let $\lambda \in \K$ be a generalized-eigenvalue of $V$.  Then, if $\restr{T}{W}=\lambda \id _W+N$ with $N\colon W\rightarrow W$ locally-nilpotent linear, then $W\subseteq \Eig _{\lambda}^{\infty}$.
 	\begin{rmk}
 		A corollary of this is that, to show that $\lambda$ is a generalized-eigenvalue, it suffices to exhibit a single nonzero subspace $W$ on which $T-\lambda$ is locally-nilpotent linear.  For this result implies that $\Eig _{\lambda}^{\infty}\supseteq W$, so that if $W$ is nonzero, so is $\Eig _{\lambda}^{\infty}$, in which case $\lambda$ would be a generalized-eigenvalue.
@@ -1612,7 +1683,7 @@ As before, we start by establishing uniqueness of generalized-eigenspaces.
 		$(\Leftarrow )$ Suppose that $\lambda$ is an eigenvalue of $T$.  Then, $\Eig _{\lambda}$ is a nonzero subspace on which $T-\lambda$ is locally-nilpotent, and so $\lambda$ is a generalized-eigenvalue of $T$.
 	\end{proof}
 \end{prp}
-\begin{prp}{Generalized-eigenvalues are unique (in vector spaces)}{}
+\begin{prp}{Generalized-eigenvalues are u\-nique (in vector spaces)}{}
 	Let $V$ be a vector space and let $T\colon V\rightarrow V$ be linear.  Then, if $\Eig _{\lambda ,T}^{\infty}=\Eig _{\mu ,T}^{\infty}$, it follows that $\lambda =\mu$.
 	\begin{proof}
 		Suppose that $\Eig _{\lambda ,T}^{\infty}=\Eig _{\mu ,T}^{\infty}$.  For convenience, let us write $\Eig _{\lambda ,T}^{\infty}\eqqc E\ceqq \Eig _{\mu ,T}^{\infty}$.  There is then a locally-nilpotent operator $N\colon E\rightarrow E$ such that
@@ -1667,7 +1738,7 @@ We also have a result analogous to \cref{thm4.2.17} that is useful for actually 
 	\end{proof}
 \end{thm}
 Related to the fact that we can write the generalized-eigenspace as a union in this way is that we now have a notion of \emph{rank}.\footnote{Well, I suppose we had a notion of rank before with just eigenvalues, but it's a bit silly because all eigenvalues have rank $1$, as you'll see in the following definition.}
-\begin{dfn}{Rank (of generalized-eigenvectors)}{RankOfGeneralizedEigenvectors}
+\begin{dfn}{Rank (of generalized-eigenvec\-tors)}{RankOfGeneralizedEigenvectors}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, let $\lambda \in \K$ be an eigenvalue of $T$, and let $v\in \Eig _{\lambda}^{\infty}$.  Then, the \term{rank}\index{Rank (of a generalized-eigenvector)} of $v$ is the smallest natural number $\Rank (v)$\index[notation]{$\Rank (v)$} such that $[T-\lambda ]^{\Rank (v)}(v)=0$.
 	\begin{rmk}
 		For $m\in \N$, the \term{rank $m$ $\lambda$-eigenspace}\index{Rank $m$ eigenspace}, $\Eig _{T,\lambda}^m$, is defined by
@@ -1739,7 +1810,7 @@ Related to the fact that we can write the generalized-eigenspace as a union in t
 		\Eig _{\lambda}^m=\Span \left( \e ^{\lambda x},x\e ^{\lambda x},\ldots ,x^{m-2}\e ^{\lambda x},x^{m-1}\e ^{\lambda x}\right) .
 	\end{equation}
 \end{exm}
-\begin{prp}{Properties of higher rank eigenspaces}{prp4.4.154}
+\begin{prp}{Properties of higher rank eigen\-spaces}{prp4.4.154}
 	Let $V$ be a $\K$-module, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \K$ be an eigenvalue of $T$.  Then,
 	\begin{enumerate}
 		\item \label{prp4.4.154(i)}
@@ -1766,7 +1837,7 @@ Related to the fact that we can write the generalized-eigenspace as a union in t
 \end{prp}
 
 Recall (\cref{prp4.2.22}) that eigenvectors with distinct eigenvalues are linearly-independent.  The same is true for generalized-eigenvectors (and in fact this is a strict generalization of the previous result).
-\begin{prp}{Generalized-eigenvectors with distinct ei\-genvalues are linearly-independent}{prp4.4.157}
+\begin{prp}{Generalized-eigenvectors with \\ distinct eigenvalues are linearly-independent}{prp4.4.157}
 	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, let $\lambda _1,\ldots ,\lambda _m$ be distinct eigenvalues of $T$, and let $v_k\in \Eig _{\lambda _k}^{\infty}$ be nonzero $1\leq k\leq m$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
 	\begin{proof}
 		Denote the ground division ring by $\F$.  Suppose that
@@ -1829,11 +1900,11 @@ We're finally ready to state the Jordan Canonical Form Theorem, which, among oth
 	\end{exr}
 
 	Of course, none of this is specific to $\Jord _{5,4}$, and in general we have the following.
-	\begin{displayquote}
+	\begin{important}
 		For a Jordan block of size $m$, the standard basis is a basis of generalized-eigenvectors.  The first has rank $1$, the second has rank $2$, and so on.
 		
 		In particular, \emph{Jordan blocks have a single eigenvector} (up scaling).
-	\end{displayquote}
+	\end{important}
 \end{exm}
 And now, what is arguably the most important theorem in the entirety of the notes.\footnote{After reading the statement, if things are still unclear, you might consider jumping to the end of the proof, after which comes some more explanation.}
 \begin{thm}{Jordan Canonical Form Theorem}{GeneralizedEigenspaceDecomposition}
@@ -1901,7 +1972,7 @@ And now, what is arguably the most important theorem in the entirety of the note
 		\cref{GeneralizedEigenspaceDecomposition(i)} We proceed by (strong induction) on $\dim (V)$.  If $\dim (V)=0$, the statement is vacuously true.
 		
 		So, let $d\ceqq \dim (V)\in \Z ^+$ and suppose that the result is true whenever the dimension of the vector space is less than $d$.
-		\begin{lma}[break at=19cm/0pt]{}{}
+		\begin{lma}[break at=5in/6.8in/0pt]{}{}
 			Let $V$ be a finite-dimensional vector space over an algebraically closed field and let $T\colon V\rightarrow V$ be linear.  Then, $T$ has an eigenvalue.
 			\begin{proof}
 				Let $v\in V$ be nonzero.
@@ -1973,7 +2044,7 @@ And now, what is arguably the most important theorem in the entirety of the note
 		As generalized-eigenvectors with distinct eigenvalues are linearly-independent (\cref{prp4.4.157}), this implies that $v_1=0$, $u_2=v$, and $u_3=\cdots =u_m=0$.  Thus, $v\in U$, as desired.
 		
 		\blni
-		\cref{GeneralizedEigenspaceDecomposition(ii)} As each generalized-eigenspace is invariant (\cref{prp4.4.154}\cref{prp4.4.154(ii)}, the \namerefpcref{thm4.5.2} says that the matrix of $T$ with respect to this direct-sum decomposition is
+		\cref{GeneralizedEigenspaceDecomposition(ii)} As each generalized-eigenspace is invariant\footnote{By \cref{prp4.4.154}\cref{prp4.4.154(ii)}.}, the \namerefpcref{thm4.5.2} says that the matrix of $T$ with respect to this direct-sum decomposition is
 		\begin{equation}
 			\begin{bmatrix}\restr{T}{\Eig _{\lambda _1}^{\infty}} & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & \restr{T}{\Eig _{\lambda _m}^{\infty}}\end{bmatrix}
 		\end{equation}
@@ -2005,9 +2076,9 @@ And now, what is arguably the most important theorem in the entirety of the note
 	\end{proof}
 \end{thm}
 This theorem says a lot, all of which is important and useful, but the short and sweet version can be summed up as saying
-\begin{displayquote}
+\begin{important}
 	Every linear operator on a finite-dimensional vector space over an algebraically closed field has a basis in which the associated matrix is a direct-sum of Jordan blocks.
-\end{displayquote}
+\end{important}
 
 How this works can be understood in three key steps.  First, $V$ is a direct-sum of the generalized-eigenspaces:
 \begin{equation}
@@ -2082,9 +2153,9 @@ When studying diagonalization, it wasn't just of interest to know what the diago
 	\end{rmk}
 	\begin{rmk}
 		Note that, by \cref{CoordinatesLinearTransformation}, the columns of $\coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ are given by $\coordinates{b_k}{\basis{S}}$ for $b_k\in \basis{B}$.  However, by \cref{prp3.1.17},\footnote{This is the result that says the coordinates of a column vector with respect to the standard basis is just that original column vector.} this is just $b_k$ itself.  Thus,
-		\begin{displayquote}
+		\begin{important}
 			\emph{$P\ceqq \coordinates{\id}{\basis{S}\leftarrow \basis{B}}$ is the matrix whose columns form a Jordan basis for $A$.}
-		\end{displayquote}
+		\end{important}
 	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
@@ -2153,7 +2224,10 @@ Another characterization of similarity that makes it more apparent what this con
 		\end{exr}
 		By construction, we have that $\coordinates{P}{\basis{C}\leftarrow \basis{B}}=\id _{d\times d}$, and so
 		\begin{equation}
-			\coordinates{T}{\basis{C}\leftarrow \basis{C}}=\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}}=\coordinates{P\circ S\circ P^{-1}}{\basis{C}\leftarrow \basis{C}},
+			\begin{split}
+				\coordinates{T}{\basis{C}\leftarrow \basis{C}} & =\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}} \\
+				& =\coordinates{P\circ S\circ P^{-1}}{\basis{C}\leftarrow \basis{C}},
+			\end{split}
 		\end{equation}
 		and hence $T=P\circ S\circ P^{-1}$.
 	\end{proof}
@@ -2164,7 +2238,11 @@ As mentioned before, Jordan canonical form gives a complete characterization of 
 	\begin{proof}
 		$(\Rightarrow )$ Suppose that $S$ and $T$ are similar.  Then, there is an invertible linear operator $P\colon V\rightarrow V$ such that $T=P\circ S\circ P^{-1}$.  Let $\basis{B}$ be a basis for which $\coordinates{S}{\basis{B}}$ is in Jordan canonical form.  Define $\basis{C}\ceqq \{ P(b):b\in \basis{B}\}$.  Then,
 		\begin{equation}
-			\coordinates{T}{\basis{C}}=\coordinates{P\circ S\circ P^{-1}}{\basis{C}\leftarrow \basis{C}}=\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}}=\coordinates{S}{\basis{B}}.
+			\begin{split}
+				\coordinates{T}{\basis{C}} & =\coordinates{P\circ S\circ P^{-1}}{\basis{C}\leftarrow \basis{C}} \\
+				& =\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}} \\
+				& =\coordinates{S}{\basis{B}}.
+			\end{split}
 		\end{equation}
 		Thus, $S$ and $T$ have the same Jordan canonical form.
 		
@@ -2244,7 +2322,7 @@ We begin with the theorem that allows us to define the minimal polynomial.
 	\end{proof}
 \end{thm}
 Our first goal is to actually prove that the eigenvalues are precisely the roots of $p_{\min ,T}$.
-\begin{thm}{Root of $p_{\min ,T}$ are the eigenvalues}{}
+\begin{thm}{Roots of $p_{\min ,T}$ are the eigenvalues}{thm4.5.9}
 	Let $V$ be a a finite-dimensional vector space over a field $\F$, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \F$.  Then, $\lambda$ is an eigenvalue of $T$ iff $p_{\min ,T}(\lambda )=0$.
 	\begin{rmk}
 		Warning:  Keep in mind the ground field.  For example, suppose that the ground field is $\F$ and that $p_{\min ,T}(x)=x^2+1$.  Don't think ``Oh, $\im$ and $-\im$ are roots of $x^2+1$, and therefore they are eigenvalues of $T$.''.  Nooooooo.  Over the \emph{reals} they are neither roots of $x^2+1$ nor eigenvalues.
@@ -2311,20 +2389,20 @@ Even as I describe this, it probably doesn't sound all that efficient.  In any c
 
 So, yes, certainly, one can compute $p_{\min ,T}$ for the purpose of computing the eigenvalues, but if that's all it could do, it wouldn't be of much use.  Of course, it has some theoretical uses,\footnote{See, for example, \cref{semisimple_linear_operator}.} but at the moment I would like to pay particular attention to what information the minimal polynomial gives you about the Jordan canonical form.  To best understand this, I think it's helpful to first see what the minimal polynomial of matrices in Jordan canonical form are.
 \begin{prp}{The minimal polynomial of a matrix in Jordan canonical form}{MinimalJordan}
-	Define
+	Let $V$ be a finite-dimensional vector space over an algebraically closed field, let $T\colon V\rightarrow V$ be linear, and for every $\lambda \in \Eig (T)$ denote by $n_{\lambda}$ the size of the largest Jordan block with eigenvalue $\lambda$ appearing in the Jordan canonical form of $T$.  Then,
 	\begin{equation}
-		A\ceqq \bigoplus _{\lambda \in \Eig (A)}\left[ \Jord _{\lambda ,n_{\lambda ,1}}\oplus \cdots \oplus \Jord _{\lambda ,n_{\lambda ,m_{\lambda}}}\right] ,
-	\end{equation}
-	entries taken to be in an algebraically closed field, and for each $\lambda \in \Eig (A)$ write
-	\begin{equation}
-		n_{\lambda}\ceqq \max \{ n_{\lambda ,1},\ldots ,n_{\lambda ,m_{\lambda}}\} .
-	\end{equation}
-	Then,
-	\begin{equation}
-		p_{\min ,A}(x)=\prod _{\lambda \in \Eig (T)}(x-\lambda )^{n_{\lambda}}.
+		p_{\min ,T}(x)=\prod _{\lambda \in \Eig (T}(x-\lambda )^{n_{\lambda}}.
 	\end{equation}
 	\begin{rmk}
-		In words, the minimal polynomial of $A$ has a factor $x-\lambda$ for each eigenvalue $\lambda$ of $A$, and the power of the factor is the size of the largest Jordan block with that eigenvalue.
+		In words, the minimal polynomial of $T$ has a factor $x-\lambda$ for each eigenvalue $\lambda$ of $T$, and the power of the factor is the size of the largest Jordan block with that eigenvalue.
+	\end{rmk}
+	\begin{rmk}
+		There is a rather easy generalization of this to the case when the ground field is not algebraically closed, though we can't yet state it officially because we haven't yet spoken of ``extension of scalars''---see \cref{sctExtensionOfScalars}.  Because of it's importance, we state the generalization here---it shouldn't be too hard to follow, and in any case, you can always come back once you've learned what $V^{\A}$ and $T^{\A}$ are.
+		
+		Let $V$ be a finite-dimensional vector space over a field $\F$, let $\A$ be an algebraic closure of $\F$, let $T\colon V\rightarrow V$ be linear, and for every $\lambda \in \Eig (T^{\A})$ denote by $n_{\lambda}$ the size of the largest Jordan block with eigenvalue $\lambda$ appearing in the Jordan canonical form of $T^{\A}$.  Then,
+		\begin{equation}
+			p_{\min ,T}(x)=\prod _{\lambda \in \Eig (T^{\A})}(x-\lambda )^{n_{\lambda}}.
+		\end{equation}
 	\end{rmk}
 	\begin{rmk}
 		In particular, this tells us what the minimal polynomial of single Jordan blocks are.
@@ -2373,14 +2451,14 @@ So, yes, certainly, one can compute $p_{\min ,T}$ for the purpose of computing t
 Having examined the minimal polynomial for matrices in Jordan canonical form, let's turn things around and see what information the minimal polynomial can tell us about a linear operator's as of yet unknown Jordan canonical form.  In fact, let's just discuss how one might compute the Jordan canonical form (and the corresponding Jordan basis) in general.
 
 Of course, we're going to start by computing the eigenvalues.\footnote{When we learn about the characteristic equation later one, we'll see that every eigenvalue has an \emph{algebraic multiplicity}, and that the the dimension of the generalized-eigenspace coincides with that multiplicity.  Thus, the algebraic multiplicity tells you exactly how many linearly-independent generalized-eigenvectors you need to find before you know you're `done'.}  For a fixed eigenvalue $\lambda$, find a basis for $\Ker (T-\lambda )$.  If you have `enough',\footnote{By ``enough'' I mean the number of elements in this basis is already equal to the algebraic multiplicity.} stop.  Otherwise, compute a basis for $\Ker ([T-\lambda ^2])$ by \emph{extending} your basis of $\Ker (T-\lambda )$---don't pick an entirely new basis.  Again, if you have ``enough'', stop.  Otherwise, extend your basis of $\Ker ([T-\lambda ]^2)$ to a basis of $\Ker ([T-\lambda ]^3)$, and so on.  When you finally \emph{do} stop, pick one of the `newest' vectors that you just added to your basis at the last step.  Call that guy $v_0$.  $v_0$ is \emph{$[T-\lambda ]$-maximal}.  So, apply $T-\lambda$ to $v_0$ over and over until you get $0$:  $[T-\lambda ]^m(v_0),\ldots ,[T-\lambda ](v_0),v_0$.  These vectors will form part of your final basis.  Continue finding $[T-\lambda ]$-maximal vectors in this way (for every eigenvalue) until you have a number of vectors equal to the dimension of your vector space.  The matrix of $T$ with respect to this basis will be in Jordan Canonical Form.\footnote{Perhaps its worth mentioning that the matrix in any basis of generalized-eigenvectors will be relatively simple, but if you want the matrix to be exactly in Jordan Canonical Form, you can't just use any basis of generalized-eigenvectors---you have to do what was just explained previously.}
-\begin{exm}{A computation of the Jordan Canonical form}{}
+\begin{exm}{A computation of the Jordan Canonical form}{exm4.5.32}
 	Define
 	\begin{equation}
 	A\ceqq \begin{bmatrix}5 & 4 & 2 & 1 \\ 0 & 1 & -1 & -1 \\ -1 & -1 & 3 & 0 \\ 1 & 1 & -1 & 2\end{bmatrix}.
 	\end{equation}
 	Proceeding as in the previous example \cref{exm4.5.17}, we find that the minimal polynomial is
 	\begin{equation}\label{eqn4.5.20}
-		p_{\min ,A}(x)=x^4-11x^3+42x^2-64x+32=(x-1)(x-2)(x-4)^2.\footnote{Yes, this computation is exceptionally tedious to do by hand.}
+		p_{\min ,A}(x)=x^4-11x^3+42x^2-64x+32=(x-1)(x-2)(x-4)^2.\footnote{Yes, this computation is exceptionally tedious to do by hand, at least given the knowledge we have now.  See \cref{exm4.5.32x} to see how one might at least compute the eigenvalues.}
 	\end{equation}
 	
 	Thus, we see that the eigenvalues are $\lambda _1\ceqq 1$, $\lambda _2\ceqq 2$, and $\lambda _3\ceqq 4$.  Furthermore, by virtue of \cref{MinimalJordan}, we know that the largest $\lambda =1$ Jordan block has size $1$, the largest $\lambda =2$ Jordan block has size $1$, and the largest $\lambda =4$ Jordan block has size $2$.  For a $4\times 4$ matrix, there is only one way for this to happen:
@@ -2531,9 +2609,9 @@ Anyways, let's get to the result.
 Okay, so that was a long chapter.  Fortunately, the key ideas you really need to take note of are less in number than the length of the chapter alone might suggest.
 
 Linear algebra is the study of vector spaces and linear-transformations.  In the previous chapter, we learned that, after chooses bases, we can associate column-vectors to vectors and matrices to linear-transformations.  The objective of this chapter was then ``How do I pick a basis that makes the matrix as simple as possible?''.  The final answer to that is you pick a Jordan basis, in which the associated matrix will be a direct-sum of Jordan blocks.  And that's really it---if you learn nothing else from this course, remember the following.
-\begin{displayquote}
+\begin{important}
 	If $T\colon V\rightarrow V$ is a linear operator on a finite-dimensional vector space over an algebraically-closed field, then there is a basis $\basis{B}$ of $V$ such that $\coordinates{T}{\basis{B}}$ is a direct-sum of Jordan blocks.
-\end{displayquote}
+\end{important}
 
 Essentially everything else in this chapter was either a build-up to this or very closely related to it.  Eigenspaces were introduced in an attempt to diagonalize matrices, which were later generalized to generalized-eigenspaces when we realized that didn't always work.  Direct-sums, coordinates with respect to direct-sum decompositions, invariant subspaces, indecomposable subspaces, and nilpotent operators were all part of the background necessary to either prove or state the \namerefpcref{GeneralizedEigenspaceDecomposition}.  The Jordan Canonical Form Theorem gave a characterization when two linear-transformations were similar.  The minimal polynomial was used as a tool to give information about the Jordan canonical form.  And finally The Jordan-Chevalley Decomposition was presented as what is essentially a variant of the Jordan Canonical Form Idea.
 

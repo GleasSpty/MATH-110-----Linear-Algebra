@@ -101,7 +101,7 @@ For example, suppose you want to prove the statement ``Every positive integer is
 \end{rmk}
 \end{exm}
 
-\subsection{A bit about proofs}
+\subsection{A bit about proofs}\label{sbsABitAboutProofs}
 
 Proofs are absolutely fundamental to mathematics.  Indeed, you might say that mathematics \emph{is} the study of those truths which are provable.\footnote{In contrast to those truths are which true by observation.  For example, while the statements ``$x\in \R$ implies $x^2\geq 0$.'' and ``The mass of the electron is $\SI{9.10938356(11)e-31}{\kilogram}$.'' are both true, they are true in fundamentally different ways---the former is true because we can prove it and the latter is true because we measure it.}  But what actually \emph{is} a proof?
 
@@ -114,22 +114,22 @@ Okay, so enough with this wishy-washy philosophical BS.  I should probably at le
 \subsubsection{Iff}
 
 We mentioned the meaning of the word ``iff'' in the previous section, and we wound up giving an example of a proof which involved the phrase (\cref{prpA.2.4}).  Allow us to elaborate.
-\begin{displayquote}
+\begin{important}
 If ever asked to prove a statement of the form ``$A$ iff $B$'', you need to prove \emph{two things}:  first, assuming $A$, you prove $B$; then, assuming $B$, you prove $A$.
-\end{displayquote}
+\end{important}
 See \cref{prpA.2.4} for a concrete example of this.
 
 \subsubsection{The following are equivalent}
 
 The phrase ``The following are equivalent.'' is similar to the phrase ``iff'', but is used when dealing with more than two statements.  For example, consider the following claim.
-\begin{displayquote}
+\begin{important}
 Let $m,n\in \Z$.  Then, the following are equivalent.
 \begin{enumerate}
 \item \label{tfae.i}$m<n$.
 \item \label{tfae.ii}$m\leq n-1$.
 \item \label{tfae.iii}$m+1\leq n$.
 \end{enumerate}
-\end{displayquote}
+\end{important}
 To prove this, you need to prove that \cref{tfae.i} iff \cref{tfae.ii}, \cref{tfae.i} iff \cref{tfae.iii}, and \cref{tfae.ii} iff \cref{tfae.iii}---this is exactly what it means for all the three statements to be logically-equivalent to one another.  On the face of it, it seems like this would mean we would have to do $2\times 3=6$ proofs.  Not so.  In fact, it is enough to prove \cref{tfae.i} implies \cref{tfae.ii}, \cref{tfae.ii} implies \cref{tfae.iii}, and \cref{tfae.iii} implies \cref{tfae.i}.  Using these three implications alone, you can go from any one statement to any other.  For example, \cref{tfae.ii} implies \cref{tfae.i} because, if \cref{tfae.ii}, then \cref{tfae.iii}, and hence \cref{tfae.i}.
 
 \subsubsection{For all\textellipsis}
@@ -168,9 +168,9 @@ Finally, we end with a quick comment on usage.  First of all, it is very easy to
 You will often see the phrase ``Without loss of generality\textellipsis'' used in proofs.  It is easiest to demonstrate what this means, and how to use it yourself, with an example.
 
 The definition of integral (\cref{dfnA.1.69}) reads
-\begin{displayquote}
+\begin{important}
 A rg $\coord{X,+,0,\cdot}$ is \emph{integral} iff it has the property that, whenever $x\cdot y=0$, it follows that either $x=0$ or $y=0$.
-\end{displayquote}
+\end{important}
 So, imagine you were doing a proof, and you know that $\coord{X,+,0,\cdot}$ was an integral rg,\footnote{You shouldn't need to know what a rg is to understand the explanation of ``Without loss of generality\textellipsis ''.} and that $x\cdot y=0$ for $x,y\in X$.  The definition of integral implies that $x=0$ or $y=0$.  \emph{At this point, you could say}, ``Without loss of generality, suppose that $x=0$.''.  You then continue the proof using the fact that $x=0$.
 
 Logically, you would first have to assume that $x=0$, finish the proof in that case, and then go back to the case where $y=0$, and finish the proof again.  However, if the proofs are essentially identical\footnote{Obviously, if the proof needed to do the case $x=0$ is significantly different from the proof needed to do the case $y=0$ (i.e.~is more than just a letter swap $x\leftrightarrow y$), you should not use this phrase and instead write up the proofs of both cases individually.} in these two cases, you are `allowed' to cut your work in half with the phrase ``Without loss of generality\textellipsis ''---there is no point in repeating the same logic with a different letter twice.
@@ -180,9 +180,9 @@ Logically, you would first have to assume that $x=0$, finish the proof in that c
 As with ``Without loss of generality\textellipsis '', the use of this phrase is easiest to demonstrate with an example.
 
 The definition of \emph{prime} reads
-\begin{displayquote}
+\begin{important}
 Let $p\in \Z$.  Then, $p$ is \emph{prime}\index{Prime} iff \textellipsis whenever $p\mid (mn)$, it follows that $p\mid m$ or $p\mid n$.\footnote{We have omitted part of the definition in the ``\textellipsis'' that is irrelevant for us at the moment (essentially the requirement that $p\neq -1,0,1$).}
-\end{displayquote}
+\end{important}
 So, let $p\in \Z$ and suppose that you want to prove that $p$ is prime.  To prove this condition, you would say ``Let $m,n\in \Z$ and suppose that $p\mid (mn)$.''  From here, you now want to prove that $p\mid m$ or $p\mid n$.  At this point, you can say ``If $p\mid m$ we are done, so suppose that $p\nmid m$.''.
 
 Hopefully, the logic of this is pretty self-explanatory.  If it helps, however, you can view this as essentially the same as proof by contradiction.  If we were to proceed by contradiction, instead we would say ``Suppose that $p\nmid m$ and $p\nmid n$.'', and from that deduce a contradiction.  Instead, in this case, we shall assume $p\nmid m$, and use that to prove that $p\mid m$.
@@ -190,38 +190,49 @@ Hopefully, the logic of this is pretty self-explanatory.  If it helps, however, 
 \subsubsection{Proving two sets are equal}
 
 A lot of proofs require you to show that two different sets are in fact one in the same.  The way to prove this is made precise with \cref{exrA.2.10}.  In the meantime, however, we can say the following.
-\begin{displayquote}
+\begin{important}
 Let $S$ and $T$ be sets and suppose that you want to prove that $S=T$.  You then need to prove \emph{two} things:  if $s\in S$, then $s\in T$; and if $t\in T$, then $t\in S$.
-\end{displayquote}
+\end{important}
 This logic is very much identical to that used for proving ``iff'' statements.
 
 \subsubsection{Induction}
 
-Let $\mcal{P}_m$ be a statement for $m\in \N$.  The \term{Principle of Induction}\index{Principle of Induction} says that
-\begin{displayquote}
+\paragraph{Induction} Let $\mcal{P}_m$ be a statement for $m\in \N$.  The \term{Principle of Induction}\index{Principle of Induction} says that
+\begin{important}
 If (i)~$\mcal{P}_0$ is true and (ii)~$\mcal{P}_m\Rightarrow \mcal{P}_{m+1}$ is true for all $m\in \N$, then $\mcal{P}_m$ is true for all $m\in \N$.\footnote{(i)~is referred to as the \term{initial case} or the \term{initial step}, and (ii)~is referred to as the \term{inductive step}.}
-\end{displayquote}
-The logic is as follows.  Suppose we want to prove $\mcal{P}_3$.  Then, because $\mcal{P}_0$ and $\mcal{P}_0\Rightarrow \mcal{P}_1$, it follows that $\mcal{P}_1$.\footnote{Incidentally, the passage from ``$A$ and $A\Rightarrow B$'' to $B$ is called \emph{modus ponens}\index{Modus ponens}, which itself is short for ``modus pōnendō pōnēns'', which is Latin for (literally) ``the method to be affirmed, affirms''.}  Then, because $\mcal{P}_1$ and $\mcal{P}_1\Rightarrow \mcal{P}_2$, it follows that $\mcal{P}_2$.  Then, because $\mcal{P}_2$ and $\mcal{P}_2\Rightarrow \mcal{P}_3$, it follows that $\mcal{P}_3$.  Of course, nothing is special about $m=3$, and so this logic can be used to prove $\mcal{P}_m$ for all $m\in \N$.
+\end{important}
+The logic is as follows.  Suppose we want to prove $\mcal{P}_3$.  Then, because $\mcal{P}_0$ and $\mcal{P}_0\Rightarrow \mcal{P}_1$, it follows that $\mcal{P}_1$.\footnote{Incidentally, the passage from ``$A$ and $A\Rightarrow B$'' to $B$ is called \emph{modus ponens}\index{Modus ponens}, which itself is short for ``modus pōnendō pōnēns'', which is Latin for (literally) ``the method to be affirmed, affirms''.}  Then, because $\mcal{P}_1$ and $\mcal{P}_1\Rightarrow \mcal{P}_2$, it follows that $\mcal{P}_2$.  Then, because $\mcal{P}_2$ and $\mcal{P}_2\Rightarrow \mcal{P}_3$, it follows that $\mcal{P}_3$.  Of course, nothing is special about $m=3$, and so this logic can be used to prove $\mcal{P}_m$ for all $m\in \N$.\footnote{Though it won't be able to prove $\mcal{P}_{\infty}$!  For example, a common fake proof that $\uppi$ is rational essentially proves by induction that, for all $m\in \Z ^+$, the decimal approximation of $\uppi$ with $m$ digits is rational, and `therefore' $\uppi$ is rational.  Sorry, but that's not how induction works.}
 
 You can also use similar logic to define things.  For example, you might define a bijection $f\colon \N \rightarrow \N \times \N$ by
 \begin{equation}
 \begin{split}
 f(0) & \coloneqq \coord{0,0} \\
-f(m+1) & \coloneqq \begin{cases}\coord{f(m)_x-1,f(m)_y+1} & \text{if }f(m)_x\geq 1 \\ \coord{f(m)_x+f(m)_y+1,0} & \text{otherwise.}\end{cases}\footnotemark
+f(m+1) & \coloneqq \begin{cases}\coord{f(m)_x-1,f(m)_y+1} & \text{if }f(m)_x\geq 1 \\ \coord{f(m)_x+f(m)_y+1,0} & \text{otherwise.\footnotemark}\end{cases}
 \end{split}
 \end{equation}\footnotetext{The picture is that you go `down the diagonal', unless you `hit the edge', in which case you `hop to the top of the next diagonal'.}
 
-Equally as valid, for the exact same reason, is what is sometimes referred to the \term{Principle of Strong Induction}\index{Principle of Strong Induction}, which says that
-\begin{displayquote}
+\paragraph{Strong Induction} Equally as valid, for the exact same reason, is what is sometimes referred to the \term{Principle of Strong Induction}\index{Principle of Strong Induction}, which says that
+\begin{important}
 If (i)~$\mcal{P}_0$ is true and (ii)~$(\forall 0\leq k\leq m,\ \mcal{P}_k)\Rightarrow \mcal{P}_{m+1}$ is true for all $m\in \N$, then $\mcal{P}_m$ is true for all $m\in \N$.
-\end{displayquote}
+\end{important}
 The key difference between this and `regular' induction is that, in the induction step, you don't just assume $\mcal{P}_m$, but instead, you assume $\mcal{P}_0$, and $\mcal{P}_1$, and $\mcal{P}_2$, and \textellipsis $\mcal{P}_m$.  Superficially, this does indeed seem stronger,\footnote{Because during the inductive step, you don't get to assume just the single statement $\mcal{P}_m$, but rather the $m+1$ statements $\mcal{P}_0$, and $\mcal{P}_1$, and $\mcal{P}_2$, and \textellipsis $\mcal{P}_m$.} but in fact `regular' induction and strong induction are equivalent, though sometimes it can be quite convenient to be make use of all of $\mcal{P}_0,\ldots ,\mcal{P}_m$ instead of just $\mcal{P}_m$.
 
 For example, suppose that you want to prove that every positive integer greater-than-or-equal to $2$ is divisible by some prime.  In this case, the initial step is simply to prove that ``$2$ is divisible by some prime.''.  This is of course trivial:  $2$ is divisible by $2$, which is prime.  Here's where things get a bit different, however:  for the inductive step, assume that $2,3,4,\ldots ,m$ are all divisible by some prime.  Using this, we want to show that $m+1$ is divisible by some prime.  Well, either $m+1$ is prime itself, in which case $m+1$ is divisible by $m+1$, or it is not prime, in which case $m+1$ is divisible by some integer $k$ with $2\leq k\leq m$.  By the induction hypothesis, $k$ is divisible by some prime, and hence $m+1$ is in turn divisible by some prime.
 
-Note that we will not usually make a distinction between `regular' induction and strong induction in these notes.  When using either method, we shall simply say something like ``We proceed by induction.''.
+Note that we will not usually make a distinction between `regular' induction and strong induction in these notes.  When using either method, we shall simply say something like ``We proceed by induction\textellipsis ''.
 
-Finally, we mention that there is a method of proof called \emph{transfinite induction}\index{Transfinite induction}, which is essentially induction over infinite sets.  If you ever want to perform an induction-like argument, but it's not working because you have more than countably-infinite many statements, try transfinite induction.\footnote{Making transfinite induction precise would take us quite a bit astray (it requires the development of what are called \emph{ordinals}\index{Ordinal}), and as we don't need to make use of it in these notes, we refrain from developing it.  Still, you should be aware of it so you can go and learn it if you ever feel this will be useful to you (if you become a mathematician, it almost certainly will be at some point).}
+\paragraph{Well-founded induction} The most powerful form of induction which subsumes all other `types' of induction is known as \emph{well-founded induction}.  As it is less elementary than what we have discussed thus far, we leave a detailed discussion of this until \cref{sbsWellFoundedInduction}.  We can, however, at least say a little for the time being..
+
+The basic idea is to replace the set with which you index your statements (previously $\N$) with a more general type of set $X$.  It turns out that the only structure on $\N$ relevant to induction is the ordering, and so you don't just replace $\N$ with a set $X$, you replace $\coord{\N ,\leq}$ with a pair $\coord{X,\preceq}$, where $X$ is a set and $\preceq$ is a \emph{relation} (\cref{Relation}) on $X$.  It turns out that (\cref{WellFoundedInduction}) the only property of $\leq$ on $\N$ that was necessary for induction to work is what is called \emph{well-foundedness} (\cref{MaximalAndMinimal}), which states that every nonempty subset has a minimal element (\cref{MaximalAndMinimal}).
+
+The \term{Principle of Well-Founded Induction}\index{Principle of Well-Founded Induction} then says that
+\begin{important}
+	If for every $x_0\in X$, $(\forall x<x_0,\mcal{P}_x)\Rightarrow \mcal{P}_{x_0}$, then $\mcal{P}_x$ is true for all $x\in X$.
+\end{important}
+
+If you ever want to perform an induction-like argument, but it's not working because you have more than countably-infinite many statements, try well-founded induction.
+
+Finally, we mention that there is a method of proof called \emph{transfinite induction}\index{Transfinite induction}.  It is technically a special case of well-founded induction, but much more common.\footnote{For some reason, not too many people seem to know of well-founded induction.}  Roughly speaking, transfinite induction is to well-ordered as well-founded induction is to well-founded.  We refrain from discussing it because (i) we don't need to---well-founded induction is stronger and (ii) the usual way it's stated requires the development of what are called \emph{ordinals}\index{Ordinal}), which would take us quite astray.  Still, you should be aware of it so you can go and learn it if you ever feel this will be useful to you (if you become a mathematician, it almost certainly will be at some point).
 
 \subsection{Sets}\label{sbsSets}
 
@@ -352,7 +363,7 @@ We will discuss the motivation for this notation in the next subsection (see \cr
 \section{Relations, functions, and orders}
 
 Having defined Cartesian products, we can now make the following definition.
-\begin{dfn}{Relation}{}
+\begin{dfn}{Relation}{Relation}
 A \emph{relation}\index{Relation} between two sets $X$ and $Y$ is a subset $R$ of $X\times Y$.
 \begin{rmk}
 For a given relation $R$, we write $x\sim _Ry$\index[notation]{$x\sim _Ry$}, or just $x\sim y$\index[notation]{$x\sim y$} if $R$ is clear from context, iff $\coord{x,y}\in R$.  Often we will simply refer to the relation by the symbol $\sim$ instead of $R$.
@@ -436,7 +447,7 @@ For every set $X$, there is a function, $\id _X:X\rightarrow X$\index[notation]{
 \end{exm}
 \begin{dfn}{Inverse function}{}
 Let $f\colon X\rightarrow Y$ and $g\colon Y\rightarrow X$ be functions.  Then, $g$ is a \term{left-inverse}\index{Left-inverse (of a function)} of $f$ iff $g\circ f=\id _X$; $g$ is a \term{right-inverse}\index{Right-inverse (of a function)} of $f$ iff $f\circ g=\id _Y$; $g$ is a \term{two-sided-inverse}\index{Two-sided-inverse (of a function)}, or just \term{inverse}\index{Inverse (of a function)}, iff $g$ is both a left- and right-inverse of $f$.
-\begin{exr}{}{}
+\begin{exr}[breakable=false]{}{}
 Let $g$ and $h$ be two (two-sided)-inverses of $f$.  Show that $g=h$.
 \end{exr}
 Because of the uniqueness of two-sided-inverses, we may write $f^{-1}$\index[notation]{$f^{-1}$} for the unique two-sided-inverse of $f$.
@@ -459,7 +470,7 @@ f(S)\coloneqq \left\{ f(x):x\in S\right\} .
 \end{equation}
 The \term{range}\index{Range} of $f$, $f(X)$, is the image of $X$ under $f$.
 \begin{rmk}
-We may also write $\Ima (f)\coloneqq f(X)$\index[notation]{$\Im (f)$} for the range of $f$.  If we simply say ``image of $f$'', you should interpret this to mean ``image of $X$ under $f$'', i.e., the range $f(X)$.
+We may also write $\Ima (f)\coloneqq f(X)$\index[notation]{$\Ima (f)$} for the range of $f$.  If we simply say ``image of $f$'', you should interpret this to mean ``image of $X$ under $f$'', i.e., the range $f(X)$.
 \end{rmk}
 \begin{rmk}
 Note the difference between range and codomain.  For example, consider the function $f\colon \R \rightarrow \R$ defined by $f(x)\coloneqq x^2$.  Then, the codomain is $\R$ but the range is just $[0,\infty )$.  In fact the range and codomain are the same precisely when $f$ is surjective (see \cref{exrA.1.32}.\cref{exrA.1.32.ii}).
@@ -556,7 +567,7 @@ Let $\collection{X}$ be an indexed collection\footnote{By \term{indexed collecti
 The intuition and way to think of notation is just the same as it was in the simpler case of the disjoint-union of two sets (\cref{DisjointUnion}).
 \end{rmk}
 \end{dfn}
-\begin{dfn}{Restrictions (of functions on a disjoint-union)}{}
+\begin{dfn}{Restrictions (of functions on a dis\-joint-union)}{}
 Let $\collection{X}$ be an indexed collection of sets, let $Y$ be a set, and let $f\colon \coprod _{X\in \collection{X}}X\rightarrow Y$ be a function.  Then, the \term{restriction of $f$ to $X$}\index{Restriction (disjoint-union)}, $\restr{f}{X}:X\rightarrow Y$\index[notation]{$\restr{f}{X}$}, is defined by
 \begin{equation}
 \restr{f}{X}(x)\coloneqq f(\coord{x,X}).
@@ -656,10 +667,16 @@ We will see a `better' way of viewing the integers modulo $m$ in \cref{exmA.1.11
 \end{rmk}
 \end{exm}
 \begin{dfn}{Equivalence class}{}
-Let $\sim$ be an equivalence relation on a set $X$ and let $x_0\in X$.  Then, the \term{equivalence class}\index{Equivalence class} of $x_0$, denoted by $[x_0]_\sim$\index[notation]{$[x_0]_\sim$}, or just $[x_0]$\index[notation]{$[x_0]$} if $\sim$ is clear from context, is
+Let $\sim$ be an equivalence relation on a set $X$ and let $x_0\in X$.  Then, the \term{equivalence class}\index{Equivalence class} of $x_0$, $[x_0]_\sim$\index[notation]{$[x_0]_\sim$}, is
 \begin{equation}\label{A.1.10}
 [x_0]_\sim \coloneqq \left\{ x\in X:x\sim x_0\right\} =\left\{ x\in X:x_0\sim x\right\} .
 \end{equation}
+\begin{rmk}
+If $\sim$ is clear from context, we may simply write $[x_0]\ceqq [x_0]_{\sim}$\index[notation]{$[x_0]$}.
+\end{rmk}
+\begin{rmk}
+We may also on occasion write $x_0/\sim \ceqq [x_0]_{\sim}$\index[notation]{$x_0/\sim$} for the equivalence class.
+\end{rmk}
 \begin{rmk}
 In words, the equivalence class of $x_0$ is the set of elements equivalent to $x$.
 \end{rmk}
@@ -866,6 +883,37 @@ Let $x_1,x_2\in X$.  Then, the set $\{ x_1,x_2\}$ has a smallest element.  If th
 What is an example of a totally-ordered set that is not a well-ordered set?
 \end{exr}
 
+\subsection{Well-founded induction}\label{sbsWellFoundedInduction}
+
+In the very beginning of this chapter when discussing proof techniques (\cref{sbsABitAboutProofs}), we mentioned \emph{well-founded induction}.  It is time we return to this and make the statement precise.
+\begin{dfn}{Well-founded}{WellFounded}
+	Let $X$ be a set and let $\preceq$ be a relation on $X$.  Then, $\coord{X,\preceq}$ is \emph{well-founded} iff every nonempty subset of $X$ has a minimal element.
+\end{dfn}
+The relationship between being well-ordered and well-founded is as follows.
+\begin{prp}{}{}
+	Let $X$ be a set and let $\preceq$ be a relation on $X$.  Then, $\coord{X,\preceq}$ is a well-ordered set iff $\preceq$ is a well-founded total-order.
+	\begin{proof}
+		$(\Rightarrow )$ Suppose that $\coord{X,\preceq}$ is a well-ordered set.  Then, $\preceq$ is well-founded because minima are minimal.  Let $x_1,x_2\in X$.  Then, $\{ x_1,x_2\}$ is nonempty, and so has a minimum, say $x_1$.  Then, $x_1\preceq x_2$, and so $\preceq$ is total.
+		
+		\blankline
+		\noindent
+		$(\Leftarrow )$ Suppose that $\preceq$ is a well-founded total-order.  Let $S\subseteq X$ be nonempty.  Then, $S$ has a minimal element $s_0\in S$.  We wish to show that $s_0$ is a minimum of $S$.  So, let $s\in S$.  We wish to show that $s_0\preceq s$.  By totality, either $s_0\preceq s$ or $s\preceq s_0$.  In the former case, we are done.  In the latter case, by minimality, we have $s=s_0$.  By reflexivity (total-orders are reflexive), this would imply $s_0\preceq s$, and we are done.
+	\end{proof}
+\end{prp}
+We are ultimately interested in well-foundedness itself because of its relevance to the most powerful form of induction (I know of).
+\begin{thm}{Well-founded Induction}{WellFoundedInduction}\index{Well-founded Induction}
+	Let $X$ be a set, let $\preceq$ be a well-founded relation on $X$, and let $\mcal{P}\colon X\rightarrow \{ 0,1\}$.  Then, if $\mcal{P}(y)=1$ for all $y\preceq x$, $y\neq x$, implies that $\mcal{P}(x)=1$, it follows that $\mcal{P}(x)=1$ for all $x\in X$.
+	\begin{rmk}
+		Of course, we are thinking of $\mcal{P}(x)$ as a statement that may or may not be true for a given $x$, and $\mcal{P}(x)=1$ corresponds to it being true and $\mcal{P}(x)=0$ corresponds to it being false.
+	\end{rmk}
+	\begin{rmk}
+		Note how this gives us `normal' induction in case $X\ceqq \N$ and $\preceq \ceqq \leq$.  Indeed, it similarly generalizes transfinite induction (whatever that is).
+	\end{rmk}
+	\begin{proof}
+		Suppose that $\mcal{P}(y)=1$ for all $y\preceq x$, $y\neq x$, implies that $\mcal{P}(x)=1$.  Define $S\ceqq \{ x\in X:\mcal{P}(x)=0\}$.  We wish to show that $S$ is empty.  We proceed by contradiction:  suppose that $S$ is nonempty.  Then, $S$ has a minimal element $s_0\in S$.  Let $y\in X$ be such that $y\preceq s_0$ and $y\neq s_0$.  If $y\in S$, then by minimality, we would have $y=s_0$, which is not the case.  Thus, $y\notin S$, and hence $\mcal{P}(y)=1$.  Thus, by hypotheses, $\mcal{P}(s)=1$:  a contradiction.
+	\end{proof}
+\end{thm}
+
 \subsection{Zorn's Lemma}
 
 We end this subsection with an incredibly important result known as \emph{Zorn's Lemma}.  At the moment, it's importance might not seem obvious, and perhaps one must see it in action in order to appreciate its significance.  For the time being at least, let me say this:  if ever you are trying to produce something maximal by adding things to a set one-by-one (e.g.~if you are trying to construct a basis by picking linearly-independent vectors one-by-one), but you are running into trouble because, somehow, this process will never stop, not even if you `go on forever':  give Zorn's Lemma a try.
@@ -903,7 +951,7 @@ Let $X$ be a \emph{partially}-ordered set and let $S\subseteq X$.
 \item Come up with an example of $X$ and $S$ where $S$ has two distinct maximal elements.
 \end{enumerate}
 \end{exr}
-\begin{dfn}{Downward-closed and upward-closed}{}
+\begin{dfn}{Downward-closed and upward-\\closed}{}
 Let $X$ be a preordered set and let $S\subseteq X$.  Then, $S$ is \term{downward-closed}\index{Downward closed} in $X$ iff whenever $x\leq s\in S$ it follows that $x\in S$.  $S$ is \term{upward-closed}\index{Upward closed} in $X$ iff whenever $x\geq s\in S$ it follows that $x\in S$.
 \end{dfn}
 \begin{prp}{}{prpA.1.56}
@@ -1095,6 +1143,9 @@ In a rig $R$, we write
 $R^{\times}$ is a group with respect to the ring multiplication and is known as the \term{group of units}\index{Group of units} in $R$.
 \end{rmk}
 \begin{rmk}
+Just as the empty sum is defined to be $0$ in a rg (see the remark in \cref{Rg}), the empty product is defined to be $1$ in a rig.\footnote{Of course, similar conventions apply for all types of algebraic objects (in particular, for monoids), but we shall not keep repeating this.}
+\end{rmk}
+\begin{rmk}
 I believe it is more common to refer to rigs as \emph{semirings}.  I dislike this terminology because it suggests an analogy with semigroups, of which there is none.  The term rig is also arguably more descriptive---even if you didn't know what the term meant, you might have a good chance of guessing, especially if you had seen the term rng before.
 \end{rmk}
 \end{dfn}
@@ -1274,7 +1325,7 @@ By changing the definition of the equivalent relation to ``\textellipsis iff $r_
 \end{rmk}
 \begin{proof}
 We leave this as an exercise.
-\begin{exr}{}{}
+\begin{exr}[breakable=false]{}{}
 Prove this yourself.
 \begin{rmk}
 Hint:  Use the proof of \cref{Cosets} as a guide.
@@ -1377,7 +1428,7 @@ You might be thinking ``Ah, that makes sense.  But why use injective?  Couldn't 
 	\end{proof}
 \end{prp}
 That $\leq$ is a preorder is relatively easy.  The next step, showing that it is a partial-order, is considerably more difficult, and even has a name.
-\begin{thm}{Bernstein-Cantor-Schröder Theorem}{thm1.1.26}\index{Bernstein-Cantor-Schröder Theorem}
+\begin{thm}{Bernstein-Cantor-Schröder Theo-\\rem}{thm1.1.26}\index{Bernstein-Cantor-Schröder Theorem}
 	$\coord{\aleph ,\leq}$ is a partially-ordered set.
 	\begin{rmk}
 		This theorem is usually stated as ``If there is an injection from $X$ to $Y$ and there is an injection from $Y$ to $X$, then there is a bijection from $X$ to $Y$.''.
@@ -1428,9 +1479,10 @@ That $\leq$ is a preorder is relatively easy.  The next step, showing that it is
 		\end{equation}
 		as well as
 		\begin{subequations}
-		\begin{align}
-		X_1\coloneqq&M\cap A, & Y_1\coloneqq&N\cap A,\qquad X_2\coloneqq&M\cap A^{\comp}, & Y_2\coloneqq&N\cap A^{\comp}.
-		\end{align}
+			\begin{align}
+				X_1\coloneqq&M\cap A, & Y_1\coloneqq&N\cap A, \\
+				X_2\coloneqq&M\cap A^{\comp}, & Y_2\coloneqq&N\cap A^{\comp}.
+			\end{align}
 		\end{subequations}
 		Note that, as $\{ C_x:x\in M\}$ is a partition of $M\sqcup N$, we have that
 		\begin{equation}\label{1.1.34}
@@ -1563,9 +1615,9 @@ The cardinality of the natural numbers is special:  it turns out that the cardin
 	Let $\kappa$ be an infinite cardinal.  Then, $\abs{\N}\leq \kappa$.
 	\begin{rmk}
 		Phrased differently ,note that the contrapositive easily implies the following.
-		\begin{displayquote}
+		\begin{important}
 			If $\kappa$ is a cardinal with $\kappa \leq \abs{\N}$, then either $\kappa =\abs{\N}$ or $\kappa$ is finite.
-		\end{displayquote}
+		\end{important}
 	\end{rmk}
 	\begin{proof}
 		Let $K$ be any set such that $|K|=\kappa$.  Recall that (\cref{dfn1.1.23}) to show that $|\N |\leq \kappa$ requires that we produce an injection from $\N$ into $K$.  We construct an injection $f\colon \N \rightarrow K$ inductively.  Let $k_0\in K$ be arbitrary and let us define $f(0)\coloneqq k_0$.  If $K\setminus \{ k_0\}$ were empty, then $K$ would not be infinite, therefore there must be some $k_1\in K$ distinct from $k_0$, so that we may define $f(1)\coloneqq k_1$.  Continuing this process, suppose we have defined $f$ on $0,\ldots ,n\in \N$, and wish to define $f(n+1)$.  If $K\setminus \left\{ f(0),\ldots ,f(n)\right\}$ were empty, then $K$ would be finite.  Thus, there must be some $k_{n+1}\in K$ distinct from $f(0),\ldots ,f(n)$.  We may then define $f(n+1)\coloneqq k_{n+1}$.  The function produced must be injective because, by construction, $f(m)$ is distinct from $f(n)$ for all $n<m$.  Hence, $|\N |\leq \kappa$.
@@ -2011,7 +2063,7 @@ With this language in hand, we can now return to what is probably the most relev
 	\end{exr}
 \end{exm}
 
-\subsection{Natural transformations}\label{sbsB.2.2}
+\subsection{Natural-transformations}\label{sbsB.2.2}
 
 We can compose the dual-space functor with itself to obtain the ``double-dual-space'' functor $V\mapsto [V^{\T}]^{\T}$.  Recall that (\cref{DualityOfTheDual}), for every $\K$-module $V$, we actually have a linear-transformation $V\rightarrow [V^{\T}]^{\T}$, and in fact, this is an isomorphism in the context of finite-dimensional vector spaces.
 
@@ -2030,7 +2082,7 @@ is an isomorphism.  The significant thing to note here is that the definition of
 Thus, in order to define the morphism $V\rightarrow V^{\T}$ for every vector space $V$, you'll have to pick a basis for every single vector space, and there is no single ``natural'' way to do so.  The isomorphisms that I happen to use are almost certainly going to be different than the ones you choose to use.  On the other hand, there is \emph{no choice} when it comes to the isomorphism $V\rightarrow [V^{\T}]^{\T}$.  Intuitively, this isomorphism doesn't depend on $V$, the same definition works for every vector space, whereas the isomorphisms $V\rightarrow V^{\T}$ do depend on $V$.
 
 The precise notion which distinguishes these two is that of a \emph{natural transformation}:  $V\rightarrow [V^{\T}]^{\T}$ will be a natural isomorphism, whereas $V\rightarrow V^{\T}$ will not be.
-\begin{dfn}{Natural transformation}{NaturalTransformation}
+\begin{dfn}{Natural-transformation}{NaturalTransformation}
 	Let $\cat{C}$ and $\cat{D}$ be functors, and let $\functor{f},\functor{g}\colon \cat{C}\rightarrow \cat{D}$ be functors.  Then, a \term{natural transformation}\index{Natural transformation} from $\functor{f}$ to $\functor{g}$ is, for every $A\in \Obj (\cat{C})$, a morphism $\eta _A\colon \functor{f}(A)\rightarrow \functor{f}(B)$, such that
 	\begin{equation}
 		\begin{tikzcd}
@@ -2578,7 +2630,7 @@ Intuitively, an associative algebra is like a module\footnote{Actually, a bimodu
 		Essentially what these axioms state is (i) ``associativity'' holds between elements of $\K$ and elements of $A$,\footnote{Three axioms needed to deal with the three cases of the scalar appearing on the left, on the right, or in the middle.  Note that the case of two scalars and one element of $A$ is part of the definition of a bimodule.}, and (ii) central elements commute with scalars.
 	\end{rmk}
 	\begin{rmk}
-		An \term{associative algebra}\index{Associative algebra} is a $\K$-algebra for some $\K$.  This term is thus used when you don't want to have to specify the ground ring.  The ``associative'' here refers to the associativity of the ring multiplication.  If you drop this hypothesis (in which case the definition becomes a bit more cumbersome to state because $\mathlarger{\cdot}$ is then no longer a ring multiplication), you obtain what is simply an \term{algebra}.  For example, Lie algebras are algebras that are generally not associative.  Thus, the term ``algebra'' by itself should be avoided if one really means ``associative algebra''.  On the other hand, if we say ``$\K$-algebra'', it is of course implicit that the algebra is associative.
+		An \term{associative algebra}\index{Associative algebra} is a $\K$-algebra for some $\K$.  This term is thus used when you don't want to have to specify the ground ring.  The ``associative'' here refers to the associativity of the ring multiplication.  If you drop this hypothesis (in which case the definition becomes a bit more cumbersome to state because $\mathlarger{\cdot}$ is then no longer a ring multiplication), you obtain what is simply an \term{algebra}.  For example, Lie algebras are algebras that are generally not associative.  Thus, the term ``algebra'' by itself should be avoided if one really means ``associative algebra''.  On the other hand, if we say ``$\K$-algebra'', for us it is implicit that the algebra is associative.
 	\end{rmk}
 	\begin{rmk}
 		The reason we require the structure of a bimodule (instead of just a left or right module) is motivated by the fact that doing things this way gives us another standard equivalent definition---see \cref{thmC.1.5}.
@@ -3031,7 +3083,7 @@ Of course, not everything is algebraically closed or even integrally closed (for
 	
 	$\uppi \in \R$ is not algebraic over $\Q$.\footnote{For example, by the Lindemann-Weierstrass Theorem, if you enjoy swatting your flies with sledgehammers (I know I do).}
 \end{exm}
-\begin{mpr}{Integral=algebraic over division rings}{prpC.2.18}
+\begin{mpr}{Integral=algebraic over \\ division rings}{prpC.2.18}
 	Let $\F$ be a division ring, let $A$ be an $\F$-algebra, and let $x\in A$.  Then, $x$ is XYZ integral over $\F$ iff it is XYZ algebraic over $\F$.
 	\begin{rmk}
 		Similarly, a division ring is XYZ integrally closed iff it is XYZ algebraically closed.
@@ -3431,10 +3483,10 @@ We had a term (\cref{prp4.5.17}), \emph{complete-decomposability}, for a module 
 \end{thm}
 Our interest in semisemplicity arises from the fact that semisimple operators are in a certain sense a generalization of diagonalizable operators.
 \begin{thm}{Semisimple (linear operator)}{semisimple_linear_operator}
-	Let $\K$ be a field, let $\A$ be an algebraic closure of $\K$, let $V$ be a finite-dimensional vector space over $\K$, write $V_{\A}\ceqq \A \otimes _{\K}V$, and let $T\colon V\rightarrow V$ be a linear operator.  Then, the following are equivalent.
+	Let $\K$ be a field, let $\A$ be an algebraic closure of $\K$, let $V$ be a finite-dimensional vector space over $\K$, write $V^{\A}\ceqq \A \otimes _{\K}V$, and let $T\colon V\rightarrow V$ be a linear operator.  Then, the following are equivalent.
 	\begin{enumerate}
 		\item \label{semisimple_linear_operator.i}The minimal polynomial of $T$ is separable.
-		\item \label{semisimple_linear_operator.ii}$T\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable.
+		\item \label{semisimple_linear_operator.ii}$T\colon V^{\A}\rightarrow V^{\A}$ is diagonalizable.
 		\item \label{semisimple_linear_operator.iii}The $\K [x]$-module $V_T$ defined by $T$ is semisimple.
 		\item \label{semisimple_linear_operator.iv}Every $T$-invariant subspace has a $T$-invariant complement.
 	\end{enumerate}
@@ -3442,11 +3494,11 @@ Our interest in semisemplicity arises from the fact that semisimple operators ar
 		If these conditions are satisfied, then we say that $T$ is \term{semisimple}\index{Semisimple (linear operator)}.
 	\end{rmk}
 	\begin{proof}
-		$(\cref{semisimple_linear_operator.i}\Rightarrow \cref{semisimple_linear_operator.ii})$ Suppose that the minimal polynomial of $T$ is separable.  Denote this minimal polynomial by $p$ and write $p(x)=(x-\lambda _1)\cdots (x-\lambda _m)$, with $\lambda _1,\ldots ,\lambda _m$ all distinct.  By the Jordan Canonical Form Theorem, we can pick a basis $\mcal{B}$ for $V_{\A}$ such that $[T]_{\mcal{B}}=D+N$ where $D$ is a matrix with $\lambda _1,\ldots ,\lambda _m$ along the diagonal (each listed a number of times equal to their algebraic multiplicity as roots of the characteristic polynomial), $N$ a matrix of all $0$s except for possibly some $1$s above the super-diagonal, and $DN=ND$, where $d\coloneqq \dim (V_{\A})$  Plugging $D+N$ into $p$, we see that if $N\neq 0$, then $p(D+N)\neq 0$:  a contradiction.  Therefore, $T\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable.
+		$(\cref{semisimple_linear_operator.i}\Rightarrow \cref{semisimple_linear_operator.ii})$ Suppose that the minimal polynomial of $T$ is separable.  Denote this minimal polynomial by $p$ and write $p(x)=(x-\lambda _1)\cdots (x-\lambda _m)$, with $\lambda _1,\ldots ,\lambda _m$ all distinct.  By the Jordan Canonical Form Theorem, we can pick a basis $\mcal{B}$ for $V^{\A}$ such that $[T]_{\mcal{B}}=D+N$ where $D$ is a matrix with $\lambda _1,\ldots ,\lambda _m$ along the diagonal (each listed a number of times equal to their algebraic multiplicity as roots of the characteristic polynomial), $N$ a matrix of all $0$s except for possibly some $1$s above the super-diagonal, and $DN=ND$, where $d\coloneqq \dim (V^{\A})$  Plugging $D+N$ into $p$, we see that if $N\neq 0$, then $p(D+N)\neq 0$:  a contradiction.  Therefore, $T\colon V^{\A}\rightarrow V^{\A}$ is diagonalizable.
 		
 		\blankline
 		\noindent
-		$(\cref{semisimple_linear_operator.ii}\Rightarrow \cref{semisimple_linear_operator.i})$ Suppose that $T\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable.  Let $\lambda _1,\ldots ,\lambda _m$ denote the distinct eigenvalues of $T$.  Then, $(T-\lambda _1)\cdots (T-\lambda _m)=0$, and so the minimal polynomial of $T$ cannot have roots of multiplicity more than $1$, i.e.~is separable.
+		$(\cref{semisimple_linear_operator.ii}\Rightarrow \cref{semisimple_linear_operator.i})$ Suppose that $T\colon V^{\A}\rightarrow V^{\A}$ is diagonalizable.  Let $\lambda _1,\ldots ,\lambda _m$ denote the distinct eigenvalues of $T$.  Then, $(T-\lambda _1)\cdots (T-\lambda _m)=0$, and so the minimal polynomial of $T$ cannot have roots of multiplicity more than $1$, i.e.~is separable.
 		
 		\blankline
 		\noindent
@@ -3460,7 +3512,7 @@ Our interest in semisemplicity arises from the fact that semisimple operators ar
 		
 		\blankline
 		\noindent
-		$(\cref{semisimple_linear_operator.iii}\Rightarrow \cref{semisimple_linear_operator.ii})$ Suppose that the representation $\rho \colon \K \rightarrow \gl (V)$ defined by $\rho (1)\coloneq T$ is semisimple.  By the Jordan Canonical Form Theorem, we can write $T=S+N$ for unique linear maps $S,N\colon V\rightarrow V$ that satisfy (i) $S\colon V_{\A}\rightarrow V_{\A}$ is diagonalizable, (ii) $N$ is nilpotent, and (iii) $SN=NS$.  Thus, to prove the result, it suffices to show that $N=0$.  Write $V\coloneqq V_1\oplus \cdots \oplus V_m$, where each $V_k$ is a simple subrepresentation of $V$.  Thus, $T(V_k)\subseteq V_k$, and no nonzero proper subspace of $V_k$ has this property.  For each $k$, we can apply the Jordan Canonical Form Theorem again to obtain $\restr{T}{V_k}=S_k+N_k$.  From uniqueness, we must have that $S=S_1\oplus \cdots \oplus S_m$ and $N=S_1\oplus \cdots \oplus S_m$.  Thus, each $V_k$ is in fact invariant under both $S$ and $N$ as well.  Define $W_k\coloneqq N(V_k)\subseteq V_k$.  $W_k$ is of course invariant under $N$, and so $S$ and $N$ commute, it is also invariant under $S$, and hence invariant under $T$.  Therefore, either $W_k=V_k$ or $W_k=0$.  If $W_k\coloneqq N(V_k)=V_k$, then $N$ will not be nilpotent.  Therefore, we must have that $W_k\coloneqq N(V_k)=0$, whence it follows that $N=0$, as desired.
+		$(\cref{semisimple_linear_operator.iii}\Rightarrow \cref{semisimple_linear_operator.ii})$ Suppose that the representation $\rho \colon \K \rightarrow \gl (V)$ defined by $\rho (1)\coloneq T$ is semisimple.  By the Jordan Canonical Form Theorem, we can write $T=S+N$ for unique linear maps $S,N\colon V\rightarrow V$ that satisfy (i) $S\colon V^{\A}\rightarrow V^{\A}$ is diagonalizable, (ii) $N$ is nilpotent, and (iii) $SN=NS$.  Thus, to prove the result, it suffices to show that $N=0$.  Write $V\coloneqq V_1\oplus \cdots \oplus V_m$, where each $V_k$ is a simple subrepresentation of $V$.  Thus, $T(V_k)\subseteq V_k$, and no nonzero proper subspace of $V_k$ has this property.  For each $k$, we can apply the Jordan Canonical Form Theorem again to obtain $\restr{T}{V_k}=S_k+N_k$.  From uniqueness, we must have that $S=S_1\oplus \cdots \oplus S_m$ and $N=S_1\oplus \cdots \oplus S_m$.  Thus, each $V_k$ is in fact invariant under both $S$ and $N$ as well.  Define $W_k\coloneqq N(V_k)\subseteq V_k$.  $W_k$ is of course invariant under $N$, and so $S$ and $N$ commute, it is also invariant under $S$, and hence invariant under $T$.  Therefore, either $W_k=V_k$ or $W_k=0$.  If $W_k\coloneqq N(V_k)=V_k$, then $N$ will not be nilpotent.  Therefore, we must have that $W_k\coloneqq N(V_k)=0$, whence it follows that $N=0$, as desired.
 		
 		\blankline
 		\noindent
