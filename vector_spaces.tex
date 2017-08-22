@@ -1,4 +1,5 @@
 \chapter{\texorpdfstring{$\K$}{K}-modules and \texorpdfstring{\hfill \\}{} linear-transformations}\label{chpVectorSpaces}
+\chaptermark{$\K$-modules and linear-transformations}
 
 \section{Basic definitions}
 
@@ -75,7 +76,9 @@ Our first order of business is to give another equivalent definition of a $\K$-m
 		$\coord{\End _{\Grp}(V),+,0,-}$ is a commutative group because $\coord{V,+,0,-}$ is (write out the verification of the axioms yourself if you don't believe me).  $\coord{\End _{\Grp}(V),\circ ,\id _V}$ is a monoid by \cref{prpB.2.9}.  From the definition of a ring \cref{Rg}, we see that it only remains to check that $\circ$ distributes over $+$, and so, we check.
 		\begin{equation}
 		\begin{split}
-		\left[ \phi \circ (\psi +\chi )\right] (v) & \ceqq \phi \left( [\psi +\chi ](v)\right) \ceqq \phi \left( \psi (v)+\chi (v)\right) \\
+		\MoveEqLeft
+		\left[ \phi \circ (\psi +\chi )\right] (v)\ceqq \phi \left( [\psi +\chi ](v)\right) \\
+		& \ceqq \phi \left( \psi (v)+\chi (v)\right) \\
 		& =\footnote{Because $\phi$ is a homomorphism.}\phi (\psi (v))=\phi (\chi (v)) \\
 		& \eqqc [\phi \circ \psi ](v)+[\phi \circ \chi ](v) \\
 		& \eqqc \left[ \phi \circ \psi +\phi \circ \chi\right] (v).
@@ -84,7 +87,8 @@ Our first order of business is to give another equivalent definition of a $\K$-m
 		As this is true for all $v$, in fact, the functions themselves must be equal, that is $\phi \circ (\psi +\chi )=\phi \circ \psi +\phi \circ \chi$.  Similarly,
 		\begin{equation}
 		\begin{split}
-		\left[ (\psi +\chi )\circ \phi \right] (v) & \ceqq [\psi +\chi ]\left( \phi (v)\right) \ceqq \psi (\phi (v))+\chi (\phi (v)) \\
+		\left[ (\psi +\chi )\circ \phi \right] (v) & \ceqq [\psi +\chi ]\left( \phi (v)\right) \\
+		& \ceqq \psi (\phi (v))+\chi (\phi (v)) \\
 		& \eqqc [\psi \circ \phi ](v)+[\chi \circ \phi ](v) \\
 		& \eqqc \left[ \psi \circ \phi +\chi \circ \phi \right] (v),
 		\end{split}
@@ -119,7 +123,8 @@ Our first order of business is to give another equivalent definition of a $\K$-m
 		\cref{prpD.1.3.i} For the sake of brevity, we shall simply write $\cdot \ceqq \cdot _{\rho}$.  We must verify the four axioms in \cref{RModule}.  So, let $\alpha ,\alpha _1,\alpha _2\in R$ and $v,v_1,v_2\in V$.  Then,
 		\begin{equation}
 		\begin{split}
-		(\alpha _1\alpha _2)\cdot v & \ceqq \rho _{\alpha _1\alpha _2}(v)=\footnote{As $\rho$ is a ring homomorphism, it ``preserves'' multiplication.}[\rho _{\alpha _1}\circ \rho _{\alpha _2}](v)\ceqq \rho _{\alpha _1}\left( \rho _{\alpha _2}(v)\right) \\
+		(\alpha _1\alpha _2)\cdot v & \ceqq \rho _{\alpha _1\alpha _2}(v)=\footnote{As $\rho$ is a ring homomorphism, it ``preserves'' multiplication.}[\rho _{\alpha _1}\circ \rho _{\alpha _2}](v) \\
+		& \ceqq \rho _{\alpha _1}\left( \rho _{\alpha _2}(v)\right) \\
 		& \ceqq \rho _{\alpha _1}(\alpha _2\cdot v)\ceqq \alpha _1\cdot (\alpha _2\cdot v).
 		\end{split}
 		\end{equation}
@@ -167,13 +172,10 @@ Our first order of business is to give another equivalent definition of a $\K$-m
 Now that we've seen two equivalent definitions of $\K$-module, it's time we present what is perhaps the most important example (at least for us) of $\K$-modules.
 \begin{exm}{Column vectors}{ColumnVectors}
 	Let $\K$ be a ring and let $d\in \N$.  Then, $\K ^d$ is a $\K$-module with ``componentwise'' addition and scaling.  Explicitly,
-	\begin{subequations}
-		\begin{align}
-			\coord{v^1,\ldots ,v^d}+\coord{w^1,\ldots ,w^d} & \ceqq \\
-			\coord{v^1+w^1, & \ldots ,v^d+w^d}\notag \\
-			\alpha \cdot \coord{v^1,\ldots ,v^d} & \ceqq \coord{\alpha v^1,\ldots ,\alpha v^d}.
-		\end{align}
-	\end{subequations}
+	\begin{align*}
+		\hspace{-3pt}\coord{v^1,\ldots ,v^d}+\coord{w^1,\ldots ,w^d} & \ceqq \coord{v^1+w^1,\ldots ,v^d+w^d} \\
+		\hspace{-3pt}\alpha \cdot \coord{v^1,\ldots ,v^d} & \ceqq \coord{\alpha v^1,\ldots ,\alpha v^d}.
+	\end{align*}
 	Elements of $\K ^d$ are \term{column vectors}\index{Column vector} with entries or elements in $\K$.
 	\begin{rmk}
 		Note the superscripts here.  $v^k$ simply indicates the $k^{\text{th}}$ component of the vector $v\ceqq \coord{v^1,\ldots ,v^d}$.  The reason we use the superscript instead of a subscript is because we will want to use subscripts to denote lists of \emph{different vectors}.  For example, we might have two vectors $v_1$ and $v_2$.  Then, $[v_1]^2$ and $[v_2]^5$ would respectively denote $2^{\text{nd}}$ component of $v_1$ and $5^{\text{th}}$ component of $v_2$.
@@ -309,6 +311,13 @@ Having defined a type of mathematical object, we are now morally obligated to sp
 		Another synonym for ``linear-transformation'' is \term{linear operator}\index{Linear operator}, though this is probably more commonly used when the domain and codomain are the same, $T\colon V\rightarrow V$.\footnote{I use a dash in ``linear-transformation'' but not in ``linear operator'' because the term ``transformation'' by itself is meaningless in this context, whereas the term ``operator'' is used in related contexts in its own right (indeed, \emph{nonlinear operators} are definitely a thing, whereas no one talks about ``nonlinear transformations'').}
 	\end{rmk}
 \end{dfn}
+\begin{ntn}{Composition denoted by juxtaposition}{}
+	If $S$ and $T$ are composable linear-transformations, then we may sometimes write
+	\begin{equation}
+		ST\ceqq S\circ T
+	\end{equation}\index[notation]{$ST$}
+	for clarity.
+\end{ntn}
 \begin{exr}{Sum and composition of linear maps is linear}{exr1.1.31}
 	Let $\K$ be a ring.
 	\begin{enumerate}
@@ -338,7 +347,7 @@ Having defined a type of mathematical object, we are now morally obligated to sp
 \end{exm}
 \begin{exm}{Scaling}{exm1.1.36}
 	Let $\K$ be a cring, let $V$ be a $\K$-module, and let $\alpha \in \K$.  Then, scaling by $\alpha$, $V\ni v\mapsto \alpha \cdot v\in V$, is a linear-transformation.
-	\begin{ntn}
+	\begin{ntn}{}{}
 		In general (for any $\K$, not necessarily commutative) for $\alpha \in \K$, if the map $V\ni v\mapsto \alpha \cdot v\in V$ is linear, then we shall denote it by
 		\begin{equation}
 			\alpha \ceqq \alpha \id _V.
@@ -438,7 +447,10 @@ In fact, we would like the morphism sets $\Mor _{\Mod{\K}}(V,W)$ themselves to f
 \end{equation}
 Unfortunately, however, this is not linear in general:
 \begin{equation}
-	[\alpha \cdot T](\beta \cdot v)\ceqq \alpha \cdot T(\beta \cdot v)=\alpha \beta \cdot T(v)\neq \beta \cdot (\alpha \cdot T(v))\eqqc \beta \cdot [\alpha \cdot T](v).
+	\begin{split}
+		[\alpha \cdot T](\beta \cdot v) & \ceqq \alpha \cdot T(\beta \cdot v)=\alpha \beta \cdot T(v)\neq \beta \cdot (\alpha \cdot T(v)) \\
+		& \eqqc \beta \cdot [\alpha \cdot T](v).
+	\end{split}
 \end{equation}
 In order for what we have written as an inequality to be an equality, we would need to know that $\K$ is commutative.\footnote{See \cref{exm1.1.92} for a concrete counter-example.}  There is a silly way to fix this, however---instead, let us try scaling $T$ \emph{on the right}:
 \begin{equation}

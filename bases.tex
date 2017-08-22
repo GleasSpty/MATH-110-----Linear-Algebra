@@ -1,4 +1,5 @@
-\chapter{Linear-independen\-ce, spanning, bases, and dimension}\label{chpBases}
+\chapter[Lin.-ind., span, bases, and dimension]{Linear-independen\-ce, spanning, bases, and dimension}\label{chpBases}
+\chaptermark{Lin.-ind., spanning, bases, and dimension}
 
 \section{Spanning and linear-independence}
 
@@ -108,7 +109,11 @@ Given a collection of vectors, we can take the set of all linear-combinations to
 		
 		Furthermore, even if $S$ is not necessarily finite, you may prefer to use the equivalent definition:  ``$S$ is linearly-independent iff for every $m\in \N$ and $v_1,\ldots ,v_m\in S$
 		\begin{equation}
-			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0\text{ implies }\alpha _1=0,\ldots ,\alpha _m=0.
+			\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m=0
+		\end{equation}
+		implies
+		\begin{equation}
+			\alpha _1=0,\ldots ,\alpha _m=0.
 		\end{equation}
 	\end{rmk}
 	\begin{rmk}
@@ -223,11 +228,11 @@ What follows is arguably a more intuitive way to think about linear (in)dependen
 	the smallest subfield of $\R$ that contains each $\sqrt{p_k}$.  Note that this is a vector space over $\Q$ (in fact, a subspace of $R$ over $\Q$).
 	\begin{exr}[breakable=false]{}{}
 		Show that
-		\begin{equation}
+		\begin{equation*}
 			\begin{multlined}
 				\Q (\sqrt{p_1},\ldots ,\sqrt{p_m}) \\ =\Span \left( \left\{ \sqrt{\prod _{k\in S}p_k}:S\subseteq \{ 1,\ldots ,m\} \right\} \right) .
 			\end{multlined}
-		\end{equation}
+		\end{equation*}
 		\begin{rmk}
 			To clarify, among the elements appearing inside the $\Span$, $1$ is in this list, each $\sqrt{p_k}$ is in this list, each $\sqrt{p_ip_j}$ for $i<j$ is in this list, each $\sqrt{p_ip_jp_k}$ for $i<j<k$ is in this list, etc..
 		\end{rmk}
@@ -261,16 +266,16 @@ What follows is arguably a more intuitive way to think about linear (in)dependen
 		Show that
 		\begin{enumerate}
 			\item
-			\begin{equation}
+			\begin{equation*}
 				\Q (\sqrt{p_1},\ldots ,\sqrt{p_m})=\F (\sqrt{p_{m-1}},\sqrt{p_m});
-			\end{equation}
+			\end{equation*}
 			and
 			\item
-			\begin{equation}
+			\begin{equation*}
 				\begin{multlined}
 					\dim _{\Q}\left( \F (\sqrt{p_{m-1}},\sqrt{p_m})\right) \\ =\dim _{\F}\left( \F (\sqrt{p_{m-1}},\sqrt{p_m})\right) \dim _{\Q}(\F ).
 				\end{multlined}
-			\end{equation}
+			\end{equation*}
 		\end{enumerate}
 		\begin{rmk}
 			To clarify, $\F (\sqrt{p_{m-1}},\sqrt{p_m})$ is the smallest subfield of $\R$ that contains $\F$, $\sqrt{p_{m-1}}$, and $\sqrt{p_m}$.  It is a vector space over $\F$, and hence may also be regarded as a vector space over $\Q$.
@@ -401,9 +406,9 @@ We mentioned before that if we start adding vectors to a linearly-independent se
 		
 		\blni
 		\cref{thm1.2.55(i)}\footnote{Proof adapted from \cite{Conrad}.} Suppose that $S$ is spanning.  Define
-		\begin{equation}
+		\begin{equation*}
 			\collection{S}\ceqq \left\{ A\subseteq V:A\subseteq S\text{ and }A\text{ is linearly-independent.}\right\} .
-		\end{equation}
+		\end{equation*}
 		$\collection{S}$ a partially-ordered set with respect to the usual inclusion $\subseteq$ partial-order.  We wish to show that $\coord{\collection{S},\subseteq}$ has a maximal element, which will be a basis by \cref{prp1.2.39}.  To show that $\coord{\collection{S},\subseteq}$ has a maximal element, we apply \namerefpcref{ZornsLemma}.
 		
 		So, let $\collection{T}\subseteq \collection{S}$ be a totally-ordered subset and define
@@ -420,9 +425,9 @@ We mentioned before that if we start adding vectors to a linearly-independent se
 		
 		\blni
 		\cref{thm1.2.55(ii)} Suppose that $S$ is linearly-independent.  Define
-		\begin{equation}
+		\begin{equation*}
 			\collection{S}\ceqq \left\{ A\subseteq V:A\supseteq S\text{ and }A\text{ is linearly-independent.}\right\} .
-		\end{equation}
+		\end{equation*}
 		A maximal element of $\collection{S}$ will be a maximal linearly-independent set, and hence a basis by \cref{prp1.2.39}.  To show that $\collection{S}$ has a maximal element, we apply \namerefpcref{ZornsLemma}.
 		
 		So, let $\collection{T}\subseteq \collection{S}$ be a totally-ordered subset and define
@@ -452,8 +457,8 @@ We mentioned before that if we start adding vectors to a linearly-independent se
 \end{exm}
 
 Bases are incredibly important in the theory of vector spaces for at least three reasons:  they provide a convenient way to define linear-transformations (\cref{prp1.2.68}), they allow us to define \emph{dimension} (\cref{thm1.2.66,Dimension}), and they allow us to define \emph{coordinates} (\cref{CoordinatesVector,CoordinatesLinearTransformation}).  We start with the first.
-\begin{prp}{Linear-transformations and basis of domain}{prp1.2.68}
-	Let $V$ and $W$ be $\K$-modules, let $\basis{B}$ be a basis for $V$, and for every $b\in \basis{B}$ let $w_b\in W$ be some vector in $W$.  Then, there exists a unique linear transformation $T\colon V\rightarrow W$ such that $T(b)=w_b$ for all $b\in \basis{B}$.
+\begin{thm}{Linear-transformations and basis of domain}{prp1.2.68}
+	Let $V$ and $W$ be $\K$-modules, let $\basis{B}$ be a basis for $V$, and for every $b\in \basis{B}$ let $w_b\in W$ be some vector in $W$.  Then, there exists a unique linear-transformation $T\colon V\rightarrow W$ such that $T(b)=w_b$ for all $b\in \basis{B}$.
 	\begin{rmk}
 		In words, you can define a linear-transformation by specifying where elements of a given basis are mapped to.
 	\end{rmk}
@@ -473,7 +478,7 @@ Bases are incredibly important in the theory of vector spaces for at least three
 		\end{exr}
 		Finally, linearity dictated that this was the only possible choice for $T(v)$ if we required that $b$ be mapped to $w_b$, and so $T$ is the unique such linear-transformation.
 	\end{proof}
-\end{prp}
+\end{thm}
 
 \subsection{Dimension}
 
@@ -523,7 +528,10 @@ Intuitively, the dimension of a vector space is the number of scalars required t
 		\end{equation}
 		and hence
 		\begin{equation}
-			V=\Span (b_1,\ldots ,b_d)\subseteq \Span \bigg( \bigcup _{k=1}^d\basis{C}_k\bigg) \subseteq \Span (\basis{C})=V,
+			\begin{split}
+				V & =\Span (b_1,\ldots ,b_d) \\
+				& \subseteq \Span \bigg( \bigcup _{k=1}^d\basis{C}_k\bigg) \subseteq \Span (\basis{C})=V,
+			\end{split}
 		\end{equation}
 		and so all of these inclusions must be equalities.  In particular,
 		\begin{equation}
@@ -609,11 +617,11 @@ Intuitively, the dimension of a vector space is the number of scalars required t
 		Warning:  This example technically requires a knowledge of matrices, which we haven't yet discussed---see \cref{sbs3.2.1}.  Feel free to come back to this later if you like---the details aren't particularly important.
 	\end{rmk}
 	Define
-	\begin{equation}
+	\begin{equation*}
 		\begin{multlined}
 			\K \ceqq \left\{ \coord{A\indices{^i_j}:i,j\in \N}\in \R ^{\N \times \N}:\text{for every }j\in \N ,\right. \\ \left. A\indices{^i_j}=0\text{ for cofinitely many }i\in \N \text{.}\right\} .
 		\end{multlined}
-	\end{equation}
+	\end{equation*}
 	Intuitively, $\K$ is thought of as infinite-dimensional square matrices (with rows and columns indexed by $\N$) such that each column only has finitely many nonzero entries.  $\K$ is regarded as a ring with the usual definition of matrix addition and multiplication.\footnote{The condition that the columns have only finitely many nonzero entries guarantees that the sum involved in the definition of matrix multiplication is just a finite sum, and so makes sense.}
 	
 	Define $V\ceqq \K$ and $W\ceqq \K ^2$ and regard these as $\K$-modules.  We claim that there is an isomorphism of $\K$-modules $V\rightarrow W$.  As $V$ has a basis with $1$ element and $W$ has a basis of $2$ elements, this isomorphism shows in particular that both $V$ and $W$ each have distinct bases with $1$ and $2$ elements.

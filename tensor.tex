@@ -25,14 +25,14 @@ While we won't begin study of multilinear maps proper for a couple of sections, 
 	Let $V_1,\ldots ,V_m$ be respectively $\K _k$-$\K _{k+1}$-bimodules, let $V$ be a $\K _1$-$\K _{m+1}$-bimodule, and let $T\colon V_1\times \cdots \times V_m\rightarrow V$ be a function.  Then, $T$ is \term{multilinear}\index{Multilinear-transformation} iff
 	\begin{enumerate}
 		\item
-		\begin{equation}
+		\begin{equation*}
 			V_k\in v\mapsto T(v_1,\ldots ,v_{k-1},v,v_{k+1},\ldots ,v_m)\in V
-		\end{equation}
+		\end{equation*}
 		is a group homomorphism for all $1\leq k\leq m$;
 		\item
-		\begin{equation}
+		\begin{equation*}
 			T(\alpha \cdot v_1,v_2,\ldots ,v_{m-1},v_m\cdot \beta )=\alpha \cdot T(v_1,v_2\ldots ,v_{m-1},v_m)\cdot \beta
-		\end{equation}
+		\end{equation*}
 		for $\alpha \in \K _1$ and $\beta \in \K _{m+1}$; and
 		\item
 		\begin{equation}
@@ -210,8 +210,9 @@ One reason the term ``dual'' is used is because, while on one hand, we can obvio
 		for al $v\in V$ and $\psi \in W^{\T}$.  However, by definition of the transpose and $\pinnerprod{|v}$,
 		\begin{equation}
 			\begin{split}
-				\pinnerprod{\psi |[[T^{\T}]^{\T}](\pinnerprod{|v})} & \ceqq \pinnerprod{[T^{\T}](\psi )|\pinnerprod{|v}}\ceqq \pinnerprod{[T^{\T}](\psi )|v} \\
-				& \ceqq \pinnerprod{\psi |T(v)},
+				\MoveEqLeft
+				\pinnerprod{\psi |[[T^{\T}]^{\T}](\pinnerprod{|v})}\ceqq \pinnerprod{[T^{\T}](\psi )|\pinnerprod{|v}} \\
+				& \ceqq \pinnerprod{[T^{\T}](\psi )|v}\ceqq \pinnerprod{\psi |T(v)},
 			\end{split}
 		\end{equation}
 		as desired.
@@ -435,7 +436,7 @@ In case you were wondering, yes, this is the same ``transpose'' you have probabl
 
 \subsubsection{The orthogonal complement}
 
-The intuition behind the following concept will likely be easier to understand when we begin our study of inner-product spaces, though one can see it's usefulness easily enough:  it allows us to related the kernel and image of $T^{\T}$ to that of $T$---see \cref{prp5.2.21}.
+The intuition behind the following concept will likely be easier to understand when we begin our study of inner-product spaces,\footnote{See \cref{sssTheOrthogonalComplement}.} though one can see it's usefulness easily enough:  it allows us to related the kernel and image of $T^{\T}$ to that of $T$---see \cref{prp5.2.21}.
 \begin{dfn}{Orthogonal complement}{OrthogonalComplement}\index{Orthogonal complement}\index[notation]{$S^{\perp}$}
 	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ be a dual-pair.
 	\begin{enumerate}
@@ -589,8 +590,9 @@ Among other things, this can be used to figure out the ``row-space'' of matrices
 	As you already know how to compute null spaces, this gives you an alternative description of $\Row (A)$.  In particular, from \cref{prp5.2.18}\cref{prp5.2.18(iii)},
 	\begin{equation}
 	\begin{split}
-	\dim (\Row (A)) & =\dim (\Null (A)^{\perp})=\dim (\K ^n)-\dim (\Null (A)) \\
-	& =\footnote{By the \namerefpcref{RankNullityTheorem}.}\dim (\Col (A)).
+	\MoveEqLeft
+	\dim (\Row (A))=\dim (\Null (A)^{\perp}) \\
+	& =\dim (\K ^n)-\dim (\Null (A))=\footnote{By the \namerefpcref{RankNullityTheorem}.}\dim (\Col (A)).
 	\end{split}
 	\end{equation}
 	
@@ -706,7 +708,7 @@ We said before that multilinear algebra is the study of multilinear maps.  From 
 		
 		Anyways, I'm sure you probably don't feel very uncomfortable talking about ``$\sqrt{2}\cdot \uppi$'', and my claim is that if you feel comfortable working with this, then you should feel comfortable working with $v\otimes w$.
 		
-		That said, in special cases, one can be a bit more explicit---see the remark in \cref{Tensor}, and in particular, \eqref{eqn5.4.6}.  I personally don't find this perspective particularly useful, but I have found that some students to.
+		That said, in special cases, one can be a bit more explicit---see the blue box in the remark of \cref{Tensor}.  I personally don't find this perspective particularly useful, but I have found that some students to.
 	\end{rmk}
 	\begin{rmk}
 		Thus you can take the tensor product of an $R$-$S$-bimodule and an $S$-$T$-bimodule, the result being an $R$-$T$-bimodule.  To remember this, you might note that this is exactly analogous to matrix multiplication:  the `inner' things have to be the same in which case the result has the structure coming from the `outer' things.
@@ -854,9 +856,9 @@ We continue with an enumeration of some basic properties of the tensor product.
 \begin{prp}{}{prp5.3.16}
 	\begin{enumerate}
 		\item \label{prp5.3.16(i)}Let $Q$, $R$, $S$, and $T$ be rings, let $U$ be a $Q$-$R$-bimodule, let $V$ be an $R$-$S$-bimodule, and let $W$ be an $S$-$T$-bimodule.  Then,
-		\begin{equation}
+		\begin{equation*}
 		(U\otimes _RV)\otimes _SW\cong U\otimes _RV\otimes _SW\cong U\otimes _R(V\otimes _SW)
-		\end{equation}
+		\end{equation*}
 		via the unique maps that has the property $(u\otimes v)\otimes w\mapsto u\otimes v\otimes w$ and $u\otimes v\otimes w\mapsfrom u\otimes (v\otimes w)$ respectively.
 		\item \label{prp5.3.16(ii)}Let $\K$ is a cring, and let $V$ and $W$ be $\K$-modules.  Then,
 		\begin{equation}
@@ -910,11 +912,14 @@ We continue with an enumeration of some basic properties of the tensor product.
 	\end{proof}
 \end{prp}
 
-\begin{exr}{}{}
-	Let $R$, $S$, and $T$ be rings, let $U$ be a $R$-$S$-bimodule, let $V$ be an $S$-$T$-bimodule, let $W$ be an $R$-$T$-bimodule, and let $f\colon U\otimes _SV\rightarrow W$ be linear.
+\begin{exm}{`Injective on pure tensors' but not injective}{}
+	We give an example of a linear-transformation $T\colon U\otimes V\rightarrow W$ such that $T(u\otimes v)=0$ implies $u\otimes v=0$ but yet is not injective.
 	
-	Suppose that $f(u\otimes v)=0$ implies that $u\otimes v=0$ for all $u\in U$ and $v\in V$.  Need $f$ be injective?  Does the answer change if the rings are commutative or division rings?  What if everything is a finite-dimensional vector space?
-\end{exr}
+	Define $V\ceqq \C [x,y]/\Ide{x^2,xy,y^2}$ and define $T\colon V\otimes _{\C}V\rightarrow \C$ to be the unique linear map that sends $1\otimes 1$, $1\otimes x_2$, $1\otimes y_2$, $x_1\otimes 1$, $x_1\otimes x_2$, $x_1\otimes y_2$, $y_1\otimes 1$, $y_1\otimes x_2$, and $y_1\otimes y_2$ all to $1$.
+	\begin{exr}[breakable=false]{}{}
+		Determine if this example satisfies the property I claim it does, and if it does not, find an example that is actually correct.
+	\end{exr}
+\end{exm}
 
 \subsection{Natural-isomorphisms}
 
@@ -947,16 +952,16 @@ What follows is one of the most important properties of the tensor product.
 	\end{enumerate}
 	\begin{rmk}
 		The $R$, $S$, and $T$s everywhere clutter things up.  Dropping all of the notational baggage, these become the more readable
-		\begin{align}
+		\begin{align*}
 			\Mor (U\otimes V,W) & \cong \Mor (V,\Mor (U,W)) \\
 			\Mor (U\otimes V,W) & \cong \Mor (U,\Mor (V,W)).
-		\end{align}
+		\end{align*}
 	\end{rmk}
 	\begin{rmk}
 		To understand this, it might first help to understand an analogous result in a different category:  the map defined analogously as above yields an isomorphism
-		\begin{equation}
+		\begin{equation*}
 			\Mor _{\Set}(X\times Y,Z)\rightarrow \Mor _{\Set}(X,\Mor _{\Set}(Y,Z)).
-		\end{equation}
+		\end{equation*}
 		In other words, functions from $X\times Y$ into $Z$ are `the same as' functions from $X$ into $\Mor _{\Set}(Y,Z)$; given a function of two variables, we can instead think of it as a function-valued function $f\mapsto (x\mapsto (y\mapsto f(x,y)))$.  In computer science, this concept is called \emph{currying}.  Thus, you could say that this result is just the linear algebraic analogue of currying.
 	\end{rmk}
 	\begin{rmk}
@@ -995,13 +1000,15 @@ What follows is one of the most important properties of the tensor product.
 		This is of course true because $f$ is linear and because of properties of the tensor product (\eqref{eqn5.3.5e}).
 		
 		Finally, to check that $f\mapsto g_f$ is a group homomorphism
-		\begin{equation}
+		\begin{equation*}
 			\Mor _{\Mod{R}[T]}(U\otimes _SV,W)\rightarrow \Mor _{\Mod{S}[T]}(V,\Mor _{\Mod{R}}(U,W)),
-		\end{equation}
+		\end{equation*}
 		we must show that $g_{f_1+f_2}=g_{f_1}+g_{f_2}$.  In other words, we must show that
 		\begin{equation}
 			\begin{split}
-				[f_1+f_2](u\otimes v) & =[g_{f_1+f_2}(v)](u)=[[g_{f_1}+g_{f_2}](v)](u)\\
+				\MoveEqLeft
+				[f_1+f_2](u\otimes v)=[g_{f_1+f_2}(v)](u) \\
+				& =[[g_{f_1}+g_{f_2}](v)](u) \\
 				& =f_1(u\otimes v)+f_2(u\otimes v)
 			\end{split}
 		\end{equation}
@@ -1051,12 +1058,12 @@ What follows are a couple of results similar in flavor to the tensor-hom adjunct
 		As this is bilinear in $S$ and $T$, it defines a linear-transformation on the tensor product.
 		
 		To show naturality, let $f\colon U_1\rightarrow V_1$ be a linear-transformation.  By definition (\cref{NaturalTransformation}), this will be natural in the first space iff the following diagram commutes.
-		\begin{equation}
+		\begin{equation*}
 			\begin{tikzcd}[column sep=scriptsize]
 				\Mor (V_1,W_1)\otimes \Mor (V_2,W_2) \ar[r] \ar[d] & \Mor  (V_1\otimes V_2,W_1\otimes W_2) \ar[d] \\
 				\Mor (U_1,W_1)\otimes \Mor (V_2,W_2) \ar[r] & \Mor (U_1\otimes V_2,W_1\otimes W_2)
 			\end{tikzcd}
-		\end{equation}
+		\end{equation*}
 		By definition, this commutes iff
 		\begin{equation}
 			S(f(u_1))\otimes T(v_2)=S(f(u_1))\otimes T(v_2),
@@ -1082,9 +1089,9 @@ What follows are a couple of results similar in flavor to the tensor-hom adjunct
 \end{thm}
 \begin{crl}{$V^{\T}\otimes W\cong \Mor (V,W)$}{prp5.4.9}
 	Let $V$ and $W$ be $\K$-$\K$-bimodules.  Then, the map
-	\begin{equation}
+	\begin{equation*}
 		V^{\dagger}\otimes _{\K}W\ni \phi \otimes w\mapsto (v\mapsto \phi (v)w)\in \Mor _{\Mod{\K}}(V,W)
-	\end{equation}
+	\end{equation*}
 	is linear and natural.
 	
 	Furthermore,
@@ -1107,9 +1114,9 @@ What follows are a couple of results similar in flavor to the tensor-hom adjunct
 \end{crl}
 \begin{crl}{$V^{\T}\otimes W^{\T}\cong (W\otimes W)^{\T}$}{crl5.4.12}
 	Let $V$ and $W$ be $\K$-$\K$-bimodules.  Then, the map
-	\begin{equation}
+	\begin{equation*}
 		V^{\dagger}\otimes W^{\dagger}\ni \phi \otimes \chi \mapsto (v\otimes w\mapsto \phi (v)\chi (w))\in (V\otimes W)^{\dagger}
-	\end{equation}
+	\end{equation*}
 	is linear and natural.
 	
 	Furthermore,
@@ -1128,8 +1135,11 @@ What follows are a couple of results similar in flavor to the tensor-hom adjunct
 		However, by the \namerefpcref{TensorHomAdjunction}, we have a natural isomorphism
 		\begin{equation}
 			\begin{split}
-				\Mor _{\Mod{\K}}(V,W^{\T}) & \ceqq \Mor _{\Mod{\K}}(V,\Mor _{\Mod{\K}}(W,\K )) \\
-				& \cong \Mor _{\Mod _{\K}}(V\otimes _{\K}W,\K )\eqqc [V\otimes _{\K}W]^{\T}.
+				\MoveEqLeft
+				\Mor _{\Mod{\K}}(V,W^{\T}) \\
+				& \ceqq \Mor _{\Mod{\K}}(V,\Mor _{\Mod{\K}}(W,\K )) \\
+				& \cong \Mor _{\Mod _{\K}}(V\otimes _{\K}W,\K ) \\
+				& \eqqc [V\otimes _{\K}W]^{\T}.
 			\end{split}
 		\end{equation}
 		Putting these together, we obtain a natural linear map $V^{\T}\otimes _{\K}W^{\T}\rightarrow [V\otimes _{\K}W]^{\T}$, which is injective if $W$ and $W$ are vector spaces and an isomorphism if $V$ and $W$ are finite-dimensional vector spaces (by \cref{prp5.4.9} again).
@@ -1203,18 +1213,18 @@ We make this precise as follows.
 	\end{rmk}
 	\begin{rmk}
 		Using the same sort of isomorphisms referenced in the previous remark, for $V$ a finite-dimensional vector space, there is a natural isomorphism
-		\begin{equation}
+		\begin{equation*}
 			\begin{split}
 				\tensoralg _l^kV & \ceqq \Mor _{\Mod{\K}}(\underbrace{V\otimes \cdots \otimes V}_l,\underbrace{V\otimes \cdots \otimes V}_k) \\
 				& \cong \Mor _{\Mod{\K}}(\underbrace{V\otimes \cdots \otimes V}_l\otimes \underbrace{V^{\T}\otimes \cdots \otimes V^{\T}}_k,\K ).
 			\end{split}
-		\end{equation}
+		\end{equation*}
 		Thus, in regards to the question ``But what actually \emph{is} a tensor?'', this says that, for $V$ a finite-dimensional vector space anyways:
 		\begin{important}
 			A tensor of rank $\coord{k,l}$ is a multilinear map
-			\begin{equation}\label{eqn5.4.6}
+			\begin{equation*}
 				\underbrace{V\times \cdots \times V}_l\times \underbrace{V^{\T}\times \cdots \times V^{\T}}_k\rightarrow \K .
-			\end{equation}
+			\end{equation*}
 		\end{important}
 	\end{rmk}
 	\begin{rmk}
@@ -1574,7 +1584,10 @@ We now know enough about index notation to further elaborate on the map $V^{\T}\
 	\end{equation}
 	then
 	\begin{equation}
-		\coordinates{\phi \otimes w}{\basis{S}_2\leftarrow \basis{S}_3}=\begin{bmatrix}1\cdot 4 & 2\cdot 4 & 3\cdot 4 \\ 1\cdot 5 & 2\cdot 5 & 3\cdot 5\end{bmatrix}=\begin{bmatrix}4 & 8 & 12 \\ 5 & 10 & 15\end{bmatrix},
+		\begin{split}
+		\coordinates{\phi \otimes w}{\basis{S}_2\leftarrow \basis{S}_3} & =\begin{bmatrix}1\cdot 4 & 2\cdot 4 & 3\cdot 4 \\ 1\cdot 5 & 2\cdot 5 & 3\cdot 5\end{bmatrix} \\
+		& =\begin{bmatrix}4 & 8 & 12 \\ 5 & 10 & 15\end{bmatrix},
+		\end{split}
 	\end{equation}
 	where $\basis{S}_k$ is the standard basis of $\R ^k$.  Also, note how this is just the matrix product
 	\begin{equation}
@@ -1701,7 +1714,8 @@ Let $V$ be a᪞$\K$-$\K$-bimodule and let $\pinnerprod{\blankdot |\blankdot}\col
 		which in index notation reads
 		\begin{equation}
 			\begin{split}
-				g_{ab}[T^{\T}]\indices{^a_c}w^cv^b & =g_{ab}w^aT\indices{^b_c}v^c=T_{ac}w^av^c \\
+				g_{ab}[T^{\T}]\indices{^a_c}w^cv^b & =g_{ab}w^aT\indices{^b_c}v^c \\
+				& =T_{ac}w^av^c \\
 				& =g_{ab}T\indices{_c^a}w^cv^b,
 			\end{split}
 		\end{equation}
@@ -1756,9 +1770,9 @@ We end this section with a couple of exercises to get practice using index notat
 	\end{equation}
 	\begin{rmk}
 		Throughout, we have omitted the indices corresponding to $A$.  For example, with these indices put in, \eqref{eqnClifford} would read
-		\begin{equation}
+		\begin{equation*}
 			m\indices{^A_{BC}}\gamma \indices{^B_a}\gamma \indices{^C_b}+m\indices{^A_{BC}}\gamma \indices{^B_b}\gamma \indices{^C_a}=2g_{ab}1^A,
-		\end{equation}
+		\end{equation*}
 		where we have used uppercase for the $A$-indices, $m\indices{^A_{BC}}$ is the multiplication tensor of $A$ (confer \cref{exmAssociativity}) and $1^A\in A$ is the multiplicative identity.  We recommend you do not do this problem with the $A$-indices written explicitly.
 	\end{rmk}
 	\begin{rmk}
@@ -1792,26 +1806,26 @@ We end this section with a couple of exercises to get practice using index notat
 
 If you've studied physics before, there is a good chance that you encountered a definition of ``tensor'' that doesn't look much at all like the one we've just given.\footnote{If you've never studied physics, then there is no possibility for confusion, and you should feel free to skip this subsubsection.}  Let us try to explain the sense in which these two different definitions are related.
 
-First of all, the ``physicists definition'' I have in mind sounds something like the following.
-\begin{important}
+First of all, the ``physicists definition'' I have in mind sounds something like the following.\footnote{You might have also simply heard that a tensor is just a multidimensional array of numbers, like a matrix, but of higher dimension.  This is even more incorrect, but there is a reason people say this:  in coordinates, tensors are represented by multidimensional arrays of numbers, but one must keep in mind that some information is lost---for example, a $3$ dimensional array of numbers can't distinguish between a $\coord{3,0}$ tensor, a $\coord{2,1}$ tensor, a $\coord{1,2}$ tensor, or a $\coord{0,3}$ tensor.}
+\begin{displayquote}
 	A \emph{tensor} is a multidimensional array of numbers that transforms in a certain way under a certain group action.
-\end{important}
+\end{displayquote}
 Of course, this is not precise, and so the exact definition you find will not be exactly this.  For example, the definition from \cite[pg.~659]{Taylor} reads verbatim:
-\begin{important}
+\begin{displayquote}
 	A four-tensor (strictly speaking a four-tensor of rank $2$) is defined as a set of sixteen numbers $T_{\mu \nu}$ (defined for every inertial frame $\mscr{S}$), where the indices $\mu$ and $\nu$ run from $1$ to $4$, which, when formed into a $4\times 4$ matrix $T$, satisfy
 	\begin{equation*}
 		T'=\Lambda T\tilde{\Lambda}\tag{15.137}
 	\end{equation*}
 	---a property that exactly parallels Equation (15.132) for three-tensors.
-\end{important}
+\end{displayquote}
 To give you perhaps a better idea of what Taylor means, we reproduce what is essentially the same definition made precise (from \cite[pg.~175]{Gelfand}).\footnote{Incidentally, Gel'fand is by any reasonable standard a fantastic mathematician.  I'm not sure where he got this wacky idea to use bases, but Hermann Weyl would not have been pleased.  (And yes, he most certainly is using ``$\mbf{R}$'' as the name of a vector space.  And yes, he is not staggering (all of) his indices.  Please don't do this.)}
-\begin{important}
+\begin{displayquote}
 	Let $\mbf{R}$ be an $n$-dimensional vector space.  We say that a $p$ times covariant and $q$ times contravariant tensor is defined with every basis in $\mbf{R}$ there is associated as set of $n^{p+q}$ numbers $a_{ij\cdots}^{rs\cdots}$ (there are $p$ lower indices and $q$ upper indices) which under change of basis defined by some matrix $\| c\indices{_i^j}\}$ transform according to the rule
 	\begin{equation*}
 		\tag*{(6)}a'{}_{ij\cdots}^{rs\cdots}=c\indices{_i^{\alpha}}c\indices{_j^{\beta}}\cdots b\indices{_{\sigma}^r}b\indices{_{\tau}^s}\cdots a_{\alpha \beta \cdots}^{\sigma \tau \cdots}
 	\end{equation*}
 	with $\| b\indices{_i^j}\}$ the transpose of the inverse of $\| c\indices{_i^j}\}$.  The number $p+q$ is called the rank (valence) of the tensor.  The numbers $a_{ij\cdots}^{rs\cdots}$ are called the components of the tensor.
-\end{important}
+\end{displayquote}
 
 First of all, let's be clear:  \emph{this concept of ``tensor'' is \emph{not} the same as ours}---they are only related.\footnote{Incidentally, don't have your indices run from $1$ to $4$.  I don't know what he was thinking, but in relativity they should really be running from $0$ to $3$.}
 
@@ -1821,9 +1835,9 @@ The relationship between these two definitions then stems from the fact that \em
 
 One should really keep these concepts distinct in one's mind, however.  For example, one often wants to think of tensors are being in a representation of, say, the group of isometries of $V$ if $V$ comes with a metric.  If in your definition of tensor it is implicit that it already `lives' in a representation of $\Aut _{\Vect}(V)$, it's not clear how one changes the group.  To be honest, most physicists probably don't think about the mathematical formalism enough to realize that this is not clear.  In any case, I would imagine most would not have a problem with it anyways---being absolutely mathematically precise about what sort of object a tensor is (element of vector space or representation) won't affect numerical predictions, so why bother worrying?
 
-\subsection{Summary}
+\subsection{Summary}\label{sbsTensorSummary}
 
-In summary:\footnote{In what follows, unless otherwise stated, we assume we are working over a finite-dimensional vector space over a field.  If we didn't do this, breaking up all the cases would make the summary sufficiently cluttered so as to decrease its utility substantially.}
+In summary:
 \begin{enumerate}
 	\item A tensor of rank $\coord{k,l}$ is a linear map from
 	\begin{equation}
@@ -1831,7 +1845,7 @@ In summary:\footnote{In what follows, unless otherwise stated, we assume we are 
 	\end{equation}
 	(\cref{Tensor}).
 	\item A general tensor is an element of the tensor algebra $\tensoralg _{\bullet}^{\bullet}V\ceqq \bigoplus _{k,l\in \N}\tensoralg _l^kV$ (\cref{TensorAlgebra}).
-	\item In finite-dimensional, a tensor of rank $\coord{k,l}$ is the same as an element of $\underbrace{V\otimes \cdots \otimes V}_k\otimes \underbrace{V^{\T}\otimes \cdots \otimes V^{\T}}_l$ (\cref{thm5.4.6}).
+	\item In finite-dimensions, a tensor of rank $\coord{k,l}$ is the same as an element of $\underbrace{V\otimes \cdots \otimes V}_k\otimes \underbrace{V^{\T}\otimes \cdots \otimes V^{\T}}_l$ (\cref{thm5.4.6}).
 	\item The identity linear-transformation is denoted by $\delta \indices{^a_b}$.
 	\item The transpose of $T\indices{^a_b}$ is denoted $[T^{\T}]\eqqc T\indices{_a^b}$.
 	\item The tensor product of two tensors is denoted simply by juxtaposition (\cref{ntn5.4.4}).
@@ -1923,7 +1937,11 @@ We are now able to begin discussing (anti)symmetric tensors themselves.
 		for all $\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\} )$.
 		\item $T^{a_1\cdots a_k}$ is \term{antisymmetric}\index{Antiymmetric (tensor)} iff
 		\begin{equation}
-			T^{a_1\cdots a_k}=\sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}$ for all $\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\}).
+			T^{a_1\cdots a_k}=\sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}
+		\end{equation}
+		for all
+		\begin{equation}
+			\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\}).
 		\end{equation}
 	\end{enumerate}
 	\begin{rmk}
@@ -1997,13 +2015,13 @@ Given an arbitrary tensor, there is a canonical way of `turning it into' an (ant
 	Let $V$ be a $\K$-$\K$-bimodule with $\Char (\K )=0$, and let $T^{a_1\cdots a_k}\in \bigotimes ^kV$.
 	\begin{enumerate}
 		\item The \term{symmetrization}\index{Symmetrization} $T^{(a_1\cdots a_k)}$\index[notation]{$T^{(a_1\cdots a_k)}$} of $T^{a_1\cdots a_k}$ is defined by
-		\begin{equation}
+		\begin{equation*}
 			T^{(a_1\cdots a_k)}\ceqq \frac{1}{k!}\sum _{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\})}T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}.
-		\end{equation}
+		\end{equation*}
 		The \term{antisymmetrization}\index{Antisymmetrization} $T^{[a_1\cdots a_k]}$\index[notation]{$T^{[a_1\cdots a_k]}$} of $T^{a_1\cdots a_k}$ is defined by
-		\begin{equation}
+		\begin{equation*}
 			T^{[a_1\cdots a_k]}\ceqq \frac{1}{k!}\sum _{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\})}\sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}.
-		\end{equation}
+		\end{equation*}
 	\end{enumerate}
 	\begin{rmk}
 		The (anti)symmetrization of covariant tensors is defined in an essentially identical manner.  You can take the (anti)symmetrization of a tensor with both contravariant and covariant parts, but you do the contravariant and covariant indices separately (so that you might more accurately use the terms ``contravariant (anti)symmetrization'' and ``covariant (anti)symmetrization'').  For example, the expression $T\indices{^{ab}_{(cde)}}$ is perfectly valid, as is $T\indices{^{[abc]}_{(cd)}}$.
@@ -2024,11 +2042,9 @@ Given an arbitrary tensor, there is a canonical way of `turning it into' an (ant
 		T_{(ab)}=\frac{1}{2}(T_{ab}+T_{ba})
 	\end{equation}
 	and
-	\begin{equation}
-		\begin{multlined}
-			T^{[abc]} \\ =\frac{1}{6}(T^{abc}-T^{acb}-T^{bac}+T^{bca}+T^{cab}-T^{cba}).
-		\end{multlined}
-	\end{equation}
+	\begin{equation*}
+		T^{[abc]}=\frac{1}{6}(T^{abc}-T^{acb}-T^{bac}+T^{bca}+T^{cab}-T^{cba}).
+	\end{equation*}
 	You figure out the signs here by counting the number of `flips' to go from $\coord{a,b,c}$ to the order of indices for that term.  For example, to go from $\coord{a,b,c}$ to $\coord{a,c,b}$, I need to do just one flip ($b\leftrightarrow c$), and so the sign for the second term is $(-1)^1=-1$.  On the other hand, to go from $\coord{a,b,c}$ to $\coord{b,c,a}$ takes two flips ($a\leftrightarrow c$ and then $b\leftrightarrow c$), and so the sign for the fourth term is $(-1)^2=1$.
 \end{exm}
 We may now characterize the (anti)symmetric tensors using the concept of (anti)symmetrization.
@@ -2061,9 +2077,9 @@ We may now characterize the (anti)symmetric tensors using the concept of (anti)s
 		\begin{equation}
 		S^{a_1\cdots a_k}T_{a_1\cdots a_k}=S^{(a_1\cdots a_k)}T_{a_1\cdots a_k}.
 		\end{equation}
-		\item \label{exr5.5.23(ii)}Show that if $S$ is symmetric, then $S^{[a_1\cdots a_k]}=0$.\footnote{Again, an analogous result holds if $S$ is antisymmetric.}
+		\item \label{exr5.5.23(ii)}Let $k\geq 2$.  Show that if $S$ is symmetric, then $S^{[a_1\cdots a_k]}=0$.\footnote{Again, an analogous result holds if $S$ is antisymmetric.}
 		\item \label{exr5.5.23(iii)}Is the converse of the previous part true?  If so prove it; if not, give a counter-example.
-		\item \label{exr5.5.23(iv)}Show that $S^{a_1\cdots a_k}T_{a_1\cdots a_k}=0$ if $S$ is symmetric and $T$ is antisymmetric.
+		\item \label{exr5.5.23(iv)}Let $k\geq 2$.  Show that $S^{a_1\cdots a_k}T_{a_1\cdots a_k}=0$ if $S$ is symmetric and $T$ is antisymmetric.
 	\end{enumerate}
 	\begin{solution}
 		\cref{exr5.5.23(i)} Let $\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k\} )$.  Then, using the fact that
@@ -2107,23 +2123,23 @@ We will make it `official' later, but let us tentatively write $\symalg _{\bulle
 	Let $V$ be a $\K$-$\K$-bimodule and let $S^{a_1\cdots a_k}\in \tensoralg ^kV$ and $T^{a_1\cdots a_l}\in \tensoralg ^lV$.
 	\begin{enumerate}
 		\item The \term{symmetric product}\index{Symmetric product} $[S\vee T]^{a_1\cdots a_{k+l}}$\index[notation]{$S\vee T$} of $S$ and $T$ is defined by
-		\begin{equation}
+		\begin{equation*}
 			\begin{multlined}
 				[S\vee T]^{a_1\cdots a_{k+l}}\ceqq \\ \sum _{\substack{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k+l\}) \\ \sigma \text{ is a }\coord{k,l}\text{ shuffle.}}}S^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (k+l)}}.
 			\end{multlined}
-		\end{equation}
+		\end{equation*}
 		\item The \term{antisymmetric product}\index{Antisymmetric product} $[S\wedge T]^{a_1\cdots a_{k+l}}$\index[notation]{$S\wedge T$} of $S$ and $T$ is defined by
-		\begin{equation}
+		\begin{equation*}
 			\begin{multlined}
 				[S\wedge T]^{a_1\cdots a_{k+l}}\ceqq \\ \sum _{\substack{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k+l\}) \\ \sigma \text{ is a }\coord{k,l}\text{ shuffle.}}}\sgn (\sigma )S^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (k+l)}}.
 			\end{multlined}
-		\end{equation}
+		\end{equation*}
 	\end{enumerate}
 	\begin{rmk}
 		$\sigma \in \Aut _{\Set}(\{ 1,\ldots ,k+l\} )$ is a \term{$\coord{k,l}$ shuffle} iff
-		\begin{equation}
+		\begin{equation*}
 			\sigma (1)<\cdots <\sigma (k)\text{ and }\sigma (k+1)<\cdots <\sigma (k+l).
-		\end{equation}
+		\end{equation*}
 		The term comes from the fact that if you break up a deck of $k+l$ cards into two piles, one with $k$ cards and one with $l$ cards, and you ``shuffle'' them, then the cards will be `mixed up' in such a way so that the first pile of $k$ cards is still `in order' compared to other cards from that pile, and similarly for the second pile of $l$ cards.
 		
 		Note that the subset of shuffles is \emph{not} a subgroup of the symmetric group---the composition of two shuffles need not be a shuffle.\footnote{And in fact, it had better not be if we're going to shuffle our cards like this!}
@@ -2192,13 +2208,13 @@ A trivial but quite important corollary of the definition is that the antisymmet
 		\emph{Commutative} would mean of course that $ST=TS$.  \emph{Anticommutative} would mean that $ST=-TS$.  \term{Super-commutativity}\index{Super-commutativity} on the other hand refers to the fact that two tensors of definite rank\footnote{For example, the sum of a tensor of rank $2$ with a tensor of rank $3$ is still a tensor, but not one of definite rank.} commute or anticommute depending on their ranks.
 	\end{rmk}
 	\begin{proof}
-		\begin{equation}
+		\begin{equation*}
 		S^{[a_1\cdots a_p}T^{a_{p+1}\cdots a_{p+q}]}=(-1)^pS^{[a_{p+1}a_1\cdots a_{p-1}}T^{a_pa_{p+2}\cdots a_{p+q}]}.
-		\end{equation}
+		\end{equation*}
 		In words, to move the index $a_{p+1}$ all the way to the left, we move it past $p$ other indices, picking up $p$ minus signs along the way.  Doing the same for $a_{p+2}$ gives another $p$ minus signs, and so on.  Moving all the indices $a_{p+1},\ldots ,a_{p+q}$ all the way to the left thus generates $p\cdot q$ minus signs, giving
-		\begin{equation}
+		\begin{equation*}
 		S^{[a_1\cdots a_p}T^{a_{p+1}\cdots a_{p_q}]}=(-1)^{pq}S^{[a_{p+1}\cdots a_{p+q}}T^{a_1\cdots a_p]}.
-		\end{equation}
+		\end{equation*}
 		As $\K$ is commutative (so that everything commutes in index notation), it follows that $S\wedge T=(-1)^{pq}T\wedge S$.
 	\end{proof}
 \end{prp}
@@ -2206,14 +2222,14 @@ A trivial but quite important corollary of the definition is that the antisymmet
 	Let $V$ be a $\K$-module, $\K$ a cring, and let $T\in \antialg ^kV$.  Then, if $k$ is odd, then $T\wedge T=0$.
 	\begin{proof}
 		Suppose that $k$ is odd.  Let $\sigma \in \Aut _{\Set}(\{ 1,\ldots ,2k\} )$ and denote by $\breve{\sigma}\in \Aut _{\Set}(\{ 1,\ldots ,2k\} )$ the permutation defined by
-		\begin{equation}
+		\begin{equation*}
 			\breve{\sigma}(i)\ceqq (1(k+1))(2(k+2))\cdots ((k-1)(2k-1))(k(2k))\sigma .\footnote{That is, $\breve{\sigma}$ is the product of $\sigma$ by the $k$ transpositions $(i(k+i))$ as $i$ runs from $1$ to $k$.  Intuitively, $\breve{\sigma}$ does to $\{ 1,\ldots ,k\}$ what $\sigma$ did to $\{ k+1,\ldots ,2k\}$ and vice versa.}
-		\end{equation}
+		\end{equation*}
 		Note that $\breve{\breve{\sigma}}=\sigma$ and that $\breve{\sigma}$ is a $\coord{k,k}$ shuffle iff $\sigma$ is.  Furthermore, because $k$ is odd, we have that $\sgn (\breve{\sigma})=-\sgn (\sigma )$.
 		
 		We now have that
 		{\footnotesize
-		\begin{equation}
+		\begin{equation*}
 			\begin{split}
 				\MoveEqLeft {}
 				[T\wedge T]^{a_1\cdots a_{2k}}\ceqq \sum _{\substack{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,2k\} ) \\ \sigma \text{ is a }\coord{k,k}\text{ shuffle.}}}\sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (2k)}} \\
@@ -2221,7 +2237,7 @@ A trivial but quite important corollary of the definition is that the antisymmet
 				& =\sum _{\substack{\sigma \colon \{ 1,\ldots ,k\} \rightarrow \{ 1,\ldots ,2k\} \\ \text{injective.}}}\left[ \sgn (\sigma )T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}T^{a_{\sigma (k+1)}\cdots a_{\sigma (2k)}}+\right. \\ & \qquad \left.-\sgn (\sigma )T^{a_{\sigma (k+1)}\cdots a_{\sigma (2k)}}T^{a_{\sigma (1)}\cdots a_{\sigma (k)}}\right] \\
 				& =0.
 			\end{split}
-		\end{equation}
+		\end{equation*}
 		}
 	\end{proof}
 	\begin{rmk}
@@ -2353,12 +2369,12 @@ We saw above in \cref{BasisForTensorAlgebra} an explicit description of a basis 
 			\antialg _l^kV=0\text{ if }k>\dim (V)\text{ or }l>\dim (V)\text{.}
 		\end{equation}
 		Hence,
-		\begin{equation}
+		\begin{equation*}
 			\begin{split}
 				\dim \left( \antialg _{\bullet}^{\bullet}V\right) & =\sum _{k,l=0}^{\dim (V)}\binom{\dim (V)}{k}\binom{\dim (V)}{l} \\
 				& =2^{\dim (V)}\cdot 2^{\dim (V)}=2^{2\dim (V)}.
 			\end{split}
-		\end{equation}
+		\end{equation*}
 		Similar results hold for the purely contravariant and covariant cases.
 	\end{rmk}
 	\begin{proof}
@@ -2611,7 +2627,7 @@ Given a matrix $A$, it turns out that the trace is going to be the sum of the di
 		Throughout this section, it should be assumed that things generalize to finite-rank modules unless otherwise indicated.
 	\end{rmk}	
 \end{dfn}
-\begin{thm}{$\tr (T)=\text{sum of eigenvalues}$}{}
+\begin{thm}{$\tr (T)=\text{sum of eigenvalues}$}{thm5.7.1.3}
 	Let $V$ be a finite-dimensional vector space over a field $\F$ with algebraic closure $\A$ and let $T\colon V\rightarrow V$ be linear.  Then,
 	\begin{equation}
 		\tr (T)=\sum _{\lambda \in \Eig (T^{\A})}\dim (\Eig _{\lambda}^{\infty})\lambda .
@@ -2731,7 +2747,7 @@ It's quite likely that you've seen the determinant before, and that this doesn't
 	\end{rmk}
 
 	$\{e_1\wedge e_2\wedge e_3\}$ is a basis for $\antialg ^3\R ^3$ (see \cref{exm1.6.51} for a slight elaboration), and so we compute
-	\begin{equation}
+	\begin{equation*}
 		\begin{split}
 			\MoveEqLeft {}
 			[\antialg* ^3T](e_1\wedge e_2\wedge e_3)\ceqq T(e_1)\wedge T(e_2)\wedge T(e_3) \\
@@ -2742,7 +2758,7 @@ It's quite likely that you've seen the determinant before, and that this doesn't
 			& =e_1\wedge e_2\wedge e_3+2e_1\wedge e_2\wedge e_3+e_1\wedge e_2\wedge e_3 \\
 			& =4e_1\wedge e_2\wedge e_3.
 		\end{split}
-	\end{equation}
+	\end{equation*}
 	Hence, it follows from the definition that
 	\begin{equation}
 		\det (T)=4.
@@ -2786,8 +2802,8 @@ One of the first properties of the determinant that we're going to be interested
 			& \ceqq [T\circ S](u_1)\vee \cdots \vee [T\circ S](u_k) \\
 			& \ceqq T(S(u_1))\vee \cdots \vee T(S(u_k)) \\
 			& \eqqc [\symalg* ^kT]\left( S(u_1)\vee \cdots \vee S(u_k)\right) \\
-			& \eqqc [\symalg* kT]\left( [\symalg* ^kS](u_1\vee \cdots \vee u_k)\right) \\
-			& \eqqc [\symalg* ^kT\circ \symalg* ^kS](u_1\vee \cdots u_k).
+			& \eqqc [\symalg* ^kT]\left( [\symalg* ^kS](u_1\vee \cdots \vee u_k)\right) \\
+			& \eqqc [\symalg* ^kT\circ \symalg* ^kS](u_1\vee \cdots \vee u_k).
 			\end{split}
 		\end{equation}
 		
@@ -2819,7 +2835,8 @@ One of the first properties of the determinant that we're going to be interested
 		\begin{equation}
 			\begin{split}
 				\det (S\circ T)\id & =\antialg* ^d[T\circ S]=\footnote{By the previous result.}\antialg* ^dT\circ \antialg* ^dS \\
-				& =[\det (T)\id ]\circ [\det (S)\id ]=\det (T)\det (S)\id .
+				& =[\det (T)\id ]\circ [\det (S)\id ] \\
+				& =\det (T)\det (S)\id .
 			\end{split}
 		\end{equation}
 		Hence, $\det (S\circ T)=\det (S)\det (T)$.
@@ -2865,7 +2882,9 @@ We now turn to show that this definition is equivalent to any definition you lik
 		and hence
 		\begin{equation}
 			\begin{split}
-				T(b_1)\wedge T(b_2)\wedge T(b_3) & =(\lambda ^2b_1\wedge b_2)\wedge (\lambda b_3+n_2b_2) \\
+				\MoveEqLeft
+				T(b_1)\wedge T(b_2)\wedge T(b_3) \\
+				& =(\lambda ^2b_1\wedge b_2)\wedge (\lambda b_3+n_2b_2) \\
 				& =\lambda ^3b_1\wedge b_2\wedge b_3.
 			\end{split}
 		\end{equation}
@@ -2937,7 +2956,7 @@ This has a couple of important corollaries.
 \subsubsection{Determinants of matrices}
 
 We now take a look at the definitions of determinant in terms of matrices you might have seen before.  The first and most important one says that the determinant is the unique scalar-valued function on matrices that assigns $1$ to the identity and transforms a certain way upon performing row operations (\cref{RowOperation}).
-\begin{thm}{}{}
+\begin{thm}{}{thm5.7.2.38}
 	Let $\K$ be a cring and let $m\in \N$.  Then, $\det \colon \Matrix _n(\K )\rightarrow \K$ is the unique function such that
 	\begin{align}
 		\det (\id _n) & =1 \\
@@ -3026,7 +3045,8 @@ Okay, so as it stands, this definition is pretty impenetrable.  Let's look at an
 		\begin{split}
 			[\antialg* ^2T](e_2\wedge e_3) & \ceqq T(e_2)\wedge T(e_3) \\
 			& \ceqq (2e_1+5e_2)\wedge (3e_1+6e_2) \\
-			& =12e_1\wedge e_2+15e_2\wedge e_1=-3e_1\wedge e_2.
+			& =12e_1\wedge e_2+15e_2\wedge e_1 \\
+			& =-3e_1\wedge e_2.
 		\end{split}
 	\end{equation}
 	Thus,
@@ -3275,17 +3295,17 @@ Finally, we return to the last statement that is sometimes taken as the definiti
 	Let $\F$ be a field and let $A$ be an $n\times n$ matrix with entries in $\F$.
 	\begin{enumerate}
 		\item \label{thm5.7.96(i)}
-		\begin{equation}
+		\begin{equation*}
 			\begin{multlined}
 				\det (A) \\ =\sum _{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,n\} )}\sgn (\sigma )A\indices{^{\sigma (1)}_1}\cdots A\indices{^{\sigma (n)}_n}.
 			\end{multlined}
-		\end{equation}
+		\end{equation*}
 		\item \label{thm5.7.96(ii)}
-		\begin{equation}
+		\begin{equation*}
 			\begin{multlined}
 				\det (A) \\ =\sum _{\sigma \in \Aut _{\Set}(\{ 1,\ldots ,n\} )}\sgn (\sigma )A\indices{^1_{\sigma (1)}}\cdots A\indices{^n_{\sigma (n)}}.
 			\end{multlined}
-		\end{equation}
+		\end{equation*}
 	\end{enumerate}
 	\begin{rmk}
 		In words (for \cref{thm5.7.96(ii)}):  Pick an entry from every column of $A$.  Multiply these entries, together with possibly a minus sign depending on the order you chose the entries.  Add up all the numbers found in this way for each way of picking entries.\footnote{Of course, there are many ways (in fact, $n!$ ways) to pick exactly one entry from each column.}
@@ -3305,7 +3325,7 @@ Finally, we return to the last statement that is sometimes taken as the definiti
 In $\R ^d$, the determinant can be given a geometric interpretation.  The absolute value tells us by how much the volume scales and the sign tells us whether the orientation changes or not.
 
 We begin with the former.
-\begin{thm}{}{}
+\begin{thm}{}{thm5.7.2.104}
 	Let $T\colon \R ^d\rightarrow \R ^d$ be linear and let $S\subseteq \R ^d$.  Then,
 	\begin{equation}
 		\vol (T(S))=\abs{\det (T)}\vol (S),
@@ -3353,7 +3373,7 @@ So that's what the absolute value of the determinant means.  It turns out that t
 	An \term{oriented vector space}\index{Oriented vector space} is a finite-dimensional real vector space $V$ together with an orientation $\omega /\sim$ on $V$.
 \end{dfn}
 As now we can state the theorem giving the relationship between orientation and the sign of the determinant.
-\begin{thm}{}{}
+\begin{thm}{}{thm5.7.2.111}
 	Let $\coord{V,\omega /\sim}$ be an oriented vector space and let $T\colon V\rightarrow V$ be linear.  Then, $[\antialg _dT^{\T}](\omega )/\sim =\omega /\sim$ iff $\det (T)>0$.
 	\begin{rmk}
 		$T$ sends the original orientation $\omega /\sim$ to a new orientation $[\antialg _dT^{\T}](\omega )/\sim$.  Thus, this is the statement that $\det (T)>0$ iff $T$ ``preserves'' the orientation.
@@ -3421,17 +3441,17 @@ Let $V$ be a finite-dimensional vector space over a field $\F$, let $T\colon V\r
 		for, upon writing $[\antialg ^kT](b_S)$ as a linear-combination of elements of $\antialg ^k\basis{B}$, we see that all the $b_T$-term will vanish when you take the wedge product with $b_{S^{\comp}}$ unless $b_T$ and $b_{S^{\comp}}$ have no factors in common.\footnote{This of course, from the definition \eqref{eqn5.7.115}, is true iff $T=S$.}
 		
 		Using this, we see that
-		\begin{equation}
+		\begin{equation*}
 			\begin{split}
 				\MoveEqLeft {}
 				[\antialg* ^d[T+\lambda ]](v_1\wedge \cdots \wedge v_d) \\
 				& \ceqq [[T+\lambda ](v_1)]\wedge \cdots \wedge [[T+\lambda ](v_d)] \\
 				& \ceqq (T(v_1)+\lambda v_1)\wedge \cdots \wedge (T(v_d)+\lambda v_d) \\
-				& =\sum _{k=0}^d\lambda ^k\left[ \sum _{\substack{S\subseteq \{ 1,\ldots ,d\} \\ \abs{S}=k-d}}\sgn (S)[\antialg* ^kT](b_S)\wedge b_{S^{\comp}}\right] \\
-				& =\sum _{k=0}^d\lambda ^k\left[ \sum _{\substack{S\subseteq \{ 1,\ldots ,d\} \\ \abs{S}=k-d}}\sgn (S)^2[T]\indices{^S_S}b_1\wedge \cdots \wedge b_d\right] \\
+				& =\sum _{k=0}^d\lambda ^k\Bigg[ \sum _{\substack{S\subseteq \{ 1,\ldots ,d\} \\ \abs{S}=k-d}}\sgn (S)[\antialg* ^kT](b_S)\wedge b_{S^{\comp}}\Bigg] \\
+				& =\sum _{k=0}^d\lambda ^k\Bigg[ \sum _{\substack{S\subseteq \{ 1,\ldots ,d\} \\ \abs{S}=k-d}}\sgn (S)^2[T]\indices{^S_S}b_1\wedge \cdots \wedge b_d\Bigg] \\
 				& =\left( \sum _{k=0}^d\lambda ^k\tr (\antialg* ^{d-k}T)\right) b_1\wedge \cdots \wedge b_d,
 			\end{split}
-		\end{equation}
+		\end{equation*}
 		and hence
 		\begin{equation}
 			\det (T+\lambda )=\sum _{k=0}^d\tr (\antialg* ^{d-k}T)\lambda ^k,
@@ -3446,8 +3466,13 @@ Let $V$ be a finite-dimensional vector space over a field $\F$, let $T\colon V\r
 	\end{equation}
 	where $d_{\lambda}\ceqq \dim (\Eig _{\lambda ,T^{\A}}^{\infty})$.
 	\begin{rmk}
-		In particular, for $\lambda \in \F$, $\lambda \in \Eig (T)$ off $p_{\operatorname{char}}(\lambda )=0$.
+		In particular, for $\lambda \in \F$, $\lambda \in \Eig (T)$ iff $p_{\operatorname{char}}(\lambda )=0$.
 	\end{rmk}
+	\begin{important}
+		\emph{This is by far the most common ways, and often the most practical way, to compute the eigenvalues of a matrix}.\footnote{Though for linear-transformations that are not matrices, you'll often just want to start from the definition of eigenvalue.}
+		
+		Compute $p_{\operatorname{char}}$ as $\det (T-\lambda )$.  Set the result equal to $0$.  Solve for $\lambda$.  Your solutions are then the eigenvalues of $T$.
+	\end{important}
 	\begin{proof}
 		This follows immediately from \cref{thm5.7.28} by replacing $T$ with $T-\lambda$.
 	\end{proof}
@@ -3488,7 +3513,7 @@ As you may already be aware, one of the most important applications of the chara
 	\end{equation}
 	Using the cofactor expansion along the first column, we compute
 	{\scriptsize
-	\begin{equation}
+	\begin{equation*}
 		\begin{split}
 			\MoveEqLeft
 			\det (A-\lambda )=(5-\lambda )\cdot \det \left( \begin{bmatrix}1-\lambda & -1 & -1 \\ -1 & 3-\lambda & 0 \\ 1 & -1 & 2-\lambda \end{bmatrix}\right) \\ & \qquad -1\cdot \det \left( \begin{bmatrix}4 & 2 & 1 \\ 1-\lambda & -1 & -1 \\ 1 & -1 & 2-\lambda \end{bmatrix}\right) \\ & \qquad -1\cdot \det \left( \begin{bmatrix}4 & 2 & 1 \\ 1-\lambda & -1 & -1 \\ -1 & 3-\lambda & 0\end{bmatrix}\right) \\
@@ -3497,7 +3522,7 @@ As you may already be aware, one of the most important applications of the chara
 			& =\lambda ^4-11\lambda ^3+42\lambda ^2-64\lambda +32 \\
 			& =(\lambda -1)(\lambda -2)(\lambda -4)^2.
 		\end{split}
-	\end{equation}
+	\end{equation*}
 	}
 	Thus, this matrix has three distinct eigenvalues, $1$, $2$, and $4$, with respective multiplicities $1$, $1$, and $2$.
 \end{exm}
@@ -3519,7 +3544,7 @@ We end this chapter with a discussion of what are called \emph{bilinear forms} a
 \begin{dfn}{Quadratic form}{QuadraticForm}
 	Let $V$ be a $\K$-$\K$-bimodule.  Then, a \term{quadratic form}\index{Quadratic form} on $V$ is a function $Q\colon V\rightarrow \K$ of the form $Q(v)=\pinnerprod{v|v}$ for $\pinnerprod \colon V\times V\rightarrow \K$ symmetric and bilinear.
 \end{dfn}
-\begin{thm}{Quadratic forms are `the same' as symmetric bilinear forms}{}
+\begin{thm}{Quadratic forms are `the same' as symmetric bilinear forms}{thm5.8.1.3}
 	Let $V$ be a $\K$-$\K$-bimodule and let $Q\colon V\times V\rightarrow \K$ be a quadratic form on $V$.  Then, if $2\in \K$ is a unit,
 	\begin{equation}
 		\pinnerprod{v|w}\ceqq \frac{1}{2}\left( Q(v+w)-Q(v)-Q(w)\right) 
@@ -3831,3 +3856,29 @@ We mentioned before that diagonalizations of bilinear forms are not necessarily 
 		\end{exr}
 	\end{proof}
 \end{thm}
+
+\section{Summary}
+
+The subject of study of this chapter was multilinear maps, the motivation for which came from differentiation (where the higher derivatives are multilinear maps in the tangent vectors).  This in turn motivated us to introduce two concepts:  the dual-space and the tensor product.
+
+The dual-space of $V$ is defined to be $\Mor _{\Mod{\K}}(V,\K )$, the set of all linear maps from $V$ to $\K$ (\cref{DualSpace})
+
+The tensor product of two modules $V\times W$ was defined so that bilinear maps $V\times W\rightarrow U$ are `the same as' $V\otimes W\rightarrow U$.
+
+Together, these two constructions allowed us to reduce the study of multilinear maps to the study of linear maps (between tensor products of $V$ and $V^*$).  Be sure to take a look at \cref{sbsTensorSummary}, which contains a more detailed summary of what we did with tensors in index notation.
+
+We then turned to a study of the determinant (which necessitated a discussion of antisymmetric tensors and extension of scalars).  The determinant wound up being the unique scalar $\det (T)$ such that $\antialg ^dT=\det (T)$, where $d$ is the dimension of the underlying vector space.  While we were at it, we were able to define the trace as $\tr (T)\ceqq T\indices{^a_a}$.  Some facts worth remembering about the determinant:
+\begin{enumerate}
+	\item The definition itself, essentially $\antialg ^dT=\det (T)$ (\cref{Determinant}).
+	\item $\det (T)$ is the product of the eigenvalues of $T$ in an algebraic closure counted with multiplicity (\cref{thm5.7.28}).
+	\item $\tr (T)$ is the sum of the eigenvalues of $T$ in an algebraic closure counted with multiplicity (\cref{thm5.7.1.3}).
+	\item For matrices, the determinant is uniquely defined by how it changes upon performing row operations (\cref{thm5.7.2.38}).
+	\item The cofactor expansion can be used to explicitly compute determinants of matrices (\cref{CofactorExpansion}).
+	\item The absolute value of the determinant tells you how $T$ scales the volume (\cref{thm5.7.2.104}).
+	\item The sign of the determinant tells you whether $T$ changes the orientation (\cref{thm5.7.2.111}).
+	\item The characteristic polynomial of $T$ is defined to be $\det (T-\lambda )$, and has the important property that its roots are exactly the eigenvalues of $T$ (\cref{CharacteristicPolynomialEigenvalue}).  In practice, this is how eigenvalues of matrices are usually computed.
+\end{enumerate}
+
+Finally, we discussed bilinear and quadratic forms.  ``Bilinear form'' is just a fancy name for a map $V\times V\rightarrow \K$, and a quadratic form $Q\colon V\rightarrow \K$ is a function of the form $Q(v)=\pinnerprod{v|v}$ for a bilinear form $\pinnerprod \colon V\times V\rightarrow \K$.  Except for $\Char (\F )=2$, these are in one-to-one correspondence with one another (\cref{thm5.8.1.3}).
+
+Our main concern here was diagonalization, and it turns out that one can always diagonalize quadratic forms, and hence one can always diagonalize bilinear forms if $\Char (\F )\neq 2$ (\cref{DiagonalizableForm}).

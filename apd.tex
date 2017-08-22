@@ -279,30 +279,28 @@ but my personal opinion is that this can look ugly (or even slightly confusing) 
 \end{equation*}
 \end{rmk}
 \begin{dfn}{Complement}{}
-Let $X$ and $Y$ be sets.  Then, the \term{complement}\index{Complement} of $Y$ in $X$, $X\setminus Y$\index[notation]{$X\setminus Y$}, is
+Let $X$ and $Y$ be sets.  Then, the \term{complement}\index{Complement} of $Y$ in $X$, $X\setminus Y$\index[notation]{$X\setminus Y$}, is defined by
 \begin{equation}
 X\setminus Y\coloneqq \{ x\in X:x\notin Y\} .
 \end{equation}
 If $X$ is clear from context, sometimes we write $Y^{\comp}\coloneqq X\setminus Y$\index[notation]{$Y^{\comp}$}.
 \end{dfn}
 \begin{dfn}{Union and intersection}{}
-Let $A,B$ be subsets of a set $X$.  Then, the \term{union}\index{Union} of $A$ and $B$, $A\cup B$\index[notation]{$A\cup B$}, is
+Let $A,B$ be subsets of a set $X$.  Then, the \term{union}\index{Union} of $A$ and $B$, $A\cup B$\index[notation]{$A\cup B$}, is defined by
 \begin{equation}
 A\cup B\coloneqq \left\{ x\in X:x\in A\text{ or }x\in B\right\} .
 \end{equation}
-The \term{intersection}\index{Intersection} of $A$ and $B$, $A\cap B$\index[notation]{$A\cap B$}, is
+The \term{intersection}\index{Intersection} of $A$ and $B$, $A\cap B$\index[notation]{$A\cap B$}, is defined by
 \begin{equation}
 A\cap B\coloneqq \left\{ x\in X:x\in A\text{ and }x\in B\right\} .
 \end{equation}
 \begin{rmk}
 More generally, if $\collection{S}$ is a collection\footnote{Technically, the term \term{collection}\index{Collection} is just synonymous with the term ``set'', though it tends to be used in cases when the elements of the set itself are to be thought of as other sets (e.g.~here where the elements of $\collection{S}$ are subsets of $X$).} of subsets of $X$, then the \emph{union} and \emph{intersection} of all sets in $\collection{S}$ are defined by
-\begin{equation}
-\bigcup _{S\in \collection{S}}S\coloneqq \left\{ x\in X:\exists S\in \collection{S}\text{ such that }x\in S\text{.}\right\}
-\end{equation}
-and
-\begin{equation}
-\bigcap _{S\in \collection{S}}S\coloneqq \left\{ x\in X:\forall S\in \collection{S},\ x\in S\text{.}\right\} .
-\end{equation}
+\begin{align*}
+\bigcup _{S\in \collection{S}}S & \coloneqq \left\{ x\in X:\exists S\in \collection{S}\text{ such that }x\in S\text{.}\right\} \\
+\intertext{and}
+\bigcap _{S\in \collection{S}}S & \coloneqq \left\{ x\in X:\forall S\in \collection{S},\ x\in S\text{.}\right\} .
+\end{align*}
 \end{rmk}
 \end{dfn}
 \begin{dfn}{Disjoint and intersecting}{}
@@ -311,12 +309,23 @@ Let $A,B$ be subsets of a set $X$.  Then, $A$ and $B$ are \term{disjoint}\index{
 \begin{exr}{De Morgan's Laws}{DeMorgansLaws}\index{De Morgan's Laws}
 Let $\collection{S}$ be a collection of subsets of a set $X$.  Show that
 \begin{equation}
-\left( \bigcup _{S\in \collection{S}}S\right) ^{\comp}=\bigcap _{S\in \collection{S}}S^{\comp}\text{ and }\left( \bigcap _{S\in \collection{S}}S\right) ^{\comp}=\bigcup _{S\in \collection{S}}S^{\comp}.
+\bigg( \bigcup _{S\in \collection{S}}S\bigg) ^{\comp}=\bigcap _{S\in \collection{S}}S^{\comp}\text{ and }\bigg( \bigcap _{S\in \collection{S}}S\bigg) ^{\comp}=\bigcup _{S\in \collection{S}}S^{\comp}.
 \end{equation}
 \end{exr}
 \begin{exr}{}{}
 Let $X$ be a set and let $S,T\subseteq X$.  Show that $S\setminus T=S\cap T^{\comp}$.
 \end{exr}
+\begin{dfn}{Symmetric-difference}{SymmetricDifference}
+	Let $A,B$ be subsets of a set $X$.  Then, the \term{symmetric-difference}\index{Symmetric-difference} of $A$ and $B$, $A\bigtriangleup B$\index[notation]{$A\bigtriangleup B$}, is defined by
+	\begin{equation}
+		A\bigtriangleup B\ceqq (A\cap B^{\comp})\cup (A^{\comp}\cap B).
+	\end{equation}
+	\begin{rmk}
+		If you draw a ``Venn diagram'', you break up $X$ into four disjoint pieces:  everything outside $A$ and $B$, things inside both $A$ and $B$, things inside $A$ but not $B$, and things inside $B$ but not $A$.  The symmetric difference is the union of the last two regions.
+		
+		Put another way, the symmetric difference is the elements in $A\cup B$ that $A$ and $B$ do \emph{not} have in common.
+	\end{rmk}
+\end{dfn}
 
 The union and intersection of two sets are ways of constructing new sets, but one important thing to keep in mind is that, a priori, the two sets $A$ and $B$ are assumed to be contained within another set $X$.  But how do we get entirely new sets without already `living' inside another?  There are several ways to do this.
 \begin{dfn}{Cartesian-product}{CartesianProduct}
@@ -742,6 +751,9 @@ Let $\sim$ be an equivalence relation on a set $X$.  Then, the \term{quotient of
 X/\sim \coloneqq \left\{ [x]_\sim :x\in X\right\} .
 \end{equation}
 The function $\q :X\rightarrow X/\sim$ defined by $\q (x)\coloneqq [x]_\sim$ is the \term{quotient function}\index{Quotient function}.
+\begin{rmk}
+	If one wants to define a function $f$ on $X/\sim$, often times one will define $f([x]_{\sim})$ in terms of $x$ itself.  This is dubious, however, as how do we know that our definition gives the same result if $x_1\sim x_2$?  (We can't have $f([x_1]_{\sim})\neq f([x_2]_{\sim})$ if $[x_1]_{\sim}=[x_2]_{\sim}$, now can we?)  Thus, if ever we do want to make a definition like this we must first prove that our definition does not depend on the ``representative'' of the equivalence class $[x]_{\sim}$ we have chosen.  More precisely, we must show that if $x_1\sim x_2$, then $f(x_1)=f(x_2)$.  If this is the case, we say that our definition $f$ is \term{well-defined}\index{Well-defined}.  (We elaborate on this below.)
+\end{rmk}
 \end{dfn}
 Of course the quotient function is surjective.  What's perhaps a bit more surprising is that \emph{every} surjective function can be viewed as the quotient function with respect to some equivalence relation.
 \begin{exr}{}{exrA.1.81}
@@ -805,12 +817,12 @@ In other words, $I$ is an interval iff everything in-between two elements of $I$
 \begin{rmk}
 As you are probably aware, the following notation is common.
 \begin{subequations}
-\begin{align}
+\begin{align*}
 [x_1,x_2] & \coloneqq \{ x\in X:x_1\leq x\leq x_2\} \\
 (x_1,x_2) & \coloneqq \{ x\in X:x_1<x<x_2\} \\
 [x_1,x_2) & \coloneqq \{ x\in X:x_1\leq x<x_2\} \\
 (x_1,x_2] & \coloneqq \{ x\in X:x_1<x\leq x_2\} .
-\end{align}
+\end{align*}
 \end{subequations}
 The first and second are called respectively \term{closed intervals}\index{Closed interval} and \term{open intervals}\index{Open interval}.  Terminology for the third and fourth is less common, but you might call them respectively the \term{half-closed-open intervals}\index{Half-closed-open interval} and \term{half-open-closed intervals}\index{Half-open-closed interval}.
 
@@ -852,7 +864,7 @@ There are two preorders that you can define on any set.  They are not terribly u
 A much more useful collection of examples of partially-ordered sets is that are those exhibited as power-sets.
 \begin{exm}{Power set}{}
 The archetypal example of a partially-ordered set is given by the power set.  Let $X$ be a set and for $U,V\in 2^X$, define $U\leq V$ iff $U\subseteq V$.
-\begin{exr}{}{exrA.1.26}
+\begin{exr}[breakable=false]{}{exrA.1.26}
 Check that $\coord{2^X,\leq}$ is in fact a partially-ordered set.
 \end{exr}
 \end{exm}
@@ -887,7 +899,7 @@ What is an example of a totally-ordered set that is not a well-ordered set?
 
 In the very beginning of this chapter when discussing proof techniques (\cref{sbsABitAboutProofs}), we mentioned \emph{well-founded induction}.  It is time we return to this and make the statement precise.
 \begin{dfn}{Well-founded}{WellFounded}
-	Let $X$ be a set and let $\preceq$ be a relation on $X$.  Then, $\coord{X,\preceq}$ is \emph{well-founded} iff every nonempty subset of $X$ has a minimal element.
+	Let $X$ be a set and let $\preceq$ be a relation on $X$.  Then, $\coord{X,\preceq}$ is \term{well-founded}\index{Well-founded} iff every nonempty subset of $X$ has a minimal element.
 \end{dfn}
 The relationship between being well-ordered and well-founded is as follows.
 \begin{prp}{}{}
@@ -985,9 +997,9 @@ That is, $D$ is the union of all sets that are downward-closed in both $S$ and $
 We first check that $D$ itself is downward-closed in both $S$ and $T$.  Let $d\in D$, let $s\in S$, and suppose that $s\leq d$.  As $d\in D$, it follows that $d\in A$ for some $A\subseteq X$ downward-closed in both $S$ and $T$.  As $A$ is in particular downward-closed in $S$, it follows that $s\in D$, and so $D$ is downward-closed in $S$.  Similarly it is downward-closed in $T$.
 
 If $D=S$, then $S=D$ is downward-closed in $T$, and we are done.  Likewise if $D=T$.  Thus, we may as well assume that $D$ is a proper subset of both $S$ and $T$.  Then, by \cref{prpA.1.56}, there are $s_0\in S$ and $t_0\in T$ such that $\{ s\in S:s<s_0\} =D=\{ t\in T:t<t_0\}$.  Because $S$ and $T$ are $u$-sets, it follows that
-\begin{equation}
+\begin{equation*}
 s_0=u\left( \{ s\in S:s<s_0\} \right) =u\left( \{ t\in T:t<t_0\} \right) =t_0.
-\end{equation}
+\end{equation*}
 Define $D\cup \{ s_0\} \eqqcolon D'\coloneqq D\cup \{ t_0\}$.
 Let $d\in D'$, let $s\in S$, and suppose that $s\leq d$.  Either $d=s_0$ or $d\in D$.  In the latter case, $d<s_0$.  Either way, $d\leq s_0$, and so we have that $s\leq d\leq s_0$, and so either $s=s_0$ or $s<s_0$; either way, $s\in D'$.  The conclusion is that $D'$ is downward-closed in $S$.  It is similarly downward-closed in $T$.  By the definition of $D$, we must have that $D'\subseteq D$:  a contradiction.  Thus, it could not have been the case that $D$ was a proper subset of both $S$ and $T$.
 
@@ -1137,16 +1149,18 @@ The even natural numbers $2\N$ with their usual addition and multiplication is a
 A \term{rig}\index{Rig} is a rg such that $\coord{X,\cdot ,1}$ is a monoid, that is, a rg that has a multiplicative identity.
 \begin{rmk}
 In a rig $R$, we write
+{\footnotesize
 \begin{equation}\label{eqnA.1.34}
     R^{\times}\coloneqq \left\{ r\in R:r\text{ has a multiplicative inverse.}\right\} .
 \end{equation}\index[notation]{$R^{\times}$}
+}
 $R^{\times}$ is a group with respect to the ring multiplication and is known as the \term{group of units}\index{Group of units} in $R$.
 \end{rmk}
 \begin{rmk}
 Just as the empty sum is defined to be $0$ in a rg (see the remark in \cref{Rg}), the empty product is defined to be $1$ in a rig.\footnote{Of course, similar conventions apply for all types of algebraic objects (in particular, for monoids), but we shall not keep repeating this.}
 \end{rmk}
 \begin{rmk}
-I believe it is more common to refer to rigs as \emph{semirings}.  I dislike this terminology because it suggests an analogy with semigroups, of which there is none.  The term rig is also arguably more descriptive---even if you didn't know what the term meant, you might have a good chance of guessing, especially if you had seen the term rng before.
+I believe it is more common to refer to rigs as \emph{semirings}\index{Semiring}.  I dislike this terminology because it suggests an analogy with semigroups, of which there is none.  The term rig is also arguably more descriptive---even if you didn't know what the term meant, you might have a good chance of guessing, especially if you had seen the term rng before.
 \end{rmk}
 \end{dfn}
 \begin{dfn}{Characteristic}{Characteristic}
@@ -1371,7 +1385,7 @@ Show that $m\Z$ is an ideal in $\Z$.
 Then, the \term{integers modulo $m$}\index{Integers modulo $m$} are defined to be the quotient cring $\Z /m\Z$.
 \end{exm}
 
-\section{Cardinality, countability, and the natural numbers}
+\section[Cardinality, countability, and the naturals]{Cardinality, countability, and the natural numbers}
 
 The goal of this section is to define what is called the \emph{cardinality} of a set.  Intuitively, the cardinality of a set is the number of elements that set contains.  The concept of cardinality will then allow us to define the \emph{natural numbers} (at least as a well-ordered set---we won't worry about the arithmetic of the natural numbers here), which in turn will allow us to define the important concept of \emph{countability}.
 
@@ -1451,15 +1465,15 @@ That $\leq$ is a preorder is relatively easy.  The next step, showing that it is
 		
 		\Step{Define $C_x$}
 		Fix an element $x\in M$ and define
-		\begin{equation}\label{1.1.26}
+		\begin{equation*}
 		\begin{multlined}
 		C_x\coloneqq \left\{ \ldots ,g^{-1}\left( f^{-1}\left( g^{-1}(x)\right) \right) ,f^{-1}\left( g^{-1}(x)\right) ,g^{-1}(x),x, \right. \\ \left. f(x),g\left( f(x)\right) ,f\left( g\left( f(x)\right) \right) ,\ldots \right\} \subseteq M\sqcup N.\footnote{The ``$C$'' is for ``chain''.}
 		\end{multlined}
-		\end{equation}
+		\end{equation*}
 		Note that $C_x$ is `closed' under application of $f$, $g$, $f^{-1}$, and $g^{-1}$, in the sense that, if $x'\in C_x$ and $f(x')$ makes sense (i.e.~if $x'\in M$), then $f(x')\in C_x$, and similarly for $g$, $f^{-1}$, and $g^{-1}$.
 		
 		\Step{Show that $\{ C_x:x\in M\}$ forms a partition of $M\sqcup N$}
-		We now claim that the collection $\left\{ C_x:x\in M\right\}$ forms a partition of $M\sqcup N$ (recall that this means that any two given $C_x$s are either identical or disjoint---see \cref{dfnA.1.11}).  If $C_{x_1}$ is disjoint from $C_{x_2}$ we are done, so instead suppose that there is some element $x_0$ that is in both $C_{x_1}$ and $C_{x_2}$.  First, let us do the case in which $x_0\in M$.  From the definition of $C_x$ \eqref{1.1.26}, we then must have that
+		We now claim that the collection $\left\{ C_x:x\in M\right\}$ forms a partition of $M\sqcup N$ (recall that this means that any two given $C_x$s are either identical or disjoint---see \cref{dfnA.1.11}).  If $C_{x_1}$ is disjoint from $C_{x_2}$ we are done, so instead suppose that there is some element $x_0$ that is in both $C_{x_1}$ and $C_{x_2}$.  First, let us do the case in which $x_0\in M$.  From the definition of $C_x$, we then must have that
 		\begin{equation}
 		[g\circ f]^k(x_1)=x_0=[g\circ f]^l(x_2)
 		\end{equation}
@@ -1493,7 +1507,7 @@ That $\leq$ is a preorder is relatively easy.  The next step, showing that it is
 		We claim that $\restr{f}{X_1}:X_1\rightarrow Y_1$ is a bijection.  First of all, note the it $x\in X_1$, then in fact $f(x)\in Y_1$, so that this statement indeed does make sense.  Of course, it is injective because $f$ is.  To show surjectivity, let $y\in Y_1\coloneqq N\cap A$.  From the definition of $A$ \eqref{1.1.30}, we see that $y\in C_x\cap N$ for some $C_x$ with $C_x\cap N\subseteq f(M)$, so that $y=f(x')$ for some $x'\in M$.  We still need to show that $x'\in X_1$.  However, we have that $x'=f^{-1}(y)$, and so as $y\in C_x$, we have that $x'=f^{-1}(y)\in C_x$ as well.  We already had that $C_x\cap N\subseteq f(M)$, so that indeed $x'\in A$, and hence $x'\in X_1$.  Thus, $\restr{f}{X_1}:X_1\rightarrow Y_1$ is a bijection.
 		
 		\Step{Show that $\restr{g}{Y_2}:Y_2\rightarrow X_2$ is a bijection}
-		We now show that $\restr{g}{Y_2}:Y_2\rightarrow X_2$ is a bijection.  Once again, all we must show is surjectivity, so let $x\in X_2=M\cap A^{\comp}$. From the definition of $A$ \eqref{1.1.30}, it thus cannot be the case that $C_x\cap N$ is contained in $f(M)$, so that there is some $y\in C_x\cap N$ such that $y\notin f(M)$.  By virtue of \eqref{1.1.29}, we have that $C_x=C_y$, and in particular $x\in C_y$.  From the definition of $C_y$ \eqref{1.1.26}, it follows that either (i)~$x=y$, (ii)~$x$ is in the image of $f^{-1}$, or (iii)~$x$ is in the image of $g$ (the other possibilities are excluded because $x\in M$).  Of course it cannot be the case that $x=y$ because $x\in M$ and $y\in N$.  Likewise, it cannot be the case that $x$ is in the image of $f^{-1}$ because $x\in A^{\comp}$.  Thus, we must have that $x=g(y')$ for some $y'\in N$.  Once again, we still must show that $y'\in Y_2$.  However, we have that $y'=g^{-1}(x)$, so that $y'\in C_x$.  Furthermore, as $C_x\cap N$ is not contained in $f(M)$, from \eqref{1.1.34} it follows that $C_x\subseteq A^{\comp}$.  Thus, $y'\in C_x\subseteq A^{\comp}$, and so $y'\in Y_2$.  Thus, $\restr{g}{Y_2}:Y_2\rightarrow X_2$ is a bijection.
+		We now show that $\restr{g}{Y_2}:Y_2\rightarrow X_2$ is a bijection.  Once again, all we must show is surjectivity, so let $x\in X_2=M\cap A^{\comp}$. From the definition of $A$ \eqref{1.1.30}, it thus cannot be the case that $C_x\cap N$ is contained in $f(M)$, so that there is some $y\in C_x\cap N$ such that $y\notin f(M)$.  By virtue of \eqref{1.1.29}, we have that $C_x=C_y$, and in particular $x\in C_y$.  From the definition of $C_y$, it follows that either (i)~$x=y$, (ii)~$x$ is in the image of $f^{-1}$, or (iii)~$x$ is in the image of $g$ (the other possibilities are excluded because $x\in M$).  Of course it cannot be the case that $x=y$ because $x\in M$ and $y\in N$.  Likewise, it cannot be the case that $x$ is in the image of $f^{-1}$ because $x\in A^{\comp}$.  Thus, we must have that $x=g(y')$ for some $y'\in N$.  Once again, we still must show that $y'\in Y_2$.  However, we have that $y'=g^{-1}(x)$, so that $y'\in C_x$.  Furthermore, as $C_x\cap N$ is not contained in $f(M)$, from \eqref{1.1.34} it follows that $C_x\subseteq A^{\comp}$.  Thus, $y'\in C_x\subseteq A^{\comp}$, and so $y'\in Y_2$.  Thus, $\restr{g}{Y_2}:Y_2\rightarrow X_2$ is a bijection.
 		
 		\Step{Construct the bijection from $M$ to $N$}
 		Finally, we can define the bijection from $M$ to $N$.  We define $h \colon M\rightarrow N$ by
@@ -1519,11 +1533,11 @@ Finally, we check that $\leq$ is a well-order on $\aleph$.
 		M\coloneqq \prod _{m\in S}M_m
 		\end{equation}
 		and
-		\begin{equation}\label{1.1.39}
+		\begin{equation*}
 		\begin{split}
 		\mcal{T} & \coloneqq \left\{ T\subseteq M:T\in \Obj (\Set );\text{ for all }x,y\in T,\right. \\ & \qquad \left. \text{if }x\neq y\text{ it follows that }x_m\neq y_m\text{ for all }m\in S\text{.}\right\} .
 		\end{split}
-		\end{equation}
+		\end{equation*}
 		Order $\mcal{T}$ by inclusion.
 		
 		\Step{Verify that $\mcal{T}$ satisfies  the hypotheses of Zorn's Lemma}
@@ -1540,7 +1554,7 @@ Finally, we check that $\leq$ is a well-order on $\aleph$.
 		Let $\pi _m:M\rightarrow M_m$ be the canonical projection.  We claim that there is some $m_0\in S$ such that $\pi _{m_0}(T_0)=M_{m_0}$.  To show this, we proceed by contradiction:  suppose that for all $m\in M$ there is some element $x_m\in M_m\setminus \pi _m(T_0)$.  Then, $T_0\cup \{ x\}\in \mcal{T}$ is strictly larger than $T_0$:  a contradiction of maximality.  Therefore, there is some $m_0\in S$ such that $\pi _{m_0}(T_0)=M_{m_0}$.
 		
 		\Step{Construct an injection from $M_{m_0}$ to $M_m$ for all $m\in S$}
-		The defining condition of $\mcal{T}$, \eqref{1.1.39}, is simply the statement that $\restr{\pi _m}{T}:T\rightarrow M_m$ is injective for all $T\in \mcal{T}$.  In particular, by the previous step, $\restr{\pi _{m_0}}{T_0}:T_0\rightarrow M_{m_0}$ is a bijection.  And therefore, the composition $\pi _m\circ \restr{\pi _{m_0}}{T_0}^{-1}:M_{m_0}\rightarrow M_m$ is an injection from $M_{m_0}$ to $M$.  Therefore,
+		The defining condition of $\mcal{T}$ is simply the statement that $\restr{\pi _m}{T}:T\rightarrow M_m$ is injective for all $T\in \mcal{T}$.  In particular, by the previous step, $\restr{\pi _{m_0}}{T_0}:T_0\rightarrow M_{m_0}$ is a bijection.  And therefore, the composition $\pi _m\circ \restr{\pi _{m_0}}{T_0}^{-1}:M_{m_0}\rightarrow M_m$ is an injection from $M_{m_0}$ to $M$.  Therefore,
 		\begin{equation}
 		m_0=\abs{M_{m_0}}\leq \abs{M_m}=m
 		\end{equation}
@@ -2053,10 +2067,10 @@ With this language in hand, we can now return to what is probably the most relev
 \begin{exm}{Dual-space}{}
 	Let $\K$ be a cring and consider the \emph{co}functor $\Mod{\K}\rightarrow \Mod{\K}$ defined by
 	\begin{subequations}
-		\begin{align}
+		\begin{align*}
 			\Obj (\Mod{\K})\ni V & \mapsto V^{\T}\in \Obj (\Mod{\K}) \\
 			\Mor _{\Mod{\K}}(V,W)\ni T & \mapsto T^{\T}\in \Mor _{\Mod{\K}}(W^{\T},V^{\T})
-		\end{align}
+		\end{align*}
 	\end{subequations}
 	\begin{exr}[breakable=false]{}{}
 		Check that this defines a functor.
@@ -2679,18 +2693,26 @@ While, in my opinion anyways, ``ring in which you can scale elements'' is by far
 	\begin{proof}
 		\cref{thmC.1.5(i)} For the sake of brevity, we shall simply write $\cdot \ceqq \cdot _{L,\phi}$, and by abuse of notation, $\cdot \ceqq \cdot _{R,\phi}$ as well.  We first check that this gives $A$ the structure of a left $\K$-module.  So, let $\alpha _1,\alpha _2\in \K$ and $a\in A$.  Then,
 		\begin{equation}
-			(\alpha _1\alpha _2)\cdot a\ceqq \phi (\alpha _1\alpha _2)a=\phi (\alpha _1)(\phi (\alpha _2)a)\eqqc \alpha _1\cdot (\alpha _2\cdot a).
+			\begin{split}
+			(\alpha _1\alpha _2)\cdot a & \ceqq \phi (\alpha _1\alpha _2)a=\phi (\alpha _1)(\phi (\alpha _2)a) \\
+			& \eqqc \alpha _1\cdot (\alpha _2\cdot a).
+			\end{split}
 		\end{equation}
 		We also have $1\cdot a\ceqq \phi (1)a=1a=a$.  As for the distributivity axioms of a $\K$-module, we have
 		\begin{equation}
 			\begin{split}
-				(\alpha _1+\alpha _2)\cdot a & \ceqq \phi (\alpha _1+\alpha _2)a=\left( \phi (\alpha _1)+\phi (\alpha _2)\right) a \\
-				& =\phi (\alpha _1)a+\phi (\alpha _2)a\eqqc \alpha _1\cdot a+\alpha _2\cdot a
+				(\alpha _1+\alpha _2)\cdot a & \ceqq \phi (\alpha _1+\alpha _2)a \\
+				& =\left( \phi (\alpha _1)+\phi (\alpha _2)\right) a \\
+				& =\phi (\alpha _1)a+\phi (\alpha _2)a \\
+				& \eqqc \alpha _1\cdot a+\alpha _2\cdot a
 			\end{split}
 		\end{equation}
 		and
 		\begin{equation}
-			\alpha \cdot (a_1+a_2)\ceqq \phi (\alpha)(a_1+a_2)=\phi (\alpha )a_1+\phi (\alpha )a_2\eqqc \alpha \cdot a_1+\alpha \cdot a_2.
+			\begin{split}
+				\alpha \cdot (a_1+a_2) & \ceqq \phi (\alpha)(a_1+a_2)=\phi (\alpha )a_1+\phi (\alpha )a_2 \\
+				& \eqqc \alpha \cdot a_1+\alpha \cdot a_2.
+			\end{split}
 		\end{equation}
 		Thus, $\cdot$ does indeed give $A$ the structure of a left $\K$-module.  Similarly, it has the structure of a right $\K$-module.  Finally, to see that $A$ is in fact a $\K$-$\K$-bimodule, note that
 		\begin{equation}
@@ -2703,7 +2725,10 @@ While, in my opinion anyways, ``ring in which you can scale elements'' is by far
 		\end{equation}
 		\cref{KAlgebra(iii)} follows similarly.  As for \cref{KAlgebra(iiix)}, we see that
 		\begin{equation}
-			(a_1\cdot \alpha )a_2\ceqq (a_1\phi (\alpha ))a_2=\footnote{Because the ring multiplication is associative.}a_1(\phi (\alpha )a_2)\eqqc a_1(\alpha \cdot a_2).
+			\begin{split}
+			(a_1\cdot \alpha )a_2 & \ceqq (a_1\phi (\alpha ))a_2=\footnote{Because the ring multiplication is associative.}a_1(\phi (\alpha )a_2) \\
+			& \eqqc a_1(\alpha \cdot a_2).
+			\end{split}
 		\end{equation}
 		
 		Finally, we check \cref{KAlgebra(iv)}.  So, let $\alpha _1,\alpha _2\in \K$ and let $a\in A$ be central.  Then,
@@ -2715,8 +2740,8 @@ While, in my opinion anyways, ``ring in which you can scale elements'' is by far
 		\cref{thmC.1.5(ii)} For the sake of brevity, we shall simply write $\phi \ceqq \phi _{\cdot _L,\cdot _R}$.  $\phi$ preserves addition because scaling distributes over addition in $\K$.  As for multiplication, let $\alpha ,\beta \in \K$.  Then,
 		\begin{equation}
 			\begin{split}
-				\phi (\alpha \beta ) & \ceqq (\alpha \beta )\cdot 1=\alpha \cdot (\beta \cdot 1)\eqqc \alpha \cdot \phi (\beta )=\alpha \cdot (1\phi (\beta )) \\
-				& =(\alpha \cdot 1)\phi (\beta )\eqqc \phi (\alpha )\phi (\beta ).
+				\phi (\alpha \beta ) & \ceqq (\alpha \beta )\cdot 1=\alpha \cdot (\beta \cdot 1)\eqqc \alpha \cdot \phi (\beta ) \\
+				& =\alpha \cdot (1\phi (\beta ))=(\alpha \cdot 1)\phi (\beta )\eqqc \phi (\alpha )\phi (\beta ).
 			\end{split}
 		\end{equation}
 		And of course, $\phi (1)\ceqq 1\cdot 1=1$.
@@ -2724,7 +2749,10 @@ While, in my opinion anyways, ``ring in which you can scale elements'' is by far
 		\blni
 		It remains to check that these constructions are inverse to one another.
 		\begin{equation}
-			\alpha \cdot _{L,\phi _{\cdot _L,\cdot _R}}a\ceqq \phi _{\cdot _L,\cdot _R}(\alpha )a\ceqq (\alpha \cdot _L1)a=\alpha \cdot _L(1a)=\alpha \cdot _La.
+			\begin{split}
+			\alpha \cdot _{L,\phi _{\cdot _L,\cdot _R}}a & \ceqq \phi _{\cdot _L,\cdot _R}(\alpha )a\ceqq (\alpha \cdot _L1)a \\
+			& =\alpha \cdot _L(1a)=\alpha \cdot _La.
+			\end{split}
 		\end{equation}
 		Similarly for $\cdot _R$.
 		
@@ -3226,10 +3254,10 @@ Of course, not everything is algebraically closed or even integrally closed (for
 			g_1f_1(x_{f_1})+\cdots +g_mf_m(x_{f_m})=1
 		\end{equation}
 		for $g_k\in \L$.  For convenience, let us write $x_k\ceqq x_{f_k}$, and enumerate any remaining variables that appear in any $g_k$ as $x_{m+1},\ldots ,x_n$, so that this equation then reads
-		\begin{equation}\label{eqnC.2.34}
+		\begin{equation*}
 			g_1(x_1,\ldots ,x_n)f_1(x_1)+\cdots +g_m(x_1,\ldots ,x_n)f_m(x_m)=1.
-		\end{equation}
-		Define $A_1\ceqq \K [x]/I_1$, where $I_1\ceqq \{ af_1(x)b:a,b\in \K \}$, the ideal ``generated'' by $f_1$.  $A_1$ is a $\K$-algebra that contains a root of $f_1$ (namely $x+I_1\in A_1$), and furthermore, the image of $1\in \K$ under the quotient map $\K \rightarrow A_1$ is nonzero, for if it were, we would have $1=af_1(x)b$ for some $a,b\in \K$, in which case $f_1(x)$ would be a constant polynomial, a contradiction.  We may now define $A_2\ceqq A_1[x]/I_2$, where $I_2\ceqq \{ af_2(x)b:a,b\in \K _1\}$.  As before, $A_2$ is a $\K$-algebra that now contains roots of both $f_1$ and $f_2$, and furthermore, the image of $1\in \K$ under the map $\K \rightarrow A_2$ is nonzero.  Proceeding inductively, we obtain a $\K$-algebra $A_m$ that contains roots of $f_1,\ldots ,f_m$ and $1\neq 0$ in $A_m$.  Plugging in these roots for $x_1,\ldots ,x_m$ respectively (and anything for the remaining variables), \eqref{eqnC.2.34} reduces to $0=1$ in $A_m$:  a contradiction.\footnote{If $\K$ were noncommutative, then these terms wouldn't just be of the form $g_kf_k$, but rather, $g_kf_kh_k$, and now, the result we get by plugging in the root $\alpha _k$ is not necessarily equal to $g_k(\alpha _k)f_k(\alpha _k)h_k(\alpha _k)$.  This seems to break the proof for $\K$ noncommutative.}  Thus, $1\notin I$.
+		\end{equation*}
+		Define $A_1\ceqq \K [x]/I_1$, where $I_1\ceqq \{ af_1(x)b:a,b\in \K \}$, the ideal ``generated'' by $f_1$.  $A_1$ is a $\K$-algebra that contains a root of $f_1$ (namely $x+I_1\in A_1$), and furthermore, the image of $1\in \K$ under the quotient map $\K \rightarrow A_1$ is nonzero, for if it were, we would have $1=af_1(x)b$ for some $a,b\in \K$, in which case $f_1(x)$ would be a constant polynomial, a contradiction.  We may now define $A_2\ceqq A_1[x]/I_2$, where $I_2\ceqq \{ af_2(x)b:a,b\in \K _1\}$.  As before, $A_2$ is a $\K$-algebra that now contains roots of both $f_1$ and $f_2$, and furthermore, the image of $1\in \K$ under the map $\K \rightarrow A_2$ is nonzero.  Proceeding inductively, we obtain a $\K$-algebra $A_m$ that contains roots of $f_1,\ldots ,f_m$ and $1\neq 0$ in $A_m$.  Plugging in these roots for $x_1,\ldots ,x_m$ respectively (and anything for the remaining variables), the above equation reduces to $0=1$ in $A_m$:  a contradiction.\footnote{If $\K$ were noncommutative, then these terms wouldn't just be of the form $g_kf_k$, but rather, $g_kf_kh_k$, and now, the result we get by plugging in the root $\alpha _k$ is not necessarily equal to $g_k(\alpha _k)f_k(\alpha _k)h_k(\alpha _k)$.  This seems to break the proof for $\K$ noncommutative.}  Thus, $1\notin I$.
 		
 		We just showed that $1\notin I$, and so in particular $I\subseteq \L$ is a proper ideal.  It is thus contained in a maximal ideal $M$, in which case let us replace our definition of $\K _1$ in \eqref{eqnC.2.31} by
 		\begin{equation}

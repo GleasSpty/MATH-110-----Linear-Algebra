@@ -1,4 +1,4 @@
-\chapter{``Eigenstuff''}
+\chapter{``Eigenstuff''}\label{chpEigenstuff}
 
 \section{Motivation}\label{sct4.1}
 
@@ -166,7 +166,7 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 \begin{thm}{}{thm4.2.17}
 	$V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \F$.  Then,
 	\begin{enumerate}
-		\item \label{thm4.2.17(i)}$\lambda$ is an eigenvalue of $T$ iff $\lambda$ is central and there is some nonzero $v\in V$ such that $T(v)=\lambda v$, in which case $v$ is an eigenvector of $T$ with eigenvalue $\lambda$; and
+		\item \label{thm4.2.17(i)}$\lambda \in \Eig (T)$ iff $\lambda$ is central and there is some nonzero $v\in V$ such that $T(v)=\lambda v$, in which case $v$ is an eigenvector of $T$ with eigenvalue $\lambda$; and
 		\item \label{thm4.2.17(ii)}if $\lambda$ is an eigenvalue, then
 		\begin{equation}
 			\Eig _{\lambda ,T}=\{ v\in V:T(v)=\lambda v\} =\Ker (T-\lambda ).
@@ -188,7 +188,10 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 		
 		We now check that $\lambda$ is central.  Let $\alpha \in \F$.  Then,
 		\begin{equation}
-			(\alpha \lambda )\cdot v=\alpha (\lambda v)=\alpha T(v)=T(\alpha v)=\footnote{If $v\in \Eig _{\lambda}$, $\alpha v\in \Eig _{\lambda}$ as well because this is a subspace.}\lambda (\alpha v)=(\lambda \alpha )\cdot v.
+			\begin{split}
+				(\alpha \lambda )\cdot v & =\alpha (\lambda v)=\alpha T(v)=T(\alpha v)=\footnote{If $v\in \Eig _{\lambda}$, $\alpha v\in \Eig _{\lambda}$ as well because this is a subspace.}\lambda (\alpha v) \\
+				& =(\lambda \alpha )\cdot v.
+			\end{split}
 		\end{equation}
 		As $v\neq 0$ and we are working over a division ring, it follows that $\alpha \lambda =\lambda \alpha$, that is, $\lambda$ is central.
 		
@@ -209,7 +212,58 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 		\cref{thm4.2.17(ii)} Note that this has already been proven in \eqref{eqn4.2.22}.
 	\end{proof}
 \end{thm}
-
+There is an equivalent way to state this that is often used in practice.
+\begin{prp}{}{}
+	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \F$.  Then, $\lambda \in \Eig (T)$ iff $\Ker (T-\lambda )\neq 0$.
+	\begin{rmk}
+		In practice, this is often used as follows.  Suppose $A$ is a matrix and you would like to compute its eigenvalues.  Row-reduce $A-\lambda$.  The eigenvalues are then the values of $\lambda$ for which the null-space of the result is nonzero, in which case the eigenvectors are the elements of those nonzero null-spaces.
+		
+		A more common method to compute eigenvalues (\cref{CharacteristicPolynomialEigenvalue}) is not able to be stated until after we've done determinants.  While that method is admittedly sometimes more practical for computing the eigenvalues themselves, this method has the advantage that it lends itself to computing the eigenvalues and eigenvectors simultaneously.
+	\end{rmk}
+	\begin{rmk}
+		Thus, $\lambda \in \Eig (T)$ iff $T-\lambda$ is not injective, which, in finite-dimensions, is equivalent to \emph{$T-\lambda$ not being invertible}.
+	\end{rmk}
+	\begin{proof}
+		We leave this as an exercise.
+		\begin{exr}[breakable=false]{}{}
+			Prove the result.
+		\end{exr}
+	\end{proof}
+\end{prp}
+\begin{exm}{}{exm4.2.23}
+	Define
+	\begin{equation}
+		A\ceqq \begin{bmatrix}42 & -30 \\ 60 & -43\end{bmatrix}
+	\end{equation}
+	as a matrix over $\C$.
+	
+	Then,
+	\begin{equation}
+		A-\lambda =\begin{bmatrix}42-\lambda & -30 \\ 60 & -43-\lambda  \end{bmatrix}.
+	\end{equation}
+	Swap the rows, and after doing so, add $-(42-\lambda )/60$ times the first row to the second.  The result is
+	\begin{equation}\label{eqn4.2.26x}
+		\begin{bmatrix}60 & -43-\lambda \\ 0 & -30-\tfrac{1}{60}(42-\lambda )(-43-\lambda )\end{bmatrix}.
+	\end{equation}
+	This has a free-variable iff the bottom-right entry vanishes, that is, iff
+	\begin{equation}
+		-30-\tfrac{1}{60}(42-\lambda )(-43-\lambda )=0.
+	\end{equation}
+	Solving this equation for $\lambda$, one finds
+	\begin{equation}
+		\lambda =-3,2.
+	\end{equation}
+	These are the eigenvectors.
+	
+	As for the eigenvectors, plug these values into our row-reduced $A-\lambda$ in \eqref{eqn4.2.26x}.  If you solved for $\lambda$ properly, you know the bottom row is going to vanish, and so you only need to compute the top row which is easy:
+	\begin{equation}
+		\begin{bmatrix}60 & -40 \\ 0 & 0\end{bmatrix}\text{ and }\begin{bmatrix}60 & -45 \\ 0 & 0\end{bmatrix}
+	\end{equation}
+	respectively for $\lambda =-3$ and $\lambda =2$.  From this, we can read off the null-spaces to find
+	\begin{equation}
+		\Eig _{-3}=\Span \left( \begin{bmatrix}2 \\ 3\end{bmatrix}\right) \text{ and }\Eig _2=\Span \left( \begin{bmatrix}3 \\ 4\end{bmatrix}\right) .
+	\end{equation}
+\end{exm}
 \begin{exm}{}{exm4.2.17}
 	Define $D\colon C^{\infty}(\R )\rightarrow C^{\infty}(\R )$ by $D(f)\ceqq f'$.  Then, $\lambda \in \C$ is an eigenvalue of $f$ iff $f$ is nonzero and $f'\eqqc D(f)=\lambda f$.  If this is true, it follows that $f(x)=C\exp (\lambda x)$ for some constant $C\in \C$, and hence that the function $x\mapsto \exp (\lambda x)$ is an eigenvector of $D$ with eigenvalue $\lambda$.  Thus, every $\lambda \in \C$ is an eigenvalue and
 	\begin{equation}
@@ -230,7 +284,10 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 	
 	Let $\lambda \in \F$ be an eigenvalue of $R$.  Then, there is some nonzero sequence $\coord{a_0,a_1,\ldots }\in \F ^{\N}$ such that
 	\begin{equation}
-		\coord{0,a_0,a_1,\ldots }\eqqc R(a_0,a_1,a_2,\ldots )=\lambda (a_0,a_1,a_2,\ldots ),
+		\begin{split}
+			\coord{0,a_0,a_1,\ldots } & \eqqc R(a_0,a_1,a_2,\ldots ) \\
+			& =\lambda (a_0,a_1,a_2,\ldots ),
+		\end{split}
 	\end{equation}
 	whence it follows that $\lambda a_0=0$ and $a_k=\lambda a_{k+1}$ for $k\geq 0$.  If $\lambda =0$, the latter implies that $a_k=0$ for all $k\in \N$.  On the other hand, if $\lambda \neq 0$, then former implies that $a_0=0$, in which case the latter gives $a_1=\lambda \cdot 0=0$, $a_2=\lambda \cdot a_1$, and so on.  In either case, the sequence is $0$, in which case $\lambda$ cannot be an eigenvalue.  Thus, the set of eigenvalues of $R$ is the empty-set.
 	
@@ -247,13 +304,20 @@ Another advantage it has is that it places the emphasis on eigen\emph{spaces} in
 	\end{equation}
 \end{exm}
 
-\begin{prp}{Eigenvectors with distinct eigenvalues are linearly-independent}{prp4.2.22}
-	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, let $\lambda _1,\ldots ,\lambda _m$ be distinct eigenvalues of $T$, and let $v_k\in \Eig _{\lambda _k}$ be nonzero $1\leq k\leq m$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
+\begin{prp}{Eigenspaces with distinct eigenvalues are linearly-independent}{prp4.2.22}
+	Let $V$ be a vector space and let $T\colon V\rightarrow V$ be linear.  Then,
+	\begin{equation}
+		\left\{ \Eig _{\lambda}:\lambda \in \Eig (T)\right\} 
+	\end{equation}
+	is linearly-independent.
+	\begin{rmk}
+		Explicitly, this means that any collection of eigenvectors with distinct eigenvalues is linearly-independent.
+	\end{rmk}
 	\begin{rmk}
 		When we investigate generalized-eigenvectors, we will encounter a strict generalization of this---see \cref{prp4.4.157}.
 	\end{rmk}
 	\begin{proof}
-		Denote the ground division ring by $\F$.  We proceed by induction on $m$.  The $m=0$ case is immediate as eigenvectors are nonzero.  So, let $m\in \Z ^+$ and suppose the result is true $m-1$.  To prove the result for $m$, we proceed by contradiction:  suppose that $\{ v_1,\ldots ,v_m\}$ is linearly-dependent.  By \cref{prp1.2.28}, there is some $v_k$ such that
+		Denote the ground division ring by $\F$.  We proceed by induction on $m$.  The $m=0$ case is immediate as eigenvectors are nonzero.  So, let $m\in \Z ^+$ and suppose the result is true $m-1$.  To prove the result for $m$, we proceed by contradiction:  let $v_1\in \Eig _{\lambda _1},\ldots ,v_m\in \Eig _{\lambda _m}$ for $\lambda _1,\ldots ,\lambda _m\in \Eig (T)$ and suppose that $\{ v_1,\ldots ,v_m\}$ is linearly-dependent.  By \cref{prp1.2.28}, there is some $v_k$ such that
 		\begin{equation}
 			v_k\in \Span (v_1,\ldots ,v_{k-1}).
 		\end{equation}
@@ -292,6 +356,9 @@ Let $V$ be a vector space over a division ring $\F$ and let $T\colon V\rightarro
 		[p(T)](v)=p(\lambda )v.
 	\end{equation}
 	\begin{rmk}
+		In fact, over the complex numbers at least, this generalizes to $p$ any Borel function---the trick in making this precise is that first one has to actually \emph{define} what one means by $p(T)$ in this case.
+	\end{rmk}
+	\begin{rmk}
 		Indeed, note that you can view the equation $T(v)=\lambda v$ as the special case of this result for the polynomial $p(x)\ceqq x$.
 	\end{rmk}
 	\begin{proof}
@@ -302,12 +369,12 @@ Let $V$ be a vector space over a division ring $\F$ and let $T\colon V\rightarro
 	\end{proof}
 \end{prp}
 \begin{crl}{}{crl4.2.36}
-	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $p\in \F [x]$ be a polynomial.  Then, if $p(T)=0$, then $p(\lambda )=0$ for every eigenvalue $\lambda \in \F$ of $T$.
+	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $p\in \F [x]$ be a polynomial.  Then, if $p(T)=0$, then $p(\lambda )=0$ for all $\lambda \in \Eig (T)$.
 	\begin{rmk}
 		This can have practical applications for actually \emph{computing} eigenvalues.  For example, if for whatever reason you know that $T^2-1=0$, then you know that $\lambda ^2-1=0$ for any eigenvalue $\lambda \in \F$ of $T$.  Thus, in this case, one could deduce that the only possible eigenvalues for $T$ were $\pm 1$.
 	\end{rmk}
 	\begin{proof}
-		Suppose that $p(T)=0$.  Let $\lambda \in \F$ be an eigenvalue of $T$ with eigenvector $v\in V$.  By the previous result, we have that
+		Suppose that $p(T)=0$.  Let $\lambda \in \Eig (T)$ with eigenvector $v\in V$.  By the previous result, we have that
 		\begin{equation}
 			0=[p(T)](v)=p(\lambda )v.
 		\end{equation}
@@ -319,7 +386,8 @@ Let $V$ be a vector space over a division ring $\F$ and let $T\colon V\rightarro
 	\begin{equation}
 		\begin{split}
 			[-5T^2+2T+\id ](v) & \eqqc [p(T)](v)=p(3)v \\
-			& =[-5\cdot 9+2\cdot 3+1]v=-38v.
+			& =[-5\cdot 9+2\cdot 3+1]v \\
+			& =-38v.
 		\end{split}
 	\end{equation}
 \end{exm}
@@ -480,11 +548,96 @@ While the concept of diagonalization makes sense for any linear-transformation, 
 	\end{proof}
 \end{prp}
 
-\section{Jordan Canonical Form}
+The practical important of this result is as follows.  Let $A$, $P$, and $D$ be as in the statement of the previous result.  Then,
+\begin{equation}
+	A^2=(PDP^{-1})(PDP^{-1})=PD^2P^{-1},
+\end{equation}
+where the `inner' $P^{-1}$ and $P$ have canceled.  Similarly,
+\begin{equation}
+	A^3=(PD^2P^{-1})(PDP^{-1})=PD^3P^{-1}.
+\end{equation}
+And so on.  It follows from this that
+\begin{equation}
+	p(A)=Pp(D)P^{-1}
+\end{equation}
+for any polynomial $p\in \C [x]$.  In fact, essentially the same is true for `any' function $f$:
+\begin{equation}
+	f(A)=Pf(D)P^{-1},
+\end{equation}
+the catch being that we haven't actually defined $f(A)$ for nonpolynomial $f$.
+
+This, coupled with the fact that that $f(D)$ is easily found,
+\begin{equation}
+	f\left( \begin{bmatrix}\lambda _1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & \lambda _d\end{bmatrix}\right) =\begin{bmatrix}f(\lambda _1) & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & f(\lambda _d)\end{bmatrix},
+\end{equation}
+make this particularly useful for explicit computation.
+
+For example, suppose I decided I don't like you, and so I to torture you by asking you to compute $A^{1000}$, where
+\begin{equation}
+	A\ceqq \begin{bmatrix}42 & -30 \\ 60 & -43\end{bmatrix}.
+\end{equation}
+You could just multiply this $2\times 2$ matrix by itself one thousand times.  Alternatively, you could diagonalize.
+\begin{exm}{}{}
+	Define
+	\begin{equation}
+		A\ceqq \begin{bmatrix}42 & -30 \\ 60 & -43\end{bmatrix}
+	\end{equation}
+	as a matrix over $\C$.
+	
+	Fortunately for you, the astute student that you are, you already know what the eigenvalues and eigenvectors are because you've read \cref{exm4.2.23}:
+	\begin{equation}
+		\Eig (A)=\{ -3,2\} ,
+	\end{equation}
+	and
+	\begin{equation}
+		\Eig _{-3}=\Span \left( \begin{bmatrix}2 \\ 3\end{bmatrix}\right) \text{ and }\Eig _2=\Span \left( \begin{bmatrix}3 \\ 4\end{bmatrix}\right) .
+	\end{equation}
+	
+	Writing
+	\begin{equation}
+		P\ceqq \begin{bmatrix}2 & 3 \\ 3 & 4\end{bmatrix},\footnote{Though you can't tell from this example, this matrix is formed by taking the vectors $\coord{2,3}$ and $\coord{3,4}$ as its \emph{columns}, not as its rows.},
+	\end{equation}
+	according to the above result, we should have
+	\begin{equation}
+		A=PDP^{-1},
+	\end{equation}
+	where
+	\begin{equation}
+		D=\begin{bmatrix}-3 & 0 \\ 0 & 2\end{bmatrix}.
+	\end{equation}
+	
+	Hence,
+	\begin{equation}
+		A^{1000}=P\begin{bmatrix}(-3)^{1000} & 0 \\ 0 & 2^{1000}\end{bmatrix}P^{-1},
+	\end{equation}
+	whatever that simplifies to.
+\end{exm}
+
+\section{Jordan Canonical Form}\label{sctJordanCanonicalForm}
 
 Diagonalizable linear-transformations are great.  There's just one little itsy-bitsy problem:  not all linear-transformations are diagonalizable!  Not even in the context of finite-dimensional vector space over algebraically closed (\cref{AlgebraicallyClosed}) fields.  Fortunately, there is something that is almost as good, but \emph{always} exist (at least if the ground ring is sufficiently nice):  the \emph{Jordan canonical form} of a linear-transformation.
 
-Before we get there however, we must first take a detour to discuss \emph{direct-sums} and \emph{invariant-subspaces}.  Very roughly speaking, the idea is to decompose a vector space into smaller pieces that are easier to study.  For example, if $b\in V$ is an eigenvector of $T$, then $\Span (b)$ the behavior of $T$ on this subspace is particularly easy to understand.  While we can't quite have the subspaces be that simple in general, we will find that we can still decompose our space into pieces which are not that much more complicated.
+\horizontalrule
+
+Before doing Jordan canonical form itself, let us quickly investigate a more obvious method one might use in an attempt to `fix' this defect, a method that winds up not being particularly useful.  The original objective was to find a basis $\basis{B}$ such that $\coordinates{T}{\basis{B}}\ceqq \coordinates{T}{\basis{B}\leftarrow \basis{B}}$ is diagonal.  If we can't do this, it is natural to ask ``Okay, so why don't I drop the requirement that the domain and codomain bases be the same, and instead just try to find a basis $\basis{B}$ for the domain and a $\basis{C}$ for the codomain such that $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$ is diagonal?''.  Sure enough, you can do this, but the answer is almost stupidly easy to the point of being useless.
+
+For simplicity, consider for the moment the case $T$ is invertible.  Then, for \emph{any} basis $\basis{B}\eqqc \{ b_1,\ldots ,b_d\}$,
+\begin{equation}
+	\basis{C}\ceqq T(\basis{B})\ceqq \{ T(b_1),\ldots ,T(b_d)\}
+\end{equation}
+is another basis (this uses the fact that $T$ is invertible.  But then, using \eqref{eqnCoordinatesLinearTransformation},
+\begin{equation}
+	\coordinates{T}{\basis{C}\leftarrow \basis{B}}=\id _{d\times d}.
+\end{equation}
+That is, you can always find bases $\basis{B}$ and $\basis{C}$ such that $\coordinates{T}{\basis{C}\leftarrow \basis{B}}$ is the identity matrix!  In fact, any basis $\basis{B}$ will work (which itself determines $\basis{C}$).  Now in the general case $T$ is not necessarily invertible, you find almost the same thing:  instead of just the identity matrix, you obtain a matrix that is identically $0$ except for some $1$s on the diagonal.
+
+It should be intuitively clear that because this works all the time and doesn't even really even depend on $T$ (in the sense that any basis $\basis{B}$ will work), this isn't going to be very useful.  More practically speaking, the result that would be analogous to \cref{prp4.3.16} wouldn't lend itself to computation.  You'll recall there that the computational usefulness of $A=PDP^{-1}$ came down to the fact that the $P$ and $P^{-1}$ canceled when multiplying $A$ by itself.  Here, however, there would be no such cancellation if we tried to develop this alternative to diagonalization.  Thus, aside from it just being intuitively clear that this isn't going to be very useful, we see more explicitly that this can't be useful because the trick that made $A=PDP^{-1}$ useful for computation just isn't going to work.
+
+Anyways, let's get back to the ``fix'' that \emph{will} actually work:  Jordan canonical form.
+
+\horizontalrule
+
+Before we get to Jordan canonical form itself, we must first take a detour to discuss \emph{direct-sums} and \emph{invariant-subspaces}.  Very roughly speaking, the idea is to decompose a vector space into smaller pieces that are easier to study.  For example, if $b\in V$ is an eigenvector of $T$, then $\Span (b)$ the behavior of $T$ on this subspace is particularly easy to understand.  While we can't quite have the subspaces be that simple in general, we will find that we can still decompose our space into pieces which are not that much more complicated.
 
 \subsection{Direct-sums}
 
@@ -557,7 +710,7 @@ We will see that a given direct-sum decomposition is in many ways similar to the
 		Synonymously, we also say that $\collection{W}$ \term{spans}\index{Spans (of subspaces)} $V$.
 	\end{rmk}
 \end{dfn}
-\begin{dfn}{Linear-independence (of subspa\-ces)}{}
+\begin{dfn}{Linear-independence (of subspa\-ces)}{LinearIndependenceOfSubspaces}
 	Let $V$ be a $\K$-module and let $\collection{W}$  be a collection of subspaces of $V$.  Then, $\collection{W}$ is \term{linearly-independent}\index{Linearly-independent (subspaces)} iff for all $m\in \Z ^+$, $W_1,\ldots ,W_m\in \collection{W}$, $w_k\in W_k$,
 	\begin{equation}
 		w_1+\cdots +w_m=0\text{ implies }w_1=0,\ldots ,w_m=0.
@@ -709,9 +862,9 @@ There are also more practical criterion specific to the finite-dimensional case.
 	V\ceqq \left\{ f\in \Mor _{\Set}(\R ^2,\R ):\lim _{\abs{x}\to \infty}f(x)\text{ exists.}\right\} .
 	\end{equation}
 	Then,
-	\begin{equation}
+	\begin{equation*}
 	V=\left\{ f\in V:f\text{ is constant.}\right\} \oplus \left\{ f\in V:\lim _{\abs{x}\to \infty}f(x)=0\right\} .
-	\end{equation}
+	\end{equation*}
 	To see this, note that we may write
 	\begin{equation}
 	f=\lim _{\abs{x}\to \infty}f(x)+(f-\lim _{\abs{x}\to \infty}f(x))
@@ -752,7 +905,10 @@ In a way roughly analogous to how we can extend linearly-independent subsets to 
 	\begin{proof}
 		Let $\basis{A}$ be a basis of $U$ and extend it to a basis $\basis{B}$ of $V$.  Define $\basis{C}\ceqq \basis{B}\setminus \basis{A}$ and $W\ceqq \Span (\basis{C})$.  We certainly have
 		\begin{equation}
-			V=\Span (\basis{B})=\Span (\basis{A}\cup \basis{C})=\Span (\basis{A})+\Span (\basis{C})=U+W.
+			\begin{split}
+				V & =\Span (\basis{B})=\Span (\basis{A}\cup \basis{C}) \\
+				& =\Span (\basis{A})+\Span (\basis{C})=U+W.
+			\end{split}
 		\end{equation}
 		On the other hand, an element in the intersection $V\cap W$ must be able to be written as a linear-combination of both elements of $\basis{A}$ and elements of $\basis{C}$.  This would then yield a nontrivial linear-dependence relation among elements of $\basis{A}\cup \basis{C}=\basis{B}$ unless the element in the intersection were $0$.  Thus, we must have $U\cap W=0$, and hence $V=U\oplus W$ by \cref{crl4.4.11}.
 	\end{proof}
@@ -799,7 +955,7 @@ Direct-sums allow us to define \emph{projections}.
 	with respect to the second decomposition.
 \end{exm}
 
-\subsubsection{Coordinates with respect to direct-sum decompositions}
+\subsubsection[Coords.~with respect to direct-sum decompositions]{Coordinates with respect to direct-sum decompositions}
 
 We saw in \cref{CoordinatesVector} that, given a basis of a $\K$-module $V$, we can define the \emph{coordinates} of elements of $v$ with respect to that basis.  In a similar way, we can also talk about the coordinates of elements of $V$ with respect to a direct-sum decomposition.   In fact, the definition of coordinates we learned before is a special case of this---see \cref{exr4.4.9}.
 
@@ -831,13 +987,11 @@ These two facts together suggest that in the general case $V=W_1\oplus \cdots \o
 	\end{rmk}
 	\begin{rmk}
 		In the finite case $\collection{V}\eqqc \{ V_1,\ldots ,V_m\}$, these definitions (in more suggestive notation) look like
-		\begin{equation}
-			\coord{v_1,\ldots ,v_m}+\coord{w_1,\ldots ,w_m}\ceqq \coord{v_1+w_1,\ldots ,v_m+w_m}
-		\end{equation}
-		and
-		\begin{equation}
-			\alpha \cdot \coord{v_1,\ldots ,v_m}\ceqq \coord{\alpha \cdot v_1,\ldots ,\alpha \cdot v_m}.
-		\end{equation}
+		\begin{align*}
+			\coord{v^1,\ldots ,v^d}+\coord{w^1,\ldots ,w^d} & \ceqq \coord{v^1+w^1,\ldots ,v^d+w^d} \\
+			\alpha \cdot \coord{v^1,\ldots ,v^d} & \ceqq \coord{\alpha v^1,\ldots ,\alpha v^d},
+		\end{align*}
+		just as in $\K ^m$ (\cref{ColumnVectors}).
 	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
@@ -885,9 +1039,9 @@ As before, this is an isomorphism if the direct-sum decomposition is finite.
 		V\ni v\mapsto \coordinates{v}{\collection{W}}\in \prod _{W\in \collection{W}}W
 	\end{equation}
 	is linear and injective with image
-	\begin{equation}
+	\begin{equation*}
 		\left\{ \coord{v^W:W\in \collection{W}}:v^W=0\text{ for cofinitely many }W\in \collection{W}\text{.}\right\} .
-	\end{equation}
+	\end{equation*}
 	\begin{rmk}
 		In particular, if $\collection{W}\eqqc \{ W^1,\ldots ,W^m\}$ is finite this gives an isomorphism $V\rightarrow W^1\times \cdots \times W^m$.  In particular,
 		\begin{equation}
@@ -1027,9 +1181,9 @@ Combining these two properties, with both the domain and the codomain as a direc
 		Perhaps the most important thing for you to remember about this is an expression for $T$ in terms of the $T\indices{^i_j}$s:
 		
 		For $v\in V$, write $v=v^1+\cdots +v^n$ for unique $v^k\in V^k$.  Then,
-		\begin{equation}
+		\begin{equation*}
 			T(v)=\left( \sum _{j=1}^nT\indices{^1_j}(v^j)\right) +\cdots +\left( \sum _{j=1}^nT\indices{^m_j}(v^j)\right) .
-		\end{equation}
+		\end{equation*}
 		That is, the $i^{\text{th}}$ coordinate of $T(v)$ with respect to the decomposition $W=W^1\oplus \cdots \oplus W^m$ is given by
 		\begin{equation}
 			T(v)^i=\sum _{j=1}^nT\indices{^i_j}(v^j).
@@ -1093,9 +1247,9 @@ The answer is that there are spaces which have these properties, but they may no
 This leaves us to address the question of the ``out of'' case.  The answer is that it is essentially the direct-sum that has this property, but so far we only know ``Give a module, is this module a direct-sum of blah blah blah subspaces?''.  We don't yet know how to create \emph{new} spaces out of old ones by taking direct-sums.  The following definition does just that.
 \begin{dfn}{External direct-sum of modules}{}
 	Let $\collection{V}$ be an indexed collection of $\K$-modules.  Then, the \term{external direct-sum}\index{External direct-sum} of $\collection{V}$, $\bigoplus _{V\in \collection{V}}V$\index[notation]{$\bigoplus _{V\in \collection{V}}V$} is defined by
-	\begin{equation}
+	\begin{equation*}
 		\bigoplus _{V\in \collection{V}}V\ceqq \left\{ \coord{v^V:V\in \collection{V}}:\text{cofinitely many }v^V=0\text{.}\right\} .
-	\end{equation}
+	\end{equation*}
 	\begin{rmk}
 		That is, it is the subspace of the Cartesian product consisting of those elements with only finitely many nonzero coordinates.  For example, this is exactly analogous to the difference between $\C ^{\infty}$ and $\C ^{\N}$.  Indeed, these are respectively the external direct-sum and Cartesian product of countably-infinitely many copies of $\C$. 
 	\end{rmk}
@@ -1144,9 +1298,9 @@ Before turning to the the definition of invariant subspace itself, we first inve
 	Having noted that $\K [x]$ has the structure of a ring (so that ``$\K [x]$-module'' actually makes sense), let us turn to examining the $\K [x]$-module itself.  To define this $\K [x]$-module, we must first start with a $\K$-module $V$ and a $\K$-linear operator $T\colon V\rightarrow V$.
 	
 	We now define the $\K [x]$-module as follows:  The underlying set of vectors is the same as before, $V$; the addition is the same as it was before; but now scaling $\K [x]\times V\rightarrow V$ is defined by
-	\begin{equation}
+	\begin{equation*}
 	(\alpha _0+\alpha _1x+\cdots +\alpha _mx^m)\cdot v\ceqq \alpha _0\cdot v+\alpha _1\cdot T(v)+\cdots +\alpha _m\cdot T^m(v).
-	\end{equation}
+	\end{equation*}
 	Intuitively, we require that $x\cdot v\ceqq T(v)$, and then the ``action'' of every other polynomial is determined in the obvious way (e.g.~$x^2\cdot v\ceqq T^2(v)$).
 	\begin{exr}[breakable=false]{}{}
 		Check that this actually satisfies the axioms of a $\K [x]$-module.
@@ -1157,7 +1311,10 @@ Before turning to the the definition of invariant subspace itself, we first inve
 \end{exm}
 Regarding $V$ as a $\K [x]$-module in this way is just a fancy way of saying that we have defined what $p(T)$ means, $T\colon V\rightarrow V$ a $\K$-linear operator and $p$ a polynomial.  For example, if $p(x)\ceqq 3x^3-5x^2+2$, then $p(T)\colon V\rightarrow V$ is the $\K$-linear transformation
 \begin{equation}
-v\mapsto [p(T)](v)\ceqq [3T^3-5T^2+2](v)\ceqq 3T(T(T(v)))-5T(T(v))+2v.
+	\begin{split}
+		v\mapsto [p(T)](v) & \ceqq [3T^3-5T^2+2](v) \\
+		& \ceqq 3T(T(T(v)))-5T(T(v))+2v.
+	\end{split}
 \end{equation}
 After having discussed eigenvalues, we can say a little more about these operators---see \cref{prp4.2.33}.
 
@@ -1231,7 +1388,10 @@ We know now that we can't always find a basis in which the matrix of a linear op
 	\begin{rmk}
 		Let $V=V^1\oplus \cdots \oplus V^m$ be a direct-sum decomposition of $V$ consisting of $T$-invariant subspaces.  As each $V^k$ is invariant, $T$ restricts to a linear-transformation $T^k\ceqq \restr{T}{V^k}\colon V^k\rightarrow V^k$.  Using this notation, we have
 		\begin{equation}
-		\coordinates{T}{\collection{V}\leftarrow \collection{V}}=\begin{bmatrix}T^1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & T^m\end{bmatrix}\eqqc T^1\oplus \cdots \oplus T^m.
+		\begin{split}
+		\coordinates{T}{\collection{V}\leftarrow \collection{V}} & =\begin{bmatrix}T^1 & \cdots & 0 \\ \vdots & \ddots & \vdots \\ 0 & \cdots & T^m\end{bmatrix} \\
+		& \eqqc T^1\oplus \cdots \oplus T^m.
+		\end{split}
 		\end{equation}
 	\end{rmk}
 	\begin{rmk}
@@ -1311,9 +1471,9 @@ After realizing that we won't always be able to find a basis in which the matrix
 Our first hint at how we might do all this is given by the following result \cref{prp4.6.1}.
 \begin{prp}{}{lma4.6.2}
 	Let $V$ be a finite-dimensional vector space and let $T\colon V\rightarrow V$ be linear.  Then,
-	\begin{equation}
+	\begin{equation*}
 	0\subseteq \Ker (T)\subseteq \cdots \subseteq \Ker (T^{\dim (V)})=\Ker (T^{\dim (V)+1})=\cdots .
-	\end{equation}
+	\end{equation*}
 	\begin{proof}
 		Let $v\in \Ker (T^k)$.  Then, $T^k(v)=0$, and so $T^{k+1}(v)\ceqq T(T^k(v))=0$, and so $v\in \Ker (T^{k+1})$.  Hence, $\Ker (T^k)\subseteq \Ker (T^{k+1})$.
 		
@@ -1461,9 +1621,11 @@ We thus know that nilpotent linear-transformations are essentially never diagona
 		\end{equation}
 		is maximal $N$-indecomposable if $v_0\in V$ is $N$-maximal; and
 		\item \label{thm4.6.17(iv)}if $V$ is $N$-indecomposable and $v_0\in V$ is $N$-maximal, then $N^{\infty}(v_0)$ is a basis of $V$ that has the property that
+		{\small
 		\begin{equation}\label{eqn4.6.17}
 			\coordinates{N}{N^{\infty}(v_0)\leftarrow N^{\infty}(v_0)}=\begin{bmatrix}0 & 1 & 0 & \cdots & 0 \\ 0 & 0 & 1 & \cdots & 0 \\ \vdots &\ddots & \ddots & \ddots & \vdots \\ 0 & 0 & 0 & \cdots & 1 \\ 0 & 0 & 0 & \cdots & 0\end{bmatrix}.
 		\end{equation}
+		}
 	\end{enumerate}
 	\begin{rmk}
 		Intuitively, one can think of this as follows.  Starting with $v_0$, if you want something that is $N$-invariant, that something had better contain $N(v_0)$, $N^2(v_0)$, and so on.  This gives you $N^{\infty}(v_0)$.  If you then want that something to be a subspace, you had better taken the span to obtain $\Span (N^{\infty}(v_0))$.  In turns out that this is $N$-indecomposable, is maximal if $v_0$ is $N$-maximal, and furthermore, the matrix of $N$ with respect to this basis is particularly simple---see \eqref{eqn4.6.17}.
@@ -1488,9 +1650,9 @@ We thus know that nilpotent linear-transformations are essentially never diagona
 			\alpha _0\cdot N^{r-1}(v_0)=N^{r-1}(v)\in U,
 		\end{equation}
 		and so as $\alpha _0\neq 0$, $N^{r-1}(v_0)\in U$.  It follows that
-		\begin{equation}
+		\begin{equation*}
 			v-\alpha _{r-1}\cdot N^{r-1}(v_0)=\alpha _0\cdot v_0+\cdots +\alpha _{r-2}\cdot N^{r-2}(v_0)\in U.
-		\end{equation}
+		\end{equation*}
 		Continuing this process inductively, eventually we obtain that all terms in \eqref{eqn4.4.139} with nonzero coefficients are elements of $U$, and so in particular $v_0\in U$.  But then $U=\Span (N^{\infty}(v_0))$, and so $\Span (N^{\infty}(v_0))$ is indecomposable.
 		
 		
@@ -1511,7 +1673,8 @@ We thus know that nilpotent linear-transformations are essentially never diagona
 		\begin{equation}\label{eqn4.4.132}
 		\begin{split}
 		N(v) & =\proj _U(N(v))+\proj _W(N(v)) \\
-		& =\footnote{$N$ commutes with the projections because the subspaces are invariant---see \cref{prp4.5.9}.}N(\proj _U(v))+N(\proj _W(v))\eqqc N(v_U)+N(v_W),
+		& =\footnote{$N$ commutes with the projections because the subspaces are invariant---see \cref{prp4.5.9}.}N(\proj _U(v))+N(\proj _W(v)) \\
+		& \eqqc N(v_U)+N(v_W),
 		\end{split}
 		\end{equation}
 		where we have written $v_U\ceqq \proj _U(v)$ and $v_W\ceqq \proj _W(v)$.  Let $\basis{B}'$ be a basis for $V'$, and define
@@ -1527,9 +1690,9 @@ We thus know that nilpotent linear-transformations are essentially never diagona
 		As $V=U\oplus W\oplus W'$, it follows that $\sum _{k=1}^r\alpha _kb_k=0$, whence each $\alpha _k=0$ by linear-independence, that $w=0$, and that $u=\sum _{k=1}^r\alpha _k[b_k]_U=0$.  By \cref{prp4.4.7}, it just remains to check that $V=U+W+\breve{V}$.
 		
 		So, let $v\in V$.  We may then write $v=u+w+v'$ for $u\in U$, $w\in W$, and $v'\in V'$.  Write $v'=\alpha _1b_1+\cdots +\alpha _rb_r$.  Then,
-		\begin{equation}
+		\begin{equation*}
 		v'=\left( u+\sum _{k=1}^r\alpha _k[b_k]_U\right) +w+\sum _{k=1}^r\alpha _k(b_k-[b_k]_U)\in U+W+\breve{V},
-		\end{equation}
+		\end{equation*}
 		as desired.  Thus, $\Ima (T)$ is indecomposable, and hence $\Ima (N)=\Span (N^{r-1}(v_0),\ldots ,N(v_0))$.
 		
 		\Step{Finish the proof of spanning}
@@ -1609,6 +1772,9 @@ Having understood the behavior of $T$ on subspaces of the form $\Ker ([T-\lambda
 	\end{enumerate}
 	\begin{rmk}
 		Such a $\lambda$ is referred to a \term{generalized-eigenvalue}\index{Generalized-eigenvalue} of $T$.\footnote{We will see (\cref{prp4.6.25}) that in fact generalized-eigenvalues are the same as the eigenvalues.  So in particular, we don't introduce a separate notation for the set of generalized-eigenvalues.}
+	\end{rmk}
+	\begin{rmk}
+		Warning:  There is another meaning of the term ``generalized-eigenvalue'' which we will not study.  As we will see in \cref{prp4.6.25}, generalized-eigenvalues in this sense are just the same as eigenvalues, after which point we will stop using of the term ``generalized-eigenvalue''.
 	\end{rmk}
 	\begin{rmk}
 		Nonzero elements of $W$ are \term{generalized-eigenvectors} of $T$ with eigenvalue $\lambda$.
@@ -1700,12 +1866,12 @@ As before, we start by establishing uniqueness of generalized-eigenspaces.
 We also have a result analogous to \cref{thm4.2.17} that is useful for actually `calculating' generalized-eigenspaces.
 \begin{thm}{}{thm4.4.143}
 	Let $V$ be a vector space over a division ring $\F$, let $T\colon V\rightarrow V$ be linear, and let $\lambda \in \F$.  Then, if $\lambda$ is an eigenvalue of $T$, then
-	\begin{equation}
+	\begin{equation*}
 		\begin{split}
-			\Eig _{\lambda ,T}^{\infty} & =\left\{ v\in V:[T-\lambda ]^m(v)=0\text{for some }m\in \N \text{.}\right\} \\
+			\Eig _{\lambda ,T}^{\infty} & =\left\{ v\in V:[T-\lambda ]^m(v)=0\text{ for some }m\in \N \text{.}\right\} \\
 			& =\bigcup _{m\in \N}\Ker ([T-\lambda ]^m).
 		\end{split}
-	\end{equation}
+	\end{equation*}
 	In fact, if $V$ is finite-dimensional, then
 	\begin{equation}
 		\Eig _{\lambda ,T}^{\infty}=\Ker ([T-\lambda ]^{\dim (V)}).
@@ -1728,7 +1894,10 @@ We also have a result analogous to \cref{thm4.2.17} that is useful for actually 
 		
 		To show maximality, let $U\supseteq W$ be a subspace such that $\restr{T}{U}=\lambda \id _U+N$ for $N\colon U\rightarrow U$ locally-nilpotent.  Then, for every $u\in U$, there is some $m\in \N$ such that $N^m(u)=0$, in which case $[T-\lambda ]^m(u)=N^m(u)=0$.  Thus, $u\in W$, so that $U\subseteq W$, showing maximality.  Hence,
 		\begin{equation}
-		W\ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{for some }m\in \N \text{.}\right\} =\Eig _{\lambda ,T}^{\infty}.
+			\begin{split}
+				W & \ceqq \left\{ v\in V:[T-\lambda ]^m(v)=0\text{for some }m\in \N \text{.}\right\} \\
+				& =\Eig _{\lambda ,T}^{\infty}.
+			\end{split}
 		\end{equation}
 		
 		Now suppose that $V$ is finite-dimensional.  It follows from \cref{lma4.6.2} that
@@ -1837,10 +2006,17 @@ Related to the fact that we can write the generalized-eigenspace as a union in t
 \end{prp}
 
 Recall (\cref{prp4.2.22}) that eigenvectors with distinct eigenvalues are linearly-independent.  The same is true for generalized-eigenvectors (and in fact this is a strict generalization of the previous result).
-\begin{prp}{Generalized-eigenvectors with \\ distinct eigenvalues are linearly-independent}{prp4.4.157}
-	Let $V$ be a vector space, let $T\colon V\rightarrow V$ be linear, let $\lambda _1,\ldots ,\lambda _m$ be distinct eigenvalues of $T$, and let $v_k\in \Eig _{\lambda _k}^{\infty}$ be nonzero $1\leq k\leq m$.  Then, $\{ v_1,\ldots ,v_m\}$ is linearly-independent.
+\begin{prp}{Generalized-eigenspaces with \\ distinct eigenvalues are linearly-independent}{prp4.4.157}
+	Let $V$ be a vector space and let $T\colon V\rightarrow V$ be linear.  Then,
+	\begin{equation}
+		\left\{ \Eig _{\lambda}^{\infty}:\lambda \in \Eig (T)\right\}
+	\end{equation}
+	is linearly-independent.
+	\begin{rmk}
+		Explicitly, this means that any collection of generalized-eigenvectors with distinct eigenvalues is linearly-independent.
+	\end{rmk}
 	\begin{proof}
-		Denote the ground division ring by $\F$.  Suppose that
+		Denote the ground division ring by $\F$.  Let $\lambda _1,\ldots ,\lambda _m\in \Eig (T)$ and $v_1\in \Eig _{\lambda _1}^{\infty},\ldots ,v_m\in \Eig _{\lambda _m}^{\infty}$.  Suppose that
 		\begin{equation}
 			0=\alpha _1\cdot v_1+\cdots +\alpha _m\cdot v_m.
 		\end{equation}
@@ -1884,9 +2060,11 @@ We're finally ready to state the Jordan Canonical Form Theorem, which, among oth
 	\end{equation}
 \end{dfn}
 \begin{exm}{}{}
-	\begin{equation}
-		\Jord _{-2,3}\coloneqq \begin{bmatrix}-2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -1\end{bmatrix}\text{ and } \Jord _{1,1}\coloneqq \begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}.
-	\end{equation}
+	\begin{align}
+		\Jord _{-2,3} & \coloneqq \begin{bmatrix}-2 & 1 & 0 \\ 0 & -2 & 1 \\ 0 & 0 & -1\end{bmatrix} \\
+		\intertext{and}
+		\Jord _{1,1} & \coloneqq \begin{bmatrix}1 & 1 \\ 0 & 1\end{bmatrix}.
+	\end{align}
 \end{exm}
 \begin{exm}{Jordan blocks and ranks of generalized-eigenvectors}{JordanRank}
 	Consider for the sake of example the Jordan block
@@ -2002,9 +2180,9 @@ And now, what is arguably the most important theorem in the entirety of the note
 				for some nonzero $\alpha \in \F$.
 				
 				By \eqref{eqn4.4.180}, we have that $[p(T)](v)=0$, and hence
-				\begin{equation}
+				\begin{equation*}
 					0=\alpha [T-\lambda _d]\left( [T-\lambda _{d-1}]\left( \cdots ([T-\lambda _1](v))\cdots \right) \right) .
-				\end{equation}
+				\end{equation*}
 				If $[T-\lambda _{d-1}](\cdots )$ is nonzero, then $T-\lambda _d$ has nonzero kernel.  Otherwise, in fact we have $[T-\lambda _{d-1}](\cdots )=0$.  Now, if $[T-\lambda _{d-2}](\cdots )$ is nonzero, $T-\lambda _{d-1}$ has nonzero kernel.  Continuing inductively, we eventually find some $k$ such that $\Ker (T-\lambda _k)\neq 0$.  Thus, $\lambda _k$ is an eigenvalue of $T$.
 			\end{proof}
 		\end{lma}
@@ -2102,9 +2280,9 @@ Of course, there is still the issue of how to actually \emph{calculate} the damn
 
 To give you an idea of what this means (don't worry---it's not hard), let's take a look at a couple examples of matrices in Jordan canonical form.
 \begin{exm}{}{}
-	\begin{equation}
+	\begin{equation*}
 		\Jord _{3,2}\oplus \Jord _{4,1}\oplus \Jord _{-2,2}\ceqq \begin{bmatrix}3 & 1 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 & 0 \\ 0 & 0 & 4 & 0 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}
-	\end{equation}
+	\end{equation*}
 	is in Jordan canonical form.
 	
 	Similarly,
@@ -2134,7 +2312,7 @@ To give you an idea of what this means (don't worry---it's not hard), let's take
 	With just a bit of extra information, you can determine which of these five possibilities it is.  For example, if $T-3=0$, then of course it must the last choice.  If $T-3\neq 0$ but $(T-3)^2=0$, then it must be the third or fourth choice, and you can distinguish between those two by looking at $\dim (\Eig _3)$.\footnote{While the dimension of the generalized-eigenspace is of course always $4$, we have $\dim (\Eig _3)=2$ for the third matrix and $\dim (\Eig _3)=3$ for the third matrix.}  If $(T-3)^2\neq 0$ but $(T-3)^3=0$, then it must be the second choice.  Finally, if $(T-3)^3\neq 0$, then it must be the first choice.
 \end{exm}
 
-\subsubsection{Jordan canonical form of matrix linear-transformations}
+\subsubsection[Jordan canonical form of matrix linear.-transformations]{Jordan canonical form of matrix linear-transformations}
 
 When studying diagonalization, it wasn't just of interest to know what the diagonalization itself was, but also what the relationship was between the original linear-transformation and its diagonalization.  In general, this relationship is just ``The diagonalization is the matrix with respect to a basis of eigenvectors.'', but if the linear-transformation is defined by a matrix, we can be a bit more explicit.  This was done in \cref{prp4.3.16}, and we now present the analogous result for Jordan canonical form.  Conceptually, it is essentially identical in nature, and if understand the previous result, you understand this one.
 \begin{prp}{}{MatrixJordan}
@@ -2210,7 +2388,10 @@ Another characterization of similarity that makes it more apparent what this con
 		\end{equation}
 		Hence,
 		\begin{equation}
-			\coordinates{T}{\basis{C}}\ceqq \coordinates{T}{\basis{C}\leftarrow \basis{C}}=\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}}=\coordinates{S}{\basis{B}}.
+			\begin{split}
+			\coordinates{T}{\basis{C}} & \ceqq \coordinates{T}{\basis{C}\leftarrow \basis{C}} \\
+			& =\coordinates{P}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{B}}\coordinates{P^{-1}}{\basis{B}\leftarrow \basis{C}}=\coordinates{S}{\basis{B}}.
+			\end{split}
 		\end{equation}
 		
 		\blni
@@ -2298,9 +2479,9 @@ We begin with the theorem that allows us to define the minimal polynomial.
 			\left\{ 1,T,\ldots ,T^{\dim (V)^2-1},T^{\dim (V)^2}\right\}
 		\end{equation}
 		This is a set of $\dim (V)^2+1$ elements in $\End _{\Vect _{\F}}(V)$.  However, by \cref{prp3.2.144}, we know that $\dim (\End _{\Vect _{\F}}(V))=\dim (V)^2$, and so we must have a linear-dependence relation:
-		\begin{equation}
+		\begin{equation*}
 			\alpha _0\cdot 1+\alpha _1\cdot T+\cdots +\alpha _{\dim (V)^2-1}\cdot T^{\dim (V)^2-1}+\alpha _{\dim (V)^2}\cdot T^{\dim (V)^2}=0.
-		\end{equation}
+		\end{equation*}
 		This of course gives us a polynomial $p$ such that $p(T)=0$.
 		
 		Now, by \cref{PolynomialsArePIDs}, $\F [x]$ is both a left and right PIR, and so as $\Ker (\rho )\neq 0$, there is some $p_0\in \F [x]$ such that
@@ -2361,7 +2542,10 @@ Even as I describe this, it probably doesn't sound all that efficient.  In any c
 	\end{equation}
 	We how check for a linear-dependence relation among $1,A,A^2$:
 	\begin{equation}
-		0=\alpha _1+\alpha _2A+\alpha _3A^2=\begin{bmatrix}\alpha _1+\alpha _2+7\alpha _3 & 2\alpha _2+10\alpha _3 \\ 3\alpha _2+15\alpha _3 & \alpha _1+4\alpha _2+22\alpha _3\end{bmatrix}.
+		\begin{split}
+		0 & =\alpha _1+\alpha _2A+\alpha _3A^2 \\
+		& =\begin{bmatrix}\alpha _1+\alpha _2+7\alpha _3 & 2\alpha _2+10\alpha _3 \\ 3\alpha _2+15\alpha _3 & \alpha _1+4\alpha _2+22\alpha _3\end{bmatrix}.
+		\end{split}
 	\end{equation}
 	This gives us $4$ equations in $\alpha _1,\alpha _2,\alpha _3$.  If it has a solution, we have our linear-dependence relation.  Otherwise, onto $A^3$.\footnote{Pro-tip:  You'll only ever need to go as high as $\dim (V)$, so without doing anything, I know there's going to be a solution.  We'll learn this when we cover the Cayley-Hamilton Theorem.}
 	
@@ -2420,7 +2604,10 @@ So, yes, certainly, one can compute $p_{\min ,T}$ for the purpose of computing t
 \begin{exm}{}{}
 	The minimal polynomial of
 	\begin{equation}
-		A\ceqq \Jord _{3,2}\oplus \Jord _{4,1}\oplus \Jord _{-2,2}=\begin{bmatrix}3 & 1 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 & 0 \\ 0 & 0 & 4 & 0 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}
+		\begin{split}
+		A & \ceqq \Jord _{3,2}\oplus \Jord _{4,1}\oplus \Jord _{-2,2} \\
+		& =\begin{bmatrix}3 & 1 & 0 & 0 & 0 \\ 0 & 3 & 0 & 0 & 0 \\ 0 & 0 & 4 & 0 & 0 \\ 0 & 0 & 0 & -2 & 1 \\ 0 & 0 & 0 & 0 & -2\end{bmatrix}
+		\end{split}
 	\end{equation}
 	is
 	\begin{equation}
@@ -2438,7 +2625,10 @@ So, yes, certainly, one can compute $p_{\min ,T}$ for the purpose of computing t
 	
 	Finally, the minimal polynomial of
 	\begin{equation}
-		C\ceqq \Jord _{4,2}\oplus \Jord _{4,2}\oplus \Jord _{4,1}\ceqq \begin{bmatrix}4 & 1 & 0 & 0 & 0 \\ 0 & 4 & 0 & 0 & 0 \\ 0 & 0 & 4 & 1 & 0 \\ 0 & 0 & 0 & 4 & 0 \\ 0 & 0 & 0 & 0 & 4\end{bmatrix}.
+		\begin{split}
+		C & \ceqq \Jord _{4,2}\oplus \Jord _{4,2}\oplus \Jord _{4,1} \\
+		& \ceqq \begin{bmatrix}4 & 1 & 0 & 0 & 0 \\ 0 & 4 & 0 & 0 & 0 \\ 0 & 0 & 4 & 1 & 0 \\ 0 & 0 & 0 & 4 & 0 \\ 0 & 0 & 0 & 0 & 4\end{bmatrix}.
+		\end{split}
 	\end{equation}
 	is
 	\begin{equation}
@@ -2458,7 +2648,10 @@ Of course, we're going to start by computing the eigenvalues.\footnote{When we l
 	\end{equation}
 	Proceeding as in the previous example \cref{exm4.5.17}, we find that the minimal polynomial is
 	\begin{equation}\label{eqn4.5.20}
-		p_{\min ,A}(x)=x^4-11x^3+42x^2-64x+32=(x-1)(x-2)(x-4)^2.\footnote{Yes, this computation is exceptionally tedious to do by hand, at least given the knowledge we have now.  See \cref{exm4.5.32x} to see how one might at least compute the eigenvalues.}
+		\begin{split}
+		p_{\min ,A}(x) & =x^4-11x^3+42x^2-64x+32 \\
+		& =(x-1)(x-2)(x-4)^2.\footnote{Yes, this computation is exceptionally tedious to do by hand, at least given the knowledge we have now.  See \cref{exm4.5.32x} to see how one might at least compute the eigenvalues.}
+		\end{split}
 	\end{equation}
 	
 	Thus, we see that the eigenvalues are $\lambda _1\ceqq 1$, $\lambda _2\ceqq 2$, and $\lambda _3\ceqq 4$.  Furthermore, by virtue of \cref{MinimalJordan}, we know that the largest $\lambda =1$ Jordan block has size $1$, the largest $\lambda =2$ Jordan block has size $1$, and the largest $\lambda =4$ Jordan block has size $2$.  For a $4\times 4$ matrix, there is only one way for this to happen:

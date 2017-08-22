@@ -1,4 +1,5 @@
-\chapter{Coordinates, column vectors, and matrices}
+\chapter[Coordinates, vectors, and matrices]{Coordinates, column vectors, and matrices}
+\chaptermark{Coordinates, column vectors, and matrices}
 
 We now turn to the second important use of bases:  coordinates.
 
@@ -9,7 +10,7 @@ We now turn to the second important use of bases:  coordinates.
 	\begin{equation}
 		v=\sum _{b\in \basis{B}}v^b\cdot b
 	\end{equation}
-	for unique $v^b\in \basis{B}$.  Then, the \term{coordinates}\index{Coordinates (of a vector)} of $v$ with respect to the basis $\basis{B}$, $\coordinates{v}{\basis{B}}$\index[notation]{$\coordinates{v}{\basis{B}}$}, are defined by
+	for unique $v^b\in \K$.  Then, the \term{coordinates}\index{Coordinates (of a vector)} of $v$ with respect to the basis $\basis{B}$, $\coordinates{v}{\basis{B}}$\index[notation]{$\coordinates{v}{\basis{B}}$}, are defined by
 	\begin{equation}
 		\coordinates{v}{\basis{B}}\ceqq \coord{v^b:b\in \basis{B}}\in \K ^{\basis{B}}.
 	\end{equation}
@@ -59,9 +60,11 @@ is linear and injective with image
 \end{rmk}
 \begin{proof}
 	We first prove that it is in fact linear.  Let $v_1,v_2\in V$ and write
-	\begin{equation}
-		v_1=v_1^{b_1}\cdot b_1+\cdots +v_1^{b_m}\cdot b_m\text{ and }v_2=v_2^{b_1}\cdot b_1+\cdots +v_2^{b_m}\cdot b_m,
-	\end{equation}
+	\begin{align}
+		v_1 & =v_1^{b_1}\cdot b_1+\cdots +v_1^{b_m}\cdot b_m \\
+		\intertext{and}
+		v_2 & =v_2^{b_1}\cdot b_1+\cdots +v_2^{b_m}\cdot b_m,
+	\end{align}
 	so that
 	\begin{equation}\label{eqn3.1.12}
 		v_1+v_2=(v_1^{b_1}+v_2^{b_1})\cdot b_1+\cdots +(v_1^{b_m}+v_2^{b_m})\cdot b_m.
@@ -126,7 +129,8 @@ So, given a choice of basis, we can associate column vectors to `abstract' vecto
 	\end{exr}
 \end{exm}
 
-\section{Coordinates, linear-transformations, and matrices}
+\section[Coordinates, lin.-trans., and matrices]{Coordinates, linear-transformations, and matrices}
+\sectionmark{Coordinates, linear-transformations, and matrices}
 
 We can also define the coordinates of linear-transformations.  We just saw that the coordinates of a vector in an (`abstract') vector space is a column vector.  On the other hand, it turns out that the coordinates of a linear-transformation is a \emph{matrix}, and so first, I suppose, it would help to actually define what a matrix is.
 
@@ -206,9 +210,9 @@ Taking $v=S(u)$ in \eqref{eqn3.2.10}, so that
 	v^j=\sum _{h=1}^cu^hS\indices{^j_h},
 \end{equation}
 it becomes
-\begin{equation}
+\begin{equation*}
 	T(S(u))=\left( \sum _{h=1}^cu^h\left( \sum _{i=1}^dS\indices{^i_h}T\indices{^1_i}\right) \right) +\cdots +\left( \sum _{h=1}^cu^h\left( \sum _{i=1}^dS\indices{^i_h}T\indices{^e_i}\right) \right) \cdot c_e.
-\end{equation}
+\end{equation*}
 From this, we can read off that the $\coord{j,h}$ entry is
 \begin{equation}
 	\sum _{i=1}^dS\indices{^i_h}T\indices{^j_i}.
@@ -270,7 +274,10 @@ What follows is another way of thinking of matrix multiplication.
 	\begin{rmk}
 		The first, after writing $B$ in terms of its columns, looks something like
 		\begin{equation}
-			AB=A\begin{bmatrix}B\indices{^{\blankdot}_1} & \cdots & B\indices{^{\blankdot}_o}\end{bmatrix}=\begin{bmatrix}AB\indices{^{\blankdot}_1} & \cdots & AB\indices{^{\blankdot}_o}\end{bmatrix}.
+			\begin{split}
+				AB & =A\begin{bmatrix}B\indices{^{\blankdot}_1} & \cdots & B\indices{^{\blankdot}_o}\end{bmatrix} \\
+				& =\begin{bmatrix}AB\indices{^{\blankdot}_1} & \cdots & AB\indices{^{\blankdot}_o}\end{bmatrix}.
+			\end{split}
 		\end{equation}
 		On the other hand, the second, after writing $A$ in terms of its row, looks something like
 		\begin{equation}
@@ -327,13 +334,13 @@ We now present some trivial but necessary terminology.
 	\begin{rmk}
 		These terms get their names from the following pictures.
 		\begin{subequations}
-			\begin{align}
+			\begin{align*}
 			\text{Diagonal:} & \begin{bmatrix}* & 0 & \cdots & 0 \\ 0 & * & \cdots & 0 \\ \vdots & \cdots & \ddots & \vdots \\ 0 & 0 & \cdots & *\end{bmatrix} \\
 			\text{Upper-triangular:} & \begin{bmatrix}* & * & \cdots & * \\ 0 & * & \cdots & * \\ \vdots & \cdots & \ddots & \vdots \\ 0 & 0 & \cdots & *\end{bmatrix} \\
 			\text{Strictly upper-triangular:} & \begin{bmatrix}0 & * & \cdots & * \\ 0 & 0 & \cdots & * \\ \vdots & \cdots & \ddots & \vdots \\ 0 & 0 & \cdots & 0\end{bmatrix} \\
 			\text{Lower-triangular:} & \begin{bmatrix}* & 0 & \cdots & 0 \\ * & * & \cdots & 0 \\ \vdots & \cdots & \ddots & \vdots \\ * & * & \cdots & *\end{bmatrix} \\
 			\text{Strictly lower-triangular:} & \begin{bmatrix}0 & 0 & \cdots & 0 \\ * & 0 & \cdots & 0 \\ \vdots & \cdots & \ddots & \vdots \\ * & * & \cdots & 0\end{bmatrix}
-			\end{align}
+			\end{align*}
 		\end{subequations}
 	\end{rmk}
 \end{dfn}
@@ -660,17 +667,21 @@ One of the most important facts about matrices is that they define linear-transf
 		
 		Let $x\in \K ^n$, let $\alpha \in \K$, and let $1\leq i\leq m$.  Then,
 		\begin{equation}
-		\begin{split}
-		T_A(\alpha \cdot x)^i & \ceqq [A(\alpha x)]^i\ceqq \sum _{k=1}^n[\alpha x]^kA\indices{^i_k}=\alpha \sum _{k=1}^dx^kA\indices{^i_k} \\
-		& \eqqc \alpha [Ax]^i=\alpha T_A(x)^i=[\alpha \cdot T_A(x)]^i,
-		\end{split}
+			\begin{split}
+				T_A(\alpha \cdot x)^i & \ceqq [A(\alpha x)]^i\ceqq \sum _{k=1}^n[\alpha x]^kA\indices{^i_k} \\
+				& =\alpha \sum _{k=1}^dx^kA\indices{^i_k}\eqqc \alpha [Ax]^i=\alpha T_A(x)^i \\
+				& =[\alpha \cdot T_A(x)]^i,
+			\end{split}
 		\end{equation}
 		and so $T_A(\alpha \cdot x)=\alpha \cdot T_A(x)$, as desired.
 	\end{proof}
 	\begin{rmk}
 		It could be instructive to see how this would have gone if we hadn't used the definition of matrix multiplication we did.  Using the other possible definition, we would have found
 		\begin{equation}
-		T_A(\alpha \cdot x)^i\ceqq [A(\alpha x)]^i=\sum _{k=1}^nA\indices{^i_k}[\alpha x]^k=\sum _{k=1}^nA\indices{^i_k}\alpha x^k.
+			\begin{split}
+				T_A(\alpha \cdot x)^i & \ceqq [A(\alpha x)]^i=\sum _{k=1}^nA\indices{^i_k}[\alpha x]^k \\
+				& =\sum _{k=1}^nA\indices{^i_k}\alpha x^k.
+			\end{split}
 		\end{equation}
 		But now we have no way of pulling the $\alpha$ out front (if the ring is not commutative) to write this as $\alpha \cdot Ax$!.
 	\end{rmk}
@@ -819,8 +830,10 @@ Having take a (longer than necessary) diversion investigating matrices, let us r
 		Then, for $1\leq i\leq e$,
 		\begin{equation}
 			\begin{split}
-				\left[ \coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}\right] ^i & \ceqq \sum _{k=1}^d\coordinates{v}{\basis{B}}^k[T]\indices{_{\basis{C}\leftarrow \basis{B}}^i_k}\ceqq \sum _{k=1}^dv^k\coordinates{T(b_k)}{\basis{C}}^i \\
-				& =\left[ T\left( \sum _{k=1}^dv^k\cdot b_k\right) \right] _{\basis{C}}^i=\coordinates{T(v)}{\basis{C}}^i
+				\left[ \coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{v}{\basis{B}}\right] ^i & \ceqq \sum _{k=1}^d\coordinates{v}{\basis{B}}^k[T]\indices{_{\basis{C}\leftarrow \basis{B}}^i_k} \\
+				& \ceqq \sum _{k=1}^dv^k\coordinates{T(b_k)}{\basis{C}}^i \\
+				& =\Bigg[ T\bigg( \sum _{k=1}^dv^k\cdot b_k\bigg) \Bigg] _{\basis{C}}^i \\
+				& =\coordinates{T(v)}{\basis{C}}^i
 			\end{split}
 		\end{equation}
 		Hence,
@@ -857,7 +870,10 @@ We mentioned before when defining matrix multiplication that its seemingly awkwa
 		
 		So, let $v\in V$.  We then have
 		\begin{equation}
-			\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{A}}\coordinates{v}{\basis{A}}=\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S(v)}{\basis{B}}=\coordinates{T(S(v))}{\basis{A}},
+			\begin{split}
+				\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S}{\basis{B}\leftarrow \basis{A}}\coordinates{v}{\basis{A}} & =\coordinates{T}{\basis{C}\leftarrow \basis{B}}\coordinates{S(v)}{\basis{B}} \\
+				& =\coordinates{T(S(v))}{\basis{A}},
+			\end{split}
 		\end{equation}
 		as desired.
 	\end{proof}
@@ -865,9 +881,9 @@ We mentioned before when defining matrix multiplication that its seemingly awkwa
 Similarly, as $V\ni v\mapsto \coordinates{v}{\basis{B}}\in \K ^d$ was an isomorphism, so to is $\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\basis{C}\leftarrow \basis{B}}\in \Matrix _{m\times n}(\K )$.  However, in this case, we need $\K$ to be commutative.\footnote{Otherwise $\Mor _{\Mod{\K}}(V,W)$ won't have the structure of a $\K$-module---see \cref{sss1.1.2}.  That said, they would still be isomorphic as commutative groups (with respect to addition).}
 \begin{prp}{$\coordinates{\blankdot}{\basis{C}\leftarrow \basis{B}}$ is an isomorphism}{prp3.2.117}
 	Let $\K$ be a cring, let $V$ and $W$ be $\K$-modules, and let $\basis{B}$ and $\basis{C}$ be bases for $V$ and $W$ respectively with respective finite cardinalities $d$ and $e$.  Then,
-	\begin{equation}
-	\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\basis{C}\leftarrow \basis{B}}\in \Matrix _{e\times d}(\K )
-	\end{equation}
+	\begin{equation*}
+		\Mor _{\Mod{\K}}(V,W)\ni T\mapsto \coordinates{T}{\basis{C}\leftarrow \basis{B}}\in \Matrix _{e\times d}(\K )
+	\end{equation*}
 	is an isomorphism of $\K$-modules.
 	\begin{rmk}
 		In particular, we have that
@@ -891,7 +907,8 @@ Similarly, as $V\ni v\mapsto \coordinates{v}{\basis{B}}\in \K ^d$ was an isomorp
 		\begin{equation}
 			\begin{split}
 				\MoveEqLeft
-				\left( \coordinates{T_1}{\basis{C}\leftarrow \basis{B}}+\coordinates{T_2}{\basis{C}\leftarrow \basis{B}}\right) \coordinates{v}{\basis{B}}=\coordinates{T_1(v)}{\basis{C}}+\coordinates{T_2(v)}{\basis{C}} \\
+				\left( \coordinates{T_1}{\basis{C}\leftarrow \basis{B}}+\coordinates{T_2}{\basis{C}\leftarrow \basis{B}}\right) \coordinates{v}{\basis{B}} \\
+				& =\coordinates{T_1(v)}{\basis{C}}+\coordinates{T_2(v)}{\basis{C}} \\
 				& =\coordinates{T_1(v)+T_2(v)}{\basis{C}}=\coordinates{[T_1+T_2](v)}{\basis{C}},
 			\end{split}
 		\end{equation}
@@ -957,7 +974,10 @@ We saw in \cref{prp3.1.17} that the coordinates of a column vector (with respect
 	\end{equation}
 	Thus, we have that
 	\begin{equation}
-		\coordinates{T}{\basis{S}\leftarrow \basis{S}}=\begin{bmatrix}\coordinates{T(e_1)}{\basis{S}} & \coordinates{T(e_2)}{\basis{S}}\end{bmatrix}=\begin{bmatrix}\cos (\theta ) & -\sin (\theta ) \\ \sin (\theta ) & \cos (\theta )\end{bmatrix}.
+		\begin{split}
+			\coordinates{T}{\basis{S}\leftarrow \basis{S}} & =\begin{bmatrix}\coordinates{T(e_1)}{\basis{S}} & \coordinates{T(e_2)}{\basis{S}}\end{bmatrix} \\
+			& =\begin{bmatrix}\cos (\theta ) & -\sin (\theta ) \\ \sin (\theta ) & \cos (\theta )\end{bmatrix}.
+		\end{split}
 	\end{equation}
 \end{exm}
 \begin{exr}{}{}
@@ -989,7 +1009,10 @@ We saw in \cref{prp3.1.17} that the coordinates of a column vector (with respect
 	\end{equation}
 	and hence
 	\begin{equation}
-		\coordinates{D}{\basis{C}\leftarrow \basis{B}}=\begin{bmatrix}\coordinates{D(\e ^{\im x})}{\basis{C}} & \coordinates{D(\e ^{-\im x})}{\basis{C}}\end{bmatrix}=\begin{bmatrix}\im & -\im \\ -1 & -1\end{bmatrix}.
+		\begin{split}
+			\coordinates{D}{\basis{C}\leftarrow \basis{B}} & =\begin{bmatrix}\coordinates{D(\e ^{\im x})}{\basis{C}} & \coordinates{D(\e ^{-\im x})}{\basis{C}}\end{bmatrix} \\
+			& =\begin{bmatrix}\im & -\im \\ -1 & -1\end{bmatrix}.
+		\end{split}
 	\end{equation}
 	
 	\begin{exr}[breakable=false]{}{}
