@@ -207,7 +207,7 @@ One reason the term ``dual'' is used is because, while on one hand, we can obvio
 		\begin{equation}
 			\pinnerprod{\psi |[[T^{\T}]^{\T}](\pinnerprod{|v})}=\pinnerprod{\psi|T(v)}
 		\end{equation}
-		for al $v\in V$ and $\psi \in W^{\T}$.  However, by definition of the transpose and $\pinnerprod{|v}$,
+		for all $v\in V$ and $\psi \in W^{\T}$.  However, by definition of the transpose and $\pinnerprod{|v}$,
 		\begin{equation}
 			\begin{split}
 				\MoveEqLeft
@@ -256,8 +256,8 @@ On the off chance this talk of dual-spaces has you thinking ``Okay, but if $\Mor
 		It follows from the definition that it is linear.  To check naturality, let $T\colon U\rightarrow V$ be linear.  Then, this map is natural (\cref{NaturalTransformation}) iff the following diagram commutes.
 		\begin{equation}
 			\begin{tikzcd}
-				\Mor (\K ,U) & U \\
-				\Mor (\K ,V) & V
+				\Mor (\K ,U) \ar[r] \ar[d] & U \ar[d] \\
+				\Mor (\K ,V) \ar[r] & V
 			\end{tikzcd}
 		\end{equation}
 		Writing out the definitions of these maps, we see that this commutes for tautological reasons.
@@ -605,18 +605,17 @@ Among other things, this can be used to figure out the ``row-space'' of matrices
 
 Given a dual-pair $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$ and a basis $\basis{B}\subseteq V$, there will be a corresponding subset $\basis{B}^{\T}\subseteq W$ which is always linearly-independent and, in good cases, a basis of $W$, the \emph{dual basis}.
 \begin{prp}{The dual basis}{TheDualBasis}
-	Let $\pinnerprod{\blankdot |\blankdot}\colon W\times V\rightarrow \K$, let $\basis{B}$ be a basis of $V$, and for $b\in \basis{B}$ let $b^{\T}\colon V\rightarrow \K$ be the unique linear map such that
-	Let $V$ be a $\K$-module, let $\basis{B}$ be a basis of $V$, for $b\in \basis{B}$ let $b^{\T}\colon V\rightarrow \K$ be the unique linear map such that
+	Let $V$ be a $\K$-$\K$-bimodule, let $\basis{B}$ be a basis of $V$, for $b\in \basis{B}$ let $b^{\T}\colon V\rightarrow \K$ be the unique linear map such that
 	\begin{equation}
 	b^{\T}(c)=\begin{cases}1 & \text{if }c=b \\ 0 & \text{otherwise,}\end{cases}
 	\end{equation}
 	and define $\basis{B}^{\T}\ceqq \{ b^{\T}:b\in \basis{B}\}$.
 	\begin{enumerate}
-		\item If the pairing is nondegenerate, then $\basis{B}^{\T}\subseteq V$ is linearly-independent.
-		\item If the pairing is nonsingular, then $\basis{B}^{\T}\subseteq V$ is a basis.
+		\item If $V$ is a vector space, then $\basis{B}^{\T}\subseteq V^{\T}$ is linearly-independent.
+		\item If $V$ is a finite-dimensional vector space, then $\basis{B}^{\T}\subseteq V^{\T}$ is a basis.
 	\end{enumerate}
 	\begin{rmk}
-		If $\basis{B}^{\T}$ is actually a basis of $W$, then it is referred to as the \term{dual basis}\index{Dual basis} of $\basis{B}$.
+		If $\basis{B}^{\T}$ is actually a basis of $V^{\T}$, then it is referred to as the \term{dual basis}\index{Dual basis} of $\basis{B}$.
 	\end{rmk}
 	\begin{proof}
 		We leave this as an exercise.
@@ -699,7 +698,7 @@ We said before that multilinear algebra is the study of multilinear maps.  From 
 		\end{tikzcd}
 		\end{equation}
 		
-		Note that while people say ``unique up to \emph{unique} isomorphism'', the isomorphism is itself not unique---it would be more accurate to say ``unique up to unique isomorphisms which commute with blah blah blah diagram''.  That is to say, while there might be many isomorphisms between $V\otimes _SW$ and $U$, there is only one which makes the above diagram commute.  Given that the latter option, while more accurate, is incredibly verbose, people just stick to ``unique up to unique isomorphism''.
+		Thus, while people do often say ``unique up to \emph{unique} isomorphism'', the isomorphism is itself not unique---it would be more accurate to say ``unique up to unique isomorphisms which commute with blah blah blah diagram''.  That is to say, while there might be many isomorphisms between $V\otimes _SW$ and $U$, there is only one which makes the above diagram commute.  Given that the latter option, while more accurate, is incredibly verbose, people just stick to ``unique up to unique isomorphism''.
 	\end{rmk}
 	\begin{rmk}
 		A common question I've gotten from students is ``But what actually \emph{is} $v\otimes w$?''.  I'm afraid there's not a terribly good answer for that.  It is what it is:  the image of $\coord{v,w}\in V\times W$ under the canonical bilinear map $V\times W\rightarrow V\otimes _SW$.  As that's probably not very satisfying, I ask you to consider the following.
@@ -1112,6 +1111,32 @@ What follows are a couple of results similar in flavor to the tensor-hom adjunct
 		Take $W_1=\K$, $V_2=\K$, $V_1=V$, and $W_2=W$ in the previous result (\cref{TensorProductLinearTransformation}).  Using the fact that $W\cong \Mor _{\Mod{\K}}(\K ,W)$ (\cref{prp5.2.24}), $V\cong V\otimes _{\K}\K$, and $W\cong \K \otimes _{\K}W$ naturally, \cref{TensorProductLinearTransformation} reduces to exactly the statement of this corollary.
 	\end{proof}
 \end{crl}
+\begin{crl}{$\Mor (U\otimes V,W)\cong \Mor (U,V^{\T}\otimes W)$}{crl5.4.10}
+	Let $U$, $V$, and $W$ be $\K$-$\K$-bimodules.  Then, the map
+	\begin{equation*}
+		\Mor _{\Mod{\K}}(U,V^{\T}\otimes _{\K}W)\rightarrow \Mor _{\Mod{\K}}(U\otimes V,W),
+	\end{equation*}
+	given by the composition of the maps
+	{\small
+	\begin{subequations}
+		\begin{align*}
+			& \Mor _{\Mod{\K}}(U,V^{\T}\otimes _{\K}W)\rightarrow \Mor _{\Mod{\K}}(U,\Mor _{\Mod{\K}}(V,W)) \\
+			\intertext{and}
+			& \Mor _{\Mod{\K}}(U,\Mor _{\Mod{\K}}(V,W))\rightarrow \Mor _{\Mod{\K}}(U\otimes V,W),
+		\end{align*}
+	\end{subequations}
+	}
+	is linear and natural.
+	
+	Furthermore,
+	\begin{enumerate}
+		\item if $V$ and $W$ are vector spaces, this map is injective; and
+		\item if $V$ and $W$ are finite-dimensional vector space, this map is an isomorphism.
+	\end{enumerate}
+	\begin{proof}
+		This map is a composition of the map from the previous corollary and the \namerefpcref{TensorHomAdjunction}, and so this corollary follows immediately from those two results.
+	\end{proof}
+\end{crl}
 \begin{crl}{$V^{\T}\otimes W^{\T}\cong (W\otimes W)^{\T}$}{crl5.4.12}
 	Let $V$ and $W$ be $\K$-$\K$-bimodules.  Then, the map
 	\begin{equation*}
@@ -1170,7 +1195,7 @@ What follows are a couple of results similar in flavor to the tensor-hom adjunct
 
 Roughly speaking, a tensor rank $\coord{k,l}$ is going to be something that takes in $l$ vectors and spits out $k$ vectors\footnote{More accurately, a element of $V^{\otimes k}$.} in a multilinear manner.  For example, linear-transformations are $\coord{1,1}$ tensors, covectors are $\coord{0,1}$ tensors, vectors are $\coord{1,0}$ tensors, and scalars are $\coord{0,0}$ tensors:  linear-transformations take in $1$ vector and spit out $1$ vector, covectors take in $1$ vector and spits out a scalar\footnote{Which, for our purposes, is to be regarded as `zero vectors'.}, vectors take in $0$ vectors and spit out $1$ vector, and scalars take in $0$ vectors and spit out $0$ vectors.  Similarly, a pairing on a dual-pair will be a tensor of type $\coord{0,2}$:  it takes in two vectors and spits out a scalar.
 
-\subsection{The tensor algebra}
+\subsection{Tensors and the tensor algebra}
 
 We make this precise as follows.
 \begin{dfn}{Tensor}{Tensor}
@@ -1201,7 +1226,7 @@ We make this precise as follows.
 		Thus, by the definition of the tensor product (\cref{Tensor}), a tensor of rank $\coord{k,l}$ is `the same as' a multilinear map from $\underbrace{V\times \cdots \times V}_l$ to $\underbrace{V\otimes \cdots \otimes V}_k$.  Thus, a tensor of rank $\coord{k,l}$ is a thing that takes in $l$ vectors and `spits out' `$k$ vectors'\footnote{More accurately, a contravariant tensor of rank $k$.} in a multilinear manner.
 	\end{rmk}
 	\begin{rmk}
-		If $V$ is a finite-dimensional vector space, by virtue of \cref{prp5.4.9}, we have natural isomorphisms like, for example,
+		If $V$ is a finite-dimensional vector space, by virtue of \cref{crl5.4.10}, we have natural isomorphisms like, for example,
 		\begin{equation}
 			\begin{multlined}
 				\Mor _{\Mod{\K}}(V\otimes V^{\T}\otimes V^{\T},V\otimes V^{\T})\cong \\ \Mor _{\Mod{\K}}(V\otimes V,V\otimes V\otimes V).
@@ -1453,7 +1478,7 @@ The transpose we have already done in \cref{Transpose}, and so we simply explain
 \end{ntn}
 The tensor product we have already done in \cref{TensorProduct}, and so we simply explain the how to write the tensor product in index notation.
 \begin{ntn}{Tensor product in index notation}{ntn5.4.4}
-	Let $V$ be a $\K$-$\K$-bimodule and let $T_1$ and $T_2$ respectively be tensors over $V$ of rank $\coord{k_1,l_1}$ and $\coord{k_2,l_2}$.  The \emph{tensor product} of $[T_1]\indices{^{a_1\ldots a_{k_1}}_{b_1\ldots b_{l_1}}}\in V^{k_1\otimes ,l_1\otimes \T}$ and $[T_2]\indices{^{a_1\ldots a_{k_2}}_{b_1\ldots b_{l_2}}}\in V^{k_2\otimes ,l_2\otimes \T}$ is denoted
+	Let $V$ be a $\K$-$\K$-bimodule and let $T_1$ and $T_2$ respectively be tensors over $V$ of rank $\coord{k_1,l_1}$ and $\coord{k_2,l_2}$.  The \emph{tensor product} of $[T_1]\indices{^{a_1\ldots a_{k_1}}_{b_1\ldots b_{l_1}}}\in \tensoralg _{l_1}^{k_1}V$ and $[T_2]\indices{^{a_1\ldots a_{k_2}}_{b_1\ldots b_{l_2}}}\in \tensoralg _{l_2}^{k_2}V$ is denoted
 	\begin{equation}
 		\begin{multlined}
 			[T_1\otimes T_2]\indices{^{a_1\cdots a_{k_1}c_1\cdots c_{k_2}}_{b_1\cdots b_{l_1}d_1\cdots d_{l_2}}}\eqqc \\ [T_1]\indices{^{a_1\ldots a_{k_1}}_{b_1\ldots b_{l_1}}}[T_2]\indices{^{c_1\ldots c_{k_2}}_{d_1\ldots d_{l_2}}}.
@@ -2173,11 +2198,13 @@ In case $\Char (\K )=0$, this definition can be written in another, arguably sim
 \begin{prp}{}{}
 	Let $V$ be a $\K$-$\K$-bimodule with $\Char (\K )=0$, and let $S^{a_1\cdots a_k}\in \tensoralg ^kV$ and $T^{a_1\cdots a_l}\in \tensoralg ^lV$.
 	\begin{enumerate}
-		\item 
+		\item
+		\intomargin
 		\begin{equation}
 			[S\vee T]^{a_1\cdots a_{k+l}}=\frac{(k+l)!}{k!l!}S^{(a_1\cdots a_k}T^{a_{k+1}\cdots a_{k+l})}.
 		\end{equation}
 		\item
+		\intomargin
 		\begin{equation}
 			[S\wedge T]^{a_1\cdots a_{k+l}}=\frac{(k+l)!}{k!l!}S^{[a_1\cdots a_k}T^{a_{k+1}\cdots a_{k+l}]}.
 		\end{equation}
@@ -2365,6 +2392,7 @@ We saw above in \cref{BasisForTensorAlgebra} an explicit description of a basis 
 			\dim \left( \antialg _l^kV\right) =\binom{\dim (V)}{k}\binom{\dim (V)}{l},
 		\end{equation}
 		and in particular that
+		\intomargin
 		\begin{equation}
 			\antialg _l^kV=0\text{ if }k>\dim (V)\text{ or }l>\dim (V)\text{.}
 		\end{equation}
@@ -2484,6 +2512,7 @@ We have an analogous construction for linear-transformations.  We begin with a p
 		\end{equation}
 		and
 		\item \label{thm5.6.7(ii)}for any $\L$-module $U$, the map
+		\intomargin
 		\begin{equation}\label{eqn5.6.9}
 			\Mor _{\Mod{\K}}(V,U)\ni T\mapsto T^{\L}\Mor _{\Mod{\L}}(V^{\L},U)
 		\end{equation}
